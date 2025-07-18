@@ -1,0 +1,145 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mitglieder",
+  "info": {
+    "singularName": "mitglied",
+    "pluralName": "mitglieder",
+    "displayName": "Mitglied",
+    "description": "Vereinsmitglieder"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "mitgliedsnummer": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "vorname": {
+      "type": "string",
+      "required": true
+    },
+    "nachname": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "telefon": {
+      "type": "string"
+    },
+    "geburtsdatum": {
+      "type": "date"
+    },
+    "mitgliedsstatus": {
+      "type": "enumeration",
+      "enum": [
+        "aktiv",
+        "inaktiv",
+        "ausgetreten",
+        "ausgeschlossen"
+      ],
+      "default": "aktiv"
+    },
+    "mitgliedstyp": {
+      "type": "enumeration",
+      "enum": [
+        "spieler",
+        "trainer",
+        "fan",
+        "familie",
+        "ehrenmitglied",
+        "funktionaer"
+      ],
+      "required": true
+    },
+    "beitrittsdatum": {
+      "type": "date",
+      "required": true
+    },
+    "austrittsdatum": {
+      "type": "date"
+    },
+    "zahlungsstatus": {
+      "type": "enumeration",
+      "enum": [
+        "aktuell",
+        "rueckstaendig",
+        "befreit"
+      ],
+      "default": "aktuell"
+    },
+    "letzter_beitrag": {
+      "type": "date"
+    },
+    "adresse": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.adresse"
+    },
+    "notfallkontakt": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.notfallkontakt"
+    },
+    "benutzerrolle": {
+      "type": "enumeration",
+      "enum": [
+        "mitglied",
+        "spieler",
+        "trainer",
+        "admin",
+        "vorstand"
+      ],
+      "default": "mitglied"
+    },
+    "profilfoto": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bemerkungen": {
+      "type": "text"
+    },
+    "datenschutz_akzeptiert": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "newsletter_aktiv": {
+      "type": "boolean",
+      "default": true
+    },
+    "spieler": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::spieler.spieler",
+      "mappedBy": "mitglied"
+    },
+    "trainer_mannschaften": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mannschaft.mannschaft",
+      "mappedBy": "trainer"
+    },
+    "kontakt_mannschaften": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mannschaft.mannschaft",
+      "mappedBy": "kontaktperson"
+    },
+    "trainings_als_trainer": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::training.training",
+      "mappedBy": "trainer"
+    }
+  }
+} 

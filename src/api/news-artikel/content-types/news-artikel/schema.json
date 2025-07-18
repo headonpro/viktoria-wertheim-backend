@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "news_artikel",
+  "info": {
+    "singularName": "news-artikel",
+    "pluralName": "news-artikels",
+    "displayName": "news-artikel"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titel": {
+      "type": "string",
+      "required": true
+    },
+    "inhalt": {
+      "type": "blocks",
+      "required": true
+    },
+    "datum": {
+      "type": "date",
+      "required": true
+    },
+    "titelbild": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "autor": {
+      "type": "string"
+    },
+    "kategorie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kategorie.kategorie",
+      "inversedBy": "news_artikel"
+    }
+  }
+} 

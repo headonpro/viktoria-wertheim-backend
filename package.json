@@ -1,0 +1,46 @@
+{
+  "name": "viktoria-wertheim-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "strapi build",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "seed:leaderboard": "node scripts/seed-leaderboard.js",
+    "seed:leaderboard:clear": "node scripts/seed-leaderboard.js --clear"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "5.18.0",
+    "@strapi/plugin-graphql": "^5.18.1",
+    "@strapi/plugin-users-permissions": "5.18.0",
+    "@strapi/strapi": "5.18.0",
+    "axios": "^1.10.0",
+    "better-sqlite3": "11.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-easy-crop": "^5.5.0",
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "0b73a874-c78e-4cdf-b5dc-9ae2c7d69ffc",
+    "installId": "25ae1fa5b8226a0ea6a79a86f1f009a1812198c8f45061eb8bc0c8c6c2e11eee"
+  }
+}

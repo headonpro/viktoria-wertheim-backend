@@ -1,0 +1,88 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mannschaften",
+  "info": {
+    "singularName": "mannschaft",
+    "pluralName": "mannschaften",
+    "displayName": "Mannschaft",
+    "description": "Vereinsmannschaften und Teams"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "liga": {
+      "type": "string"
+    },
+    "trainer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::mitglied.mitglied"
+    },
+    "teamfoto": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "beschreibung": {
+      "type": "richtext"
+    },
+    "gruendungsjahr": {
+      "type": "integer",
+      "min": 1900,
+      "max": 2030
+    },
+    "vereinsfarben": {
+      "type": "string"
+    },
+    "spielort": {
+      "type": "string",
+      "default": "Sportplatz Wertheim"
+    },
+    "saison": {
+      "type": "string",
+      "default": "2024/25"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "aktiv",
+        "inaktiv",
+        "aufgeloest"
+      ],
+      "default": "aktiv"
+    },
+    "altersklasse": {
+      "type": "enumeration",
+      "enum": [
+        "senioren",
+        "a-jugend",
+        "b-jugend",
+        "c-jugend",
+        "d-jugend",
+        "e-jugend",
+        "f-jugend",
+        "bambini"
+      ]
+    },
+    "kontaktperson": {
+      "type": "relation",
+      "relation": "manyToOne", 
+      "target": "api::mitglied.mitglied"
+    },
+    "trainingszeiten": {
+      "type": "text"
+    },
+    "bemerkungen": {
+      "type": "text"
+    }
+  }
+} 

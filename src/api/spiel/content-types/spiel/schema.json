@@ -1,0 +1,89 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spiele",
+  "info": {
+    "singularName": "spiel",
+    "pluralName": "spiele",
+    "displayName": "Spiel",
+    "description": "Fußballspiele und Matches"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "datum": {
+      "type": "datetime",
+      "required": true
+    },
+    "heimmannschaft": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::mannschaft.mannschaft"
+    },
+    "auswaertsmannschaft": {
+      "type": "relation", 
+      "relation": "manyToOne",
+      "target": "api::mannschaft.mannschaft"
+    },
+    "tore_heim": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tore_auswaerts": {
+      "type": "integer", 
+      "default": 0,
+      "min": 0
+    },
+    "spielort": {
+      "type": "string",
+      "default": "Sportplatz Wertheim"
+    },
+    "liga": {
+      "type": "string"
+    },
+    "spieltag": {
+      "type": "integer",
+      "min": 1
+    },
+    "saison": {
+      "type": "string",
+      "default": "2024/25"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "geplant",
+        "live", 
+        "beendet",
+        "abgesagt",
+        "verschoben"
+      ],
+      "default": "geplant"
+    },
+    "spielbericht": {
+      "type": "richtext"
+    },
+    "zuschauer": {
+      "type": "integer",
+      "min": 0
+    },
+    "wetter": {
+      "type": "enumeration",
+      "enum": [
+        "sonnig",
+        "bewoelkt", 
+        "regen",
+        "schnee",
+        "wind"
+      ]
+    },
+    "schiedsrichter": {
+      "type": "string"
+    },
+    "bemerkungen": {
+      "type": "text"
+    }
+  }
+} 

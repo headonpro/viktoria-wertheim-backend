@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_shared_adresses",
+  "info": {
+    "displayName": "Adresse",
+    "icon": "location-arrow"
+  },
+  "options": {},
+  "attributes": {
+    "strasse": {
+      "type": "string",
+      "required": true
+    },
+    "hausnummer": {
+      "type": "string",
+      "required": true
+    },
+    "plz": {
+      "type": "string",
+      "required": true
+    },
+    "ort": {
+      "type": "string",
+      "required": true
+    },
+    "land": {
+      "type": "string",
+      "default": "Deutschland"
+    }
+  }
+} 
