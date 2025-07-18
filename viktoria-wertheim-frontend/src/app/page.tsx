@@ -8,6 +8,7 @@ import LeagueTable from '@/components/LeagueTable'
 import NewsModal from '@/components/NewsModal'
 import NewsTicker from '@/components/NewsTicker'
 import TeamStatus from '@/components/TeamStatus'
+
 import { IconClock, IconTrophy } from '@tabler/icons-react'
 import { NewsArtikel, Spieler } from '@/types/strapi'
 import { strapi } from '@/lib/strapi'
@@ -307,18 +308,18 @@ export default function HomePage() {
                 {/* Top Scorers Column */}
                 <div>
                   <div
-                    className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 overflow-hidden cursor-pointer hover:bg-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
                   >
                     {/* Title Header */}
-                    <div className="bg-white/30 px-4 md:px-8 py-3 md:py-4 border-b border-white/20 text-center">
-                      <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
+                    <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+                      <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                         Torschützenkönig
                       </h2>
                     </div>
                     
                     {/* Header */}
-                    <div className="bg-white/20 px-4 md:px-6 py-3 border-b border-white/20">
-                      <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
+                    <div className="px-4 md:px-6 py-3">
+                      <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                         <div className="col-span-1">#</div>
                         <div className="col-span-7">Spieler</div>
                         <div className="col-span-2 text-center">Spiele</div>
@@ -326,7 +327,7 @@ export default function HomePage() {
                       </div>
                     </div>
                     {/* Top Scorers Content */}
-                    <div className="divide-y divide-white/10 py-2 md:py-3">
+                    <div className="py-2 md:py-3">
                       {/* Torschützenkönig - Modernes Design mit Hintergrundbild */}
                       <div className="holo-card relative overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 hover:shadow-xl md:hover:shadow-2xl cursor-pointer group h-full flex flex-col shadow-lg mb-2 md:mb-4">
                         {/* Overlay für Lesbarkeit - Header-Hintergrund */}
@@ -392,22 +393,22 @@ export default function HomePage() {
 
                       {/* Plätze 2-5 */}
                       {topScorers.slice(1).map((player, index) => (
-                        <div key={player.id} className="px-4 md:px-6 py-1.5 md:py-2 transition-all duration-300 hover:bg-white/30">
+                        <div key={player.id} className="px-4 md:px-6 py-1.5 md:py-2 transition-all duration-300 hover:bg-white/30 dark:hover:bg-viktoria-dark-lighter/30">
                           <div className="grid grid-cols-12 gap-2 md:gap-4 items-center">
                             <div className="col-span-1 flex items-center">
-                              <span className="font-bold text-sm md:text-lg text-gray-600">{index + 2}.</span>
+                              <span className="font-bold text-sm md:text-lg text-gray-600 dark:text-gray-300">{index + 2}.</span>
                             </div>
                             <div className="col-span-7">
-                              <span className="text-sm md:text-base text-gray-700 font-medium">
+                              <span className="text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium">
                                 <span className="font-light">{player.attributes.mitglied?.data?.attributes.vorname}</span>{' '}
                                 <span className="font-semibold">{player.attributes.mitglied?.data?.attributes.nachname}</span>
                               </span>
                             </div>
-                            <div className="col-span-2 text-center text-sm md:text-base text-gray-600">
+                            <div className="col-span-2 text-center text-sm md:text-base text-gray-600 dark:text-gray-300">
                               {player.attributes.spiele_saison}
                             </div>
                             <div className="col-span-2 text-center">
-                              <span className="font-bold text-sm md:text-base text-gray-600">
+                              <span className="font-bold text-sm md:text-base text-gray-600 dark:text-gray-300">
                                 {player.attributes.tore_saison}
                               </span>
                             </div>
@@ -421,16 +422,16 @@ export default function HomePage() {
                 {/* Latest News Column - Desktop only */}
                 <div className="hidden lg:block">
                   <div
-                    className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 overflow-hidden cursor-pointer hover:bg-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
                   >
                     {/* Title Header */}
-                    <div className="bg-white/30 px-4 md:px-8 py-3 md:py-4 border-b border-white/20 text-center">
-                      <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
+                    <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+                      <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                         Neueste Nachrichten
                       </h2>
                     </div>
                     
-                    <div className="divide-y divide-white/10 pb-2 md:pb-3">
+                    <div className="pb-2 md:pb-3">
                       {newsArticles
                         .filter(article => {
                           // Handle both Strapi 5 (direct properties) and legacy (attributes wrapper) formats
@@ -514,12 +515,12 @@ export default function HomePage() {
                                   </div>
 
                                   {/* Title */}
-                                  <h3 className="font-semibold text-gray-800 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue transition-colors">
+                                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
                                     {titel}
                                   </h3>
 
                                   {/* Content Preview */}
-                                  <p className="text-xs md:text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 leading-snug">
                                     {(() => {
                                       // Handle different content formats
                                       if (typeof inhalt === 'string' && inhalt.length > 0) {
@@ -566,16 +567,16 @@ export default function HomePage() {
           <AnimatedSection className="py-2 md:py-3" delay={0.25}>
             <div className="container max-w-6xl">
               <div
-                className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 overflow-hidden cursor-pointer hover:bg-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
               >
                 {/* Title Header */}
-                <div className="bg-white/30 px-4 md:px-8 py-3 md:py-4 border-b border-white/20 text-center">
-                  <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
+                <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+                  <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                     Neueste Nachrichten
                   </h2>
                 </div>
                 
-                <div className="divide-y divide-white/10 pb-4 md:pb-6">
+                <div className="pb-4 md:pb-6">
                   {newsArticles
                     .filter(article => {
                       // Handle both Strapi 5 (direct properties) and legacy (attributes wrapper) formats
@@ -659,12 +660,12 @@ export default function HomePage() {
                               </div>
 
                               {/* Title */}
-                              <h3 className="font-semibold text-gray-800 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue transition-colors">
+                              <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
                                 {titel}
                               </h3>
 
                               {/* Content Preview */}
-                              <p className="text-xs md:text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 leading-snug">
                                 {(() => {
                                   // Handle different content formats
                                   if (typeof inhalt === 'string' && inhalt.length > 0) {
@@ -708,11 +709,11 @@ export default function HomePage() {
           <AnimatedSection className="py-2 md:py-3" delay={0.5}>
             <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
               <div
-                className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 overflow-hidden cursor-pointer hover:bg-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
               >
                 {/* Title Header */}
-                <div className="bg-white/30 px-4 md:px-8 py-3 md:py-4 border-b border-white/20 text-center">
-                  <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
+                <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+                  <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                     Unsere Sponsoren
                   </h2>
                 </div>
@@ -723,7 +724,7 @@ export default function HomePage() {
                     {[1, 2, 3, 4].map((i) => (
                       <AnimatedDiv
                         key={i}
-                        className="bg-white/30 backdrop-blur-sm rounded-lg border border-white/10 p-3 md:p-4 flex items-center justify-center cursor-pointer hover:bg-white/40 transition-all duration-300 min-h-[60px] md:min-h-[80px]"
+                        className="bg-white/30 dark:bg-viktoria-dark-lighter/30 backdrop-blur-sm rounded-lg border border-white/10 dark:border-viktoria-dark-lighter/10 p-3 md:p-4 flex items-center justify-center cursor-pointer hover:bg-white/40 dark:hover:bg-viktoria-dark-lighter/40 transition-all duration-300 min-h-[60px] md:min-h-[80px]"
                         delay={0.6 + i * 0.1}
                       >
                         <div className="w-16 h-10 md:w-20 md:h-12 bg-gray-200 rounded"></div>

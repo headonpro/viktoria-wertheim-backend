@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { NewsArtikel } from '@/types/strapi'
 import { strapi } from '@/lib/strapi'
+import DarkModeToggle from '@/components/DarkModeToggle'
 
 interface NewsTickerProps {
   onNewsClick?: (article: NewsArtikel) => void
@@ -116,9 +117,8 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
       <div className="w-full bg-transparent">
         <div className="max-w-6xl mx-auto px-4 py-2">
           <div className="flex items-center">
-            <div className="flex items-center space-x-2 bg-gray-100 text-gray-700 px-2 py-1 rounded-md border border-gray-200 mr-4">
+            <div className="bg-gray-100 text-gray-700 px-2 py-1 rounded-md border border-gray-200 mr-4 flex items-center justify-center">
               <div className="w-2 h-2 bg-viktoria-yellow rounded-full animate-pulse"></div>
-              <span className="text-xs font-medium uppercase tracking-wide">NEWS</span>
             </div>
             <div className="animate-pulse">
               <div className="h-3 bg-gray-300 rounded w-48"></div>
@@ -134,9 +134,8 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
       <div className="w-full bg-transparent">
         <div className="max-w-6xl mx-auto px-4 py-2">
           <div className="flex items-center">
-            <div className="flex items-center space-x-2 bg-gray-100 text-gray-700 px-2 py-1 rounded-md border border-gray-200 mr-4">
+            <div className="bg-gray-100 text-gray-700 px-2 py-1 rounded-md border border-gray-200 mr-4 flex items-center justify-center">
               <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-              <span className="text-xs font-medium uppercase tracking-wide">NEWS</span>
             </div>
             <span className="text-gray-500 text-sm">Keine aktuellen Nachrichten verfügbar</span>
           </div>
@@ -146,7 +145,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
   }
 
   // Kombiniere alle News-Titel zu einem langen String mit gelben Separatoren
-  const newsText = newsArticles
+  const baseNewsText = newsArticles
     .filter(article => {
       // Handle both API format and mock format
       const titel = article.titel || (article.attributes && article.attributes.titel)
@@ -157,6 +156,9 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
       return article.titel || article.attributes?.titel
     })
     .join('\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0')
+
+  // Wiederhole den Text mehrfach für längeren, seamless Loop
+  const newsText = `${baseNewsText}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${baseNewsText}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${baseNewsText}`
 
   // Erstelle News-Elemente mit gelben Separatoren für die Anzeige
   const createNewsContent = (text: string) => {
@@ -180,31 +182,33 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
       <div className="max-w-6xl mx-auto px-4 py-2 md:py-3 relative">
         <div className="flex items-center">
           {/* Kompaktes News Label */}
-          <div className="flex items-center space-x-2 flex-shrink-0 mr-4">
-            <div className="flex items-center space-x-2 bg-gray-100 text-gray-700 px-2 py-1 rounded-md border border-gray-200">
-              <div className="w-2 h-2 bg-viktoria-yellow rounded-full animate-pulse"></div>
-              <span className="text-xs font-medium uppercase tracking-wide">NEWS</span>
+          <div className="flex-shrink-0 mr-4">
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 w-10 h-6 rounded-md border border-white/40 dark:border-white/[0.08] shadow-sm dark:shadow-white/[0.05] flex items-center justify-center">
+              <div className="w-2 h-2 bg-viktoria-yellow rounded-full animate-pulse shadow-lg shadow-viktoria-yellow/50 animate-glow-pulse"></div>
             </div>
           </div>
 
           {/* Scrolling News Container */}
           <div className="flex-1 overflow-hidden relative">
             <div 
-              className="cursor-pointer"
+              className="cursor-pointer animate-scroll"
               onClick={() => onNewsClick?.(newsArticles[0])}
               style={{
                 display: 'flex',
-                animation: isPaused ? 'none' : 'scroll-seamless 8s linear infinite',
+                animationPlayState: isPaused ? 'paused' : 'running',
               }}
             >
-              {/* Original text */}
-              <span className="text-gray-700 hover:text-viktoria-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap flex-shrink-0 pr-8">
-                {createNewsContent(newsText)}
+              {/* Langer Text mit mehrfachen Wiederholungen */}
+              <span className="text-gray-600 dark:text-gray-300 hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors duration-300 text-sm font-medium whitespace-nowrap flex-shrink-0">
+                {createNewsContent(`${baseNewsText} | ${baseNewsText} | ${baseNewsText}`)}
               </span>
-              {/* Duplicate for seamless loop */}
-              <span className="text-gray-700 hover:text-viktoria-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap flex-shrink-0 pr-8">
-                {createNewsContent(newsText)}
-              </span>
+            </div>
+          </div>
+
+          {/* Dark Mode Toggle mit Badge Design */}
+          <div className="flex-shrink-0 ml-4">
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md border border-white/40 dark:border-white/[0.08] shadow-sm dark:shadow-white/[0.05]">
+              <DarkModeToggle />
             </div>
           </div>
           
@@ -212,11 +216,14 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
           <style jsx>{`
             @keyframes scroll-seamless {
               0% {
-                transform: translateX(0);
+                transform: translateX(100%);
               }
               100% {
-                transform: translateX(-50%);
+                transform: translateX(-100%);
               }
+            }
+            .animate-scroll {
+              animation: scroll-seamless 15s linear infinite;
             }
           `}</style>
         </div>

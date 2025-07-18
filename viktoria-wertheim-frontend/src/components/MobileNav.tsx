@@ -33,16 +33,16 @@ export default function MobileNav() {
   }, [lastScrollY])
 
   const navItems = [
-    { href: '/', label: 'HEIM', icon: IconBallFootball },
-    { href: '/news', label: 'NEWS', icon: IconNews },
-    { href: '/teams', label: 'TEAMS', icon: IconUsers },
-    { href: '/shop', label: 'SHOP', icon: IconShirt },
-    { href: '/kontakt', label: 'KONTAKT', icon: IconMail },
+    { href: '/', label: 'Heim', icon: IconBallFootball },
+    { href: '/news', label: 'News', icon: IconNews },
+    { href: '/teams', label: 'Teams', icon: IconUsers },
+    { href: '/shop', label: 'Shop', icon: IconShirt },
+    { href: '/kontakt', label: 'Kontakt', icon: IconMail },
   ]
 
   return (
     <nav 
-      className={`fixed left-0 right-0 bg-white border-b border-gray-200 md:hidden z-30 shadow-md transition-transform duration-300 ${
+      className={`fixed left-0 right-0 bg-white/20 dark:bg-white/[0.02] backdrop-blur-md border-b border-white/40 dark:border-white/[0.08] md:hidden z-30 shadow-lg transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`} 
       style={{ top: '70px' }}
@@ -57,22 +57,23 @@ export default function MobileNav() {
               className={`flex flex-col items-center justify-center py-1 px-3 rounded-lg transition-colors ${
                 isActive
                   ? ''
-                  : 'hover:bg-gray-100'
+                  : 'hover:bg-gray-100 dark:hover:bg-viktoria-dark-lighter'
               }`}
             >
               <Icon 
                 size={32} 
+                stroke={1.5}
                 className={`transition-colors mb-1 ${
                   isActive
                     ? 'text-viktoria-yellow'
-                    : 'text-gray-600 hover:text-viktoria-blue-light'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-viktoria-blue-light dark:hover:text-viktoria-yellow'
                 }`}
               />
               <span 
-                className={`text-[10px] font-medium transition-colors ${
+                className={`text-[10px] font-semibold transition-colors ${
                   isActive
                     ? 'text-viktoria-yellow'
-                    : 'text-gray-600 hover:text-viktoria-blue-light'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-viktoria-blue-light dark:hover:text-viktoria-yellow'
                 }`}
               >
                 {label}

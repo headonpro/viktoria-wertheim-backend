@@ -5,6 +5,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -12,6 +13,10 @@ module.exports = {
         'viktoria-blue-light': '#354992',
         'viktoria-yellow': '#FFD700',
         'viktoria-green': '#00A86B',
+        // Dark mode colors
+        'viktoria-dark': '#101010',
+        'viktoria-dark-light': '#1a1a1a',
+        'viktoria-dark-lighter': '#2a2a2a',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],

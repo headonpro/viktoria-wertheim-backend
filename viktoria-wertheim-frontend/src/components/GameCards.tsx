@@ -126,14 +126,14 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
   
   return (
     <div 
-      className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/20 hover:bg-white/50 transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-lg hover:shadow-xl"
+      className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
       onClick={onClick}
     >
       <div className="flex items-center justify-between mb-2 md:mb-4">
-        <div className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-          {type === 'last' ? 'Letztes Spiel' : 'Nächstes Spiel'}
+        <div className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          {type === 'last' ? 'Last' : 'Next'}
         </div>
-        <div className="text-xs md:text-sm text-gray-500">
+        <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
           {date}
         </div>
       </div>
@@ -141,25 +141,25 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
       <div className="flex items-center justify-between mb-3 md:mb-8">
         {/* Home Team */}
         <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 mb-0 md:mb-3">
+          <div className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-0 md:mb-3">
             {homeLogo ? (
               <Image 
                 src={homeLogo} 
                 alt={`${homeTeam} Logo`}
-                width={80}
-                height={80}
-                className="w-12 h-12 md:w-20 md:h-20 object-contain drop-shadow-sm"
+                width={64}
+                height={64}
+                className="w-10 h-10 md:w-16 md:h-16 object-contain drop-shadow-sm"
                 priority
               />
             ) : (
-              <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-400 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xs md:text-lg">{homeTeam.charAt(0)}</span>
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-xs md:text-base">{homeTeam.charAt(0)}</span>
               </div>
             )}
           </div>
           {/* Team Name - nur auf Desktop anzeigen */}
           <div className="hidden md:block text-center px-2">
-            <p className="text-gray-800 text-sm font-semibold leading-tight max-w-32 line-clamp-2">
+            <p className="text-gray-800 dark:text-gray-200 text-sm font-semibold leading-tight max-w-32 line-clamp-2">
               {homeTeam}
             </p>
           </div>
@@ -168,12 +168,12 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         {/* Score/VS */}
         <div className="text-center px-2 md:px-6 flex-shrink-0">
           {type === 'last' && homeScore !== undefined && awayScore !== undefined ? (
-            <div className={`font-bold text-xl md:text-4xl ${getResultColor()}`} style={{ letterSpacing: '-0.05em' }}>
-              {homeScore}:{awayScore}
+            <div className={`font-bold text-xl md:text-4xl ${getResultColor()}`} style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
+              {homeScore}<span style={{ position: 'relative', top: '-0.1em' }}>:</span>{awayScore}
             </div>
           ) : (
             <div 
-              className="font-bold text-viktoria-blue text-lg md:text-3xl font-permanent-marker"
+              className="font-medium text-viktoria-blue dark:text-white text-lg md:text-3xl font-sans"
             >
               VS
             </div>
@@ -182,39 +182,39 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         
         {/* Away Team */}
         <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 mb-0 md:mb-3">
+          <div className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-0 md:mb-3">
             {awayLogo ? (
               <Image 
                 src={awayLogo} 
                 alt={`${awayTeam} Logo`}
-                width={80}
-                height={80}
-                className="w-12 h-12 md:w-20 md:h-20 object-contain drop-shadow-sm"
+                width={64}
+                height={64}
+                className="w-10 h-10 md:w-16 md:h-16 object-contain drop-shadow-sm"
                 priority
               />
             ) : (
-              <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-400 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xs md:text-lg">{awayTeam.charAt(0)}</span>
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-xs md:text-base">{awayTeam.charAt(0)}</span>
               </div>
             )}
           </div>
           {/* Team Name - nur auf Desktop anzeigen */}
           <div className="hidden md:block text-center px-2">
-            <p className="text-gray-800 text-sm font-semibold leading-tight max-w-32 line-clamp-2">
+            <p className="text-gray-800 dark:text-gray-200 text-sm font-semibold leading-tight max-w-32 line-clamp-2">
               {awayTeam}
             </p>
           </div>
         </div>
       </div>
       
-      <div className="flex items-center justify-between text-xs md:text-sm text-gray-500">
+      <div className="flex items-center justify-between text-xs md:text-sm text-gray-500 dark:text-gray-400">
         <div className="flex items-center space-x-1 md:space-x-2">
           <IconClock size={12} className="md:w-4 md:h-4" />
           <span className="text-xs md:text-sm">{time}</span>
         </div>
         <div className="flex items-center space-x-1 md:space-x-2">
           <IconMapPin size={12} className="md:w-4 md:h-4" />
-          <span className="text-xs md:text-sm">{isHome ? 'Heim' : 'Auswärts'}</span>
+          <span className="text-xs md:text-sm">{isHome ? 'HOME' : 'AWAY'}</span>
         </div>
       </div>
     </div>
@@ -276,7 +276,7 @@ export default function GameCards() {
       awayTeam: isViktoriaHome ? spiel.attributes.auswaertsmannschaft?.data?.attributes?.name || '' : 'SV Viktoria Wertheim',
       homeScore: isLastGame ? (isViktoriaHome ? spiel.attributes.tore_heim : spiel.attributes.tore_auswaerts) : undefined,
       awayScore: isLastGame ? (isViktoriaHome ? spiel.attributes.tore_auswaerts : spiel.attributes.tore_heim) : undefined,
-      date: spielDatum.toLocaleDateString('de-DE'),
+      date: spielDatum.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }),
       time: spielDatum.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
       isHome: isViktoriaHome,
       stadium: spiel.attributes.spielort || 'Sportplatz Wertheim',
@@ -349,7 +349,7 @@ export default function GameCards() {
     awayTeam: 'TSV Assamstadt',
     homeScore: 3,
     awayScore: 0,
-    date: '02.08.2025',
+    date: '02.08',
     time: '18:00',
     isHome: true,
     stadium: 'Viktoria-Stadion Wertheim',
@@ -363,13 +363,13 @@ export default function GameCards() {
     type: 'next',
     homeTeam: 'Türkgücü Wertheim',
     awayTeam: 'SV Viktoria Wertheim',
-    date: '16.08.2025',
+    date: '16.08',
     time: '15:30',
     isHome: false,
     stadium: 'Sportplatz Türkgücü',
     referee: 'Weber, Thomas',
     lastMeeting: {
-      date: '12.03.2025',
+      date: '12.03',
       result: '0:3', // Heimteam 0 : Viktoria (Auswärts) 3 = Sieg für Viktoria → GRÜN
       location: 'Auswärts'
     }

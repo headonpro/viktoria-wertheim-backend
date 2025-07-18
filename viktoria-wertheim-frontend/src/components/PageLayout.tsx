@@ -10,7 +10,7 @@ interface PageLayoutProps {
 
 export default function PageLayout({ children }: PageLayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen transition-colors duration-300 bg-gray-50 text-gray-900 dark:bg-[#020205] dark:text-white">
       <Header />
       <main className="pt-[140px] md:pt-[85px] pb-6">
         {children}

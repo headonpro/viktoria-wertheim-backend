@@ -83,20 +83,20 @@ export default function TeamStatus() {
   return (
     <div className="container max-w-6xl">
       <AnimatedDiv
-        className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/50 transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden"
+        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] overflow-hidden"
         delay={0.1}
       >
-        {/* Kompakte horizontale Anordnung */}
+        {/* Kompakte horizontale Anordnung mit Grid */}
         <div className="px-4 py-3 md:px-6 md:py-4">
-          <div className="relative">
+          <div className="grid grid-cols-3 gap-4 items-end">
             
-            {/* Platz - Links mit festem Abstand */}
-            <div className="absolute left-8 md:left-12 text-center">
-              <div className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
+            {/* Platz - Links */}
+            <div className="text-center">
+              <div className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
                 Platz
               </div>
-              <div className="flex items-center justify-center space-x-1">
-                <div className="text-xl md:text-2xl font-bold text-viktoria-blue">
+              <div className="flex items-center justify-center space-x-1 h-6 md:h-8">
+                <div className="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-200">
                   {teamData.tabellenplatz}
                 </div>
                 <div className="flex items-center">
@@ -105,16 +105,16 @@ export default function TeamStatus() {
               </div>
             </div>
 
-            {/* Form - Absolut zentriert */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 text-center">
-              <div className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
+            {/* Form - Mitte */}
+            <div className="text-center">
+              <div className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
                 Form
               </div>
-              <div className="flex space-x-1 justify-center">
+              <div className="flex space-x-1 justify-center items-center h-6 md:h-8">
                 {teamData.formLetzten5.map((result, index) => (
                   <div
                     key={index}
-                    className={`w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-all duration-200 hover:scale-110 shadow-sm`}
+                    className={`w-3 h-3 md:w-4 md:h-4 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-all duration-200 hover:scale-110 shadow-sm`}
                   >
                     {getFormText(result)}
                   </div>
@@ -122,23 +122,15 @@ export default function TeamStatus() {
               </div>
             </div>
 
-            {/* Liga - Rechts mit festem Abstand */}
-            <div className="absolute right-8 md:right-12 text-center">
-              <div className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
+            {/* Liga - Rechts */}
+            <div className="text-center">
+              <div className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
                 Liga
               </div>
-              <div className="text-sm md:text-base font-semibold text-viktoria-blue">
-                {teamData.liga}
-              </div>
-            </div>
-
-            {/* Invisible spacer to maintain height */}
-            <div className="invisible">
-              <div className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
-                Platz
-              </div>
-              <div className="text-xl md:text-2xl font-bold">
-                0
+              <div className="flex items-center justify-center h-6 md:h-8">
+                <div className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-200">
+                  {teamData.liga}
+                </div>
               </div>
             </div>
             

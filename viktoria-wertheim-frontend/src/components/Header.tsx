@@ -44,7 +44,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 header-gradient border-b border-gray-700 shadow-lg">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-transparent dark:to-transparent dark:bg-white/[0.02] backdrop-blur-md border-b border-white/40 dark:border-white/[0.08] shadow-lg hover:shadow-xl transition-all duration-300">
         <div className="container">
           {/* Mobile Layout - unchanged */}
           <div className="grid grid-cols-3 items-center lg:hidden" style={{ height: '70px' }}>
@@ -72,10 +72,10 @@ export default function Header() {
             {/* Titel - Mitte */}
             <div className="flex justify-center">
               <Link href="/" className="flex items-center" style={{ gap: '6px' }}>
-                <span className="font-bold text-viktoria-yellow text-4xl md:text-5xl font-permanent-marker header-text large-sv">SV</span>
+                <span className="font-semibold text-viktoria-yellow text-3xl md:text-4xl font-permanent-marker header-text large-sv">SV</span>
                 <div className="flex flex-col justify-center stacked-container">
-                  <span className="font-bold text-white text-lg md:text-xl font-permanent-marker header-text stacked-text">VIKTORIA</span>
-                  <span className="font-bold text-white text-lg md:text-xl font-permanent-marker header-text stacked-text">WERTHEIM</span>
+                  <span className="font-semibold text-white text-base md:text-lg font-permanent-marker header-text stacked-text">VIKTORIA</span>
+                  <span className="font-semibold text-white text-base md:text-lg font-permanent-marker header-text stacked-text">WERTHEIM</span>
                 </div>
               </Link>
             </div>
@@ -112,10 +112,10 @@ export default function Header() {
                   />
                 </div>
                 <div className="flex items-center" style={{ gap: '6px' }}>
-                  <span className="font-bold text-viktoria-yellow text-2xl font-permanent-marker header-text large-sv">SV</span>
+                  <span className="font-semibold text-viktoria-yellow text-2xl font-permanent-marker header-text large-sv">SV</span>
                   <div className="flex flex-col justify-center stacked-container">
-                    <span className="font-bold text-white text-base font-permanent-marker header-text stacked-text">VIKTORIA</span>
-                    <span className="font-bold text-white text-base font-permanent-marker header-text stacked-text">WERTHEIM</span>
+                    <span className="font-semibold text-white text-base font-permanent-marker header-text stacked-text">VIKTORIA</span>
+                    <span className="font-semibold text-white text-base font-permanent-marker header-text stacked-text">WERTHEIM</span>
                   </div>
                 </div>
               </Link>
@@ -262,18 +262,18 @@ export default function Header() {
               className="fixed top-0 right-0 bottom-0 w-80 z-50"
             >
               {/* Glassmorphism Background */}
-              <div className="h-full bg-white/95 backdrop-blur-xl border-l border-white/20 shadow-2xl">
+              <div className="h-full bg-white/95 dark:bg-viktoria-dark-light/95 backdrop-blur-xl border-l border-white/20 dark:border-viktoria-dark-lighter/50 shadow-2xl">
                 
                 {/* Header Section */}
-                <div className="relative p-4 border-b border-gray-100/50">
+                <div className="relative p-4 border-b border-gray-100/50 dark:border-viktoria-dark-lighter/50">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-viktoria-blue to-viktoria-blue-light rounded-lg flex items-center justify-center">
-                        <IconTrophy size={16} className="text-viktoria-yellow" />
+                      <div className="w-8 h-8 bg-gradient-to-br from-viktoria-blue to-viktoria-blue-light dark:from-viktoria-yellow dark:to-viktoria-yellow rounded-lg flex items-center justify-center">
+                        <IconTrophy size={16} className="text-viktoria-yellow dark:text-viktoria-dark" />
                       </div>
                       <div>
-                        <h2 className="text-base font-semibold text-gray-800">Navigation</h2>
-                        <p className="text-xs text-gray-500">SV Viktoria Wertheim</p>
+                        <h2 className="text-base font-semibold text-gray-800 dark:text-white">Navigation</h2>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">SV Viktoria Wertheim</p>
                       </div>
                     </div>
                     
@@ -281,10 +281,10 @@ export default function Header() {
                       whileHover={{ scale: 1.1, rotate: 90 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={toggleMenu}
-                      className="w-8 h-8 bg-gray-100/80 hover:bg-gray-200/80 rounded-lg flex items-center justify-center transition-all duration-200"
+                      className="w-8 h-8 bg-gray-100/80 hover:bg-gray-200/80 dark:bg-viktoria-dark-lighter/80 dark:hover:bg-viktoria-dark-lighter rounded-lg flex items-center justify-center transition-all duration-200"
                       aria-label="Menü schließen"
                     >
-                      <IconX size={16} className="text-gray-600" />
+                      <IconX size={16} className="text-gray-600 dark:text-gray-300" />
                     </motion.button>
                   </div>
                 </div>
@@ -312,22 +312,22 @@ export default function Header() {
                             onClick={toggleMenu}
                             className={`group relative flex items-center p-2.5 rounded-xl transition-all duration-300 ${
                               isActive
-                                ? 'bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light text-white shadow-lg shadow-viktoria-blue/25'
-                                : 'hover:bg-gray-100/80 text-gray-700 hover:text-viktoria-blue'
+                                ? 'bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-viktoria-yellow dark:to-viktoria-yellow text-white dark:text-viktoria-dark shadow-lg shadow-viktoria-blue/25 dark:shadow-viktoria-yellow/25'
+                                : 'hover:bg-gray-100/80 dark:hover:bg-viktoria-dark-lighter/80 text-gray-700 dark:text-gray-300 hover:text-viktoria-blue dark:hover:text-viktoria-yellow'
                             }`}
                           >
                             {/* Icon Container */}
                             <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center mr-3 transition-all duration-300 ${
                               isActive
                                 ? 'bg-white/20 backdrop-blur-sm'
-                                : 'bg-gray-100/80 group-hover:bg-viktoria-blue/10'
+                                : 'bg-gray-100/80 dark:bg-viktoria-dark-lighter/80 group-hover:bg-viktoria-blue/10 dark:group-hover:bg-viktoria-yellow/10'
                             }`}>
                               <Icon 
                                 size={16} 
                                 className={`transition-all duration-300 ${
                                   isActive
-                                    ? 'text-viktoria-yellow'
-                                    : 'text-gray-600 group-hover:text-viktoria-blue'
+                                    ? 'text-viktoria-yellow dark:text-viktoria-dark'
+                                    : 'text-gray-600 dark:text-gray-300 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow'
                                 }`}
                               />
                             </div>
@@ -335,12 +335,12 @@ export default function Header() {
                             {/* Text Content */}
                             <div className="flex-1 min-w-0">
                               <h3 className={`font-semibold text-sm transition-colors duration-300 ${
-                                isActive ? 'text-white' : 'text-gray-800 group-hover:text-viktoria-blue'
+                                isActive ? 'text-white dark:text-viktoria-dark' : 'text-gray-800 dark:text-gray-300 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow'
                               }`}>
                                 {item.label}
                               </h3>
                               <p className={`text-xs transition-colors duration-300 ${
-                                isActive ? 'text-white/80' : 'text-gray-500 group-hover:text-viktoria-blue/70'
+                                isActive ? 'text-white/80 dark:text-viktoria-dark/80' : 'text-gray-500 dark:text-gray-400 group-hover:text-viktoria-blue/70 dark:group-hover:text-viktoria-yellow/70'
                               }`}>
                                 {item.description}
                               </p>
@@ -370,7 +370,7 @@ export default function Header() {
 
                 {/* Auth Section */}
                 <div className="px-4 pb-3">
-                  <div className="border-t border-gray-200/50 pt-3">
+                  <div className="border-t border-gray-200/50 dark:border-viktoria-dark-lighter/50 pt-3">
                     {isAuthenticated ? (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -435,8 +435,8 @@ export default function Header() {
 
                 {/* Sekundärnavigation - kleine Textlinks unten */}
                 <div className="px-4 pb-16">
-                  <div className="border-t border-gray-200/50 pt-3">
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <div className="border-t border-gray-200/50 dark:border-viktoria-dark-lighter/50 pt-3">
+                    <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                       Vereinsinformationen
                     </h3>
                     <div className="grid grid-cols-2 gap-1">
@@ -459,8 +459,8 @@ export default function Header() {
                               onClick={toggleMenu}
                               className={`block px-2 py-1.5 text-xs rounded-lg transition-all duration-200 ${
                                 isActive
-                                  ? 'text-viktoria-blue font-medium bg-viktoria-blue/10'
-                                  : 'text-gray-600 hover:text-viktoria-blue hover:bg-gray-100/80'
+                                  ? 'text-viktoria-blue dark:text-viktoria-yellow font-medium bg-viktoria-blue/10 dark:bg-viktoria-yellow/10'
+                                  : 'text-gray-600 dark:text-gray-400 hover:text-viktoria-blue dark:hover:text-viktoria-yellow hover:bg-gray-100/80 dark:hover:bg-viktoria-dark-lighter/80'
                               }`}
                             >
                               {item.label}

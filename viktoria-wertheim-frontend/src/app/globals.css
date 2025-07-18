@@ -123,10 +123,13 @@ body {
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(53, 73, 146, 0.9) 70%, #354992 100%) !important;
 }
 
-/* Fallback for when CSS loads */
-header {
-  background-color: #354992 !important;
+/* Dark mode header gradient */
+.dark .header-gradient {
+  background-color: #101010 !important;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(16, 16, 16, 0.9) 70%, #101010 100%) !important;
 }
+
+/* Fallback CSS rules removed - using Tailwind classes instead */
 
 /* Prevent initial scroll position issues */
 html, body {
@@ -565,4 +568,17 @@ p, span, div, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, label,
 
 .news-ticker-scroll.paused {
   animation-play-state: paused;
-} 
+} /* 
+Synchronized Glow Pulse Animation for News Badge */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(254, 240, 138, 0.5), 0 0 8px rgba(254, 240, 138, 0.3), 0 0 12px rgba(254, 240, 138, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(254, 240, 138, 0.8), 0 0 16px rgba(254, 240, 138, 0.6), 0 0 24px rgba(254, 240, 138, 0.3);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
