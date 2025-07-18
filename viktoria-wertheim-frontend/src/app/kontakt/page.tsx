@@ -38,21 +38,23 @@ export default function KontaktPage() {
     <PageLayout>
       {/* Map Section */}
       <AnimatedSection className="px-4 py-6" delay={0.1}>
-        <div className="container max-w-6xl">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
           <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
             <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
               <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
                 Unser Standort
               </h2>
             </div>
-            <div className="relative h-[30vh] md:h-[40vh] overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2566.2!2d9.5234!3d49.7612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bd9e8d7b63f9f7%3A0x4290f12c1b8f2ae6!2sHaslocherweg%2085%2C%2097877%20Wertheim!5e0!3m2!1sde!2sde!4v1701123456789!5m2!1sde!2sde"
-                className="w-full h-full border-0"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+            <div className="p-4 md:p-6">
+              <div className="relative h-[30vh] md:h-[40vh] overflow-hidden rounded-lg border border-gray-200">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2565.5!2d9.503520380745258!3d49.78259140894397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDQ2JzU3LjMiTiA5wrAzMCcxMi43IkU!5e1!3m2!1sde!2sde!4v1701123456789!5m2!1sde!2sde"
+                  className="w-full h-full border-0 rounded-lg"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
             </div>
           </div>
         </div>
@@ -60,7 +62,7 @@ export default function KontaktPage() {
 
       {/* Contact Info Cards */}
       <AnimatedSection className="px-4 py-6" delay={0.2}>
-        <div className="container max-w-6xl">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Email Card */}
             <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
@@ -128,7 +130,7 @@ export default function KontaktPage() {
 
       {/* Contact Form */}
       <AnimatedSection className="px-4 py-6" delay={0.3}>
-        <div className="container max-w-6xl">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
           <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
             <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
               <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
@@ -259,7 +261,7 @@ export default function KontaktPage() {
 
       {/* Social Media Section */}
       <AnimatedSection className="px-4 py-6" delay={0.4}>
-        <div className="container max-w-6xl">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
           <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
             <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
               <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">

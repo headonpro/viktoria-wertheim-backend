@@ -271,30 +271,38 @@ export default function HomePage() {
     <PageLayout>
       <div className="space-y-3 md:space-y-4">
         {/* News Ticker Section */}
-        <div className="mt-2 md:mt-0">
-          <NewsTicker onNewsClick={openModal} />
+        <div className="mt-2 md:mt-0 lg:px-0">
+          <div className="lg:max-w-5xl lg:mx-auto">
+            <NewsTicker onNewsClick={openModal} />
+          </div>
         </div>
 
         {/* Team Status Section */}
-        <AnimatedSection className="px-4 md:px-6 py-2 md:py-3" delay={0.1}>
-          <TeamStatus />
+        <AnimatedSection className="px-4 md:px-6 lg:px-0 py-2 md:py-3" delay={0.1}>
+          <div className="lg:max-w-5xl lg:mx-auto">
+            <TeamStatus />
+          </div>
         </AnimatedSection>
         {/* Game Cards Section */}
-        <div className="px-4 md:px-6">
+        <div className="px-4 md:px-6 lg:px-0">
           <AnimatedSection className="py-2 md:py-3" delay={0.15}>
-            <GameCards />
+            <div className="lg:max-w-5xl lg:mx-auto">
+              <GameCards />
+            </div>
           </AnimatedSection>
         </div>
         {/* League Table Section */}
-        <div className="px-4 md:px-6">
+        <div className="px-4 md:px-6 lg:px-0">
           <AnimatedSection className="py-2 md:py-3" delay={0.18}>
-            <LeagueTable />
+            <div className="lg:max-w-5xl lg:mx-auto">
+              <LeagueTable />
+            </div>
           </AnimatedSection>
         </div>
         {/* Top Scorers Section */}
         <div className="px-4 md:px-6">
           <AnimatedSection className="py-2 md:py-3" delay={0.2}>
-            <div className="container max-w-6xl">
+            <div className="container max-w-4xl lg:max-w-5xl">
               <div className="lg:grid lg:grid-cols-2 lg:gap-8">
                 {/* Top Scorers Column */}
                 <div>
@@ -696,9 +704,9 @@ export default function HomePage() {
         </div>
         
         {/* Sponsors Section */}
-        <div className="px-4 md:px-6">
+        <div className="px-4 md:px-6 lg:px-0">
           <AnimatedSection className="py-2 md:py-3" delay={0.5}>
-            <div className="container max-w-6xl">
+            <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
               <div
                 className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 overflow-hidden cursor-pointer hover:bg-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
               >

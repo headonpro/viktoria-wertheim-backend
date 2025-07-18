@@ -375,7 +375,7 @@ export default function NewsPage() {
 
 
       <main className="pt-4 pb-6">
-        <div className="container space-y-4 lg:space-y-8">
+        <div className="container space-y-4 lg:space-y-8 lg:max-w-5xl lg:mx-auto">
           
           {/* Mobile Category Filter - Compact Horizontal Scroll */}
         <AnimatedSection delay={0.2}>

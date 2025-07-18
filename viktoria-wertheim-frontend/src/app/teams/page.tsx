@@ -102,7 +102,7 @@ export default function TeamsPage() {
 
           
           <div className="px-4 pb-8 pt-8">
-            <div className="container">
+            <div className="container lg:max-w-5xl lg:mx-auto">
               <div className="flex items-center justify-center py-12">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-700 mx-auto mb-4"></div>
@@ -133,7 +133,7 @@ export default function TeamsPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="px-4 pb-8 pt-8 md:pt-6"
         >
-          <div className="container">
+          <div className="container lg:max-w-5xl lg:mx-auto">
             
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
               {teams.map((team, index) => (

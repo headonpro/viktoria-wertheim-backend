@@ -91,7 +91,7 @@ export default function TeamStatus() {
           <div className="relative">
             
             {/* Platz - Links mit festem Abstand */}
-            <div className="absolute left-0 text-center">
+            <div className="absolute left-8 md:left-12 text-center">
               <div className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
                 Platz
               </div>
@@ -123,7 +123,7 @@ export default function TeamStatus() {
             </div>
 
             {/* Liga - Rechts mit festem Abstand */}
-            <div className="absolute right-0 text-center">
+            <div className="absolute right-8 md:right-12 text-center">
               <div className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
                 Liga
               </div>

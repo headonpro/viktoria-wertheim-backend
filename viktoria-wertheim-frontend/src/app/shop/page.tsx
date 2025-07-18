@@ -23,7 +23,7 @@ export default function ShopPage() {
 
         {/* Coming Soon Banner - Kompakter */}
         <AnimatedSection className="px-4 pt-6 pb-4" delay={0.2}>
-          <div className="container">
+          <div className="container lg:max-w-5xl lg:mx-auto">
             <div className="max-w-4xl mx-auto">
               <div className="bg-gradient-to-r from-viktoria-yellow/10 to-viktoria-blue/10 border border-viktoria-yellow/30 rounded-2xl p-6 text-center shadow-lg">
                 <div className="flex items-center justify-center gap-3 mb-4">
@@ -46,7 +46,7 @@ export default function ShopPage() {
 
         {/* Produktkategorien - Modern Grid */}
         <AnimatedSection className="px-4 py-6" delay={0.3}>
-          <div className="container">
+          <div className="container lg:max-w-5xl lg:mx-auto">
             <div className="text-center mb-6">
               <h2 className="text-xl md:text-2xl font-semibold text-viktoria-blue mb-2">
                 Das wird&apos;s bald geben
@@ -119,7 +119,7 @@ export default function ShopPage() {
 
         {/* Newsletter Signup - Bonus Section */}
         <AnimatedSection className="px-4 py-6" delay={0.8}>
-          <div className="container">
+          <div className="container lg:max-w-5xl lg:mx-auto">
             <div className="max-w-md mx-auto">
               <div className="bg-gradient-to-r from-viktoria-blue/5 to-viktoria-yellow/5 rounded-xl p-6 border border-viktoria-blue/20 text-center">
                 <div className="w-12 h-12 bg-viktoria-yellow rounded-xl flex items-center justify-center mx-auto mb-4">
