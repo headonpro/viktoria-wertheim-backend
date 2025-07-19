@@ -60,7 +60,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
-    return <div className="min-h-screen bg-gray-50">{children}</div>
+    return <>{children}</>
   }
 
   return (

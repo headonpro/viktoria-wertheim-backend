@@ -221,7 +221,7 @@ export default function SponsorShowcase() {
   const sponsorDerWoche = sponsors.length > 0 ? sponsors[getWeekOfYear() % sponsors.length] : null
 
   return (
-    <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-sm rounded-lg border border-white/20 dark:border-white/[0.05] overflow-hidden shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] transition-all duration-300">
+    <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-sm rounded-lg border border-white/20 dark:border-white/[0.03] overflow-hidden shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35] transition-all duration-300">
       {/* Header */}
       <div className="px-4 py-4 md:px-6 md:py-5 text-center">
         <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
@@ -237,7 +237,7 @@ export default function SponsorShowcase() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-white/5 dark:bg-gradient-to-r dark:from-viktoria-yellow/15 dark:to-viktoria-blue/15 rounded-lg p-3 border border-white/40 dark:border-white/[0.08] shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] transition-all duration-300">
+            <div className="bg-white/5 dark:bg-gradient-to-r dark:from-viktoria-yellow/15 dark:to-viktoria-blue/15 rounded-lg p-3 border border-white/40 dark:border-white/[0.03] shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35] transition-all duration-300">
               <div className="mb-2 text-center">
                 <span className="text-xs font-bold italic text-gray-800 dark:text-viktoria-yellow uppercase tracking-wide">
                   Sponsor der Woche

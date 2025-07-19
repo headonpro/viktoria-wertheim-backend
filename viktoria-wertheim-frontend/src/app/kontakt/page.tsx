@@ -90,17 +90,33 @@ export default function KontaktPage() {
   const handleSubmit = async () => {
     setFormStatus('sending')
 
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success')
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       })
-      setCurrentStep(0)
-    }, 2000)
+
+      if (response.ok) {
+        setFormStatus('success')
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        })
+        setCurrentStep(0)
+      } else {
+        const errorData = await response.json()
+        console.error('Error sending email:', errorData.error)
+        setFormStatus('error')
+      }
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setFormStatus('error')
+    }
   }
 
   return (
@@ -452,7 +468,7 @@ export default function KontaktPage() {
               </div>
 
               <div className="space-y-6">
-                <div className="bg-white/30 dark:bg-white/[0.05] rounded-lg p-6">
+                <div className="rounded-lg p-6">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
                     <IconMapPin size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
                     Sportplatz Adresse
@@ -472,40 +488,40 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="bg-white/30 dark:bg-white/[0.05] rounded-lg p-6">
+                <div className="rounded-lg p-6">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
                     <IconClock size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
                     Trainingszeiten
                   </h3>
                   <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                    <div className="flex justify-between">
-                      <span className="font-medium">1. Mannschaft:</span>
-                      <span>Di & Do 19:00-20:30</span>
+                    <div className="flex justify-between lg:justify-center lg:space-x-8">
+                      <span className="font-medium lg:w-32 lg:text-right">1. Mannschaft:</span>
+                      <span className="lg:w-32 lg:text-left">Di & Do 19:00-20:30</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">2. Mannschaft:</span>
-                      <span>Mo & Mi 18:00-19:30</span>
+                    <div className="flex justify-between lg:justify-center lg:space-x-8">
+                      <span className="font-medium lg:w-32 lg:text-right">2. Mannschaft:</span>
+                      <span className="lg:w-32 lg:text-left">Mo & Mi 18:00-19:30</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">3. Mannschaft:</span>
-                      <span>Di & Fr 18:00-19:30</span>
+                    <div className="flex justify-between lg:justify-center lg:space-x-8">
+                      <span className="font-medium lg:w-32 lg:text-right">3. Mannschaft:</span>
+                      <span className="lg:w-32 lg:text-left">Di & Fr 18:00-19:30</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">A-Jugend:</span>
-                      <span>Mi & Fr 17:00-18:30</span>
+                    <div className="flex justify-between lg:justify-center lg:space-x-8">
+                      <span className="font-medium lg:w-32 lg:text-right">A-Jugend:</span>
+                      <span className="lg:w-32 lg:text-left">Mi & Fr 17:00-18:30</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">B-Jugend:</span>
-                      <span>Mo & Mi 16:00-17:30</span>
+                    <div className="flex justify-between lg:justify-center lg:space-x-8">
+                      <span className="font-medium lg:w-32 lg:text-right">B-Jugend:</span>
+                      <span className="lg:w-32 lg:text-left">Mo & Mi 16:00-17:30</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">C-Jugend:</span>
-                      <span>Di & Do 16:00-17:30</span>
+                    <div className="flex justify-between lg:justify-center lg:space-x-8">
+                      <span className="font-medium lg:w-32 lg:text-right">C-Jugend:</span>
+                      <span className="lg:w-32 lg:text-left">Di & Do 16:00-17:30</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/30 dark:bg-white/[0.05] rounded-lg p-6">
+                <div className="rounded-lg p-6">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
                     <IconCar size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
                     Anfahrt & Parken
@@ -535,17 +551,15 @@ export default function KontaktPage() {
                   Bleib auf dem Laufenden
                 </p>
               </div>
-              <div className="flex justify-center space-x-8">
+              <div className="flex justify-center space-x-12">
                 <a
                   href="https://www.instagram.com/viktoria_wertheim/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex flex-col items-center"
                 >
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 mb-2">
-                    <IconBrandInstagram size={20} className="text-white" />
-                  </div>
-                  <span className="text-xs text-gray-700 dark:text-gray-300">Instagram</span>
+                  <IconBrandInstagram size={48} className="text-viktoria-yellow group-hover:scale-110 transition-transform duration-300 mb-3" />
+                  <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-viktoria-yellow transition-colors">Instagram</span>
                 </a>
                 <a
                   href="https://www.facebook.com/viktoriawertheim/"
@@ -553,10 +567,8 @@ export default function KontaktPage() {
                   rel="noopener noreferrer"
                   className="group flex flex-col items-center"
                 >
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 mb-2">
-                    <IconBrandFacebook size={20} className="text-white" />
-                  </div>
-                  <span className="text-xs text-gray-700 dark:text-gray-300">Facebook</span>
+                  <IconBrandFacebook size={48} className="text-viktoria-yellow group-hover:scale-110 transition-transform duration-300 mb-3" />
+                  <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-viktoria-yellow transition-colors">Facebook</span>
                 </a>
               </div>
             </div>

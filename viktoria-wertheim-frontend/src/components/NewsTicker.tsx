@@ -182,7 +182,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
         <div className="flex items-center">
           {/* Kompaktes News Label */}
           <div className="flex-shrink-0 mr-4">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 w-10 h-6 rounded-md border border-white/40 dark:border-white/[0.08] shadow-sm dark:shadow-white/[0.05] flex items-center justify-center">
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 w-10 h-6 rounded-md border border-white/40 dark:border-white/[0.03] shadow-lg shadow-black/15 dark:shadow-white/[0.20] flex items-center justify-center">
               <div className="w-2 h-2 bg-viktoria-yellow rounded-full animate-pulse shadow-lg shadow-viktoria-yellow/50 animate-glow-pulse"></div>
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
 
           {/* Dark Mode Toggle mit Badge Design */}
           <div className="flex-shrink-0 ml-4">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md border border-white/40 dark:border-white/[0.08] shadow-sm dark:shadow-white/[0.05]">
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md border border-white/40 dark:border-white/[0.03] shadow-lg shadow-black/15 dark:shadow-white/[0.20]">
               <DarkModeToggle />
             </div>
           </div>

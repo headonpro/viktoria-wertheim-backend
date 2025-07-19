@@ -126,7 +126,7 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
   
   return (
     <div 
-      className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
+      className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.03] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]"
       onClick={onClick}
     >
       <div className="mb-2 md:mb-4 text-center">
@@ -165,12 +165,12 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         {/* Score/VS */}
         <div className="text-center px-2 md:px-6 flex-shrink-0">
           {type === 'last' && homeScore !== undefined && awayScore !== undefined ? (
-            <div className={`font-bold text-xl md:text-4xl ${getResultColor()}`} style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
+            <div className={`font-bold text-xl md:text-4xl ${getResultColor()} ${getResultColor() === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : ''}`} style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
               {homeScore}<span style={{ position: 'relative', top: '-0.1em' }}>:</span>{awayScore}
             </div>
           ) : (
             <div 
-              className="font-medium text-viktoria-blue dark:text-white text-lg md:text-3xl font-sans"
+              className="font-medium text-gray-800 dark:text-white text-lg md:text-3xl font-sans tracking-tight drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]"
             >
               VS
             </div>
@@ -480,180 +480,177 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
       
       {/* Game Modal */}
       {isModalOpen && selectedGame && createPortal(
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-md z-50 flex items-center justify-center p-2 md:p-4">
-          <AnimatedDiv delay={0} className="bg-white/95 backdrop-blur-sm rounded-xl max-w-lg w-full mx-2 md:mx-0 border border-white/40 shadow-2xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
-            <div className="relative rounded-t-xl pt-6 px-4 pb-4 md:pt-8 md:px-6 md:pb-6 text-center border-b border-gray-200">
-              <button
-                onClick={closeGameModal}
-                className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-300"
-              >
-                <IconX className="text-gray-600" size={18} />
-              </button>
-              
-              {/* Teams */}
-              <div className="flex items-center justify-center space-x-2 md:space-x-4 mb-3 md:mb-4">
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-1 md:mb-2">
-                    {getTeamLogo(selectedGame.homeTeam) ? (
-                      <Image 
-                        src={getTeamLogo(selectedGame.homeTeam)!} 
-                        alt={`${selectedGame.homeTeam} Logo`}
-                        width={64}
-                        height={64}
-                        className="w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-sm"
-                        priority
-                      />
-                    ) : (
-                      <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-sm md:text-base">{selectedGame.homeTeam.charAt(0)}</span>
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-gray-800 text-xs md:text-sm font-medium text-center leading-tight max-w-20 md:max-w-none">
-                    {selectedGame.homeTeam}
-                  </p>
-                </div>
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-2 md:p-4">
+          <AnimatedDiv delay={0} className="bg-white/95 dark:bg-white/[0.02] backdrop-blur-sm rounded-xl max-w-lg w-full mx-2 md:mx-0 border border-white/40 dark:border-white/[0.08] shadow-2xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
+            {/* Modal Header with Date/Time and Close Button */}
+            <div className="relative rounded-t-xl pt-6 px-4 pb-4 md:pt-8 md:px-6 md:pb-6">
+              <div className="flex items-center justify-between h-8">
+                {/* Empty left space for balance */}
+                <div className="w-8"></div>
                 
-                <div className="text-center px-2 md:px-4">
-                  {selectedGame.type === 'last' && selectedGame.homeScore !== undefined && selectedGame.awayScore !== undefined ? (
-                    <div className={`${getModalResultColor(selectedGame)} font-bold text-2xl md:text-3xl`}>
-                      {selectedGame.homeScore}:{selectedGame.awayScore}
-                    </div>
-                  ) : (
-                    <div className="text-viktoria-blue font-bold text-xl md:text-2xl font-permanent-marker">
-                      VS
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-1 md:mb-2">
-                    {getTeamLogo(selectedGame.awayTeam) ? (
-                      <Image 
-                        src={getTeamLogo(selectedGame.awayTeam)!} 
-                        alt={`${selectedGame.awayTeam} Logo`}
-                        width={64}
-                        height={64}
-                        className="w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-sm"
-                        priority
-                      />
-                    ) : (
-                      <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-sm md:text-base">{selectedGame.awayTeam.charAt(0)}</span>
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-gray-800 text-xs md:text-sm font-medium text-center leading-tight max-w-20 md:max-w-none">
-                    {selectedGame.awayTeam}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Datum und Zeit */}
-              <div className="flex items-center justify-center space-x-3 md:space-x-4 text-viktoria-blue">
-                <div className="flex items-center space-x-1">
-                  <IconCalendar size={14} />
-                  <span className="text-xs md:text-sm">{selectedGame.date}</span>
-                </div>
-                <div className="flex items-center space-x-1">
+                {/* Date and Time - Centered */}
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                   <IconClock size={14} />
-                  <span className="text-xs md:text-sm">{selectedGame.time}</span>
+                  <span className="text-sm">{selectedGame.time}</span>
+                  <IconCalendar size={14} />
+                  <span className="text-sm">{selectedGame.date}</span>
                 </div>
+                
+                {/* Close Button */}
+                <button
+                  onClick={closeGameModal}
+                  className="w-8 h-8 bg-white/20 dark:bg-white/[0.02] hover:bg-white/30 dark:hover:bg-white/[0.04] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-full flex items-center justify-center transition-colors duration-300"
+                >
+                  <IconX className="text-gray-600 dark:text-gray-300" size={18} />
+                </button>
               </div>
             </div>
             
             {/* Modal Body */}
-            <div className="pt-4 px-4 pb-4 md:pt-6 md:px-6 md:pb-6 space-y-4 md:space-y-6">
-              {/* Spiel-Infos */}
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                <div className="bg-viktoria-blue/10 rounded-lg p-3 md:p-4 text-center">
-                  <IconMapPin className="text-viktoria-blue mx-auto mb-1 md:mb-2" size={18} />
-                  <p className="text-xs md:text-sm text-gray-600 mb-1">Stadion</p>
-                  <p className="text-xs md:text-sm font-semibold text-viktoria-blue leading-tight">{selectedGame.stadium}</p>
+            <div className="pt-4 px-4 pb-4 md:pt-6 md:px-6 md:pb-6 space-y-6 md:space-y-8">
+
+              {/* Teams with Score/VS */}
+              <div className="relative mb-6 md:mb-8">
+                <div className="grid grid-cols-2 gap-4 md:gap-6 items-center">
+                  {/* Home Team */}
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-1 md:mb-2">
+                      {getTeamLogo(selectedGame.homeTeam) ? (
+                        <Image 
+                          src={getTeamLogo(selectedGame.homeTeam)!} 
+                          alt={`${selectedGame.homeTeam} Logo`}
+                          width={64}
+                          height={64}
+                          className="w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-sm"
+                          priority
+                        />
+                      ) : (
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-sm md:text-base">{selectedGame.homeTeam.charAt(0)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-gray-800 dark:text-gray-200 text-sm font-medium text-center leading-tight">
+                      {selectedGame.homeTeam}
+                    </p>
+                  </div>
+                  
+                  {/* Away Team */}
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-1 md:mb-2">
+                      {getTeamLogo(selectedGame.awayTeam) ? (
+                        <Image 
+                          src={getTeamLogo(selectedGame.awayTeam)!} 
+                          alt={`${selectedGame.awayTeam} Logo`}
+                          width={64}
+                          height={64}
+                          className="w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-sm"
+                          priority
+                        />
+                      ) : (
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
+                          <span className="text-white font-bold text-sm">{selectedGame.awayTeam.charAt(0)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-gray-800 dark:text-gray-200 text-sm font-medium text-center leading-tight">
+                      {selectedGame.awayTeam}
+                    </p>
+                  </div>
                 </div>
-                <div className="bg-viktoria-blue/10 rounded-lg p-3 md:p-4 text-center">
-                  <IconUser className="text-viktoria-blue mx-auto mb-1 md:mb-2" size={18} />
-                  <p className="text-xs md:text-sm text-gray-600 mb-1">Schiedsrichter</p>
-                  <p className="text-xs md:text-sm font-semibold text-viktoria-blue leading-tight">{selectedGame.referee}</p>
+                
+                {/* Score/VS - Absolutely positioned between logos */}
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex items-center justify-center h-12 md:h-16">
+                  {selectedGame.type === 'last' && selectedGame.homeScore !== undefined && selectedGame.awayScore !== undefined ? (
+                    <div className={`${getModalResultColor(selectedGame)} font-bold text-3xl md:text-4xl ${getModalResultColor(selectedGame) === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : ''}`}>
+                      {selectedGame.homeScore}:{selectedGame.awayScore}
+                    </div>
+                  ) : (
+                    <div className="text-gray-800 dark:text-white font-extrabold text-2xl md:text-3xl font-sans tracking-tight drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]">
+                      VS
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Spiel-Infos */}
+              <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
+                <div className="text-center">
+                  <IconMapPin className="text-viktoria-blue dark:text-viktoria-yellow mx-auto mb-1 md:mb-2" size={18} />
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Stadion</p>
+                  <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-tight">{selectedGame.stadium}</p>
+                </div>
+                <div className="text-center">
+                  <IconUser className="text-viktoria-blue dark:text-viktoria-yellow mx-auto mb-1 md:mb-2" size={18} />
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Schiedsrichter</p>
+                  <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-tight">{selectedGame.referee}</p>
                 </div>
               </div>
               
               {/* Letztes Spiel - Statistiken */}
               {selectedGame.type === 'last' && (
-                <>
-                  {/* Torschützen */}
-                  {selectedGame.goalScorers && selectedGame.goalScorers.length > 0 && (
-                    <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light rounded-lg p-3 md:p-4">
-                      <h3 className="text-viktoria-yellow font-semibold mb-2 md:mb-3 text-center text-sm md:text-base flex items-center justify-center">
-                        <IconTrophy className="mr-1 md:mr-2" size={18} />
-                        Torschützen
-                      </h3>
-                      <div className="space-y-1 md:space-y-2">
-                        {selectedGame.goalScorers.map((scorer, index) => (
-                          <div key={index} className="text-center">
-                            <p className="text-white font-semibold text-sm md:text-base">{scorer}</p>
-                          </div>
-                        ))}
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
+                  {/* Torschützen - Always in left column */}
+                  <div className="col-start-1">
+                    {selectedGame.goalScorers && selectedGame.goalScorers.length > 0 && (
+                      <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:bg-none rounded-lg p-3 md:p-4">
+                        <h3 className="text-viktoria-yellow font-semibold mb-2 md:mb-3 text-center text-sm flex items-center justify-center">
+                          <IconTrophy className="mr-1 md:mr-2" size={18} />
+                          Torschützen
+                        </h3>
+                        <div className="space-y-1 md:space-y-2">
+                          {selectedGame.goalScorers.map((scorer, index) => (
+                            <div key={index} className="text-center">
+                              <p className="text-white dark:text-gray-200 font-semibold text-sm">{scorer}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                   
-                  {/* Karten */}
-                  {((selectedGame.yellowCards && selectedGame.yellowCards.length > 0) || 
-                    (selectedGame.redCards && selectedGame.redCards.length > 0)) && (
-                    <div className="bg-gray-50 rounded-lg p-3 md:p-4">
-                      <h3 className="font-semibold mb-2 md:mb-3 text-center text-sm md:text-base flex items-center justify-center">
-                        <IconCards className="mr-1 md:mr-2" size={18} />
-                        Karten
-                      </h3>
-                      <div className="grid grid-cols-2 gap-3 md:gap-4">
-                        {selectedGame.yellowCards && selectedGame.yellowCards.length > 0 && (
-                          <div className="text-center">
-                            <p className="text-yellow-600 font-semibold mb-1 md:mb-2 text-xs md:text-sm">Gelbe Karten</p>
-                            {selectedGame.yellowCards.map((card, index) => (
-                              <p key={index} className="text-xs md:text-sm text-gray-600 leading-tight">{card}</p>
-                            ))}
-                          </div>
-                        )}
-                        {selectedGame.redCards && selectedGame.redCards.length > 0 && (
-                          <div className="text-center">
-                            <p className="text-red-600 font-semibold mb-1 md:mb-2 text-xs md:text-sm">Rote Karten</p>
-                            {selectedGame.redCards.map((card, index) => (
-                              <p key={index} className="text-xs md:text-sm text-gray-600 leading-tight">{card}</p>
-                            ))}
-                          </div>
-                        )}
+                  {/* Karten - Always in right column */}
+                  <div className="col-start-2">
+                    {((selectedGame.yellowCards && selectedGame.yellowCards.length > 0) || 
+                      (selectedGame.redCards && selectedGame.redCards.length > 0)) && (
+                      <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:bg-none rounded-lg p-3 md:p-4">
+                        <h3 className="text-viktoria-yellow font-semibold mb-2 md:mb-3 text-center text-sm flex items-center justify-center">
+                          <IconCards className="mr-1 md:mr-2" size={18} />
+                          Karten
+                        </h3>
+                        <div className="space-y-1 md:space-y-2">
+                          {selectedGame.yellowCards && selectedGame.yellowCards.map((card, index) => (
+                            <div key={`yellow-${index}`} className="flex items-center justify-center space-x-2">
+                              <div className="w-3 h-4 bg-yellow-400 rounded-sm flex-shrink-0"></div>
+                              <p className="text-white dark:text-gray-200 font-semibold text-sm">{card}</p>
+                            </div>
+                          ))}
+                          {selectedGame.redCards && selectedGame.redCards.map((card, index) => (
+                            <div key={`red-${index}`} className="flex items-center justify-center space-x-2">
+                              <div className="w-3 h-4 bg-red-500 rounded-sm flex-shrink-0"></div>
+                              <p className="text-white dark:text-gray-200 font-semibold text-sm">{card}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </>
-              )}
-              
-              {/* Nächstes Spiel - Letztes Aufeinandertreffen */}
-              {selectedGame.type === 'next' && selectedGame.lastMeeting && (
-                <div className="bg-gray-50 rounded-lg p-3 md:p-4">
-                  <h3 className="text-gray-800 font-semibold mb-2 md:mb-3 text-center text-sm md:text-base">
-                    Letztes Aufeinandertreffen
-                  </h3>
-                  <div className="text-center">
-                    <p className={`text-lg md:text-xl font-bold mb-1 ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location)}`}>
-                      {selectedGame.lastMeeting.result}
-                    </p>
-                    <p className="text-gray-600 text-xs md:text-sm">
-                      {selectedGame.lastMeeting.date} • {selectedGame.lastMeeting.location}
-                    </p>
+                    )}
                   </div>
                 </div>
               )}
               
-              {/* Schließen Button */}
-              <button
-                onClick={closeGameModal}
-                className="w-full bg-viktoria-blue hover:bg-viktoria-blue-light text-white font-semibold py-2.5 md:py-3 rounded-lg transition-colors duration-300 text-sm md:text-base"
-              >
-                Schließen
-              </button>
+              {/* Nächstes Spiel - Letztes Aufeinandertreffen */}
+              {selectedGame.type === 'next' && selectedGame.lastMeeting && (
+                <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:bg-none rounded-lg p-3 md:p-4">
+                  <h3 className="text-white dark:text-gray-200 font-semibold mb-3 md:mb-4 text-center text-sm">
+                    LAST MATCH
+                  </h3>
+                  <div className="text-center">
+                    <div className={`font-bold text-2xl md:text-3xl ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location)} ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location) === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location) === 'text-red-600' ? 'drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'drop-shadow-[0_0_8px_rgba(156,163,175,0.3)]'}`}>
+                      {selectedGame.lastMeeting.result}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </AnimatedDiv>
         </div>,

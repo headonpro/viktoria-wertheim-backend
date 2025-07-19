@@ -312,11 +312,22 @@ export default function NewsPage() {
 
   // Open article modal
   const openArticleModal = async (articleId: number) => {
+    console.log('Opening article modal for ID:', articleId)
     setArticleLoading(true)
     setIsModalOpen(true)
     
     try {
+      // First, try to find the article in the already loaded articles
+      const existingArticle = newsArticles.find(article => article.id === articleId)
+      if (existingArticle) {
+        console.log('Using existing article:', existingArticle)
+        setSelectedArticle(existingArticle)
+        setArticleLoading(false)
+        return
+      }
+      
       // Try to fetch full article from API with Strapi 5 format
+      console.log('Fetching article from API...')
       const response = await strapi.get(`/news-artikels/${articleId}`, {
         params: {
           populate: '*'
@@ -324,11 +335,14 @@ export default function NewsPage() {
       })
       
       const apiArticle = response.data.data
+      console.log('API Article response:', apiArticle)
       setSelectedArticle(apiArticle || mockDetailedArticles[articleId.toString()] || null)
     } catch (err) {
       console.error('Error fetching article, using mock data:', err)
       // Use mock data as fallback
-      setSelectedArticle(mockDetailedArticles[articleId.toString()] || null)
+      const fallbackArticle = mockDetailedArticles[articleId.toString()] || newsArticles.find(article => article.id === articleId)
+      console.log('Using fallback article:', fallbackArticle)
+      setSelectedArticle(fallbackArticle || null)
     } finally {
       setArticleLoading(false)
     }

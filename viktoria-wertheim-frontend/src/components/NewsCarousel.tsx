@@ -17,7 +17,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   // Desktop sidebar version - vertical list layout
   if (isDesktopSidebar) {
     return (
-      <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]">
+      <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]">
         {/* Title Header */}
         <div className="px-4 md:px-8 py-3 md:py-4 text-center">
           <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
@@ -142,7 +142,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   return (
     <div className="space-y-4">
       {/* Title Header with Border */}
-      <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
+      <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] shadow-2xl shadow-black/20 dark:shadow-white/[0.25]">
         <div className="px-4 md:px-8 py-3 md:py-4 text-center">
           <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
             Neueste Nachrichten

@@ -84,19 +84,22 @@ const TopScorers = () => {
   const displayedScorers = isExpanded ? topScorers : topScorers.slice(0, 3)
 
   return (
-    <AnimatedSection className="px-2 md:px-8 pt-0 pb-8" delay={0.2}>
-      <div className="container max-w-6xl md:max-w-7xl">
-        <h2 className="text-sm md:text-lg font-semibold text-gray-600 uppercase tracking-wide mb-4 md:mb-6 text-center">
-          Torschützen König
-        </h2>
-        
-        <div 
-          className="bg-white/40 backdrop-blur-sm rounded-xl md:rounded-2xl border border-white/20 overflow-hidden cursor-pointer hover:bg-white/50 transition-all duration-300 md:shadow-lg md:hover:shadow-xl"
+    <AnimatedSection>
+      <div className="container max-w-6xl">
+        <div
+          className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {/* Header */}
-          <div className="bg-white/20 px-4 md:px-8 py-3 md:py-4 border-b border-white/20">
-            <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
+          {/* Title Header */}
+          <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+            <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+              Torschützen König
+            </h2>
+          </div>
+
+          {/* Table Header */}
+          <div className="px-4 md:px-8 py-3 md:py-3">
+            <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               <div className="col-span-1">#</div>
               <div className="col-span-7">Spieler</div>
               <div className="col-span-2 text-center">Spiele</div>
@@ -168,8 +171,8 @@ const TopScorers = () => {
                       <IconTrophy className="text-viktoria-yellow w-5 h-5 md:w-6 md:h-6" />
                     ) : (
                       <span className={`font-bold text-sm md:text-lg ${
-                        scorer.position === 2 ? 'text-gray-600' :
-                        'text-gray-700'
+                        scorer.position === 2 ? 'text-gray-600 dark:text-gray-300' :
+                        'text-gray-700 dark:text-gray-300'
                       }`}>
                         {scorer.position}.
                       </span>
@@ -186,8 +189,8 @@ const TopScorers = () => {
                       </span>
                     ) : (
                       <span className={`text-sm md:text-base ${
-                        scorer.position === 2 ? 'text-gray-700 font-medium' :
-                        'text-gray-700'
+                        scorer.position === 2 ? 'text-gray-700 dark:text-gray-200 font-medium' :
+                        'text-gray-700 dark:text-gray-200'
                       }`}>
                         <span className="font-light">{splitName(scorer.name).firstName}</span>
                         {' '}
@@ -198,7 +201,7 @@ const TopScorers = () => {
 
                   {/* Games */}
                   <div className={`col-span-2 text-center text-sm md:text-base ${
-                    scorer.position === 1 ? 'text-viktoria-yellow font-medium' : 'text-gray-600'
+                    scorer.position === 1 ? 'text-viktoria-yellow font-medium' : 'text-gray-600 dark:text-gray-300'
                   }`}>
                     {scorer.games}
                   </div>
@@ -207,8 +210,8 @@ const TopScorers = () => {
                   <div className="col-span-2 text-center">
                     <span className={`font-bold ${
                       scorer.position === 1 ? 'text-viktoria-yellow text-lg md:text-xl' :
-                      scorer.position === 2 ? 'text-gray-600 text-sm md:text-base' :
-                      'text-gray-800 text-sm md:text-base'
+                      scorer.position === 2 ? 'text-gray-600 dark:text-gray-300 text-sm md:text-base' :
+                      'text-gray-800 dark:text-gray-200 text-sm md:text-base'
                     }`}>
                       {scorer.goals}
                     </span>
@@ -219,8 +222,8 @@ const TopScorers = () => {
           </div>
           
           {/* Expand/Collapse Indicator */}
-          <div className="bg-white/30 px-4 md:px-8 py-4 md:py-5 border-t border-white/20 text-center hover:bg-white/40 transition-colors">
-            <div className="flex items-center justify-center space-x-2 text-sm md:text-base font-semibold text-gray-700">
+          <div className="px-4 md:px-8 py-4 md:py-5 text-center transition-colors">
+            <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               <span>{isExpanded ? 'Weniger anzeigen' : 'Alle Torschützen anzeigen'}</span>
               {isExpanded ? <ChevronUp size={16} className="md:w-5 md:h-5" /> : <ChevronDown size={16} className="md:w-5 md:h-5" />}
             </div>

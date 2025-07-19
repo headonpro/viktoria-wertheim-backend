@@ -100,10 +100,10 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
 
   const getFormColor = (result: string) => {
     switch (result) {
-      case 'S': return 'bg-green-500 text-gray-700 shadow-green-500/30 shadow-lg'
-      case 'U': return 'bg-gray-400 text-gray-700 shadow-gray-400/30 shadow-lg'
-      case 'N': return 'bg-red-500 text-gray-700 shadow-red-500/30 shadow-lg'
-      default: return 'bg-gray-400 text-gray-700 shadow-gray-400/30 shadow-lg'
+      case 'S': return 'bg-green-500 text-gray-700 shadow-green-500/30 shadow-lg drop-shadow-[0_0_6px_rgba(34,197,94,0.4)]'
+      case 'U': return 'bg-gray-400 text-gray-700 shadow-gray-400/30 shadow-lg drop-shadow-[0_0_6px_rgba(156,163,175,0.3)]'
+      case 'N': return 'bg-red-500 text-gray-700 shadow-red-500/30 shadow-lg drop-shadow-[0_0_6px_rgba(239,68,68,0.4)]'
+      default: return 'bg-gray-400 text-gray-700 shadow-gray-400/30 shadow-lg drop-shadow-[0_0_6px_rgba(156,163,175,0.3)]'
     }
   }
 
@@ -128,7 +128,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
   return (
     <div className="container max-w-6xl">
       <AnimatedDiv
-        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] transition-all duration-300 shadow-lg dark:shadow-white/[0.05] overflow-hidden"
+        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.03] transition-all duration-300 shadow-2xl shadow-black/20 dark:shadow-white/[0.25] overflow-hidden"
         delay={0.1}
       >
         {/* Mannschaftsauswahl Buttons */}

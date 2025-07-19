@@ -104,7 +104,7 @@ export default function SponsorCard({ sponsor, index, isMainSponsor = false }: S
       className="relative group cursor-pointer"
       onClick={handleClick}
     >
-      <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/20 dark:border-white/[0.05] p-4 md:p-6 transition-all duration-300 hover:bg-white/20 dark:hover:bg-white/[0.04] hover:shadow-xl hover:scale-[1.02] hover:border-viktoria-yellow/30">
+      <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/20 dark:border-white/[0.03] p-4 md:p-6 transition-all duration-300 hover:bg-white/20 dark:hover:bg-white/[0.04] shadow-xl hover:shadow-2xl shadow-black/15 hover:shadow-black/25 dark:shadow-white/[0.20] dark:hover:shadow-white/[0.30] hover:scale-[1.02] hover:border-viktoria-yellow/30">
         {/* Category Badge */}
         {kategorie === 'premium' && (
           <div className="absolute -top-2 -right-2">

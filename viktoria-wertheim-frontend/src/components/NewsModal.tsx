@@ -47,7 +47,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
       return (
         <div className="prose prose-lg max-w-none">
           {content.split('\n').map((paragraph, index) => (
-            <p key={index} className="mb-4 text-gray-700 leading-relaxed">
+            <p key={index} className="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">
               {paragraph}
             </p>
           ))}
@@ -62,7 +62,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
           {content.map((block: any, index: number) => {
             if (block.type === 'paragraph') {
               return (
-                <p key={index} className="mb-4 text-gray-700 leading-relaxed">
+                <p key={index} className="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                   {block.children?.map((child: any) => child.text).join('') || ''}
                 </p>
               )
@@ -75,7 +75,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
 
     return (
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
           {content.toString()}
         </p>
       </div>
@@ -91,7 +91,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/70 backdrop-blur-md"
           onClick={handleBackdropClick}
         >
           <motion.div
@@ -100,19 +100,25 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden"
+            className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/40 dark:border-white/[0.03] shadow-3xl shadow-black/30 dark:shadow-white/[0.35] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 bg-white/20 dark:bg-white/[0.02] hover:bg-white/30 dark:hover:bg-white/[0.04] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-full transition-colors duration-300"
             >
-              <IconX className="w-5 h-5 text-gray-600" />
+              <IconX className="w-5 h-5 text-gray-600 dark:text-gray-300" />
             </button>
 
             {/* Modal Content */}
-            <div className="overflow-y-auto max-h-[90vh]">
+            <div 
+              className="overflow-y-auto max-h-[90vh]"
+              style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgb(156 163 175) rgb(243 244 246)'
+              }}
+            >
               {/* Header Image */}
               {((article.titelbild && article.titelbild.url) || (article.attributes?.titelbild?.data)) && (
                 <div className="relative h-48 md:h-64 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
@@ -136,9 +142,9 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
               {/* Article Content */}
               <div className="p-6 md:p-8 space-y-6">
                 {/* Meta Information */}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                   <div className="flex items-center">
-                    <IconClock className="w-4 h-4 mr-2" />
+                    <IconClock className="w-4 h-4 mr-2 text-viktoria-blue dark:text-viktoria-yellow" />
                     <span>
                       {new Date(article.datum || article.attributes?.datum || '').toLocaleDateString('de-DE', {
                         day: '2-digit',
@@ -150,21 +156,21 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
                   
                   {((article.kategorie && article.kategorie.name) || (article.attributes?.kategorie?.data)) && (
                     <div className="flex items-center">
-                      <IconTag className="w-4 h-4 mr-2" />
-                      <span className="bg-viktoria-yellow/20 text-gray-700 px-3 py-1 rounded-full">
+                      <IconTag className="w-4 h-4 mr-2 text-viktoria-blue dark:text-viktoria-yellow" />
+                      <span className="bg-viktoria-yellow/20 dark:bg-viktoria-yellow/10 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full">
                         {article.kategorie?.name || article.attributes?.kategorie?.data?.attributes?.name || 'Keine Kategorie'}
                       </span>
                     </div>
                   )}
 
-                  <button className="flex items-center hover:text-gray-700 transition-colors">
-                    <IconShare className="w-4 h-4 mr-2" />
+                  <button className="flex items-center hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                    <IconShare className="w-4 h-4 mr-2 text-viktoria-blue dark:text-viktoria-yellow" />
                     <span>Teilen</span>
                   </button>
                 </div>
 
                 {/* Title */}
-                <h1 className="text-2xl md:text-3xl font-permanent-marker text-gray-700 leading-tight">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 leading-tight">
                   {article.titel || article.attributes?.titel || 'Unbekannter Titel'}
                 </h1>
 
