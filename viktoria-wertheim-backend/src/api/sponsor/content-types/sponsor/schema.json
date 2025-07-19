@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sponsors",
+  "info": {
+    "singularName": "sponsor",
+    "pluralName": "sponsors",
+    "displayName": "Sponsor",
+    "description": "Sponsoren und Partner des Vereins"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "website_url": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "beschreibung": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "kategorie": {
+      "type": "enumeration",
+      "enum": ["hauptsponsor", "premium", "partner"],
+      "default": "partner",
+      "required": true
+    },
+    "reihenfolge": {
+      "type": "integer",
+      "default": 1,
+      "min": 1,
+      "max": 999
+    },
+    "aktiv": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

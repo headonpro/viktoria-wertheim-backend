@@ -8,6 +8,7 @@ import LeagueTable from '@/components/LeagueTable'
 import NewsModal from '@/components/NewsModal'
 import NewsTicker from '@/components/NewsTicker'
 import TeamStatus from '@/components/TeamStatus'
+import SponsorShowcase from '@/components/SponsorShowcase'
 
 import { IconClock, IconTrophy } from '@tabler/icons-react'
 import { NewsArtikel, Spieler } from '@/types/strapi'
@@ -308,7 +309,7 @@ export default function HomePage() {
                   >
                     {/* Title Header */}
                     <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-                      <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                      <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                         Torschützenkönig
                       </h2>
                     </div>
@@ -422,7 +423,7 @@ export default function HomePage() {
                   >
                     {/* Title Header */}
                     <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-                      <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                      <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                         Neueste Nachrichten
                       </h2>
                     </div>
@@ -564,7 +565,7 @@ export default function HomePage() {
               >
                 {/* Title Header */}
                 <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-                  <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                  <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
                     Neueste Nachrichten
                   </h2>
                 </div>
@@ -698,31 +699,7 @@ export default function HomePage() {
         <div className="px-4 md:px-6 lg:px-0">
           <AnimatedSection className="py-2 md:py-3" delay={0.5}>
             <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
-              <div
-                className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
-              >
-                {/* Title Header */}
-                <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-                  <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
-                    Unsere Sponsoren
-                  </h2>
-                </div>
-                
-                {/* Sponsors Content */}
-                <div className="p-4 md:p-6">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                    {[1, 2, 3, 4].map((i) => (
-                      <AnimatedDiv
-                        key={i}
-                        className="bg-white/30 dark:bg-viktoria-dark-lighter/30 backdrop-blur-sm rounded-lg border border-white/10 dark:border-viktoria-dark-lighter/10 p-3 md:p-4 flex items-center justify-center cursor-pointer hover:bg-white/40 dark:hover:bg-viktoria-dark-lighter/40 transition-all duration-300 min-h-[60px] md:min-h-[80px]"
-                        delay={0.6 + i * 0.1}
-                      >
-                        <div className="w-16 h-10 md:w-20 md:h-12 bg-gray-200 rounded"></div>
-                      </AnimatedDiv>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <SponsorShowcase />
             </div>
           </AnimatedSection>
         </div>

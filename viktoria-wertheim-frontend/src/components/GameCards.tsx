@@ -130,7 +130,7 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
       onClick={onClick}
     >
       <div className="flex items-center justify-between mb-2 md:mb-4">
-        <div className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+        <div className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
           {type === 'last' ? 'Last' : 'Next'}
         </div>
         <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400">

@@ -92,7 +92,7 @@ export default function TeamStatus() {
             
             {/* Platz - Links */}
             <div className="text-center">
-              <div className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
+              <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
                 Platz
               </div>
               <div className="flex items-center justify-center space-x-1 h-6 md:h-8">
@@ -107,7 +107,7 @@ export default function TeamStatus() {
 
             {/* Form - Mitte */}
             <div className="text-center">
-              <div className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
+              <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
                 Form
               </div>
               <div className="flex space-x-1 justify-center items-center h-6 md:h-8">
@@ -124,7 +124,7 @@ export default function TeamStatus() {
 
             {/* Liga - Rechts */}
             <div className="text-center">
-              <div className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
+              <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
                 Liga
               </div>
               <div className="flex items-center justify-center h-6 md:h-8">

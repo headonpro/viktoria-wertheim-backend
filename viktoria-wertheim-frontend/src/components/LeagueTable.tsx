@@ -368,14 +368,14 @@ const LeagueTable = () => {
         >
           {/* Title Header */}
           <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-            <h2 className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+            <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               Kreisliga Tauberbischofsheim
             </h2>
           </div>
 
           {/* Table Header */}
           <div className="px-4 md:px-8 py-3 md:py-3">
-            <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+            <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               <div className="col-span-1">#</div>
               <div className="col-span-4 lg:col-span-5">Verein</div>
               <div className="col-span-1 text-center">Sp</div>
@@ -510,7 +510,7 @@ const LeagueTable = () => {
 
           {/* Expand/Collapse Indicator */}
           <div className="px-4 md:px-8 py-4 md:py-5 text-center transition-colors">
-            <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+            <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               <span>{isExpanded ? 'Weniger anzeigen' : 'Vollständige Tabelle anzeigen'}</span>
               {isExpanded ? <ChevronUp size={16} className="md:w-5 md:h-5" /> : <ChevronDown size={16} className="md:w-5 md:h-5" />}
             </div>
