@@ -9,6 +9,7 @@ import NewsModal from '@/components/NewsModal'
 import NewsTicker from '@/components/NewsTicker'
 import TeamStatus from '@/components/TeamStatus'
 import SponsorShowcase from '@/components/SponsorShowcase'
+import NewsCarousel from '@/components/NewsCarousel'
 
 import { IconClock, IconTrophy } from '@tabler/icons-react'
 import { NewsArtikel, Spieler } from '@/types/strapi'
@@ -203,6 +204,7 @@ export default function HomePage() {
   const [topScorers, setTopScorers] = useState<Spieler[]>([])
   const [newsArticles, setNewsArticles] = useState<NewsArtikel[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedTeam, setSelectedTeam] = useState<'1' | '2' | '3'>('1')
 
 
 
@@ -267,7 +269,7 @@ export default function HomePage() {
 
   return (
     <PageLayout>
-      <div className="space-y-3 md:space-y-4">
+      <div className="space-y-6 md:space-y-8 lg:space-y-10">
         {/* News Ticker Section */}
         <div className="mt-2 md:mt-0 lg:px-0">
           <div className="lg:max-w-5xl lg:mx-auto">
@@ -278,14 +280,17 @@ export default function HomePage() {
         {/* Team Status Section */}
         <AnimatedSection className="px-4 md:px-6 lg:px-0 py-2 md:py-3" delay={0.1}>
           <div className="lg:max-w-5xl lg:mx-auto">
-            <TeamStatus />
+            <TeamStatus 
+              selectedTeam={selectedTeam} 
+              onTeamChange={setSelectedTeam} 
+            />
           </div>
         </AnimatedSection>
         {/* Game Cards Section */}
         <div className="px-4 md:px-6 lg:px-0">
           <AnimatedSection className="py-2 md:py-3" delay={0.15}>
             <div className="lg:max-w-5xl lg:mx-auto">
-              <GameCards />
+              <GameCards selectedTeam={selectedTeam} />
             </div>
           </AnimatedSection>
         </div>
@@ -293,7 +298,7 @@ export default function HomePage() {
         <div className="px-4 md:px-6 lg:px-0">
           <AnimatedSection className="py-2 md:py-3" delay={0.18}>
             <div className="lg:max-w-5xl lg:mx-auto">
-              <LeagueTable />
+              <LeagueTable selectedTeam={selectedTeam} />
             </div>
           </AnimatedSection>
         </div>
@@ -418,137 +423,7 @@ export default function HomePage() {
 
                 {/* Latest News Column - Desktop only */}
                 <div className="hidden lg:block">
-                  <div
-                    className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
-                  >
-                    {/* Title Header */}
-                    <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-                      <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
-                        Neueste Nachrichten
-                      </h2>
-                    </div>
-                    
-                    <div className="pb-2 md:pb-3">
-                      {newsArticles
-                        .filter(article => {
-                          // Handle both Strapi 5 (direct properties) and legacy (attributes wrapper) formats
-                          const titel = article.titel || (article.attributes && article.attributes.titel)
-                          const datum = article.datum || (article.attributes && article.attributes.datum)
-                          return article && titel && datum
-                        })
-                        .slice(0, 3)
-                        .map((article, index) => {
-                          // Handle both formats for date, content, and image
-                          const datum = article.datum || (article.attributes && article.attributes.datum)
-                          const titel = article.titel || (article.attributes && article.attributes.titel)
-                          const inhalt = article.inhalt || (article.attributes && article.attributes.inhalt)
-                          const kategorie = article.kategorie || (article.attributes && article.attributes.kategorie)
-
-                          // Handle image for both formats
-                          const titelbild = article.titelbild || (article.attributes && article.attributes.titelbild)
-                          
-                          // Try multiple possible image URL structures
-                          let imageUrl: string | null = null
-                          if (titelbild) {
-                            // Legacy format (most common)
-                            imageUrl = titelbild.data?.attributes?.url ||
-                                      // Alternative formats
-                                      (titelbild as any).url ||
-                                      (titelbild as any).attributes?.url ||
-                                      (titelbild as any).data?.url
-                          }
-
-                          const timeAgo = datum ? new Date(datum).toLocaleDateString('de-DE', {
-                            day: '2-digit',
-                            month: 'short'
-                          }) : 'Unbekannt'
-
-                          // Get category name
-                          const categoryName = (kategorie?.data?.attributes?.name) || 'News'
-
-                          return (
-                            <div
-                              key={article.id}
-                              className="px-4 md:px-6 py-3 md:py-4 transition-all duration-300 hover:bg-white/30 cursor-pointer group"
-                              onClick={() => openModal(article)}
-                            >
-                              <div className="flex gap-4 md:gap-5">
-                                {/* Image - Fixed aspect ratio 8:5 for consistency */}
-                                <div className="relative w-32 md:w-40 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue" style={{ aspectRatio: '8/5' }}>
-                                  {imageUrl ? (
-                                    <Image
-                                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'}${imageUrl}`}
-                                      alt={titel || 'News Artikel'}
-                                      fill
-                                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                      style={{ objectPosition: 'top center' }}
-                                    />
-                                  ) : (
-                                    <div className="w-full h-full flex items-center justify-center">
-                                      <div className="text-center">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-viktoria-yellow/20 rounded-full flex items-center justify-center mx-auto mb-1">
-                                          <IconTrophy className="w-4 h-4 md:w-6 md:h-6 text-viktoria-yellow" />
-                                        </div>
-                                        <p className="text-xs text-viktoria-yellow/80">SV Viktoria</p>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Content */}
-                                <div className="flex-1 min-w-0">
-                                  {/* Category and Date - Category left, Date right */}
-                                  <div className="flex items-center justify-between mb-2">
-                                    <span className="bg-viktoria-yellow text-gray-800 text-xs px-2 py-0.5 rounded-full font-medium">
-                                      {categoryName}
-                                    </span>
-                                    <div className="flex items-center text-xs text-gray-500">
-                                      <IconClock className="w-3 h-3 mr-1" />
-                                      <span>{timeAgo}</span>
-                                    </div>
-                                  </div>
-
-                                  {/* Title */}
-                                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
-                                    {titel}
-                                  </h3>
-
-                                  {/* Content Preview */}
-                                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 leading-snug">
-                                    {(() => {
-                                      // Handle different content formats
-                                      if (typeof inhalt === 'string' && inhalt.length > 0) {
-                                        // Clean up the content and get first sentence or meaningful excerpt
-                                        const cleanContent = inhalt.replace(/\n+/g, ' ').trim()
-                                        return cleanContent.length > 120
-                                          ? cleanContent.substring(0, 120) + '...'
-                                          : cleanContent
-                                      }
-                                      // Fallback for different content structures
-                                      if (Array.isArray(inhalt)) {
-                                        const textContent = inhalt
-                                          .map(block => {
-                                            if (block.children && Array.isArray(block.children)) {
-                                              return block.children.map(child => child.text || '').join('')
-                                            }
-                                            return ''
-                                          })
-                                          .join(' ')
-                                          .trim()
-                                        return textContent.length > 120
-                                          ? textContent.substring(0, 120) + '...'
-                                          : textContent || 'Artikel lesen...'
-                                      }
-                                      return 'Artikel lesen...'
-                                    })()}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })}
-                    </div>
-                  </div>
+                  <NewsCarousel newsArticles={newsArticles} onNewsClick={openModal} isDesktopSidebar={true} />
                 </div>
 
               </div>
@@ -560,137 +435,7 @@ export default function HomePage() {
         <div className="px-4 md:px-6 lg:hidden">
           <AnimatedSection className="py-2 md:py-3" delay={0.25}>
             <div className="container max-w-6xl">
-              <div
-                className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
-              >
-                {/* Title Header */}
-                <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-                  <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
-                    Neueste Nachrichten
-                  </h2>
-                </div>
-                
-                <div className="pb-4 md:pb-6">
-                  {newsArticles
-                    .filter(article => {
-                      // Handle both Strapi 5 (direct properties) and legacy (attributes wrapper) formats
-                      const titel = article.titel || (article.attributes && article.attributes.titel)
-                      const datum = article.datum || (article.attributes && article.attributes.datum)
-                      return article && titel && datum
-                    })
-                    .slice(0, 3)
-                    .map((article, index) => {
-                      // Handle both formats for date, content, and image
-                      const datum = article.datum || (article.attributes && article.attributes.datum)
-                      const titel = article.titel || (article.attributes && article.attributes.titel)
-                      const inhalt = article.inhalt || (article.attributes && article.attributes.inhalt)
-                      const kategorie = article.kategorie || (article.attributes && article.attributes.kategorie)
-
-                      // Handle image for both formats
-                      const titelbild = article.titelbild || (article.attributes && article.attributes.titelbild)
-                      
-                      // Try multiple possible image URL structures
-                      let imageUrl: string | null = null
-                      if (titelbild) {
-                        // Legacy format (most common)
-                        imageUrl = titelbild.data?.attributes?.url ||
-                                  // Alternative formats
-                                  (titelbild as any).url ||
-                                  (titelbild as any).attributes?.url ||
-                                  (titelbild as any).data?.url
-                      }
-
-                      const timeAgo = datum ? new Date(datum).toLocaleDateString('de-DE', {
-                        day: '2-digit',
-                        month: 'short'
-                      }) : 'Unbekannt'
-
-                      // Get category name
-                      const categoryName = (kategorie?.data?.attributes?.name) || 'News'
-
-                      return (
-                        <div
-                          key={article.id}
-                          className="px-4 md:px-6 py-3 md:py-4 transition-all duration-300 hover:bg-white/30 cursor-pointer group"
-                          onClick={() => openModal(article)}
-                        >
-                          <div className="flex gap-4 md:gap-5">
-                            {/* Image - Fixed aspect ratio 8:5 for consistency */}
-                            <div className="relative w-32 md:w-40 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue" style={{ aspectRatio: '8/5' }}>
-                              {imageUrl ? (
-                                <Image
-                                  src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'}${imageUrl}`}
-                                  alt={titel || 'News Artikel'}
-                                  fill
-                                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                  style={{ objectPosition: 'top center' }}
-                                />
-                              ) : (
-                                <div className="w-full h-full flex items-center justify-center">
-                                  <div className="text-center">
-                                    <div className="w-8 h-8 md:w-10 md:h-10 bg-viktoria-yellow/20 rounded-full flex items-center justify-center mx-auto mb-1">
-                                      <IconTrophy className="w-4 h-4 md:w-6 md:h-6 text-viktoria-yellow" />
-                                    </div>
-                                    <p className="text-xs text-viktoria-yellow/80">SV Viktoria</p>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Content */}
-                            <div className="flex-1 min-w-0">
-                              {/* Category and Date - Category left, Date right */}
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="bg-viktoria-yellow text-gray-800 text-xs px-2 py-0.5 rounded-full font-medium">
-                                  {categoryName}
-                                </span>
-                                <div className="flex items-center text-xs text-gray-500">
-                                  <IconClock className="w-3 h-3 mr-1" />
-                                  <span>{timeAgo}</span>
-                                </div>
-                              </div>
-
-                              {/* Title */}
-                              <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
-                                {titel}
-                              </h3>
-
-                              {/* Content Preview */}
-                              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 leading-snug">
-                                {(() => {
-                                  // Handle different content formats
-                                  if (typeof inhalt === 'string' && inhalt.length > 0) {
-                                    // Clean up the content and get first sentence or meaningful excerpt
-                                    const cleanContent = inhalt.replace(/\n+/g, ' ').trim()
-                                    return cleanContent.length > 120
-                                      ? cleanContent.substring(0, 120) + '...'
-                                      : cleanContent
-                                  }
-                                  // Fallback for different content structures
-                                  if (Array.isArray(inhalt)) {
-                                    const textContent = inhalt
-                                      .map(block => {
-                                        if (block.children && Array.isArray(block.children)) {
-                                          return block.children.map(child => child.text || '').join('')
-                                        }
-                                        return ''
-                                      })
-                                      .join(' ')
-                                      .trim()
-                                    return textContent.length > 120
-                                      ? textContent.substring(0, 120) + '...'
-                                      : textContent || 'Artikel lesen...'
-                                  }
-                                  return 'Artikel lesen...'
-                                })()}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    })}
-                </div>
-              </div>
+              <NewsCarousel newsArticles={newsArticles} onNewsClick={openModal} />
             </div>
           </AnimatedSection>
         </div>

@@ -217,13 +217,13 @@ export default function SponsorShowcase() {
     const diff = now.getTime() - start.getTime()
     return Math.floor(diff / (1000 * 60 * 60 * 24 * 7))
   }
-  
+
   const sponsorDerWoche = sponsors.length > 0 ? sponsors[getWeekOfYear() % sponsors.length] : null
 
   return (
     <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-sm rounded-lg border border-white/20 dark:border-white/[0.05] overflow-hidden shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] transition-all duration-300">
       {/* Header */}
-      <div className="px-3 py-2 text-center">
+      <div className="px-4 py-4 md:px-6 md:py-5 text-center">
         <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
           Unsere Partner
         </h2>
@@ -243,7 +243,7 @@ export default function SponsorShowcase() {
                   Sponsor der Woche
                 </span>
               </div>
-              
+
               <div className="text-center">
                 <div className="relative h-12 w-20 mx-auto mb-2 flex items-center justify-center">
                   {sponsorDerWoche.attributes.logo?.data?.attributes?.url ? (
@@ -258,10 +258,10 @@ export default function SponsorShowcase() {
                     </span>
                   )}
                 </div>
-                
+
                 <div>
                   {sponsorDerWoche.attributes.beschreibung && (
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed whitespace-pre-line">
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1 leading-relaxed whitespace-pre-line">
                       {sponsorDerWoche.attributes.beschreibung}
                     </p>
                   )}
@@ -297,16 +297,16 @@ export default function SponsorShowcase() {
                     }
                   }}
                 >
-                  <div className="p-6 transition-all duration-200 hover:scale-105">
-                    <div className="relative h-24 flex items-center justify-center">
+                  <div className="p-4 md:p-6 transition-all duration-200 hover:scale-105">
+                    <div className="relative h-16 md:h-24 flex items-center justify-center">
                       {sponsor.attributes.logo?.data?.attributes?.url ? (
                         <img
                           src={sponsor.attributes.logo.data.attributes.url}
                           alt={sponsor.attributes.name}
-                          className="h-20 w-auto object-contain brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300"
+                          className="h-12 md:h-20 w-auto object-contain brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300"
                         />
                       ) : (
-                        <span className="text-xl font-bold text-gray-600 dark:text-gray-400 text-center">
+                        <span className="text-lg md:text-xl font-bold text-gray-600 dark:text-gray-400 text-center">
                           {sponsor.attributes.name}
                         </span>
                       )}
@@ -329,11 +329,11 @@ export default function SponsorShowcase() {
             </div>
             <div className="p-2 text-center">
               <div className="relative h-12 mb-1 flex items-center justify-center">
-                <span className="text-xs text-gray-500 dark:text-gray-400 italic">
+                <span className="text-sm md:text-base text-gray-500 dark:text-gray-400 italic">
                   Platz für Hauptsponsor
                 </span>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">
                 Interesse? Kontakt aufnehmen
               </p>
             </div>
@@ -367,7 +367,7 @@ export default function SponsorShowcase() {
                   }}
                 >
                   <div className="relative p-2 transition-all duration-200 hover:scale-105">
-                    <div className="relative h-10 mb-1 flex items-center justify-center">
+                    <div className="relative h-10 flex items-center justify-center">
                       {sponsor.attributes.logo?.data?.attributes?.url ? (
                         <img
                           src={sponsor.attributes.logo.data.attributes.url}
@@ -380,9 +380,6 @@ export default function SponsorShowcase() {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 text-center truncate group-hover:text-viktoria-blue-light transition-colors">
-                      {sponsor.attributes.name}
-                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -417,7 +414,7 @@ export default function SponsorShowcase() {
                   }}
                 >
                   <div className="p-2 transition-all duration-200 hover:scale-105">
-                    <div className="relative h-10 mb-1 flex items-center justify-center">
+                    <div className="relative h-10 flex items-center justify-center">
                       {sponsor.attributes.logo?.data?.attributes?.url ? (
                         <img
                           src={sponsor.attributes.logo.data.attributes.url}
@@ -430,13 +427,10 @@ export default function SponsorShowcase() {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 text-center truncate group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
-                      {sponsor.attributes.name}
-                    </p>
                   </div>
                 </motion.div>
               ))}
-              
+
               {/* Fiktive Partner für leere Plätze */}
               {Array.from({ length: Math.max(0, 5 - partnerSponsoren.length) }, (_, index) => {
                 const fiktivePartner = [
@@ -444,9 +438,9 @@ export default function SponsorShowcase() {
                   { name: 'Bäckerei Müller', icon: 'M18 2c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h12zm-2 2H8c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1zm-4 3c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3z' },
                   { name: 'TechSolutions', icon: 'M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h3l-1 1v1h12v-1l-1-1h3c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11z' }
                 ]
-                
+
                 const partner = fiktivePartner[index % fiktivePartner.length]
-                
+
                 return (
                   <motion.div
                     key={`fictional-${index}`}
@@ -460,12 +454,12 @@ export default function SponsorShowcase() {
                   >
                     <div className="p-2 transition-all duration-200 hover:scale-105">
                       <div className="relative h-10 mb-1 flex items-center justify-center">
-                        <svg 
-                          className="h-8 w-8 brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300" 
-                          viewBox="0 0 24 24" 
+                        <svg
+                          className="h-8 w-8 brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300"
+                          viewBox="0 0 24 24"
                           fill="currentColor"
                         >
-                          <path d={partner.icon}/>
+                          <path d={partner.icon} />
                         </svg>
                       </div>
                       <p className="text-xs text-gray-600 dark:text-gray-400 text-center truncate group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">

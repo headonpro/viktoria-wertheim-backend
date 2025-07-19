@@ -15,13 +15,45 @@ const AnimatedDiv = dynamic(
   { ssr: false }
 )
 
-export default function TeamStatus() {
-  const [teamData, setTeamData] = useState({
-    formLetzten5: ['S', 'U', 'S', 'N', 'S'], // Fallback form data
-    tabellenplatz: 8, // Fallback position
-    platzierungsveraenderung: 'U', // U=gleich
-    liga: 'Kreisliga'
-  })
+// Team types
+type TeamType = '1' | '2' | '3'
+
+interface TeamData {
+  formLetzten5: string[]
+  tabellenplatz: number
+  platzierungsveraenderung: string
+  liga: string
+}
+
+interface TeamStatusProps {
+  selectedTeam: TeamType
+  onTeamChange: (team: TeamType) => void
+}
+
+export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusProps) {
+  // Mannschaftsspezifische Daten
+  const teamDataMap: Record<TeamType, TeamData> = {
+    '1': {
+      formLetzten5: ['S', 'U', 'S', 'N', 'S'],
+      tabellenplatz: 8,
+      platzierungsveraenderung: 'U',
+      liga: 'Kreisliga'
+    },
+    '2': {
+      formLetzten5: ['S', 'S', 'U', 'S', 'N'],
+      tabellenplatz: 4,
+      platzierungsveraenderung: 'S',
+      liga: 'Kreisklasse A'
+    },
+    '3': {
+      formLetzten5: ['N', 'S', 'S', 'U', 'S'],
+      tabellenplatz: 12,
+      platzierungsveraenderung: 'N',
+      liga: 'Kreisklasse B'
+    }
+  }
+
+  const [teamData, setTeamData] = useState<TeamData>(teamDataMap[selectedTeam])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -31,27 +63,40 @@ export default function TeamStatus() {
         setLoading(true)
         setError(null)
         
-        // Get Viktoria Wertheim's data from the API
-        const viktoriaData = await leagueService.fetchViktoriaStanding()
+        // Setze die Daten basierend auf der ausgewählten Mannschaft
+        const currentTeamData = teamDataMap[selectedTeam]
         
-        if (viktoriaData) {
-          setTeamData(prev => ({
-            ...prev,
-            tabellenplatz: viktoriaData.position,
-            // Keep other data as fallback for now since API doesn't provide form/trend yet
-          }))
+        // Für die 1. Mannschaft versuchen wir API-Daten zu laden
+        if (selectedTeam === '1') {
+          try {
+            const viktoriaData = await leagueService.fetchViktoriaStanding()
+            if (viktoriaData) {
+              setTeamData({
+                ...currentTeamData,
+                tabellenplatz: viktoriaData.position,
+              })
+            } else {
+              setTeamData(currentTeamData)
+            }
+          } catch (apiError) {
+            console.warn('API data not available, using fallback:', apiError)
+            setTeamData(currentTeamData)
+          }
+        } else {
+          // Für 2. und 3. Mannschaft verwenden wir Mock-Daten
+          setTeamData(currentTeamData)
         }
       } catch (err) {
         console.error('Failed to fetch team data:', err)
         setError('Daten konnten nicht geladen werden')
-        // Keep fallback data on error
+        setTeamData(teamDataMap[selectedTeam])
       } finally {
         setLoading(false)
       }
     }
 
     fetchTeamData()
-  }, [])
+  }, [selectedTeam])
 
   const getFormColor = (result: string) => {
     switch (result) {
@@ -83,9 +128,36 @@ export default function TeamStatus() {
   return (
     <div className="container max-w-6xl">
       <AnimatedDiv
-        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] overflow-hidden"
+        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] transition-all duration-300 shadow-lg dark:shadow-white/[0.05] overflow-hidden"
         delay={0.1}
       >
+        {/* Mannschaftsauswahl Buttons */}
+        <div className="px-4 py-3 md:px-6 md:py-4 border-b border-white/20 dark:border-white/[0.05]">
+          {/* Titel */}
+          <div className="text-center mb-3 md:mb-4">
+            <h3 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+              Mannschaften
+            </h3>
+          </div>
+          <div className="grid grid-cols-3 gap-4 items-center">
+            {(['1', '2', '3'] as TeamType[]).map((team) => (
+              <div key={team} className="flex justify-center">
+                <button
+                  onClick={() => onTeamChange(team)}
+                  className={`px-6 py-2 md:px-8 md:py-3 rounded-lg text-sm md:text-base font-semibold transition-all duration-300 whitespace-nowrap ${
+                    selectedTeam === team
+                      ? 'bg-viktoria-yellow text-gray-800 shadow-lg shadow-viktoria-yellow/30'
+                      : 'bg-white/30 dark:bg-white/[0.05] text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  <span className="block md:hidden">{team}.</span>
+                  <span className="hidden md:block">{team}. Mannschaft</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Kompakte horizontale Anordnung mit Grid */}
         <div className="px-4 py-3 md:px-6 md:py-4">
           <div className="grid grid-cols-3 gap-4 items-end">
@@ -114,7 +186,7 @@ export default function TeamStatus() {
                 {teamData.formLetzten5.map((result, index) => (
                   <div
                     key={index}
-                    className={`w-3 h-3 md:w-4 md:h-4 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-all duration-200 hover:scale-110 shadow-sm`}
+                    className={`w-3 h-3 md:w-4 md:h-4 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-all duration-200 shadow-sm`}
                   >
                     {getFormText(result)}
                   </div>

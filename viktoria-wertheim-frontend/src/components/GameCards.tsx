@@ -129,12 +129,9 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
       className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
       onClick={onClick}
     >
-      <div className="flex items-center justify-between mb-2 md:mb-4">
+      <div className="mb-2 md:mb-4 text-center">
         <div className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
           {type === 'last' ? 'Last' : 'Next'}
-        </div>
-        <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
-          {date}
         </div>
       </div>
       
@@ -212,16 +209,19 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
           <IconClock size={12} className="md:w-4 md:h-4" />
           <span className="text-xs md:text-sm">{time}</span>
         </div>
-        <div className="flex items-center space-x-1 md:space-x-2">
-          <IconMapPin size={12} className="md:w-4 md:h-4" />
-          <span className="text-xs md:text-sm">{isHome ? 'HOME' : 'AWAY'}</span>
+        <div className="text-xs md:text-sm">
+          {date.replace(/(\d{2})\.(\d{2})/, '$1.$2.')}
         </div>
       </div>
     </div>
   )
 }
 
-export default function GameCards() {
+interface GameCardsProps {
+  selectedTeam: '1' | '2' | '3'
+}
+
+export default function GameCards({ selectedTeam }: GameCardsProps) {
   const [selectedGame, setSelectedGame] = useState<GameDetails | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [games, setGames] = useState<Spiel[]>([])
@@ -342,38 +342,117 @@ export default function GameCards() {
     }
   }
   
-  // Fallback mock data
-  const mockLastGameDetails: GameDetails = {
-    type: 'last',
-    homeTeam: 'SV Viktoria Wertheim',
-    awayTeam: 'TSV Assamstadt',
-    homeScore: 3,
-    awayScore: 0,
-    date: '02.08',
-    time: '18:00',
-    isHome: true,
-    stadium: 'Viktoria-Stadion Wertheim',
-    referee: 'Schmidt, Michael',
-    goalScorers: ['Müller 15\'', 'Wagner 42\'', 'Bauer 78\''],
-    yellowCards: ['Neumann 65\'', 'Scholz 89\''],
-    redCards: []
-  }
-  
-  const mockNextGameDetails: GameDetails = {
-    type: 'next',
-    homeTeam: 'Türkgücü Wertheim',
-    awayTeam: 'SV Viktoria Wertheim',
-    date: '16.08',
-    time: '15:30',
-    isHome: false,
-    stadium: 'Sportplatz Türkgücü',
-    referee: 'Weber, Thomas',
-    lastMeeting: {
-      date: '12.03',
-      result: '0:3', // Heimteam 0 : Viktoria (Auswärts) 3 = Sieg für Viktoria → GRÜN
-      location: 'Auswärts'
+  // Mannschaftsspezifische Mock-Daten
+  const getTeamName = (team: '1' | '2' | '3') => {
+    switch (team) {
+      case '1': return 'SV Viktoria Wertheim'
+      case '2': return 'SV Viktoria Wertheim II'
+      case '3': return 'SV Viktoria Wertheim III'
+      default: return 'SV Viktoria Wertheim'
     }
   }
+
+  const mockGameData = {
+    '1': {
+      last: {
+        type: 'last' as const,
+        homeTeam: 'SV Viktoria Wertheim',
+        awayTeam: 'TSV Assamstadt',
+        homeScore: 3,
+        awayScore: 0,
+        date: '02.08',
+        time: '18:00',
+        isHome: true,
+        stadium: 'Viktoria-Stadion Wertheim',
+        referee: 'Schmidt, Michael',
+        goalScorers: ['Müller 15\'', 'Wagner 42\'', 'Bauer 78\''],
+        yellowCards: ['Neumann 65\'', 'Scholz 89\''],
+        redCards: []
+      },
+      next: {
+        type: 'next' as const,
+        homeTeam: 'Türkgücü Wertheim',
+        awayTeam: 'SV Viktoria Wertheim',
+        date: '16.08',
+        time: '15:30',
+        isHome: false,
+        stadium: 'Sportplatz Türkgücü',
+        referee: 'Weber, Thomas',
+        lastMeeting: {
+          date: '12.03',
+          result: '0:3',
+          location: 'Auswärts'
+        }
+      }
+    },
+    '2': {
+      last: {
+        type: 'last' as const,
+        homeTeam: 'SV Viktoria Wertheim II',
+        awayTeam: 'FC Eichel II',
+        homeScore: 2,
+        awayScore: 1,
+        date: '28.07',
+        time: '15:00',
+        isHome: true,
+        stadium: 'Sportplatz Wertheim',
+        referee: 'Müller, Andreas',
+        goalScorers: ['Schmidt 23\'', 'Weber 67\''],
+        yellowCards: ['Klein 45\''],
+        redCards: []
+      },
+      next: {
+        type: 'next' as const,
+        homeTeam: 'SV Viktoria Wertheim II',
+        awayTeam: 'TSV Kreuzwertheim II',
+        date: '18.08',
+        time: '13:00',
+        isHome: true,
+        stadium: 'Sportplatz Wertheim',
+        referee: 'Fischer, Peter',
+        lastMeeting: {
+          date: '20.04',
+          result: '1:2',
+          location: 'Auswärts'
+        }
+      }
+    },
+    '3': {
+      last: {
+        type: 'last' as const,
+        homeTeam: 'SV Pülfringen II',
+        awayTeam: 'SV Viktoria Wertheim III',
+        homeScore: 1,
+        awayScore: 4,
+        date: '25.07',
+        time: '17:30',
+        isHome: false,
+        stadium: 'Sportplatz Pülfringen',
+        referee: 'Wagner, Klaus',
+        goalScorers: ['Becker 12\'', 'Hoffmann 34\'', 'Jung 56\'', 'Roth 89\''],
+        yellowCards: ['Braun 72\'', 'Sommer 85\''],
+        redCards: []
+      },
+      next: {
+        type: 'next' as const,
+        homeTeam: 'SV Viktoria Wertheim III',
+        awayTeam: 'SV Schönfeld II',
+        date: '20.08',
+        time: '11:00',
+        isHome: true,
+        stadium: 'Sportplatz Wertheim',
+        referee: 'Bauer, Martin',
+        lastMeeting: {
+          date: '15.05',
+          result: '3:0',
+          location: 'Heim'
+        }
+      }
+    }
+  }
+
+  const mockLastGameDetails = mockGameData[selectedTeam].last
+  const mockNextGameDetails = mockGameData[selectedTeam].next
   
   return (
     <>

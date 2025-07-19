@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PageLayout from '@/components/PageLayout'
 import AnimatedSection from '@/components/AnimatedSection'
-import { IconMail, IconPhone, IconMapPin, IconBrandInstagram, IconBrandFacebook, IconArrowRight, IconArrowLeft, IconCheck, IconAt, IconMessage, IconTag } from '@tabler/icons-react'
+import { IconMail, IconPhone, IconMapPin, IconBrandInstagram, IconBrandFacebook, IconArrowRight, IconArrowLeft, IconCheck, IconAt, IconMessage, IconTag, IconUser, IconUsers, IconCreditCard, IconClock, IconCar } from '@tabler/icons-react'
 
 export default function KontaktPage() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -115,8 +115,8 @@ export default function KontaktPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <IconMail size={24} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" />
-              <span className="text-xs text-gray-700 dark:text-gray-300">E-Mail</span>
+              <IconMail size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" style={{ strokeWidth: 1.5 }} />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">E-Mail</span>
             </motion.button>
 
             <motion.a
@@ -125,8 +125,8 @@ export default function KontaktPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <IconPhone size={24} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" />
-              <span className="text-xs text-gray-700 dark:text-gray-300">Anrufen</span>
+              <IconPhone size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" style={{ strokeWidth: 1.5 }} />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Telefon</span>
             </motion.a>
 
             <motion.button
@@ -135,8 +135,8 @@ export default function KontaktPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <IconMapPin size={24} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" />
-              <span className="text-xs text-gray-700 dark:text-gray-300">Karte</span>
+              <IconMapPin size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" style={{ strokeWidth: 1.5 }} />
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Karte</span>
             </motion.button>
           </div>
         </div>
@@ -306,16 +306,16 @@ export default function KontaktPage() {
                           disabled={!isCurrentStepValid()}
                           className={`relative overflow-hidden px-4 py-2 sm:px-8 sm:py-3 rounded-lg font-medium shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border text-sm ${
                             isCurrentStepValid()
-                              ? 'bg-viktoria-blue/20 dark:bg-viktoria-yellow/20 border-viktoria-blue dark:border-viktoria-yellow text-viktoria-yellow hover:bg-viktoria-blue/30 dark:hover:bg-viktoria-yellow/30'
-                              : 'bg-white/20 dark:bg-white/[0.02] border-white/40 dark:border-white/[0.08] text-gray-600 dark:text-gray-400'
+                              ? 'bg-viktoria-yellow dark:bg-viktoria-yellow sm:bg-viktoria-blue-light sm:dark:bg-viktoria-blue-light border-viktoria-yellow dark:border-viktoria-yellow sm:border-viktoria-blue-light sm:dark:border-viktoria-blue-light text-viktoria-dark dark:text-viktoria-dark sm:text-white sm:dark:text-white hover:bg-viktoria-yellow/90 dark:hover:bg-viktoria-yellow/90 sm:hover:bg-viktoria-blue sm:dark:hover:bg-viktoria-blue'
+                              : 'bg-white/20 dark:bg-viktoria-yellow/30 sm:bg-white/20 sm:dark:bg-white/[0.02] border-white/40 dark:border-viktoria-yellow/50 sm:border-white/40 sm:dark:border-white/[0.08] text-gray-600 dark:text-viktoria-dark sm:text-gray-600 sm:dark:text-gray-400'
                           }`}
                           whileHover={{ scale: isCurrentStepValid() ? 1.05 : 1 }}
                           whileTap={{ scale: isCurrentStepValid() ? 0.95 : 1 }}
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-viktoria-yellow/8 to-transparent animate-shimmer-slow"></div>
-                          <span className="relative z-10 flex items-center text-viktoria-yellow">
+                          <span className="relative z-10 flex items-center text-viktoria-dark dark:text-viktoria-dark sm:text-white sm:dark:text-white">
                             Weiter
-                            <IconArrowRight size={16} className="ml-1 text-viktoria-yellow" />
+                            <IconArrowRight size={16} className="ml-1 text-viktoria-dark dark:text-viktoria-dark sm:text-white sm:dark:text-white" />
                           </span>
                         </motion.button>
                       </div>
@@ -328,11 +328,213 @@ export default function KontaktPage() {
         </div>
       </AnimatedSection>
 
-      {/* Social Media Section */}
+      {/* Ansprechpartner Section */}
       <AnimatedSection className="px-4 py-6" delay={0.3}>
-        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
+        <div className="container">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+              Ansprechpartner
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Unser Vorstand ist gerne für dich da
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 1. Vorsitzender */}
+            <motion.div
+              className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] p-6 shadow-lg dark:shadow-white/[0.05] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="text-center">
+                <div className="w-16 h-16 bg-viktoria-blue dark:bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                  <IconUser size={24} className="text-viktoria-yellow dark:text-viktoria-dark" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                  Hans Müller
+                </h3>
+                <p className="text-viktoria-blue dark:text-viktoria-yellow font-medium mb-3">
+                  1. Vorsitzender
+                </p>
+                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center justify-center">
+                    <IconPhone size={16} className="mr-2" />
+                    <a href="tel:+4993421234567" className="hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors">
+                      0934 / 12345-67
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <IconMail size={16} className="mr-2" />
+                    <a href="mailto:vorsitzender@viktoria-wertheim.de" className="hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors">
+                      vorsitzender@viktoria-wertheim.de
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Jugendleiter */}
+            <motion.div
+              className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] p-6 shadow-lg dark:shadow-white/[0.05] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="text-center">
+                <div className="w-16 h-16 bg-viktoria-blue dark:bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                  <IconUsers size={24} className="text-viktoria-yellow dark:text-viktoria-dark" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                  Marco Schneider
+                </h3>
+                <p className="text-viktoria-blue dark:text-viktoria-yellow font-medium mb-3">
+                  Jugendleiter
+                </p>
+                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center justify-center">
+                    <IconPhone size={16} className="mr-2" />
+                    <a href="tel:+4993421234568" className="hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors">
+                      0934 / 12345-68
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <IconMail size={16} className="mr-2" />
+                    <a href="mailto:jugend@viktoria-wertheim.de" className="hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors">
+                      jugend@viktoria-wertheim.de
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Kassenwart */}
+            <motion.div
+              className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] p-6 shadow-lg dark:shadow-white/[0.05] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="text-center">
+                <div className="w-16 h-16 bg-viktoria-blue dark:bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                  <IconCreditCard size={24} className="text-viktoria-yellow dark:text-viktoria-dark" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                  Petra Weber
+                </h3>
+                <p className="text-viktoria-blue dark:text-viktoria-yellow font-medium mb-3">
+                  Kassenwart
+                </p>
+                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center justify-center">
+                    <IconPhone size={16} className="mr-2" />
+                    <a href="tel:+4993421234569" className="hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors">
+                      0934 / 12345-69
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <IconMail size={16} className="mr-2" />
+                    <a href="mailto:kasse@viktoria-wertheim.de" className="hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors">
+                      kasse@viktoria-wertheim.de
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Sportplatz Section */}
+      <AnimatedSection className="px-4 py-6" delay={0.4}>
+        <div className="container">
           <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] overflow-hidden shadow-lg dark:shadow-white/[0.05]">
             <div className="p-6">
+              <div className="text-center mb-8">
+                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-4">
+                  Unser Sportplatz
+                </h2>
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-white/30 dark:bg-white/[0.05] rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
+                    <IconMapPin size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
+                    Sportplatz Adresse
+                  </h3>
+                  <div className="space-y-2 text-gray-700 dark:text-gray-300 text-center">
+                    <p className="font-medium">Sportanlage Viktoria Wertheim</p>
+                    <p>Haslocherweg 85</p>
+                    <p>97877 Wertheim-Bestenheid</p>
+                  </div>
+                  <div className="mt-4 text-center">
+                    <button
+                      onClick={() => window.open('https://maps.google.com/?q=Haslocherweg+85,+97877+Wertheim-Bestenheid', '_blank')}
+                      className="text-xs text-gray-500 dark:text-gray-400 hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors duration-200 underline underline-offset-2"
+                    >
+                      Karte öffnen
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-white/30 dark:bg-white/[0.05] rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
+                    <IconClock size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
+                    Trainingszeiten
+                  </h3>
+                  <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                    <div className="flex justify-between">
+                      <span className="font-medium">1. Mannschaft:</span>
+                      <span>Di & Do 19:00-20:30</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">2. Mannschaft:</span>
+                      <span>Mo & Mi 18:00-19:30</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">3. Mannschaft:</span>
+                      <span>Di & Fr 18:00-19:30</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">A-Jugend:</span>
+                      <span>Mi & Fr 17:00-18:30</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">B-Jugend:</span>
+                      <span>Mo & Mi 16:00-17:30</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium">C-Jugend:</span>
+                      <span>Di & Do 16:00-17:30</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/30 dark:bg-white/[0.05] rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
+                    <IconCar size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
+                    Anfahrt & Parken
+                  </h3>
+                  <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <p>• Freie Parkplätze</p>
+                    <p>• Zufahrt über Hauptstraße</p>
+                    <p>• Bus: Bestenheid Sportplatz</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Social Media Section */}
+      <AnimatedSection className="px-4 py-6" delay={0.5}>
+        <div className="container">
+          <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] overflow-hidden shadow-lg dark:shadow-white/[0.05]">
+            <div className="p-6">
+              <div className="text-center mb-6">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-2">
+                  Folge uns
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Bleib auf dem Laufenden
+                </p>
+              </div>
               <div className="flex justify-center space-x-8">
                 <a
                   href="https://www.instagram.com/viktoria_wertheim/"
