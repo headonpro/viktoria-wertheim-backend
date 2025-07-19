@@ -1,10 +1,12 @@
 "use client"
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import PageLayout from '@/components/PageLayout'
 import AnimatedSection from '@/components/AnimatedSection'
-import { IconMail, IconPhone, IconMapPin, IconBrandInstagram, IconBrandFacebook } from '@tabler/icons-react'
+import { IconMail, IconPhone, IconMapPin, IconBrandInstagram, IconBrandFacebook, IconArrowRight, IconArrowLeft, IconCheck, IconAt, IconMessage, IconTag } from '@tabler/icons-react'
 
 export default function KontaktPage() {
+  const [currentStep, setCurrentStep] = useState(0)
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [formData, setFormData] = useState({
     name: '',
@@ -13,13 +15,79 @@ export default function KontaktPage() {
     message: ''
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+  const steps = [
+    {
+      id: 'name',
+      title: 'Kontaktiere uns.',
+      subtitle: '',
+      icon: IconMessage,
+      field: 'name',
+      type: 'text',
+      placeholder: 'Wie sollen wir dich nennen?',
+      validation: (value: string) => value.length >= 2
+    },
+    {
+      id: 'email',
+      title: 'Deine E-Mail?',
+      subtitle: 'Damit wir dir antworten können',
+      icon: IconAt,
+      field: 'email',
+      type: 'email',
+      placeholder: 'deine@email.de',
+      validation: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+    },
+    {
+      id: 'subject',
+      title: 'Worum geht es?',
+      subtitle: 'Wähle ein Thema aus',
+      icon: IconTag,
+      field: 'subject',
+      type: 'select',
+      options: [
+        'Allgemeine Anfrage',
+        'Mitgliedschaft',
+        'Sponsoring',
+        'Jugendabteilung',
+        'Veranstaltungen'
+      ],
+      validation: (value: string) => value.length > 0
+    },
+    {
+      id: 'message',
+      title: 'Deine Nachricht',
+      subtitle: '',
+      icon: IconMessage,
+      field: 'message',
+      type: 'textarea',
+      placeholder: 'Schreib uns deine Nachricht...',
+      validation: (value: string) => value.length >= 10
+    }
+  ]
+
+  const handleChange = (value: string) => {
+    const currentField = steps[currentStep].field
+    setFormData(prev => ({ ...prev, [currentField]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const nextStep = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(prev => prev + 1)
+    }
+  }
+
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(prev => prev - 1)
+    }
+  }
+
+  const isCurrentStepValid = () => {
+    const step = steps[currentStep]
+    const value = formData[step.field as keyof typeof formData]
+    return step.validation(value)
+  }
+
+  const handleSubmit = async () => {
     setFormStatus('sending')
 
     // Simulate form submission
@@ -31,271 +99,264 @@ export default function KontaktPage() {
         subject: '',
         message: ''
       })
-    }, 1500)
+      setCurrentStep(0)
+    }, 2000)
   }
 
   return (
     <PageLayout>
-      {/* Map Section */}
-      <AnimatedSection className="px-4 py-6" delay={0.1}>
+      {/* Quick Contact Actions */}
+      <AnimatedSection className="px-4 pt-12 md:pt-8 pb-6" delay={0.1}>
         <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
-          <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-            <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
-              <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-                Unser Standort
-              </h2>
-            </div>
-            <div className="p-4 md:p-6">
-              <div className="relative h-[30vh] md:h-[40vh] overflow-hidden rounded-lg border border-gray-200">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2565.5!2d9.503520380745258!3d49.78259140894397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDQ2JzU3LjMiTiA5wrAzMCcxMi43IkU!5e1!3m2!1sde!2sde!4v1701123456789!5m2!1sde!2sde"
-                  className="w-full h-full border-0 rounded-lg"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
+          <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
+            <motion.button
+              onClick={() => navigator.clipboard.writeText('info@viktoria-wertheim.de')}
+              className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg dark:shadow-white/[0.05]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <IconMail size={24} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" />
+              <span className="text-xs text-gray-700 dark:text-gray-300">E-Mail</span>
+            </motion.button>
 
-      {/* Contact Info Cards */}
-      <AnimatedSection className="px-4 py-6" delay={0.2}>
-        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {/* Email Card */}
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
-                <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-                  Email
-                </h2>
-              </div>
-              <div className="p-5 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-viktoria-blue rounded-full flex items-center justify-center mb-3">
-                  <IconMail size={20} className="text-viktoria-yellow" />
-                </div>
-                <a href="mailto:info@viktoria-wertheim.de" className="text-viktoria-blue hover:text-viktoria-blue-light transition-colors font-medium">
-                  info@viktoria-wertheim.de
-                </a>
-                <p className="text-sm text-gray-600 mt-2">
-                  Wir antworten innerhalb von 24 Stunden
-                </p>
-              </div>
-            </div>
+            <motion.a
+              href="tel:+4993421234567"
+              className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg dark:shadow-white/[0.05]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <IconPhone size={24} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" />
+              <span className="text-xs text-gray-700 dark:text-gray-300">Anrufen</span>
+            </motion.a>
 
-            {/* Phone Card */}
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
-                <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-                  Telefon
-                </h2>
-              </div>
-              <div className="p-5 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-viktoria-blue rounded-full flex items-center justify-center mb-3">
-                  <IconPhone size={20} className="text-viktoria-yellow" />
-                </div>
-                <a href="tel:+4993421234567" className="text-viktoria-blue hover:text-viktoria-blue-light transition-colors font-medium">
-                  (09342) 123-4567
-                </a>
-                <p className="text-sm text-gray-600 mt-2">
-                  Mo-Fr: 17:00-20:00 Uhr
-                </p>
-              </div>
-            </div>
-
-            {/* Address Card */}
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
-                <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-                  Adresse
-                </h2>
-              </div>
-              <div className="p-5 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-viktoria-blue rounded-full flex items-center justify-center mb-3">
-                  <IconMapPin size={20} className="text-viktoria-yellow" />
-                </div>
-                <p className="text-viktoria-blue font-medium">
-                  Sportplatz SV Viktoria Wertheim
-                </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Haslocherweg 85<br />
-                  97877 Wertheim-Bestenheid
-                </p>
-              </div>
-            </div>
+            <motion.button
+              onClick={() => window.open('https://maps.google.com/?q=Haslocherweg+85,+97877+Wertheim-Bestenheid', '_blank')}
+              className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg dark:shadow-white/[0.05]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <IconMapPin size={24} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" />
+              <span className="text-xs text-gray-700 dark:text-gray-300">Karte</span>
+            </motion.button>
           </div>
         </div>
       </AnimatedSection>
 
       {/* Contact Form */}
-      <AnimatedSection className="px-4 py-6" delay={0.3}>
+      <AnimatedSection className="px-4 py-6" delay={0.2}>
         <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
-          <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-            <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
-              <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-                Kontaktformular
-              </h2>
+          <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] overflow-hidden shadow-lg dark:shadow-white/[0.05]">
+            <div className="px-6 py-4 border-b border-white/20 dark:border-white/[0.08]">
+              {/* Progress Dots - Centered */}
+              <div className="flex justify-center space-x-2">
+                {steps.map((_, index) => (
+                  <motion.div
+                    key={index}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${index <= currentStep
+                      ? 'bg-viktoria-blue dark:bg-viktoria-yellow'
+                      : 'bg-gray-300 dark:bg-gray-600'
+                      }`}
+                    animate={{
+                      scale: index === currentStep ? 1.2 : 1
+                    }}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="p-4 md:p-6">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Name Field */}
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-3 py-2 bg-white/70 border border-gray-300 rounded-lg focus:ring-viktoria-blue focus:border-viktoria-blue text-sm"
-                      placeholder="Dein Name"
-                    />
-                  </div>
 
-                  {/* Email Field */}
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-3 py-2 bg-white/70 border border-gray-300 rounded-lg focus:ring-viktoria-blue focus:border-viktoria-blue text-sm"
-                      placeholder="deine.email@beispiel.de"
-                    />
-                  </div>
-                </div>
-
-                {/* Subject Field */}
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                    Betreff
-                  </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 bg-white/70 border border-gray-300 rounded-lg focus:ring-viktoria-blue focus:border-viktoria-blue text-sm"
+            <div className="p-6">
+              <AnimatePresence mode="wait">
+                {formStatus === 'success' ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-12"
                   >
-                    <option value="">Bitte wählen</option>
-                    <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
-                    <option value="Mitgliedschaft">Mitgliedschaft</option>
-                    <option value="Sponsoring">Sponsoring</option>
-                    <option value="Jugendabteilung">Jugendabteilung</option>
-                    <option value="Veranstaltungen">Veranstaltungen</option>
-                  </select>
-                </div>
-
-                {/* Message Field */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                    Nachricht
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="w-full px-3 py-2 bg-white/70 border border-gray-300 rounded-lg focus:ring-viktoria-blue focus:border-viktoria-blue text-sm"
-                    placeholder="Deine Nachricht an uns..."
-                  ></textarea>
-                </div>
-
-                {/* Submit Button */}
-                <div className="flex justify-center pt-2">
-                  <button
-                    type="submit"
-                    disabled={formStatus === 'sending'}
-                    className="px-6 py-2 bg-viktoria-blue text-white rounded-lg hover:bg-viktoria-blue-light transition-colors duration-300 font-medium text-sm flex items-center justify-center min-w-[150px]"
+                    <div className="w-20 h-20 bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-6">
+                      <IconCheck size={32} className="text-white" />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                      Nachricht gesendet!
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Vielen Dank {formData.name}! Wir melden uns schnellstmöglich bei dir.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    {formStatus === 'sending' ? (
-                      <span className="flex items-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Wird gesendet...
-                      </span>
-                    ) : formStatus === 'success' ? (
-                      <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        Gesendet!
-                      </span>
+                    {/* Step Header */}
+                    <div className="mb-8 text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center justify-center">
+                        <IconMessage size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
+                        {steps[currentStep].title}
+                      </h3>
+                      {steps[currentStep].subtitle && (
+                        <p className="text-gray-600 dark:text-gray-400">
+                          {steps[currentStep].subtitle}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Input Field */}
+                    <div className="mb-8">
+                      {steps[currentStep].type === 'select' ? (
+                        <div className="space-y-3">
+                          {steps[currentStep].options?.map((option) => (
+                            <button
+                              key={option}
+                              onClick={() => handleChange(option)}
+                              className={`w-full p-4 rounded-lg text-left transition-all duration-200 ${formData[steps[currentStep].field as keyof typeof formData] === option
+                                ? 'bg-viktoria-blue/20 dark:bg-viktoria-yellow/20 border-2 border-viktoria-blue dark:border-viktoria-yellow text-gray-800 dark:text-gray-200'
+                                : 'bg-white/30 dark:bg-white/[0.05] border border-white/40 dark:border-white/[0.08] text-gray-700 dark:text-gray-300 hover:bg-white/40 dark:hover:bg-white/[0.08]'
+                                }`}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      ) : steps[currentStep].type === 'textarea' ? (
+                        <textarea
+                          value={formData[steps[currentStep].field as keyof typeof formData]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          placeholder={steps[currentStep].placeholder}
+                          rows={5}
+                          className="w-full p-4 bg-white/60 dark:bg-transparent border border-white/40 dark:border-white/[0.08] rounded-lg focus:border-viktoria-blue dark:focus:border-viktoria-yellow focus:outline-none text-gray-800 dark:text-gray-200 placeholder-gray-600 dark:placeholder-gray-400 resize-none shadow-sm"
+                        />
+                      ) : (
+                        <input
+                          type={steps[currentStep].type}
+                          value={formData[steps[currentStep].field as keyof typeof formData]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          placeholder={steps[currentStep].placeholder}
+                          className="w-full p-4 bg-white/60 dark:bg-transparent border border-white/40 dark:border-white/[0.08] rounded-lg focus:border-viktoria-blue dark:focus:border-viktoria-yellow focus:outline-none text-gray-800 dark:text-gray-200 placeholder-gray-600 dark:placeholder-gray-400 shadow-sm"
+                        />
+                      )}
+                    </div>
+
+                    {/* Navigation Buttons */}
+                    {currentStep === steps.length - 1 ? (
+                      /* Letzte Seite: Buttons vertikal angeordnet */
+                      <div className="flex flex-col items-center space-y-4">
+                        {/* Zurück Button - Oben */}
+                        {currentStep > 0 && (
+                          <button
+                            onClick={prevStep}
+                            className="flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-all duration-200 bg-white/40 dark:bg-white/[0.08] hover:bg-white/50 dark:hover:bg-white/[0.12] text-gray-700 dark:text-gray-300 border border-white/50 dark:border-white/[0.12] text-sm"
+                          >
+                            <IconArrowLeft size={14} className="mr-1" />
+                            Zurück
+                          </button>
+                        )}
+                        
+                        {/* Nachricht senden Button - Unten */}
+                        <motion.button
+                          onClick={handleSubmit}
+                          disabled={!isCurrentStepValid() || formStatus === 'sending'}
+                          className={`relative overflow-hidden px-4 py-2 sm:px-8 sm:py-3 rounded-lg font-medium shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border text-sm ${
+                            isCurrentStepValid() && formStatus !== 'sending'
+                              ? 'bg-viktoria-blue/20 dark:bg-viktoria-yellow/20 border-viktoria-blue dark:border-viktoria-yellow text-viktoria-blue dark:text-viktoria-yellow hover:bg-viktoria-blue/30 dark:hover:bg-viktoria-yellow/30'
+                              : 'bg-white/20 dark:bg-white/[0.02] border-white/40 dark:border-white/[0.08] text-gray-600 dark:text-gray-400'
+                          }`}
+                          whileHover={{ scale: isCurrentStepValid() && formStatus !== 'sending' ? 1.05 : 1 }}
+                          whileTap={{ scale: isCurrentStepValid() && formStatus !== 'sending' ? 0.95 : 1 }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-viktoria-yellow/8 to-transparent animate-shimmer-slow"></div>
+                          <span className="relative z-10 flex items-center">
+                            {formStatus === 'sending' ? (
+                              <>
+                                <svg className="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Wird gesendet...
+                              </>
+                            ) : (
+                              <>
+                                <IconCheck size={16} className="mr-1" />
+                                Nachricht senden
+                              </>
+                            )}
+                          </span>
+                        </motion.button>
+                      </div>
                     ) : (
-                      'Nachricht senden'
-                    )}
-                  </button>
-                </div>
+                      /* Andere Seiten: Buttons horizontal wie bisher */
+                      <div className="flex justify-center items-center relative">
+                        {/* Zurück Button - Links positioniert */}
+                        {currentStep > 0 && (
+                          <button
+                            onClick={prevStep}
+                            className="absolute left-0 flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-all duration-200 bg-white/40 dark:bg-white/[0.08] hover:bg-white/50 dark:hover:bg-white/[0.12] text-gray-700 dark:text-gray-300 border border-white/50 dark:border-white/[0.12] text-sm"
+                          >
+                            <IconArrowLeft size={14} className="mr-1" />
+                            Zurück
+                          </button>
+                        )}
 
-                {/* Form Status Message */}
-                {formStatus === 'success' && (
-                  <div className="text-center text-green-600 text-sm mt-2">
-                    Vielen Dank für deine Nachricht! Wir werden uns schnellstmöglich bei dir melden.
-                  </div>
+                        {/* Weiter Button - Zentriert */}
+                        <motion.button
+                          onClick={nextStep}
+                          disabled={!isCurrentStepValid()}
+                          className={`relative overflow-hidden px-4 py-2 sm:px-8 sm:py-3 rounded-lg font-medium shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border text-sm ${
+                            isCurrentStepValid()
+                              ? 'bg-viktoria-blue/20 dark:bg-viktoria-yellow/20 border-viktoria-blue dark:border-viktoria-yellow text-viktoria-yellow hover:bg-viktoria-blue/30 dark:hover:bg-viktoria-yellow/30'
+                              : 'bg-white/20 dark:bg-white/[0.02] border-white/40 dark:border-white/[0.08] text-gray-600 dark:text-gray-400'
+                          }`}
+                          whileHover={{ scale: isCurrentStepValid() ? 1.05 : 1 }}
+                          whileTap={{ scale: isCurrentStepValid() ? 0.95 : 1 }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-viktoria-yellow/8 to-transparent animate-shimmer-slow"></div>
+                          <span className="relative z-10 flex items-center text-viktoria-yellow">
+                            Weiter
+                            <IconArrowRight size={16} className="ml-1 text-viktoria-yellow" />
+                          </span>
+                        </motion.button>
+                      </div>
+                    )}
+                  </motion.div>
                 )}
-                {formStatus === 'error' && (
-                  <div className="text-center text-red-600 text-sm mt-2">
-                    Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.
-                  </div>
-                )}
-              </form>
+              </AnimatePresence>
             </div>
           </div>
         </div>
       </AnimatedSection>
 
       {/* Social Media Section */}
-      <AnimatedSection className="px-4 py-6" delay={0.4}>
+      <AnimatedSection className="px-4 py-6" delay={0.3}>
         <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
-          <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-            <div className="bg-white/30 px-4 py-3 border-b border-white/20 text-center">
-              <h2 className="text-xs md:text-sm font-medium text-gray-600 uppercase tracking-wide">
-                Social Media
-              </h2>
-            </div>
-            <div className="p-4 md:p-6">
-              <div className="flex justify-center space-x-6">
+          <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] overflow-hidden shadow-lg dark:shadow-white/[0.05]">
+            <div className="p-6">
+              <div className="flex justify-center space-x-8">
                 <a
                   href="https://www.instagram.com/viktoria_wertheim/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
+                  className="group flex flex-col items-center"
                 >
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <IconBrandInstagram size={24} className="text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 mb-2">
+                    <IconBrandInstagram size={20} className="text-white" />
                   </div>
-                  <p className="text-xs text-center mt-2">Instagram</p>
+                  <span className="text-xs text-gray-700 dark:text-gray-300">Instagram</span>
                 </a>
                 <a
                   href="https://www.facebook.com/viktoriawertheim/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
+                  className="group flex flex-col items-center"
                 >
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <IconBrandFacebook size={24} className="text-white" />
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 mb-2">
+                    <IconBrandFacebook size={20} className="text-white" />
                   </div>
-                  <p className="text-xs text-center mt-2">Facebook</p>
+                  <span className="text-xs text-gray-700 dark:text-gray-300">Facebook</span>
                 </a>
               </div>
-              <p className="text-center text-sm text-gray-600 mt-4">
-                Folge uns auf Social Media für aktuelle Updates, Spielergebnisse und Vereinsneuigkeiten!
-              </p>
             </div>
           </div>
         </div>

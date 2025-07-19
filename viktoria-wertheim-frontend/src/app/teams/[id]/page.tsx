@@ -112,8 +112,8 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         {/* Mannschaftsbild */}
         <AnimatedSection className="px-4 py-4" delay={0.3}>
           <div className="container">
-            <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/40 shadow-sm">
-              <h2 className="text-lg font-semibold text-viktoria-blue mb-4 text-center">Mannschaftsfoto</h2>
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-6 border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
+              <h2 className="text-lg font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-4 text-center">Mannschaftsfoto</h2>
               <div className="aspect-[16/9] md:aspect-[21/9] bg-gradient-to-r from-viktoria-blue-light to-viktoria-blue rounded-lg flex items-center justify-center">
                 <div className="text-center text-white">
                   <IconUsers size={48} className="mx-auto mb-4 text-viktoria-yellow" />
@@ -128,10 +128,10 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         {/* Fußballfeld - Start 11 */}
         <AnimatedSection className="px-4 py-4" delay={0.4}>
           <div className="container">
-            <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/40 shadow-sm">
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-4 md:p-6 border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
               <div className="flex items-center justify-center mb-6">
-                <IconShield className="text-viktoria-blue mr-3" size={24} />
-                <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue">Start-11</h2>
+                <IconShield className="text-viktoria-blue dark:text-viktoria-yellow mr-3" size={24} />
+                <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue dark:text-viktoria-yellow">Start-11</h2>
               </div>
               
               {/* Fußballfeld */}
@@ -292,10 +292,10 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         {/* Ersatzbank */}
         <AnimatedSection className="px-4 py-4" delay={1.6}>
           <div className="container">
-            <div className="bg-white/70 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/40 shadow-sm">
+            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-4 md:p-6 border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
               <div className="flex items-center justify-center mb-6">
-                <IconUsers className="text-viktoria-blue mr-3" size={24} />
-                <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue">Ersatzbank</h2>
+                <IconUsers className="text-viktoria-blue dark:text-viktoria-yellow mr-3" size={24} />
+                <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue dark:text-viktoria-yellow">Ersatzbank</h2>
               </div>
               
               {/* Ersatzbank im Spielfeld-Design - erweitert für 15 Personen */}

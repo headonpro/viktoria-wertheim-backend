@@ -22,19 +22,19 @@ export default function ShopPage() {
       
 
         {/* Coming Soon Banner - Kompakter */}
-        <AnimatedSection className="px-4 pt-6 pb-4" delay={0.2}>
+        <AnimatedSection className="px-4 pt-12 md:pt-8 pb-4" delay={0.2}>
           <div className="container lg:max-w-5xl lg:mx-auto">
             <div className="max-w-4xl mx-auto">
-              <div className="bg-gradient-to-r from-viktoria-yellow/10 to-viktoria-blue/10 border border-viktoria-yellow/30 rounded-2xl p-6 text-center shadow-lg">
+              <div className="bg-gradient-to-r from-viktoria-yellow/10 to-viktoria-blue/10 dark:from-viktoria-yellow/5 dark:to-viktoria-blue/5 border border-viktoria-yellow/30 dark:border-viktoria-yellow/20 rounded-2xl p-6 text-center shadow-lg dark:shadow-white/[0.05]">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="w-12 h-12 bg-viktoria-yellow rounded-xl flex items-center justify-center shadow-md">
                     <IconShirt size={24} className="text-viktoria-blue" />
                   </div>
                   <div>
-                    <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue">
+                    <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue dark:text-viktoria-yellow">
                       Unser Shop kommt bald! 🛠️
                     </h2>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
                       Wir werkeln gerade fleißig an unserem Online-Shop.
                     </p>
                   </div>
@@ -48,27 +48,27 @@ export default function ShopPage() {
         <AnimatedSection className="px-4 py-6" delay={0.3}>
           <div className="container lg:max-w-5xl lg:mx-auto">
             <div className="text-center mb-6">
-              <h2 className="text-xl md:text-2xl font-semibold text-viktoria-blue mb-2">
+              <h2 className="text-xl md:text-2xl font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-2">
                 Das wird&apos;s bald geben
               </h2>
-              <p className="text-gray-500 text-sm">Unsere kommenden Produktkategorien</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">Unsere kommenden Produktkategorien</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
               {/* Trikots */}
               <AnimatedDiv 
-                className="group bg-white/70 backdrop-blur-sm rounded-xl p-5 border border-white/40 hover:bg-white/80 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-5 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
                 delay={0.4}
               >
                 <div className="text-center">
                   <div className="w-14 h-14 bg-gradient-to-br from-viktoria-blue to-viktoria-blue-light rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300">
                     <IconShirt size={24} className="text-viktoria-yellow" />
                   </div>
-                  <h3 className="text-lg font-semibold text-viktoria-blue mb-2">Trikots & Teamwear</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <h3 className="text-lg font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-2">Trikots & Teamwear</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                     Heim- und Auswärtstrikots, Trainingshosen, Jacken
                   </p>
-                  <div className="mt-3 text-xs text-viktoria-blue/70 font-medium">
+                  <div className="mt-3 text-xs text-viktoria-blue/70 dark:text-viktoria-yellow/70 font-medium">
                     Coming Soon
                   </div>
                 </div>
@@ -76,18 +76,18 @@ export default function ShopPage() {
 
               {/* Fanartikel */}
               <AnimatedDiv 
-                className="group bg-white/70 backdrop-blur-sm rounded-xl p-5 border border-white/40 hover:bg-white/80 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-5 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
                 delay={0.5}
               >
                 <div className="text-center">
                   <div className="w-14 h-14 bg-gradient-to-br from-viktoria-blue to-viktoria-blue-light rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300">
                     <IconTrophy size={24} className="text-viktoria-yellow" />
                   </div>
-                  <h3 className="text-lg font-semibold text-viktoria-blue mb-2">Fanartikel</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <h3 className="text-lg font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-2">Fanartikel</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                     Schals, Mützen, Tassen, Schlüsselanhänger
                   </p>
-                  <div className="mt-3 text-xs text-viktoria-blue/70 font-medium">
+                  <div className="mt-3 text-xs text-viktoria-blue/70 dark:text-viktoria-yellow/70 font-medium">
                     Coming Soon
                   </div>
                 </div>
@@ -95,18 +95,18 @@ export default function ShopPage() {
 
               {/* Mitgliedschaft */}
               <AnimatedDiv 
-                className="group bg-white/70 backdrop-blur-sm rounded-xl p-5 border border-white/40 hover:bg-white/80 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-5 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
                 delay={0.6}
               >
                 <div className="text-center">
                   <div className="w-14 h-14 bg-gradient-to-br from-viktoria-blue to-viktoria-blue-light rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300">
                     <IconUsers size={24} className="text-viktoria-yellow" />
                   </div>
-                  <h3 className="text-lg font-semibold text-viktoria-blue mb-2">Mitgliedschaft</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <h3 className="text-lg font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-2">Mitgliedschaft</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                     Online Mitglied werden und Teil der Familie sein
                   </p>
-                  <div className="mt-3 text-xs text-viktoria-blue/70 font-medium">
+                  <div className="mt-3 text-xs text-viktoria-blue/70 dark:text-viktoria-yellow/70 font-medium">
                     Coming Soon
                   </div>
                 </div>
@@ -121,21 +121,21 @@ export default function ShopPage() {
         <AnimatedSection className="px-4 py-6" delay={0.8}>
           <div className="container lg:max-w-5xl lg:mx-auto">
             <div className="max-w-md mx-auto">
-              <div className="bg-gradient-to-r from-viktoria-blue/5 to-viktoria-yellow/5 rounded-xl p-6 border border-viktoria-blue/20 text-center">
+              <div className="bg-gradient-to-r from-viktoria-blue/5 to-viktoria-yellow/5 dark:from-viktoria-blue/10 dark:to-viktoria-yellow/10 rounded-xl p-6 border border-viktoria-blue/20 dark:border-viktoria-blue/30 text-center shadow-lg dark:shadow-white/[0.05]">
                 <div className="w-12 h-12 bg-viktoria-yellow rounded-xl flex items-center justify-center mx-auto mb-4">
                   <IconClock size={20} className="text-viktoria-blue" />
                 </div>
-                <h3 className="text-lg font-semibold text-viktoria-blue mb-2">Shop-News</h3>
-                <p className="text-gray-600 text-sm mb-4">
+                <h3 className="text-lg font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-2">Shop-News</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   Erfahrt als Erste, wann unser Shop online geht!
                 </p>
                 <div className="flex gap-2">
                   <input
                     type="email"
                     placeholder="eure.email@beispiel.de"
-                    className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-viktoria-blue-light bg-white/90"
+                    className="flex-1 px-3 py-2 text-sm border border-gray-200 dark:border-white/[0.15] rounded-lg focus:outline-none focus:ring-2 focus:ring-viktoria-blue-light dark:focus:ring-viktoria-yellow bg-white/90 dark:bg-white/[0.08] text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
                   />
-                  <button className="px-4 py-2 bg-viktoria-blue text-white text-sm font-medium rounded-lg hover:bg-viktoria-blue-light transition-colors">
+                  <button className="px-4 py-2 bg-viktoria-blue hover:bg-viktoria-blue-light dark:bg-viktoria-yellow dark:hover:bg-viktoria-yellow/80 text-white dark:text-viktoria-blue text-sm font-medium rounded-lg transition-colors">
                     ✓
                   </button>
                 </div>

@@ -374,7 +374,7 @@ export default function NewsPage() {
     <PageLayout>
 
 
-      <main className="pt-4 pb-6">
+      <main className="pt-8 pb-6">
         <div className="container space-y-4 lg:space-y-8 lg:max-w-5xl lg:mx-auto">
           
           {/* Mobile Category Filter - Compact Horizontal Scroll */}
@@ -385,10 +385,10 @@ export default function NewsPage() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg dark:shadow-white/[0.05] ${
                     selectedCategory === category
                       ? 'bg-viktoria-blue text-white shadow-md'
-                      : 'bg-white/60 text-gray-700 hover:bg-viktoria-blue/10 border border-gray-200'
+                      : 'bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-700 dark:text-gray-300 border border-white/40 dark:border-white/[0.08] active:bg-viktoria-blue/10 active:text-viktoria-blue dark:active:text-viktoria-yellow'
                   }`}
                 >
                   {category}
@@ -399,27 +399,24 @@ export default function NewsPage() {
 
           {/* Desktop Category Filter - Compact */}
           <div className="hidden lg:block mb-6">
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/30 p-4 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-base font-semibold text-gray-800">Kategorien</h2>
-                <div className="text-sm text-gray-600">
-                  {filteredArticles.length} {filteredArticles.length === 1 ? 'Artikel' : 'Artikel'}
-                </div>
-              </div>
+            <div className="flex items-center justify-between mb-4">
               <div className="flex flex-wrap gap-2">
                 {categoryNames.map((category) => (
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] ${
                       selectedCategory === category
-                        ? 'bg-viktoria-blue text-white shadow-sm'
-                        : 'bg-white/60 text-gray-700 hover:bg-viktoria-blue/10 hover:text-viktoria-blue border border-gray-200'
+                        ? 'bg-viktoria-blue text-white shadow-md'
+                        : 'bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-viktoria-blue/10 hover:text-viktoria-blue dark:hover:text-viktoria-yellow border border-white/40 dark:border-white/[0.08]'
                     }`}
                   >
                     {category}
                   </button>
                 ))}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300 ml-4">
+                {filteredArticles.length} {filteredArticles.length === 1 ? 'Artikel' : 'Artikel'}
               </div>
             </div>
           </div>
@@ -429,92 +426,25 @@ export default function NewsPage() {
         <AnimatedSection delay={0.3}>
           {filteredArticles.length === 0 ? (
             <div className="text-center py-12">
-              <div className="bg-white/40 backdrop-blur-sm rounded-2xl border border-white/20 p-8">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <IconEye className="w-8 h-8 text-gray-400" />
+              <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/40 dark:border-white/[0.08] p-8 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]">
+                <div className="w-16 h-16 bg-gray-100 dark:bg-white/[0.08] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <IconEye className="w-8 h-8 text-gray-400 dark:text-gray-500" />
                 </div>
-                <p className="text-gray-600 text-lg font-medium">
+                <p className="text-gray-600 dark:text-gray-300 text-lg font-medium">
                   {selectedCategory === 'Alle' 
                     ? 'Keine News-Artikel gefunden' 
                     : `Keine Artikel in der Kategorie "${selectedCategory}" gefunden`}
                 </p>
-                <p className="text-gray-500 text-sm mt-2">
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
                   Versuchen Sie eine andere Kategorie oder schauen Sie später wieder vorbei.
                 </p>
               </div>
             </div>
           ) : (
             <>
-              {/* Featured Article - Clean Modern Design */}
-              {filteredArticles.length > 0 && filteredArticles[0] && getArticleTitle(filteredArticles[0]) && (
-                <div className="mb-8">
-                  <div 
-                    className="bg-white rounded-xl border border-gray-200 overflow-hidden group hover:shadow-lg transition-all duration-300 cursor-pointer"
-                    onClick={() => openArticleModal(filteredArticles[0].id)}
-                  >
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                      {/* Featured Image */}
-                      <div className="relative h-64 lg:h-72 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
-                        {getArticleImage(filteredArticles[0]) ? (
-                          <Image
-                            src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'}${(getArticleImage(filteredArticles[0]) as any)?.url || (getArticleImage(filteredArticles[0]) as any)?.attributes?.url}`}
-                            alt={(getArticleImage(filteredArticles[0]) as any)?.alternativeText || (getArticleImage(filteredArticles[0]) as any)?.attributes?.alternativeText || getArticleTitle(filteredArticles[0])}
-                            fill
-                            className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                          />
-                        ) : (
-                          <div className="h-full flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-20 h-20 bg-viktoria-yellow/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <IconEye className="w-10 h-10 text-viktoria-yellow" />
-                              </div>
-                              <p className="text-viktoria-yellow font-semibold">SV Viktoria Wertheim</p>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Category Badge */}
-                        <div className="absolute top-4 left-4">
-                          <span className="bg-viktoria-yellow text-gray-900 text-sm px-3 py-1.5 rounded-full font-semibold shadow-sm">
-                            {getKategorieName(filteredArticles[0])}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Featured Content */}
-                      <div className="p-6 lg:p-8 flex flex-col justify-center">
-                        <div className="flex items-center text-sm text-gray-500 mb-3">
-                          <IconClock className="w-4 h-4 mr-2" />
-                          <span>
-                            {new Date(getArticleDate(filteredArticles[0])).toLocaleDateString('de-DE', {
-                              day: '2-digit',
-                              month: 'long',
-                              year: 'numeric',
-                            })}
-                          </span>
-                        </div>
-
-                        <h1 className="text-xl lg:text-2xl font-bold text-gray-900 mb-4 group-hover:text-viktoria-blue transition-colors leading-tight">
-                          {getArticleTitle(filteredArticles[0])}
-                        </h1>
-
-                        <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
-                          {getArticleContent(filteredArticles[0]) || 'Lesen Sie den vollständigen Artikel für alle Details...'}
-                        </p>
-
-                        <div className="inline-flex items-center text-viktoria-blue font-semibold hover:text-viktoria-blue-light transition-colors group/btn">
-                          <span>Vollständigen Artikel lesen</span>
-                          <IconArrowRight className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {/* Articles Grid - Clean Design */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {(filteredArticles.length > 1 ? filteredArticles.slice(1) : filteredArticles)
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {filteredArticles
                   .filter(article => article && getArticleTitle(article)) // Filter valid articles
                   .map((article, index) => {
                   return (
@@ -526,11 +456,11 @@ export default function NewsPage() {
                       className="group"
                     >
                       <div 
-                        className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer h-full flex flex-col"
+                        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] overflow-hidden hover:bg-white/30 dark:hover:bg-white/[0.04] hover:shadow-xl dark:hover:shadow-white/[0.08] transition-all duration-300 cursor-pointer h-full flex flex-col shadow-lg dark:shadow-white/[0.05]"
                         onClick={() => openArticleModal(article.id)}
                       >
                         {/* Image */}
-                        <div className="relative h-48 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden flex-shrink-0">
+                        <div className="relative h-32 sm:h-48 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden flex-shrink-0">
                           {getArticleImage(article) ? (
                             <Image
                               src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'}${(getArticleImage(article) as any)?.url || (getArticleImage(article) as any)?.attributes?.url}`}
@@ -549,17 +479,17 @@ export default function NewsPage() {
                             </div>
                           )}
                           {/* Category Badge */}
-                          <div className="absolute top-3 left-3">
-                            <span className="bg-viktoria-yellow text-gray-900 text-xs px-2.5 py-1 rounded-full font-medium shadow-sm">
+                          <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
+                            <span className="bg-viktoria-yellow text-gray-900 text-xs px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full font-medium shadow-sm">
                               {getKategorieName(article)}
                             </span>
                           </div>
                         </div>
 
                         {/* Content */}
-                        <div className="p-5 flex-grow flex flex-col">
+                        <div className="p-3 sm:p-5 flex-grow flex flex-col">
                           {/* Date */}
-                          <div className="flex items-center text-sm text-gray-500 mb-3">
+                          <div className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">
                             <IconClock className="w-4 h-4 mr-2" />
                             <span>
                               {new Date(getArticleDate(article)).toLocaleDateString('de-DE', {
@@ -571,19 +501,19 @@ export default function NewsPage() {
                           </div>
 
                           {/* Title */}
-                          <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-viktoria-blue transition-colors line-clamp-2 leading-tight flex-grow">
+                          <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors line-clamp-2 leading-tight flex-grow">
                             {getArticleTitle(article)}
                           </h3>
 
                           {/* Content Preview */}
-                          <p className="text-gray-600 line-clamp-2 text-sm leading-relaxed mb-4">
+                          <p className="text-gray-600 dark:text-gray-300 line-clamp-2 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                             {getArticleContent(article) || 'Artikel ansehen...'}
                           </p>
 
                           {/* Read More */}
-                          <div className="flex items-center text-viktoria-blue font-semibold hover:text-viktoria-blue-light transition-colors group/btn mt-auto">
-                            <span className="text-sm">Artikel lesen</span>
-                            <IconArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                          <div className="flex items-center text-gray-600 dark:text-gray-300 font-semibold hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors group/btn mt-auto">
+                            <span className="text-xs sm:text-sm">Artikel lesen</span>
+                            <IconArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2 group-hover/btn:translate-x-1 transition-transform" />
                           </div>
                         </div>
                       </div>

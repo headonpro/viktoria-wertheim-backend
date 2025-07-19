@@ -205,10 +205,6 @@ export default function HomePage() {
 
 
 
-  // Mock data wurde als stabile Konstanten außerhalb der Komponente definiert
-
-  // Mock data wurde als stabile Konstanten außerhalb der Komponente definiert
-
   // Fetch data from API
   useEffect(() => {
     const fetchData = async () => {
@@ -447,9 +443,8 @@ export default function HomePage() {
                           const inhalt = article.inhalt || (article.attributes && article.attributes.inhalt)
                           const kategorie = article.kategorie || (article.attributes && article.attributes.kategorie)
 
-                          // Handle image for both formats - Debug and fix
+                          // Handle image for both formats
                           const titelbild = article.titelbild || (article.attributes && article.attributes.titelbild)
-                          console.log('Article titelbild:', titelbild)
                           
                           // Try multiple possible image URL structures
                           let imageUrl: string | null = null
@@ -461,8 +456,6 @@ export default function HomePage() {
                                       (titelbild as any).attributes?.url ||
                                       (titelbild as any).data?.url
                           }
-                          
-                          console.log('Final imageUrl:', imageUrl)
 
                           const timeAgo = datum ? new Date(datum).toLocaleDateString('de-DE', {
                             day: '2-digit',
@@ -592,9 +585,8 @@ export default function HomePage() {
                       const inhalt = article.inhalt || (article.attributes && article.attributes.inhalt)
                       const kategorie = article.kategorie || (article.attributes && article.attributes.kategorie)
 
-                      // Handle image for both formats - Debug and fix
+                      // Handle image for both formats
                       const titelbild = article.titelbild || (article.attributes && article.attributes.titelbild)
-                      console.log('Mobile Article titelbild:', titelbild)
                       
                       // Try multiple possible image URL structures
                       let imageUrl: string | null = null
@@ -606,8 +598,6 @@ export default function HomePage() {
                                   (titelbild as any).attributes?.url ||
                                   (titelbild as any).data?.url
                       }
-                      
-                      console.log('Mobile Final imageUrl:', imageUrl)
 
                       const timeAgo = datum ? new Date(datum).toLocaleDateString('de-DE', {
                         day: '2-digit',

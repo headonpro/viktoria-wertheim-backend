@@ -97,7 +97,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
             }
           }
         })
-        
+
         const apiNews = response.data.data || []
         setNewsArticles(apiNews.length > 0 ? apiNews : mockNewsArticles)
       } catch (err) {
@@ -157,8 +157,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
     })
     .join('\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0')
 
-  // Wiederhole den Text mehrfach für längeren, seamless Loop
-  const newsText = `${baseNewsText}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${baseNewsText}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${baseNewsText}`
+
 
   // Erstelle News-Elemente mit gelben Separatoren für die Anzeige
   const createNewsContent = (text: string) => {
@@ -174,7 +173,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
   }
 
   return (
-    <div 
+    <div
       className="w-full bg-transparent relative overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -190,7 +189,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
 
           {/* Scrolling News Container */}
           <div className="flex-1 overflow-hidden relative">
-            <div 
+            <div
               className="cursor-pointer animate-scroll"
               onClick={() => onNewsClick?.(newsArticles[0])}
               style={{
@@ -211,7 +210,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
               <DarkModeToggle />
             </div>
           </div>
-          
+
           {/* CSS Animation */}
           <style jsx>{`
             @keyframes scroll-seamless {
