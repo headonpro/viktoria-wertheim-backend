@@ -178,7 +178,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="max-w-6xl mx-auto px-4 py-2 md:py-3 relative">
+      <div className="max-w-6xl mx-auto px-4 py-2 md:py-3 pb-6 md:pb-8 relative">
         <div className="flex items-center">
           {/* Kompaktes News Label */}
           <div className="flex-shrink-0 mr-4">

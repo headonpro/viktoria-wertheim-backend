@@ -269,7 +269,7 @@ export default function HomePage() {
 
   return (
     <PageLayout>
-      <div className="space-y-6 md:space-y-8 lg:space-y-10">
+      <div>
         {/* News Ticker Section */}
         <div className="mt-2 md:mt-0 lg:px-0">
           <div className="lg:max-w-5xl lg:mx-auto">
@@ -278,7 +278,7 @@ export default function HomePage() {
         </div>
 
         {/* Team Status Section */}
-        <AnimatedSection className="px-4 md:px-6 lg:px-0 py-2 md:py-3" delay={0.1}>
+        <AnimatedSection className="px-4 md:px-6 lg:px-0 py-2 md:py-3 mt-4 md:mt-6" delay={0.1}>
           <div className="lg:max-w-5xl lg:mx-auto">
             <TeamStatus 
               selectedTeam={selectedTeam} 
@@ -287,7 +287,7 @@ export default function HomePage() {
           </div>
         </AnimatedSection>
         {/* Game Cards Section */}
-        <div className="px-4 md:px-6 lg:px-0">
+        <div className="px-4 md:px-6 lg:px-0 mt-12 md:mt-18 lg:mt-20">
           <AnimatedSection className="py-2 md:py-3" delay={0.15}>
             <div className="lg:max-w-5xl lg:mx-auto">
               <GameCards selectedTeam={selectedTeam} />
@@ -295,7 +295,7 @@ export default function HomePage() {
           </AnimatedSection>
         </div>
         {/* League Table Section */}
-        <div className="px-4 md:px-6 lg:px-0">
+        <div className="px-4 md:px-6 lg:px-0 mt-12 md:mt-18 lg:mt-20">
           <AnimatedSection className="py-2 md:py-3" delay={0.18}>
             <div className="lg:max-w-5xl lg:mx-auto">
               <LeagueTable selectedTeam={selectedTeam} />
@@ -303,7 +303,7 @@ export default function HomePage() {
           </AnimatedSection>
         </div>
         {/* Top Scorers Section */}
-        <div className="px-4 md:px-6">
+        <div className="px-4 md:px-6 mt-12 md:mt-18 lg:mt-20">
           <AnimatedSection className="py-2 md:py-3" delay={0.2}>
             <div className="container max-w-4xl lg:max-w-5xl">
               <div className="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -432,7 +432,7 @@ export default function HomePage() {
         </div>
         
         {/* Latest News Section - Mobile/Tablet separate section */}
-        <div className="px-4 md:px-6 lg:hidden">
+        <div className="px-4 md:px-6 lg:hidden mt-12 md:mt-18 lg:mt-20">
           <AnimatedSection className="py-2 md:py-3" delay={0.25}>
             <div className="container max-w-6xl">
               <NewsCarousel newsArticles={newsArticles} onNewsClick={openModal} />
@@ -441,7 +441,7 @@ export default function HomePage() {
         </div>
         
         {/* Sponsors Section */}
-        <div className="px-4 md:px-6 lg:px-0">
+        <div className="px-4 md:px-6 lg:px-0 mt-12 md:mt-18 lg:mt-20">
           <AnimatedSection className="py-2 md:py-3" delay={0.5}>
             <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto">
               <SponsorShowcase />
