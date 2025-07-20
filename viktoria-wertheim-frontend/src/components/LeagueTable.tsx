@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Image from "next/image"
@@ -164,77 +164,78 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
     }
   }
 
-  // Mannschaftsspezifische Mock-Daten
-  const getMockTeams = (team: '1' | '2' | '3'): Team[] => {
-    const baseTeams = {
-      '1': [
-        { name: 'FC Umpfertal', position: 1, points: 45 },
-        { name: 'FC Hundheim-Steinbach', position: 2, points: 42 },
-        { name: 'FV Brehmbachtal', position: 3, points: 38 },
-        { name: 'Kickers DHK Wertheim', position: 4, points: 35 },
-        { name: 'SG RaMBo', position: 5, points: 32 },
-        { name: 'SV Pülfringen', position: 6, points: 28 },
-        { name: 'SV Schönfeld', position: 7, points: 25 },
-        { name: 'SV Viktoria Wertheim', position: 8, points: 22 },
-        { name: 'SpG Impfingen/Tauberbischofsheim 2', position: 9, points: 18 },
-        { name: 'SpG Schwabhausen/Windischbuch', position: 10, points: 15 },
-        { name: 'TSV Assamstadt', position: 11, points: 12 },
-        { name: 'TSV Kreuzwertheim', position: 12, points: 10 },
-        { name: 'TuS Großrinderfeld', position: 13, points: 8 },
-        { name: 'Türkgücü Wertheim', position: 14, points: 6 },
-        { name: 'VfB Reicholzheim', position: 15, points: 4 },
-        { name: 'VfR Gerlachsheim', position: 16, points: 2 }
-      ],
-      '2': [
-        { name: 'TSV Assamstadt II', position: 1, points: 38 },
-        { name: 'FC Eichel II', position: 2, points: 35 },
-        { name: 'SV Viktoria Wertheim II', position: 3, points: 32 },
-        { name: 'TSV Kreuzwertheim II', position: 4, points: 29 },
-        { name: 'SV Pülfringen II', position: 5, points: 26 },
-        { name: 'Türkgücü Wertheim II', position: 6, points: 23 },
-        { name: 'FC Hundheim II', position: 7, points: 20 },
-        { name: 'SV Schönfeld II', position: 8, points: 17 },
-        { name: 'FV Brehmbachtal II', position: 9, points: 14 },
-        { name: 'SG RaMBo II', position: 10, points: 11 },
-        { name: 'VfR Gerlachsheim II', position: 11, points: 8 },
-        { name: 'VfB Reicholzheim II', position: 12, points: 5 }
-      ],
-      '3': [
-        { name: 'FC Eichel III', position: 1, points: 42 },
-        { name: 'TSV Assamstadt III', position: 2, points: 39 },
-        { name: 'SV Pülfringen III', position: 3, points: 36 },
-        { name: 'SV Viktoria Wertheim III', position: 4, points: 33 },
-        { name: 'TSV Kreuzwertheim III', position: 5, points: 30 },
-        { name: 'SV Schönfeld III', position: 6, points: 27 },
-        { name: 'Türkgücü Wertheim III', position: 7, points: 24 },
-        { name: 'FC Hundheim III', position: 8, points: 21 },
-        { name: 'FV Brehmbachtal III', position: 9, points: 18 },
-        { name: 'VfR Gerlachsheim III', position: 10, points: 15 },
-        { name: 'SG RaMBo III', position: 11, points: 12 },
-        { name: 'VfB Reicholzheim III', position: 12, points: 9 }
-      ]
+  // Mannschaftsspezifische Mock-Daten - als useMemo für Performance
+  const mockTeams = useMemo(() => {
+    const getMockTeams = (team: '1' | '2' | '3'): Team[] => {
+      const baseTeams = {
+        '1': [
+          { name: 'FC Umpfertal', position: 1, points: 45 },
+          { name: 'FC Hundheim-Steinbach', position: 2, points: 42 },
+          { name: 'FV Brehmbachtal', position: 3, points: 38 },
+          { name: 'Kickers DHK Wertheim', position: 4, points: 35 },
+          { name: 'SG RaMBo', position: 5, points: 32 },
+          { name: 'SV Pülfringen', position: 6, points: 28 },
+          { name: 'SV Schönfeld', position: 7, points: 25 },
+          { name: 'SV Viktoria Wertheim', position: 8, points: 22 },
+          { name: 'SpG Impfingen/Tauberbischofsheim 2', position: 9, points: 18 },
+          { name: 'SpG Schwabhausen/Windischbuch', position: 10, points: 15 },
+          { name: 'TSV Assamstadt', position: 11, points: 12 },
+          { name: 'TSV Kreuzwertheim', position: 12, points: 10 },
+          { name: 'TuS Großrinderfeld', position: 13, points: 8 },
+          { name: 'Türkgücü Wertheim', position: 14, points: 6 },
+          { name: 'VfB Reicholzheim', position: 15, points: 4 },
+          { name: 'VfR Gerlachsheim', position: 16, points: 2 }
+        ],
+        '2': [
+          { name: 'TSV Assamstadt II', position: 1, points: 38 },
+          { name: 'FC Eichel II', position: 2, points: 35 },
+          { name: 'SV Viktoria Wertheim II', position: 3, points: 32 },
+          { name: 'TSV Kreuzwertheim II', position: 4, points: 29 },
+          { name: 'SV Pülfringen II', position: 5, points: 26 },
+          { name: 'Türkgücü Wertheim II', position: 6, points: 23 },
+          { name: 'FC Hundheim II', position: 7, points: 20 },
+          { name: 'SV Schönfeld II', position: 8, points: 17 },
+          { name: 'FV Brehmbachtal II', position: 9, points: 14 },
+          { name: 'SG RaMBo II', position: 10, points: 11 },
+          { name: 'VfR Gerlachsheim II', position: 11, points: 8 },
+          { name: 'VfB Reicholzheim II', position: 12, points: 5 }
+        ],
+        '3': [
+          { name: 'FC Eichel III', position: 1, points: 42 },
+          { name: 'TSV Assamstadt III', position: 2, points: 39 },
+          { name: 'SV Pülfringen III', position: 3, points: 36 },
+          { name: 'SV Viktoria Wertheim III', position: 4, points: 33 },
+          { name: 'TSV Kreuzwertheim III', position: 5, points: 30 },
+          { name: 'SV Schönfeld III', position: 6, points: 27 },
+          { name: 'Türkgücü Wertheim III', position: 7, points: 24 },
+          { name: 'FC Hundheim III', position: 8, points: 21 },
+          { name: 'FV Brehmbachtal III', position: 9, points: 18 },
+          { name: 'VfR Gerlachsheim III', position: 10, points: 15 },
+          { name: 'SG RaMBo III', position: 11, points: 12 },
+          { name: 'VfB Reicholzheim III', position: 12, points: 9 }
+        ]
+      }
+
+      return baseTeams[team].map(teamData => ({
+        position: teamData.position,
+        name: teamData.name,
+        logo: getTeamLogo(teamData.name),
+        games: 18,
+        wins: Math.floor(teamData.points / 3),
+        draws: teamData.points % 3,
+        losses: 18 - Math.floor(teamData.points / 3) - (teamData.points % 3),
+        goalsFor: Math.floor(Math.random() * 30) + 15,
+        goalsAgainst: Math.floor(Math.random() * 25) + 10,
+        goalDifference: Math.floor(Math.random() * 20) - 10,
+        points: teamData.points
+      }))
     }
 
-    return baseTeams[team].map(teamData => ({
-      position: teamData.position,
-      name: teamData.name,
-      logo: getTeamLogo(teamData.name),
-      games: 18,
-      wins: Math.floor(teamData.points / 3),
-      draws: teamData.points % 3,
-      losses: 18 - Math.floor(teamData.points / 3) - (teamData.points % 3),
-      goalsFor: Math.floor(Math.random() * 30) + 15,
-      goalsAgainst: Math.floor(Math.random() * 25) + 10,
-      goalDifference: Math.floor(Math.random() * 20) - 10,
-      points: teamData.points
-    }))
-  }
-
-  // Mock data as fallback
-  const mockTeams: Team[] = getMockTeams(selectedTeam)
+    return getMockTeams(selectedTeam)
+  }, [selectedTeam])
 
   // Fetch league standings from API
-  const fetchLeagueData = async () => {
+  const fetchLeagueData = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -274,11 +275,11 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [selectedTeam, mockTeams])
 
   useEffect(() => {
     fetchLeagueData()
-  }, [selectedTeam])
+  }, [fetchLeagueData])
 
   // Add refresh function for manual updates
   const refreshData = async () => {
@@ -307,7 +308,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           onClick={toggleExpanded}
         >
           {/* Title Header */}
-          <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+          <div className="px-8 md:px-12 py-6 md:py-8 text-center">
             <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               {getLeagueName(selectedTeam)}
             </h2>
@@ -451,7 +452,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           )}
 
           {/* Expand/Collapse Indicator */}
-          <div className="px-4 md:px-8 py-4 md:py-5 text-center transition-colors">
+          <div className="px-8 md:px-12 py-6 md:py-8 text-center transition-colors">
             <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               <span>{isExpanded ? 'Weniger anzeigen' : 'Vollständige Tabelle anzeigen'}</span>
               {isExpanded ? <ChevronUp size={16} className="md:w-5 md:h-5" /> : <ChevronDown size={16} className="md:w-5 md:h-5" />}

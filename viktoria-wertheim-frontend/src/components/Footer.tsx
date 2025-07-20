@@ -13,7 +13,7 @@ const AnimatedSection = dynamic(
 export default function Footer() {
   return (
     <AnimatedSection
-      className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-transparent dark:to-transparent dark:bg-white/[0.02] text-white dark:text-white py-8 md:py-12 px-4"
+      className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-transparent dark:to-transparent dark:bg-white/[0.02] text-white dark:text-white pt-16 pb-8 md:pt-24 md:pb-12 lg:pt-32 px-4"
       delay={0.7}
     >
       <div className="container">

@@ -19,13 +19,13 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
     return (
       <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]">
         {/* Title Header */}
-        <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+        <div className="px-8 md:px-12 py-6 md:py-8 text-center">
           <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
             Neueste Nachrichten
           </h2>
         </div>
         
-        <div className="pb-2 md:pb-3">
+        <div className="pb-6 md:pb-8">
           {newsArticles
             .filter(article => {
               const titel = article.titel || (article.attributes && article.attributes.titel)
@@ -140,10 +140,10 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
 
   // Mobile/tablet version - horizontal carousel
   return (
-    <div className="space-y-4">
-      {/* Title Header with Border */}
-      <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] shadow-2xl shadow-black/20 dark:shadow-white/[0.25]">
-        <div className="px-4 md:px-8 py-3 md:py-4 text-center">
+    <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] shadow-2xl shadow-black/20 dark:shadow-white/[0.25] p-8 md:p-12">
+      {/* Title Header */}
+      <div className="mb-6 md:mb-8">
+        <div className="text-center">
           <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
             Neueste Nachrichten
           </h2>
@@ -159,8 +159,8 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
           msOverflowStyle: 'none',
           width: '100vw',
           marginLeft: 'calc(-50vw + 50%)',
-          paddingLeft: '1rem',
-          paddingRight: '1rem'
+          paddingLeft: 'calc(50vw - 50% - 8rem)',
+          paddingRight: 'calc(50vw - 50% - 8rem)'
         }}
       >
         {newsArticles
@@ -194,7 +194,9 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
             return (
               <div
                 key={article.id}
-                className="flex-shrink-0 w-56 sm:w-64 md:w-72 lg:w-80 bg-white/10 dark:bg-white/[0.02] rounded-lg overflow-hidden cursor-pointer hover:bg-white/20 dark:hover:bg-white/[0.05] transition-all duration-300 group border border-white/20 dark:border-white/[0.05]"
+                className={`flex-shrink-0 w-56 sm:w-64 md:w-72 lg:w-80 bg-white/10 dark:bg-white/[0.02] rounded-lg overflow-hidden cursor-pointer hover:bg-white/20 dark:hover:bg-white/[0.05] transition-all duration-300 group border border-white/20 dark:border-white/[0.05] ${
+                  index === 0 ? 'ml-[25vw] md:ml-0' : ''
+                }`}
                 onClick={() => onNewsClick(article)}
               >
                 {/* Image */}

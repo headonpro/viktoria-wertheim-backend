@@ -190,7 +190,7 @@ export default function TeamsPage() {
                     </div>
 
                     {/* Team Content */}
-                    <div className="p-4 md:p-6 flex-grow flex flex-col">
+                    <div className="p-16 md:p-24 flex-grow flex flex-col">
                       {/* Team Name */}
                       <div className="mb-4">
                         <h3 className="text-lg md:text-xl font-bold text-gray-800 dark:text-gray-200 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">

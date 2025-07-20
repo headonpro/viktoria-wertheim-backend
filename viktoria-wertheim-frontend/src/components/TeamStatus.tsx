@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import dynamic from 'next/dynamic'
-import { IconTrendingUp, IconTrendingDown, IconArrowRight } from '@tabler/icons-react'
+import { IconTrendingUp, IconTrendingDown, IconArrowRight, IconCircle1, IconCircle2, IconCircle3 } from '@tabler/icons-react'
 import { leagueService } from '@/services/leagueService'
 
 const AnimatedSection = dynamic(
@@ -32,7 +32,7 @@ interface TeamStatusProps {
 
 export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusProps) {
   // Mannschaftsspezifische Daten
-  const teamDataMap: Record<TeamType, TeamData> = {
+  const teamDataMap: Record<TeamType, TeamData> = useMemo(() => ({
     '1': {
       formLetzten5: ['S', 'U', 'S', 'N', 'S'],
       tabellenplatz: 8,
@@ -51,7 +51,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
       platzierungsveraenderung: 'N',
       liga: 'Kreisklasse B'
     }
-  }
+  }), [])
 
   const [teamData, setTeamData] = useState<TeamData>(teamDataMap[selectedTeam])
   const [loading, setLoading] = useState(true)
@@ -96,7 +96,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
     }
 
     fetchTeamData()
-  }, [selectedTeam])
+  }, [selectedTeam, teamDataMap])
 
   const getFormColor = (result: string) => {
     switch (result) {
@@ -125,6 +125,19 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
     }
   }
 
+  const getTeamIcon = (team: TeamType, isSelected: boolean) => {
+    const iconClass = isSelected 
+      ? "text-gray-800" // Dunkle Schrift für aktiven Button auf gelbem Hintergrund
+      : "text-gray-700 dark:text-gray-300"; // Normale Schrift für inaktive Buttons
+    
+    switch (team) {
+      case '1': return <IconCircle1 size={32} className={iconClass} strokeWidth={2.5} />
+      case '2': return <IconCircle2 size={32} className={iconClass} strokeWidth={2.5} />
+      case '3': return <IconCircle3 size={32} className={iconClass} strokeWidth={2.5} />
+      default: return <IconCircle1 size={32} className={iconClass} strokeWidth={2.5} />
+    }
+  }
+
   return (
     <div className="container max-w-6xl">
       <AnimatedDiv
@@ -132,35 +145,35 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
         delay={0.1}
       >
         {/* Mannschaftsauswahl Buttons */}
-        <div className="px-4 py-3 md:px-6 md:py-4 border-b border-white/20 dark:border-white/[0.05]">
+        <div className="px-8 py-6 md:px-12 md:py-8">
           {/* Titel */}
-          <div className="text-center mb-3 md:mb-4">
+          <div className="text-center mb-6 md:mb-8">
             <h3 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               Mannschaften
             </h3>
           </div>
-          <div className="grid grid-cols-3 gap-4 items-center">
+          <div className="grid grid-cols-3 gap-8 items-center mb-6 md:mb-8">
             {(['1', '2', '3'] as TeamType[]).map((team) => (
               <div key={team} className="flex justify-center">
                 <button
                   onClick={() => onTeamChange(team)}
-                  className={`px-6 py-2 md:px-8 md:py-3 rounded-lg text-sm md:text-base font-semibold transition-all duration-300 whitespace-nowrap ${
+                  className={`px-6 py-2 md:px-8 md:py-3 rounded-lg text-sm md:text-base font-semibold transition-all duration-300 whitespace-nowrap flex items-center gap-2 ${
                     selectedTeam === team
                       ? 'bg-viktoria-yellow text-gray-800 shadow-lg shadow-viktoria-yellow/30'
                       : 'bg-white/30 dark:bg-white/[0.05] text-gray-700 dark:text-gray-300'
                   }`}
                 >
-                  <span className="block md:hidden">{team}.</span>
-                  <span className="hidden md:block">{team}. Mannschaft</span>
+                  <span className="block md:hidden">{getTeamIcon(team, selectedTeam === team)}</span>
+                  <span className="hidden md:block">
+                    {getTeamIcon(team, selectedTeam === team)}
+                  </span>
                 </button>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Kompakte horizontale Anordnung mit Grid */}
-        <div className="px-4 py-3 md:px-6 md:py-4">
-          <div className="grid grid-cols-3 gap-4 items-end">
+          {/* Kompakte horizontale Anordnung mit Grid */}
+          <div className="grid grid-cols-3 gap-8 items-end">
             
             {/* Platz - Links */}
             <div className="text-center">

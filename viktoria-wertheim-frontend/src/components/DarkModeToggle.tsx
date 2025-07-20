@@ -34,7 +34,6 @@ export default function DarkModeToggle() {
       whileTap={{ scale: 0.95 }}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       aria-pressed={isDark}
-      role="switch"
     >
       {/* Single Icon with smooth transition */}
       <motion.div

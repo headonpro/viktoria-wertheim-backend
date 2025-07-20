@@ -14,7 +14,8 @@
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
     "seed:leaderboard": "node scripts/seed-leaderboard.js",
-    "seed:leaderboard:clear": "node scripts/seed-leaderboard.js --clear"
+    "seed:leaderboard:clear": "node scripts/seed-leaderboard.js --clear",
+    "lint": "echo 'No linting configured for Strapi backend'"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.18.0",

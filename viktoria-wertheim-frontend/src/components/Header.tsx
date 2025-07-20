@@ -44,7 +44,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-transparent dark:to-transparent dark:bg-white/[0.02] backdrop-blur-md border-b border-white/40 dark:border-white/[0.08] shadow-lg hover:shadow-xl transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-transparent dark:to-transparent dark:bg-white/[0.02] backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300">
         <div className="container">
           {/* Mobile Layout - unchanged */}
           <div className="grid grid-cols-3 items-center lg:hidden" style={{ height: '70px' }}>
