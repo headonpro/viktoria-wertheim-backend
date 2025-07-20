@@ -1,0 +1,40 @@
+================================================================================
+MIGRATION REPORT
+================================================================================
+
+Status: SUCCESS
+Start Time: 2025-07-20T14:08:39.065Z
+End Time: 2025-07-20T14:08:39.594Z
+Duration: 1s
+
+STATISTICS:
+  Tables Processed: 40/40
+  Records Exported: 1003
+  Records Transformed: 1003
+  Records Imported: 1003
+  Errors: 0
+  Warnings: 13
+
+WARNINGS:
+  1. [transform] Data validation found 538 errors and 538 warnings
+  2. [import] Foreign key constraint warning for table admin_permissions_role_lnk: relation "permissions" does not exist
+  3. [import] Foreign key constraint warning for table admin_permissions_role_lnk: relation "roles" does not exist
+  4. [import] Foreign key constraint warning for table admin_users_roles_lnk: relation "users" does not exist
+  5. [import] Foreign key constraint warning for table admin_users_roles_lnk: relation "roles" does not exist
+  6. [import] Foreign key constraint warning for table files_folder_lnk: relation "folders" does not exist
+  7. [import] Foreign key constraint warning for table files_related_mph: relation "relateds" does not exist
+  8. [import] Foreign key constraint warning for table news_artikel_kategorie_lnk: relation "news_artikels" does not exist
+  9. [import] Foreign key constraint warning for table up_permissions_role_lnk: relation "permissions" does not exist
+  10. [import] Foreign key constraint warning for table up_permissions_role_lnk: relation "roles" does not exist
+  11. [import] Foreign key constraint warning for table up_users_role_lnk: relation "users" does not exist
+  12. [import] Foreign key constraint warning for table up_users_role_lnk: relation "roles" does not exist
+  13. [import] Foreign key constraint warning for table upload_folders: relation "paths" does not exist
+
+ROLLBACK INFORMATION:
+  To rollback the migration:
+  1. Stop the application
+  2. Replace the current database with: backups\sqlite-backup-2025-07-20T14-08-39-115Z.db
+  3. Update database configuration to use SQLite
+  4. Restart the application
+
+================================================================================

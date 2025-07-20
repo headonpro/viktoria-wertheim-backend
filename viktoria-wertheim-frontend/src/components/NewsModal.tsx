@@ -123,7 +123,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
               {((article.titelbild && article.titelbild.url) || (article.attributes?.titelbild?.data)) && (
                 <div className="relative h-48 md:h-64 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'}${
+                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${
                       article.titelbild?.url || article.attributes?.titelbild?.data?.attributes?.url
                     }`}
                     alt={

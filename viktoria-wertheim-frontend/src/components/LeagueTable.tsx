@@ -57,7 +57,7 @@ const shortenTeamName = (name: string): string => {
     return mainWord.substring(0, 3).toUpperCase();
   }
   
-  // Fallback: Erste 3 Buchstaben des ersten Wortes
+  // Default: Erste 3 Buchstaben des ersten Wortes
   return words[0].substring(0, 3).toUpperCase();
 }
 
@@ -77,62 +77,8 @@ const TeamNameDisplay = ({ team, isViktoriaTeam }: { team: { name: string }, isV
   </>
 )
 
-// Funktion zur automatischen Zuweisung von Logos basierend auf Teamnamen
-const getTeamLogo = (teamName: string): string | undefined => {
-  const teamLogos: { [key: string]: string } = {
-    'SV Viktoria Wertheim': '/viktorialogo.png',
-    'Viktoria Wertheim': '/viktorialogo.png',
-    'FC Eichel': '/fceichel.png',
-    'TSV Assamstadt': '/Assamstadt.png',
-    'Türkgücü Wertheim': '/Türkgücü.png',
-    'TSV Tauberbischofsheim': '/Tauberbischofsheim.png',
-    'FV Brehmbachtal': '/Brehmbachtal.png',
-    'SV Brehmbachtal': '/Brehmbachtal.png',
-    'SV Pülfringen': '/Pülfringen.png',
-    'SG Pülfringen': '/Pülfringen.png',
-    'TSV Kreuzwertheim': '/Kreuzwertheim.png',
-    'SV Kreuzwertheim': '/Kreuzwertheim.png',
-    'FC Hundheim-Steinbach': '/Hundheim.png',
-    'TSV Hundheim': '/Hundheim.png',
-    'SpG Schwabhausen/Windischbuch': '/Scwabhausen.png',
-    'SV Schwabhausen': '/Scwabhausen.png',
-    'FC Umpfertal': '/Umpfertal.png',
-    'SG Umpfertal': '/Umpfertal.png',
-    'SV Schönfeld': '/Schönfeld.png',
-    'Kickers DHK Wertheim': '/Kickers.png',
-    'Kickers Würzburg': '/Kickers.png',
-    'FC Kickers': '/Kickers.png',
-    'SG RaMBo': '/Rambo.png',
-    'VfR Gerlachsheim': '/Gerlachsheim.png',
-    'VfB Reicholzheim': '/Reichholzheim.png',
-    'TuS Großrinderfeld': '/Großrinderfeld.png',
-  }
-
-  // Exakte Übereinstimmung
-  if (teamLogos[teamName]) {
-    return teamLogos[teamName]
-  }
-
-  // Partielle Übereinstimmung für flexiblere Namen
-  for (const [key, logo] of Object.entries(teamLogos)) {
-    const teamWords = teamName.toLowerCase().split(' ')
-    const keyWords = key.toLowerCase().split(' ')
-
-    // Prüfe ob mindestens ein charakteristisches Wort übereinstimmt
-    for (const teamWord of teamWords) {
-      for (const keyWord of keyWords) {
-        if (teamWord.includes(keyWord) || keyWord.includes(teamWord)) {
-          // Zusätzliche Prüfung für gemeinsame Begriffe wie "FC", "SV", etc.
-          if (teamWord.length > 2 && keyWord.length > 2) {
-            return logo
-          }
-        }
-      }
-    }
-  }
-
-  return undefined
-}
+// Note: Team logos now come directly from the API data
+// No more local logo fallback mapping needed
 
 interface LeagueTableProps {
   selectedTeam: '1' | '2' | '3'
@@ -164,75 +110,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
     }
   }
 
-  // Mannschaftsspezifische Mock-Daten - als useMemo für Performance
-  const mockTeams = useMemo(() => {
-    const getMockTeams = (team: '1' | '2' | '3'): Team[] => {
-      const baseTeams = {
-        '1': [
-          { name: 'FC Umpfertal', position: 1, points: 45 },
-          { name: 'FC Hundheim-Steinbach', position: 2, points: 42 },
-          { name: 'FV Brehmbachtal', position: 3, points: 38 },
-          { name: 'Kickers DHK Wertheim', position: 4, points: 35 },
-          { name: 'SG RaMBo', position: 5, points: 32 },
-          { name: 'SV Pülfringen', position: 6, points: 28 },
-          { name: 'SV Schönfeld', position: 7, points: 25 },
-          { name: 'SV Viktoria Wertheim', position: 8, points: 22 },
-          { name: 'SpG Impfingen/Tauberbischofsheim 2', position: 9, points: 18 },
-          { name: 'SpG Schwabhausen/Windischbuch', position: 10, points: 15 },
-          { name: 'TSV Assamstadt', position: 11, points: 12 },
-          { name: 'TSV Kreuzwertheim', position: 12, points: 10 },
-          { name: 'TuS Großrinderfeld', position: 13, points: 8 },
-          { name: 'Türkgücü Wertheim', position: 14, points: 6 },
-          { name: 'VfB Reicholzheim', position: 15, points: 4 },
-          { name: 'VfR Gerlachsheim', position: 16, points: 2 }
-        ],
-        '2': [
-          { name: 'TSV Assamstadt II', position: 1, points: 38 },
-          { name: 'FC Eichel II', position: 2, points: 35 },
-          { name: 'SV Viktoria Wertheim II', position: 3, points: 32 },
-          { name: 'TSV Kreuzwertheim II', position: 4, points: 29 },
-          { name: 'SV Pülfringen II', position: 5, points: 26 },
-          { name: 'Türkgücü Wertheim II', position: 6, points: 23 },
-          { name: 'FC Hundheim II', position: 7, points: 20 },
-          { name: 'SV Schönfeld II', position: 8, points: 17 },
-          { name: 'FV Brehmbachtal II', position: 9, points: 14 },
-          { name: 'SG RaMBo II', position: 10, points: 11 },
-          { name: 'VfR Gerlachsheim II', position: 11, points: 8 },
-          { name: 'VfB Reicholzheim II', position: 12, points: 5 }
-        ],
-        '3': [
-          { name: 'FC Eichel III', position: 1, points: 42 },
-          { name: 'TSV Assamstadt III', position: 2, points: 39 },
-          { name: 'SV Pülfringen III', position: 3, points: 36 },
-          { name: 'SV Viktoria Wertheim III', position: 4, points: 33 },
-          { name: 'TSV Kreuzwertheim III', position: 5, points: 30 },
-          { name: 'SV Schönfeld III', position: 6, points: 27 },
-          { name: 'Türkgücü Wertheim III', position: 7, points: 24 },
-          { name: 'FC Hundheim III', position: 8, points: 21 },
-          { name: 'FV Brehmbachtal III', position: 9, points: 18 },
-          { name: 'VfR Gerlachsheim III', position: 10, points: 15 },
-          { name: 'SG RaMBo III', position: 11, points: 12 },
-          { name: 'VfB Reicholzheim III', position: 12, points: 9 }
-        ]
-      }
 
-      return baseTeams[team].map(teamData => ({
-        position: teamData.position,
-        name: teamData.name,
-        logo: getTeamLogo(teamData.name),
-        games: 18,
-        wins: Math.floor(teamData.points / 3),
-        draws: teamData.points % 3,
-        losses: 18 - Math.floor(teamData.points / 3) - (teamData.points % 3),
-        goalsFor: Math.floor(Math.random() * 30) + 15,
-        goalsAgainst: Math.floor(Math.random() * 25) + 10,
-        goalDifference: Math.floor(Math.random() * 20) - 10,
-        points: teamData.points
-      }))
-    }
-
-    return getMockTeams(selectedTeam)
-  }, [selectedTeam])
 
   // Fetch league standings from API
   const fetchLeagueData = useCallback(async () => {
@@ -246,36 +124,31 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           const apiTeams = await leagueService.fetchLeagueStandings()
           
           if (apiTeams && apiTeams.length > 0) {
-            // Use API data and add fallback logos for teams without logos
-            const teamsWithLogos = apiTeams.map(team => ({
-              ...team,
-              logo: team.logo || getTeamLogo(team.name)
-            }))
-            setTeams(teamsWithLogos)
+            // Use API data - logos come from API or remain undefined
+            setTeams(apiTeams)
             setLastUpdated(new Date())
           } else {
-            // Fallback to mock data if API returns empty
-            console.warn('API returned empty data, using mock data')
-            setTeams(mockTeams)
+            // No API data available - show empty state
+            console.warn('API returned empty data')
+            setTeams([])
           }
         } catch (apiError) {
-          console.warn('API data not available, using mock data:', apiError)
-          setTeams(mockTeams)
+          console.warn('API data not available:', apiError)
+          setTeams([])
         }
       } else {
-        // Für 2. und 3. Mannschaft verwenden wir Mock-Daten
-        setTeams(mockTeams)
+        // Für 2. und 3. Mannschaft keine Daten verfügbar
+        setTeams([])
       }
       
     } catch (err) {
       console.error('Failed to fetch league standings:', err)
       setError('Tabelle konnte nicht geladen werden')
-      // Fallback to mock data on error
-      setTeams(mockTeams)
+      setTeams([])
     } finally {
       setLoading(false)
     }
-  }, [selectedTeam, mockTeams])
+  }, [selectedTeam])
 
   useEffect(() => {
     fetchLeagueData()
@@ -355,8 +228,27 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
             </div>
           )}
 
+          {/* Empty State */}
+          {!loading && !error && teams.length === 0 && (
+            <div className="px-4 md:px-8 py-8 text-center">
+              <div className="text-gray-400 mb-2">📊</div>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                {selectedTeam === '1' 
+                  ? 'Keine Tabellendaten verfügbar' 
+                  : `Keine Daten für ${selectedTeam === '2' ? '2. Mannschaft' : '3. Mannschaft'} verfügbar`
+                }
+              </p>
+              <button
+                onClick={refreshData}
+                className="px-4 py-2 bg-viktoria-blue text-white rounded-lg text-sm hover:bg-viktoria-blue-light transition-colors"
+              >
+                Erneut laden
+              </button>
+            </div>
+          )}
+
           {/* Teams */}
-          {!loading && !error && (
+          {!loading && !error && teams.length > 0 && (
             <div>
               {displayedTeams.map((team) => {
                 const isViktoriaTeam = team.name === currentViktoriaTeam

@@ -24,118 +24,7 @@ interface Sponsor {
   }
 }
 
-// Mock data for development with local logos
-const mockSponsors: Sponsor[] = [
-  {
-    id: 0,
-    attributes: {
-      name: 'Red Bull',
-      logo: {
-        data: {
-          attributes: {
-            url: '/RedBullLogo.png',
-            alternativeText: 'Red Bull Logo'
-          }
-        }
-      },
-      website_url: 'https://www.redbull.com',
-      beschreibung: 'Red Bull verleiht Flügel – unser Hauptsponsor für Energie und Leistung.\nWeltweit führend im Energydrink-Bereich und Sport-Sponsoring.',
-      kategorie: 'hauptsponsor',
-      reihenfolge: 0
-    }
-  },
-  {
-    id: 1,
-    attributes: {
-      name: 'Kalinsky',
-      logo: {
-        data: {
-          attributes: {
-            url: '/KalinskyLogo.png',
-            alternativeText: 'Kalinsky Logo'
-          }
-        }
-      },
-      website_url: 'https://www.kalinsky.de',
-      beschreibung: 'Premium Partner für Qualität und Service.',
-      kategorie: 'premium',
-      reihenfolge: 1
-    }
-  },
-  {
-    id: 2,
-    attributes: {
-      name: 'Szabo',
-      logo: {
-        data: {
-          attributes: {
-            url: '/SzaboLogo.png',
-            alternativeText: 'Szabo Logo'
-          }
-        }
-      },
-      website_url: 'https://www.szabo.de',
-      beschreibung: 'Premium Partner für professionelle Dienstleistungen.',
-      kategorie: 'premium',
-      reihenfolge: 2
-    }
-  },
-  {
-    id: 3,
-    attributes: {
-      name: 'Pink',
-      logo: {
-        data: {
-          attributes: {
-            url: '/PinkLogo.png',
-            alternativeText: 'Pink Logo'
-          }
-        }
-      },
-      website_url: 'https://www.pink.de',
-      beschreibung: 'Zuverlässiger Partner für innovative Lösungen.',
-      kategorie: 'premium',
-      reihenfolge: 3
-    }
-  },
-  {
-    id: 4,
-    attributes: {
-      name: 'Zippe',
-      logo: {
-        data: {
-          attributes: {
-            url: '/ZippeLogo.png',
-            alternativeText: 'Zippe Logo'
-          }
-        }
-      },
-      website_url: 'https://www.zippe.de',
-      beschreibung: 'Die Firma Zippe aus Wertheim – unser starker Partner für Technik und Umwelt.\nWeltweit führend im Glasrecycling und Bau von Schmelzanlagen.',
-      kategorie: 'partner',
-      reihenfolge: 4
-    }
-  },
-  {
-    id: 5,
-    attributes: {
-      name: 'Zorbas',
-      logo: {
-        data: {
-          attributes: {
-            url: '/ZorbasLogo.png',
-            alternativeText: 'Zorbas Logo'
-          }
-        }
-      },
-      website_url: 'https://www.zorbas.de',
-      beschreibung: 'Kulinarischer Partner für besondere Momente.',
-      kategorie: 'partner',
-      reihenfolge: 5
-    }
-  },
 
-]
 
 export default function SponsorShowcase() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([])
@@ -153,23 +42,22 @@ export default function SponsorShowcase() {
         })
 
         const apiSponsors = response.data.data || []
-        if (apiSponsors.length > 0) {
-          setSponsors(apiSponsors)
-        } else {
-          // No sponsors found in API, use mock data
-          console.log('No sponsors found in API, using mock data')
-          setSponsors(mockSponsors)
-        }
+        setSponsors(apiSponsors)
       } catch (error) {
-        // API error (404, 403, etc.), use mock data
-        if (error.response?.status === 404) {
-          console.log('Sponsors API endpoint not found (404), using mock data')
-        } else if (error.response?.status === 403) {
-          console.log('Sponsors API access forbidden (403), check permissions in Strapi admin')
+        // API error - show empty state
+        if (error && typeof error === 'object' && 'response' in error) {
+          const axiosError = error as any;
+          if (axiosError.response?.status === 404) {
+            console.log('Sponsors API endpoint not found (404)')
+          } else if (axiosError.response?.status === 403) {
+            console.log('Sponsors API access forbidden (403), check permissions in Strapi admin')
+          } else {
+            console.error('Error fetching sponsors:', axiosError.message || 'Unknown error')
+          }
         } else {
-          console.error('Error fetching sponsors:', error.message)
+          console.error('Error fetching sponsors:', error)
         }
-        setSponsors(mockSponsors)
+        setSponsors([])
       } finally {
         setLoading(false)
       }
@@ -488,57 +376,21 @@ export default function SponsorShowcase() {
                   </motion.div>
                 ))}
 
-                {/* Fiktive Partner für leere Plätze */}
-                {Array.from({ length: Math.max(0, 5 - partnerSponsoren.length) }, (_, index) => {
-                  const fiktivePartner = [
-                    { name: 'AutoHaus Weber', icon: 'M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.6-1.6-1.6h-1.9c-.7 0-1.3-.6-1.3-1.4s.6-1.4 1.3-1.4H22V6h-3.5c-2.2 0-4.1 1.8-4.3 4-.2 2.2 1.5 4 3.6 4h1.2v2h-2v1zM1 6v4h3.5c.8 0 1.5.7 1.5 1.5S5.3 13 4.5 13H1v4h2v-2h1.5c2.2 0 4-1.8 4-4s-1.8-4-4-4H1z' },
-                    { name: 'Bäckerei Müller', icon: 'M18 2c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h12zm-2 2H8c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V5c0-.6-.4-1-1-1zm-4 3c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3z' },
-                    { name: 'TechSolutions', icon: 'M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h3l-1 1v1h12v-1l-1-1h3c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11z' }
-                  ]
 
-                  const partner = fiktivePartner[index % fiktivePartner.length]
-
-                  return (
-                    <motion.div
-                      key={`fictional-${index}`}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: (partnerSponsoren.length + index) * 0.05 }}
-                      className="w-full cursor-pointer group"
-                      onClick={() => {
-                        window.location.href = '/kontakt'
-                      }}
-                    >
-                      <div className="p-2 transition-all duration-200 hover:scale-105">
-                        <div className="relative h-10 mb-1 flex items-center justify-center">
-                          <svg
-                            className="h-8 w-8 brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d={partner.icon} />
-                          </svg>
-                        </div>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 text-center truncate group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
-                          {partner.name}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )
-                })}
               </div>
             </motion.div>
           )}
 
-          {/* Fallback */}
-          {sponsors.length === 0 && (
-            <div className="text-center py-4">
-              <p className="text-white/50 text-xs mb-2">
-                Keine Partner verfügbar
+          {/* Empty State - Only show when no sponsors are available */}
+          {sponsors.length === 0 && !loading && (
+            <div className="text-center py-8">
+              <div className="text-gray-400 mb-3">🤝</div>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
+                Derzeit sind keine Partner-Daten verfügbar
               </p>
-              <button className="bg-viktoria-yellow/20 text-viktoria-yellow px-3 py-1 rounded-md text-xs font-medium hover:bg-viktoria-yellow/30 transition-colors">
-                Partner werden
-              </button>
+              <p className="text-gray-600 dark:text-gray-300 text-xs">
+                Interesse an einer Partnerschaft? Kontaktieren Sie uns!
+              </p>
             </div>
           )}
         </div>

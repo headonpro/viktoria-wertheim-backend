@@ -4,8 +4,7 @@
   "info": {
     "singularName": "sponsor",
     "pluralName": "sponsors",
-    "displayName": "Sponsor",
-    "description": "Sponsoren und Partner des Vereins"
+    "displayName": "Sponsor"
   },
   "options": {
     "draftAndPublish": true
@@ -14,18 +13,24 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true,
-      "maxLength": 100
+      "maxLength": 100,
+      "required": true
     },
     "logo": {
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "website_url": {
       "type": "string",
-      "maxLength": 255
+      "maxLength": 255,
+      "required": false
     },
     "beschreibung": {
       "type": "text",
@@ -33,9 +38,12 @@
     },
     "kategorie": {
       "type": "enumeration",
-      "enum": ["hauptsponsor", "premium", "partner"],
-      "default": "partner",
-      "required": true
+      "enum": [
+        "hauptsponsor",
+        "premium",
+        "partner",
+        "default:partner"
+      ]
     },
     "reihenfolge": {
       "type": "integer",

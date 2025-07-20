@@ -11,63 +11,7 @@ import { NewsArtikel } from '@/types/strapi'
 import Link from 'next/link'
 import Image from 'next/image'
 
-// Mock data as fallback (moved outside component for stability)
-const mockArticles: { [key: string]: NewsArtikel } = {
-    '1': {
-      id: 1,
-      attributes: {
-        titel: 'Viktoria Wertheim gewinnt Derby mit 3:1',
-        inhalt: 'Ein spannendes Spiel endete mit einem verdienten Sieg für unsere Mannschaft. Die Tore fielen in der zweiten Halbzeit, als unser Team das Tempo erhöhte und die Kontrolle übernahm.\n\nDie Zuschauer sahen eine kämpferische Leistung und wurden mit einem tollen Fußballabend belohnt. Bereits in der 15. Minute gingen wir durch einen schönen Angriff über die rechte Seite in Führung.\n\nIn der zweiten Halbzeit erhöhten wir das Tempo und konnten durch zwei weitere Treffer den verdienten Sieg einfahren. Die Mannschaft zeigte eine geschlossene Leistung und kämpfte bis zur letzten Minute.',
-        datum: '2024-12-08',
-        kategorie: {
-          data: {
-            attributes: {
-              name: 'Spielberichte'
-            }
-          }
-        },
-        publishedAt: '2024-12-08T10:00:00.000Z',
-        createdAt: '2024-12-08T10:00:00.000Z',
-        updatedAt: '2024-12-08T10:00:00.000Z'
-      }
-    },
-    '2': {
-      id: 2,
-      attributes: {
-        titel: 'Neuer Trainer für die Jugend',
-        inhalt: 'Ab sofort wird unser Jugendbereich von einem erfahrenen Trainer geleitet. Mit seiner langjährigen Erfahrung im Nachwuchsbereich wird er unsere jungen Talente optimal fördern und weiterentwickeln.\n\nDer neue Trainer bringt moderne Trainingsmethoden mit und legt großen Wert auf die individuelle Förderung der Spieler. Wir freuen uns auf die Zusammenarbeit und sind gespannt auf die Entwicklung unserer Nachwuchstalente.',
-        datum: '2024-12-05',
-        kategorie: {
-          data: {
-            attributes: {
-              name: 'Vereinsnachrichten'
-            }
-          }
-        },
-        publishedAt: '2024-12-05T10:00:00.000Z',
-        createdAt: '2024-12-05T10:00:00.000Z',
-        updatedAt: '2024-12-05T10:00:00.000Z'
-      }
-    },
-    '3': {
-      id: 3,
-      attributes: {
-        titel: 'Saisonrückblick 2024',
-        inhalt: 'Die Saison 2024 war geprägt von vielen Höhepunkten und Erfolgen. Unser Team hat sich kontinuierlich verbessert und konnte wichtige Siege einfahren.\n\nBesonders stolz sind wir auf die Entwicklung unserer jungen Spieler, die sich perfekt in die Mannschaft integriert haben. Die Zusammenarbeit zwischen erfahrenen und jungen Spielern funktioniert hervorragend.\n\nWir blicken stolz auf die erreichten Leistungen zurück und freuen uns bereits auf die kommende Saison, in der wir an diese Erfolge anknüpfen möchten.',
-        datum: '2024-12-01',
-        kategorie: {
-          data: {
-            attributes: {
-              name: 'Allgemein'
-            }
-          }
-        },
-        publishedAt: '2024-12-01T10:00:00.000Z',
-        createdAt: '2024-12-01T10:00:00.000Z',
-        updatedAt: '2024-12-01T10:00:00.000Z'
-      }
-    }
-  }
+
 
 export default function NewsArticlePage() {
   const params = useParams()
@@ -88,16 +32,16 @@ export default function NewsArticlePage() {
           }
         })
 
-        // Use API data if available, otherwise use mock data
+        // Use API data
         const apiArticle = response.data.data
-        setArticle(apiArticle || mockArticles[id] || null)
-      } catch (err) {
-        console.error('Error fetching article, using mock data:', err)
-        // Use mock data as fallback
-        setArticle(mockArticles[id] || null)
-        if (!mockArticles[id]) {
+        setArticle(apiArticle || null)
+        if (!apiArticle) {
           setError('Artikel nicht gefunden')
         }
+      } catch (err) {
+        console.error('Error fetching article:', err)
+        setArticle(null)
+        setError('Artikel nicht gefunden')
       } finally {
         setLoading(false)
       }

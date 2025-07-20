@@ -27,176 +27,7 @@ const AnimatedDiv = dynamic(
   { ssr: false }
 )
 
-// Mock data als stabile Konstanten außerhalb der Komponente
-const mockTopScorers: Spieler[] = [
-  {
-    id: 1,
-    attributes: {
-      position: 'sturm',
-      rueckennummer: 9,
-      tore_saison: 19,
-      spiele_saison: 16,
-      mitglied: {
-        data: {
-          id: 1,
-          attributes: {
-            vorname: 'Okan',
-            nachname: 'Cirakoglu',
-            email: 'okan@example.com'
-          }
-        }
-      },
-      publishedAt: '2024-01-01T00:00:00.000Z',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z'
-    }
-  },
-  {
-    id: 2,
-    attributes: {
-      position: 'sturm',
-      rueckennummer: 10,
-      tore_saison: 12,
-      spiele_saison: 14,
-      mitglied: {
-        data: {
-          id: 2,
-          attributes: {
-            vorname: 'Max',
-            nachname: 'Mustermann',
-            email: 'max@example.com'
-          }
-        }
-      },
-      publishedAt: '2024-01-01T00:00:00.000Z',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z'
-    }
-  },
-  {
-    id: 3,
-    attributes: {
-      position: 'mittelfeld',
-      rueckennummer: 8,
-      tore_saison: 5,
-      spiele_saison: 12,
-      mitglied: {
-        data: {
-          id: 3,
-          attributes: {
-            vorname: 'Lukas',
-            nachname: 'Beispiel',
-            email: 'lukas@example.com'
-          }
-        }
-      },
-      publishedAt: '2024-01-01T00:00:00.000Z',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z'
-    }
-  },
-  {
-    id: 4,
-    attributes: {
-      position: 'sturm',
-      rueckennummer: 11,
-      tore_saison: 7,
-      spiele_saison: 10,
-      mitglied: {
-        data: {
-          id: 4,
-          attributes: {
-            vorname: 'Jonas',
-            nachname: 'Test',
-            email: 'jonas@example.com'
-          }
-        }
-      },
-      publishedAt: '2024-01-01T00:00:00.000Z',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z'
-    }
-  },
-  {
-    id: 5,
-    attributes: {
-      position: 'mittelfeld',
-      rueckennummer: 6,
-      tore_saison: 3,
-      spiele_saison: 8,
-      mitglied: {
-        data: {
-          id: 5,
-          attributes: {
-            vorname: 'Paul',
-            nachname: 'Demo',
-            email: 'paul@example.com'
-          }
-        }
-      },
-      publishedAt: '2024-01-01T00:00:00.000Z',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z'
-    }
-  }
-]
 
-const mockNewsArticles: NewsArtikel[] = [
-  {
-    id: 1,
-    attributes: {
-      titel: "Viktoria Wertheim gewinnt Derby mit 3:1",
-      inhalt: "Ein spannendes Spiel endete mit einem verdienten Sieg für unsere Mannschaft gegen FC Eichel. Die Tore fielen durch Okan Cirakoglu (2x) und Marco Schneider. Das Team zeigte eine starke Leistung vor heimischem Publikum.\n\nBereits in der 15. Minute ging Viktoria Wertheim durch einen Treffer von Okan Cirakoglu in Führung. Der Stürmer nutzte eine Flanke von der rechten Seite perfekt aus. FC Eichel kam zwar zum Ausgleich, aber die Antwort ließ nicht lange auf sich warten.\n\nIn der zweiten Halbzeit dominierte Viktoria das Spiel und belohnte sich mit zwei weiteren Treffern. Besonders die Defensive stand sicher und ließ kaum Chancen zu.",
-      datum: "2025-01-16T10:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: {
-            name: "Spielberichte"
-          }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  },
-  {
-    id: 2,
-    attributes: {
-      titel: "Neuer Trainer für die Jugend verpflichtet",
-      inhalt: "Mit Marco Schneider konnte ein erfahrener Trainer für unsere A-Jugend gewonnen werden. Der 42-jährige bringt jahrelange Erfahrung im Nachwuchsbereich mit.\n\nSchneider war zuletzt beim TSV Tauberbischofsheim tätig und führte dort die A-Jugend zum Aufstieg in die Bezirksliga. Seine Philosophie: 'Jeder Spieler soll individuell gefördert werden, aber der Teamgedanke steht immer im Vordergrund.'\n\nDie erste Trainingseinheit ist für den 15. Januar geplant. Alle Spieler der A-Jugend sind herzlich eingeladen.",
-      datum: "2025-01-15T08:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: {
-            name: "Vereinsnews"
-          }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  },
-  {
-    id: 3,
-    attributes: {
-      titel: "Winterpause: Training startet am 15. Januar",
-      inhalt: "Nach der wohlverdienten Winterpause beginnt das Training für alle Mannschaften wieder am 15. Januar. Die Vorbereitung auf die Rückrunde startet mit einem Fitnesstest.\n\nTrainer Hans Müller hat bereits einen detaillierten Trainingsplan erstellt: 'Wir werden sowohl an der Kondition als auch an der Taktik arbeiten. Die Winterpause war wichtig, aber jetzt geht es wieder richtig los.'\n\nDas erste Testspiel ist für den 25. Januar gegen den SV Königshofen geplant. Alle Fans sind herzlich eingeladen.",
-      datum: "2025-01-14T14:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: {
-            name: "Training"
-          }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  }
-]
 
 export default function HomePage() {
   const [selectedArticle, setSelectedArticle] = useState<NewsArtikel | null>(null)
@@ -239,16 +70,16 @@ export default function HomePage() {
           })
         ])
 
-        // Use API data if available, otherwise use mock data
+        // Use API data
         const apiPlayers = playersResponse.data.data || []
         const apiNews = newsResponse.data.data || []
-        setTopScorers(apiPlayers.length > 0 ? apiPlayers : mockTopScorers)
-        setNewsArticles(apiNews.length > 0 ? apiNews : mockNewsArticles)
+        setTopScorers(apiPlayers)
+        setNewsArticles(apiNews)
       } catch (err) {
-        console.error('Error fetching homepage data, using mock data:', err)
-        // Use mock data as fallback
-        setTopScorers(mockTopScorers)
-        setNewsArticles(mockNewsArticles)
+        console.error('Error fetching homepage data:', err)
+        // Show empty state
+        setTopScorers([])
+        setNewsArticles([])
       } finally {
         setLoading(false)
       }
@@ -330,8 +161,17 @@ export default function HomePage() {
                     </div>
                     {/* Top Scorers Content */}
                     <div className="py-6 md:py-8">
-                      {/* Torschützenkönig - Modernes Design mit Hintergrundbild */}
-                      <div className="holo-card relative overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 hover:shadow-xl md:hover:shadow-2xl cursor-pointer group h-full flex flex-col shadow-lg mb-2 md:mb-4">
+                      {topScorers.length === 0 ? (
+                        <div className="text-center py-8">
+                          <div className="text-gray-400 mb-2">⚽</div>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Keine Torschützendaten verfügbar
+                          </p>
+                        </div>
+                      ) : (
+                        <>
+                          {/* Torschützenkönig - Modernes Design mit Hintergrundbild */}
+                          <div className="holo-card relative overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 hover:shadow-xl md:hover:shadow-2xl cursor-pointer group h-full flex flex-col shadow-lg mb-2 md:mb-4">
                         {/* Overlay für Lesbarkeit - Header-Hintergrund */}
                         <div className="absolute inset-0 backdrop-blur-[0.5px] z-0 header-gradient"></div>
 
@@ -417,6 +257,8 @@ export default function HomePage() {
                           </div>
                         </div>
                       ))}
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

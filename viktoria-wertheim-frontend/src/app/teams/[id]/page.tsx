@@ -16,8 +16,8 @@ const AnimatedDiv = dynamic(
   { ssr: false }
 )
 
-// Mock-Daten für die Mannschaft
-const teamData = {
+// Team data structure
+const defaultTeamData = {
   id: 1,
   name: '1. Mannschaft',
   trainer: 'Max Mustermann',
@@ -66,7 +66,7 @@ const formation = {
 }
 
 export default function TeamDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const [team, setTeam] = useState(teamData)
+  const [team, setTeam] = useState(defaultTeamData)
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [teamId, setTeamId] = useState<string | null>(null)

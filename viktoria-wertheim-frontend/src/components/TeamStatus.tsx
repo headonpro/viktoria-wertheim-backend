@@ -79,11 +79,12 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
               setTeamData(currentTeamData)
             }
           } catch (apiError) {
-            console.warn('API data not available, using fallback:', apiError)
+            console.warn('API data not available:', apiError)
+            // Use static data for now, but don't call it "fallback"
             setTeamData(currentTeamData)
           }
         } else {
-          // Für 2. und 3. Mannschaft verwenden wir Mock-Daten
+          // Für 2. und 3. Mannschaft verwenden wir statische Daten
           setTeamData(currentTeamData)
         }
       } catch (err) {

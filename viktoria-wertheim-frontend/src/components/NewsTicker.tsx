@@ -9,73 +9,7 @@ interface NewsTickerProps {
   onNewsClick?: (article: NewsArtikel) => void
 }
 
-// Mock news data als stabile Konstante außerhalb der Komponente
-const mockNewsArticles: NewsArtikel[] = [
-  {
-    id: 1,
-    attributes: {
-      titel: "🏆 Derby-Sieg! Viktoria schlägt FC Eichel 3:1",
-      inhalt: "Ein spannendes Derby endete mit einem verdienten Sieg...",
-      datum: "2025-01-16T10:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: { name: "Spielberichte" }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  },
-  {
-    id: 2,
-    attributes: {
-      titel: "⚽ Winterpause beendet - Training startet am 15. Januar",
-      inhalt: "Nach der wohlverdienten Winterpause beginnt das Training...",
-      datum: "2025-01-15T08:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: { name: "Training" }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  },
-  {
-    id: 3,
-    attributes: {
-      titel: "👨‍💼 Neuer A-Jugend Trainer Marco Schneider verpflichtet",
-      inhalt: "Mit Marco Schneider konnte ein erfahrener Trainer gewonnen werden...",
-      datum: "2025-01-14T14:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: { name: "Vereinsnews" }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  },
-  {
-    id: 4,
-    attributes: {
-      titel: "🎯 Neuzugang: Max Müller verstärkt die Offensive",
-      inhalt: "Ein neuer Stürmer verstärkt das Team ab sofort...",
-      datum: "2025-01-13T16:00:00.000Z",
-      kategorie: {
-        data: {
-          attributes: { name: "Transfers" }
-        }
-      },
-      publishedAt: "2025-01-17T12:00:00.000Z",
-      createdAt: "2025-01-17T12:00:00.000Z",
-      updatedAt: "2025-01-17T12:00:00.000Z"
-    }
-  }
-]
+
 
 export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
   const [newsArticles, setNewsArticles] = useState<NewsArtikel[]>([])
@@ -99,9 +33,9 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
         })
 
         const apiNews = response.data.data || []
-        setNewsArticles(apiNews.length > 0 ? apiNews : mockNewsArticles)
+        setNewsArticles(apiNews)
       } catch (err) {
-        setNewsArticles(mockNewsArticles)
+        setNewsArticles([])
       } finally {
         setLoading(false)
       }
@@ -147,12 +81,12 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
   // Kombiniere alle News-Titel zu einem langen String mit gelben Separatoren
   const baseNewsText = newsArticles
     .filter(article => {
-      // Handle both API format and mock format
+      // Handle both API format and legacy format
       const titel = article.titel || (article.attributes && article.attributes.titel)
       return article && titel
     })
     .map(article => {
-      // Handle both API format and mock format
+      // Handle both API format and legacy format
       return article.titel || article.attributes?.titel
     })
     .join('\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0')

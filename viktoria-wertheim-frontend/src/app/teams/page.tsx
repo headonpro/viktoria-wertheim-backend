@@ -12,63 +12,7 @@ export default function TeamsPage() {
   const [teams, setTeams] = useState<Mannschaft[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Erweiterte Mock-Daten mit allen Informationen
-  const mockTeams: Mannschaft[] = useMemo(() => [
-    {
-      id: 1,
-      attributes: {
-        name: '1. Mannschaft',
-        trainer: 'Hans Müller',
-        liga: 'Kreisliga',
-        teamfoto: undefined,
-        // Erweiterte Informationen
-        trainingszeiten: 'Di & Do 19:00-20:30',
-        heimspieltag: 'Sonntag 15:00 Uhr',
-        tabellenplatz: 3,
-        letztes_spiel: 'SVW I - FC Eichel 3:1',
-        spieleranzahl: 22,
-        publishedAt: '2024-01-01T00:00:00.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        updatedAt: '2024-01-01T00:00:00.000Z'
-      }
-    },
-    {
-      id: 2,
-      attributes: {
-        name: '2. Mannschaft',
-        trainer: 'Marco Schneider',
-        liga: 'Kreisklasse A',
-        teamfoto: undefined,
-        // Erweiterte Informationen
-        trainingszeiten: 'Mo & Mi 18:30-20:00',
-        heimspieltag: 'Samstag 17:00 Uhr',
-        tabellenplatz: 7,
-        letztes_spiel: 'SVW II - SV Pülfringen 2:2',
-        spieleranzahl: 18,
-        publishedAt: '2024-01-01T00:00:00.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        updatedAt: '2024-01-01T00:00:00.000Z'
-      }
-    },
-    {
-      id: 3,
-      attributes: {
-        name: '3. Mannschaft',
-        trainer: 'Peter Schmidt',
-        liga: 'Kreisklasse B',
-        teamfoto: undefined,
-        // Erweiterte Informationen
-        trainingszeiten: 'Fr 19:00-20:30',
-        heimspieltag: 'Sonntag 13:00 Uhr',
-        tabellenplatz: 5,
-        letztes_spiel: 'SVW III - TSV Kreuzwertheim 1:3',
-        spieleranzahl: 16,
-        publishedAt: '2024-01-01T00:00:00.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        updatedAt: '2024-01-01T00:00:00.000Z'
-      }
-    }
-  ], []);
+
 
   // Fetch teams from API
   useEffect(() => {
@@ -82,17 +26,17 @@ export default function TeamsPage() {
         })
         
         const apiTeams = response.data.data || []
-        setTeams(apiTeams.length > 0 ? apiTeams : mockTeams)
+        setTeams(apiTeams)
       } catch (err) {
-        console.error('Error fetching teams, using mock data:', err)
-        setTeams(mockTeams)
+        console.error('Error fetching teams:', err)
+        setTeams([])
       } finally {
         setLoading(false)
       }
     }
 
     fetchTeams()
-  }, [mockTeams])
+  }, [])
 
   // Loading state
   if (loading) {

@@ -1,3 +1,5 @@
 {
-  "rootDirectory": "viktoria-wertheim-frontend"
+  "buildCommand": "cd viktoria-wertheim-frontend && npm run build",
+  "outputDirectory": "viktoria-wertheim-frontend/.next",
+  "installCommand": "cd viktoria-wertheim-frontend && npm install"
 } 

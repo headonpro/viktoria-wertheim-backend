@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Strapi API Base URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'
+const API_BASE_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
 
 // Strapi Response Interface (Strapi 5 format)
 interface StrapiLeaderboardEntry {

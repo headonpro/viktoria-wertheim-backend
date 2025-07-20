@@ -342,7 +342,7 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
     }
   }
   
-  // Mannschaftsspezifische Mock-Daten
+  // Mannschaftsspezifische Team-Namen
   const getTeamName = (team: '1' | '2' | '3') => {
     switch (team) {
       case '1': return 'SV Viktoria Wertheim'
@@ -352,107 +352,7 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
     }
   }
 
-  const mockGameData = {
-    '1': {
-      last: {
-        type: 'last' as const,
-        homeTeam: 'SV Viktoria Wertheim',
-        awayTeam: 'TSV Assamstadt',
-        homeScore: 3,
-        awayScore: 0,
-        date: '02.08',
-        time: '18:00',
-        isHome: true,
-        stadium: 'Viktoria-Stadion Wertheim',
-        referee: 'Schmidt, Michael',
-        goalScorers: ['Müller 15\'', 'Wagner 42\'', 'Bauer 78\''],
-        yellowCards: ['Neumann 65\'', 'Scholz 89\''],
-        redCards: []
-      },
-      next: {
-        type: 'next' as const,
-        homeTeam: 'Türkgücü Wertheim',
-        awayTeam: 'SV Viktoria Wertheim',
-        date: '16.08',
-        time: '15:30',
-        isHome: false,
-        stadium: 'Sportplatz Türkgücü',
-        referee: 'Weber, Thomas',
-        lastMeeting: {
-          date: '12.03',
-          result: '0:3',
-          location: 'Auswärts'
-        }
-      }
-    },
-    '2': {
-      last: {
-        type: 'last' as const,
-        homeTeam: 'SV Viktoria Wertheim II',
-        awayTeam: 'FC Eichel II',
-        homeScore: 2,
-        awayScore: 1,
-        date: '28.07',
-        time: '15:00',
-        isHome: true,
-        stadium: 'Sportplatz Wertheim',
-        referee: 'Müller, Andreas',
-        goalScorers: ['Schmidt 23\'', 'Weber 67\''],
-        yellowCards: ['Klein 45\''],
-        redCards: []
-      },
-      next: {
-        type: 'next' as const,
-        homeTeam: 'SV Viktoria Wertheim II',
-        awayTeam: 'TSV Kreuzwertheim II',
-        date: '18.08',
-        time: '13:00',
-        isHome: true,
-        stadium: 'Sportplatz Wertheim',
-        referee: 'Fischer, Peter',
-        lastMeeting: {
-          date: '20.04',
-          result: '1:2',
-          location: 'Auswärts'
-        }
-      }
-    },
-    '3': {
-      last: {
-        type: 'last' as const,
-        homeTeam: 'SV Pülfringen II',
-        awayTeam: 'SV Viktoria Wertheim III',
-        homeScore: 1,
-        awayScore: 4,
-        date: '25.07',
-        time: '17:30',
-        isHome: false,
-        stadium: 'Sportplatz Pülfringen',
-        referee: 'Wagner, Klaus',
-        goalScorers: ['Becker 12\'', 'Hoffmann 34\'', 'Jung 56\'', 'Roth 89\''],
-        yellowCards: ['Braun 72\'', 'Sommer 85\''],
-        redCards: []
-      },
-      next: {
-        type: 'next' as const,
-        homeTeam: 'SV Viktoria Wertheim III',
-        awayTeam: 'SV Schönfeld II',
-        date: '20.08',
-        time: '11:00',
-        isHome: true,
-        stadium: 'Sportplatz Wertheim',
-        referee: 'Bauer, Martin',
-        lastMeeting: {
-          date: '15.05',
-          result: '3:0',
-          location: 'Heim'
-        }
-      }
-    }
-  }
 
-  const mockLastGameDetails = mockGameData[selectedTeam].last
-  const mockNextGameDetails = mockGameData[selectedTeam].next
   
   return (
     <>
@@ -460,19 +360,37 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
         <div className="container max-w-6xl">
           <div className="grid grid-cols-2 gap-4 md:gap-8">
             {/* Letztes Spiel */}
-            {(lastGame || mockLastGameDetails) && (
+            {lastGame ? (
               <GameCard
-                {...(lastGame || mockLastGameDetails)}
-                onClick={() => openGameModal(lastGame || mockLastGameDetails)}
+                {...lastGame}
+                onClick={() => openGameModal(lastGame)}
               />
+            ) : (
+              <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.03] md:min-h-[240px] shadow-2xl shadow-black/20 dark:shadow-white/[0.25] flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-gray-400 mb-2">⚽</div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Kein letztes Spiel verfügbar
+                  </p>
+                </div>
+              </div>
             )}
             
             {/* Nächstes Spiel */}
-            {(nextGame || mockNextGameDetails) && (
+            {nextGame ? (
               <GameCard
-                {...(nextGame || mockNextGameDetails)}
-                onClick={() => openGameModal(nextGame || mockNextGameDetails)}
+                {...nextGame}
+                onClick={() => openGameModal(nextGame)}
               />
+            ) : (
+              <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.03] md:min-h-[240px] shadow-2xl shadow-black/20 dark:shadow-white/[0.25] flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-gray-400 mb-2">📅</div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Kein nächstes Spiel geplant
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         </div>

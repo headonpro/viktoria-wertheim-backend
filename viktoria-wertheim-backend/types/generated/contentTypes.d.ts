@@ -866,7 +866,6 @@ export interface ApiSpielerSpieler extends Struct.CollectionTypeSchema {
 export interface ApiSponsorSponsor extends Struct.CollectionTypeSchema {
   collectionName: 'sponsors';
   info: {
-    description: 'Sponsoren und Partner des Vereins';
     displayName: 'Sponsor';
     pluralName: 'sponsors';
     singularName: 'sponsor';
@@ -884,17 +883,16 @@ export interface ApiSponsorSponsor extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     kategorie: Schema.Attribute.Enumeration<
-      ['hauptsponsor', 'premium', 'partner']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'partner'>;
+      ['hauptsponsor', 'premium', 'partner', 'default:partner']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::sponsor.sponsor'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

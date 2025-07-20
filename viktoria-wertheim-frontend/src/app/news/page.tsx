@@ -10,160 +10,7 @@ import { strapi } from '@/lib/strapi'
 import { NewsArtikel, Kategorie, StrapiBlock } from '@/types/strapi'
 import Image from 'next/image'
 
-// Mock data as fallback (updated for Strapi 5 format)
-const mockNewsArticles: NewsArtikel[] = [
-    {
-      id: 1,
-      documentId: 'mock-1',
-      titel: 'Viktoria Wertheim gewinnt Derby mit 3:1',
-      inhalt: 'Ein spannendes Spiel endete mit einem verdienten Sieg für unsere Mannschaft. Die Tore fielen in der zweiten Halbzeit, als unser Team das Tempo erhöhte und die Kontrolle übernahm.\n\nDie Zuschauer sahen eine kämpferische Leistung und wurden mit einem tollen Fußballabend belohnt. Bereits in der 15. Minute gingen wir durch einen schönen Angriff über die rechte Seite in Führung.\n\nIn der zweiten Halbzeit erhöhten wir das Tempo und konnten durch zwei weitere Treffer den verdienten Sieg einfahren. Die Mannschaft zeigte eine geschlossene Leistung und kämpfte bis zur letzten Minute.',
-      datum: '2024-12-08',
-      kategorie: {
-        id: 1,
-        documentId: 'mock-cat-1',
-        name: 'Spielberichte',
-        createdAt: '2024-12-08T10:00:00.000Z',
-        updatedAt: '2024-12-08T10:00:00.000Z',
-        publishedAt: '2024-12-08T10:00:00.000Z'
-      },
-      publishedAt: '2024-12-08T10:00:00.000Z',
-      createdAt: '2024-12-08T10:00:00.000Z',
-      updatedAt: '2024-12-08T10:00:00.000Z'
-    },
-    {
-      id: 2,
-      attributes: {
-        titel: 'Neuer Trainer für die Jugend',
-        inhalt: 'Ab sofort wird unser Jugendbereich von einem erfahrenen Trainer geleitet. Mit seiner langjährigen Erfahrung im Nachwuchsbereich wird er unsere jungen Talente optimal fördern und weiterentwickeln.\n\nDer neue Trainer bringt moderne Trainingsmethoden mit und legt großen Wert auf die individuelle Förderung der Spieler. Wir freuen uns auf die Zusammenarbeit und sind gespannt auf die Entwicklung unserer Nachwuchstalente.',
-        datum: '2024-12-05',
-        kategorie: {
-          data: {
-            attributes: {
-              name: 'Vereinsnachrichten'
-            }
-          }
-        },
-        publishedAt: '2024-12-05T10:00:00.000Z',
-        createdAt: '2024-12-05T10:00:00.000Z',
-        updatedAt: '2024-12-05T10:00:00.000Z'
-      }
-    },
-    {
-      id: 3,
-      attributes: {
-        titel: 'Saisonrückblick 2024',
-        inhalt: 'Die Saison 2024 war geprägt von vielen Höhepunkten und Erfolgen. Unser Team hat sich kontinuierlich verbessert und konnte wichtige Siege einfahren.\n\nBesonders stolz sind wir auf die Entwicklung unserer jungen Spieler, die sich perfekt in die Mannschaft integriert haben. Die Zusammenarbeit zwischen erfahrenen und jungen Spielern funktioniert hervorragend.\n\nWir blicken stolz auf die erreichten Leistungen zurück und freuen uns bereits auf die kommende Saison, in der wir an diese Erfolge anknüpfen möchten.',
-        datum: '2024-12-01',
-        kategorie: {
-          data: {
-            attributes: {
-              name: 'Allgemein'
-            }
-          }
-        },
-        publishedAt: '2024-12-01T10:00:00.000Z',
-        createdAt: '2024-12-01T10:00:00.000Z',
-        updatedAt: '2024-12-01T10:00:00.000Z'
-      }
-    }
-  ]
 
-// Mock data for detailed articles (with full content)
-const mockDetailedArticles: { [key: string]: NewsArtikel } = {
-  '1': {
-    id: 1,
-    attributes: {
-      titel: 'Viktoria Wertheim gewinnt Derby mit 3:1',
-      inhalt: 'Ein spannendes Spiel endete mit einem verdienten Sieg für unsere Mannschaft. Die Tore fielen in der zweiten Halbzeit, als unser Team das Tempo erhöhte und die Kontrolle übernahm.\n\nDie Zuschauer sahen eine kämpferische Leistung und wurden mit einem tollen Fußballabend belohnt. Bereits in der 15. Minute gingen wir durch einen schönen Angriff über die rechte Seite in Führung.\n\nIn der zweiten Halbzeit erhöhten wir das Tempo und konnten durch zwei weitere Treffer den verdienten Sieg einfahren. Die Mannschaft zeigte eine geschlossene Leistung und kämpfte bis zur letzten Minute.',
-      datum: '2024-12-08',
-      kategorie: {
-        data: {
-          attributes: {
-            name: 'Spielberichte'
-          }
-        }
-      },
-      publishedAt: '2024-12-08T10:00:00.000Z',
-      createdAt: '2024-12-08T10:00:00.000Z',
-      updatedAt: '2024-12-08T10:00:00.000Z'
-    }
-  },
-  '2': {
-    id: 2,
-    attributes: {
-      titel: 'Neuer Trainer für die Jugend',
-      inhalt: 'Ab sofort wird unser Jugendbereich von einem erfahrenen Trainer geleitet. Mit seiner langjährigen Erfahrung im Nachwuchsbereich wird er unsere jungen Talente optimal fördern und weiterentwickeln.\n\nDer neue Trainer bringt moderne Trainingsmethoden mit und legt großen Wert auf die individuelle Förderung der Spieler. Wir freuen uns auf die Zusammenarbeit und sind gespannt auf die Entwicklung unserer Nachwuchstalente.',
-      datum: '2024-12-05',
-      kategorie: {
-        data: {
-          attributes: {
-            name: 'Vereinsnachrichten'
-          }
-        }
-      },
-      publishedAt: '2024-12-05T10:00:00.000Z',
-      createdAt: '2024-12-05T10:00:00.000Z',
-      updatedAt: '2024-12-05T10:00:00.000Z'
-    }
-  },
-  '3': {
-    id: 3,
-    attributes: {
-      titel: 'Saisonrückblick 2024',
-      inhalt: 'Die Saison 2024 war geprägt von vielen Höhepunkten und Erfolgen. Unser Team hat sich kontinuierlich verbessert und konnte wichtige Siege einfahren.\n\nBesonders stolz sind wir auf die Entwicklung unserer jungen Spieler, die sich perfekt in die Mannschaft integriert haben. Die Zusammenarbeit zwischen erfahrenen und jungen Spielern funktioniert hervorragend.\n\nWir blicken stolz auf die erreichten Leistungen zurück und freuen uns bereits auf die kommende Saison, in der wir an diese Erfolge anknüpfen möchten.',
-      datum: '2024-12-01',
-      kategorie: {
-        data: {
-          attributes: {
-            name: 'Allgemein'
-          }
-        }
-      },
-      publishedAt: '2024-12-01T10:00:00.000Z',
-      createdAt: '2024-12-01T10:00:00.000Z',
-      updatedAt: '2024-12-01T10:00:00.000Z'
-    }
-  }
-}
-
-const mockCategories: Kategorie[] = [
-  {
-    id: 1,
-    attributes: {
-      name: 'Spielberichte',
-      publishedAt: '2024-12-01T10:00:00.000Z',
-      createdAt: '2024-12-01T10:00:00.000Z',
-      updatedAt: '2024-12-01T10:00:00.000Z'
-    },
-    publishedAt: '2024-12-01T10:00:00.000Z',
-    createdAt: '2024-12-01T10:00:00.000Z',
-    updatedAt: '2024-12-01T10:00:00.000Z'
-  },
-  {
-    id: 2,
-    attributes: {
-      name: 'Vereinsnachrichten',
-      publishedAt: '2024-12-01T10:00:00.000Z',
-      createdAt: '2024-12-01T10:00:00.000Z',
-      updatedAt: '2024-12-01T10:00:00.000Z'
-    },
-    publishedAt: '2024-12-01T10:00:00.000Z',
-    createdAt: '2024-12-01T10:00:00.000Z',
-    updatedAt: '2024-12-01T10:00:00.000Z'
-  },
-  {
-    id: 3,
-    attributes: {
-      name: 'Allgemein',
-      publishedAt: '2024-12-01T10:00:00.000Z',
-      createdAt: '2024-12-01T10:00:00.000Z',
-      updatedAt: '2024-12-01T10:00:00.000Z'
-    },
-    publishedAt: '2024-12-01T10:00:00.000Z',
-    createdAt: '2024-12-01T10:00:00.000Z',
-    updatedAt: '2024-12-01T10:00:00.000Z'
-  }
-]
 
 // Utility functions for handling both Strapi 5 and legacy formats
 function getKategorieName(article: NewsArtikel): string {
@@ -258,7 +105,7 @@ export default function NewsPage() {
           strapi.get('/kategorien')
         ])
 
-        // Use API data if available, otherwise use mock data
+        // Use API data
         const apiNewsArticles = newsResponse.data.data || []
         const apiCategories = categoriesResponse.data.data || []
         
@@ -277,13 +124,13 @@ export default function NewsPage() {
           }
         }))
         
-        setNewsArticles(apiNewsArticles.length > 0 ? apiNewsArticles : mockNewsArticles)
-        setCategories(transformedCategories.length > 0 ? transformedCategories : mockCategories)
+        setNewsArticles(apiNewsArticles)
+        setCategories(transformedCategories)
       } catch (err) {
-        console.error('Error fetching news, using mock data:', err)
-        // Use mock data as fallback
-        setNewsArticles(mockNewsArticles)
-        setCategories(mockCategories)
+        console.error('Error fetching news:', err)
+        // Show empty state
+        setNewsArticles([])
+        setCategories([])
       } finally {
         setLoading(false)
       }
@@ -336,13 +183,18 @@ export default function NewsPage() {
       
       const apiArticle = response.data.data
       console.log('API Article response:', apiArticle)
-      setSelectedArticle(apiArticle || mockDetailedArticles[articleId.toString()] || null)
+      setSelectedArticle(apiArticle || null)
     } catch (err) {
-      console.error('Error fetching article, using mock data:', err)
-      // Use mock data as fallback
-      const fallbackArticle = mockDetailedArticles[articleId.toString()] || newsArticles.find(article => article.id === articleId)
-      console.log('Using fallback article:', fallbackArticle)
-      setSelectedArticle(fallbackArticle || null)
+      console.error('Error fetching article:', err)
+      // Try to use existing article from list if available
+      const existingArticle = newsArticles.find(article => article.id === articleId)
+      if (existingArticle) {
+        console.log('Using existing article from list:', existingArticle)
+        setSelectedArticle(existingArticle)
+      } else {
+        console.log('Article not found')
+        setSelectedArticle(null)
+      }
     } finally {
       setArticleLoading(false)
     }
@@ -382,7 +234,7 @@ export default function NewsPage() {
     )
   }
 
-  // Error state - removed since we use fallback data
+
 
   return (
     <PageLayout>
@@ -477,7 +329,7 @@ export default function NewsPage() {
                         <div className="relative h-32 sm:h-48 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden flex-shrink-0">
                           {getArticleImage(article) ? (
                             <Image
-                              src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://192.168.178.59:1337'}${(getArticleImage(article) as any)?.url || (getArticleImage(article) as any)?.attributes?.url}`}
+                              src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${(getArticleImage(article) as any)?.url || (getArticleImage(article) as any)?.attributes?.url}`}
                               alt={(getArticleImage(article) as any)?.alternativeText || (getArticleImage(article) as any)?.attributes?.alternativeText || getArticleTitle(article)}
                               fill
                               className="object-cover object-top group-hover:scale-105 transition-transform duration-300"
