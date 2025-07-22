@@ -18,12 +18,20 @@
       "unique": true
     },
     "liga": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": [
+        "Kreisklasse B",
+        "Kreisklasse A",
+        "Kreisliga",
+        "Landesliga"
+      ],
+      "required": true
     },
     "trainer": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::mitglied.mitglied"
+      "target": "api::mitglied.mitglied",
+      "inversedBy": "trainer_mannschaften"
     },
     "teamfoto": {
       "type": "media",
@@ -58,7 +66,7 @@
         "inaktiv",
         "aufgeloest"
       ],
-      "default": "aktiv"
+      "required": true
     },
     "altersklasse": {
       "type": "enumeration",
@@ -71,18 +79,87 @@
         "e-jugend",
         "f-jugend",
         "bambini"
-      ]
+      ],
+      "required": true
     },
     "kontaktperson": {
       "type": "relation",
-      "relation": "manyToOne", 
-      "target": "api::mitglied.mitglied"
+      "relation": "manyToOne",
+      "target": "api::mitglied.mitglied",
+      "inversedBy": "kontakt_mannschaften"
     },
     "trainingszeiten": {
       "type": "text"
     },
     "bemerkungen": {
       "type": "text"
+    },
+    "tabellenplatz": {
+      "type": "integer",
+      "default": 1,
+      "min": 1,
+      "max": 20
+    },
+    "punkte": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "spiele_gesamt": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "siege": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "unentschieden": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "niederlagen": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tore_fuer": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tore_gegen": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "tordifferenz": {
+      "type": "integer",
+      "default": 0
+    },
+    "form_letzte_5": {
+      "type": "json"
+    },
+    "trend": {
+      "type": "enumeration",
+      "default": "gleich",
+      "enum": [
+        "steigend",
+        "gleich",
+        "fallend"
+      ],
+      "required": true
+    },
+    "liga_vollname": {
+      "type": "string"
+    },
+    "trainers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::trainer.trainer",
+      "mappedBy": "mannschafts"
     }
   }
-} 
+}

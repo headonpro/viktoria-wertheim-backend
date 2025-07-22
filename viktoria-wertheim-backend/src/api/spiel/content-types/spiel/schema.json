@@ -84,6 +84,21 @@
     },
     "bemerkungen": {
       "type": "text"
+    },
+    "torschuetzen": {
+      "type": "json",
+      "default": []
+    },
+    "gelbe_karten": {
+      "type": "json",
+      "default": []
+    },
+    "rote_karten": {
+      "type": "json",
+      "default": []
+    },
+    "letztes_aufeinandertreffen": {
+      "type": "json"
     }
   }
 } 

@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "title": "API Consistency Validation Report",
+    "generated": "2025-07-21T23:08:27.221Z",
+    "totalTests": 0
+  },
+  "summary": {
+    "consistentTests": 0,
+    "inconsistentTests": 0,
+    "consistencyRate": "NaN",
+    "criticalIssues": 0,
+    "highIssues": 0
+  },
+  "inconsistencies": [],
+  "allResults": []
+}

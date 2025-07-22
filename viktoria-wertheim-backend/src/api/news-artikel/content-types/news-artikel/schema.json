@@ -4,7 +4,7 @@
   "info": {
     "singularName": "news-artikel",
     "pluralName": "news-artikels",
-    "displayName": "news-artikel"
+    "displayName": "News Artikel"
   },
   "options": {
     "draftAndPublish": true
@@ -43,4 +43,4 @@
       "inversedBy": "news_artikel"
     }
   }
-} 
+}

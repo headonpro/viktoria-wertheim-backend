@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-07-21T23:24:11.885Z",
+  "summary": {
+    "success": false,
+    "errors": 9,
+    "warnings": 0,
+    "info": 8
+  },
+  "steps": {
+    "clearCache": true,
+    "clearTypes": true,
+    "clearNodeCache": true,
+    "rebuild": true,
+    "verification": false,
+    "serverTest": false,
+    "validation": false,
+    "overall": false
+  },
+  "details": {
+    "errors": [
+      "- Compiling TS",
+      "√ Compiling TS (2042ms)",
+      "- Building build context",
+      "√ Building build context (340ms)",
+      "- Building admin panel",
+      "√ Building admin panel (16280ms)",
+      "Generated types file not found after rebuild",
+      "Server process ended with code 1",
+      "Schema rebuild completed with issues"
+    ],
+    "warnings": [],
+    "info": [
+      "Starting schema rebuild process...",
+      "Clearing Strapi build cache...",
+      "Clearing generated TypeScript types...",
+      "Clearing node_modules cache...",
+      "No node modules cache found to clear",
+      "Rebuilding Strapi application...",
+      "Verifying schema compilation...",
+      "Testing server startup..."
+    ]
+  },
+  "recommendations": [
+    "Schema rebuild completed with issues - review errors above",
+    "Server startup test failed - check server configuration",
+    "Post-rebuild validation failed - check schema consistency"
+  ]
+}

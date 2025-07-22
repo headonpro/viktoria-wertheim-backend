@@ -6,7 +6,7 @@ The sponsor API endpoint returns 404 because the sponsor content type doesn't ha
 ## Quick Fix
 
 ### 1. Set API Permissions
-1. Open Strapi Admin: `http://192.168.178.59:1337/admin`
+1. Open Strapi Admin: `http://localhost:1337/admin`
 2. Navigate to: **Settings** → **Users & Permissions Plugin** → **Roles** → **Public**
 3. Find **Sponsor** section and enable:
    - ✅ `find` (to read sponsors)
@@ -15,7 +15,7 @@ The sponsor API endpoint returns 404 because the sponsor content type doesn't ha
 
 ### 2. Test the API
 ```bash
-curl "http://192.168.178.59:1337/api/sponsors?populate=*"
+curl "http://localhost:1337/api/sponsors?populate=*"
 ```
 
 Should return sponsor data instead of 404.

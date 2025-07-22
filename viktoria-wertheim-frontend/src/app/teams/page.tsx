@@ -92,7 +92,7 @@ export default function TeamsPage() {
                     onClick={() => {
                       window.location.href = `/teams/${team.id}`
                     }}
-                    className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 group-hover:border-viktoria-yellow/50 dark:group-hover:border-viktoria-yellow/30 cursor-pointer h-full flex flex-col shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
+                    className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 group-hover:border-viktoria-yellow/50 dark:group-hover:border-viktoria-yellow/30 cursor-pointer h-full flex flex-col shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
                   >
                     {/* Team Header with Liga Badge */}
                     <div className="relative h-24 md:h-32 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
@@ -213,7 +213,7 @@ export default function TeamsPage() {
             {/* Empty State */}
             {teams.length === 0 && (
               <div className="text-center py-12">
-                <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] p-6 md:p-8 shadow-lg dark:shadow-white/[0.05]">
+                <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
                   <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-100 dark:bg-white/[0.08] rounded-full flex items-center justify-center mx-auto mb-4">
                     <IconUsers className="w-6 h-6 md:w-8 md:h-8 text-gray-400 dark:text-gray-500" />
                   </div>

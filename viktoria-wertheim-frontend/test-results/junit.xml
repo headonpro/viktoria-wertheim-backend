@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="61" failures="4" errors="0" time="4.014">
+  <testsuite name="Test Runner" errors="0" failures="0" skipped="0" timestamp="2025-07-21T10:34:18" time="0.527" tests="1">
+    <testcase classname="Test Runner should export required functions" name="Test Runner should export required functions" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="TeamService" errors="0" failures="0" skipped="0" timestamp="2025-07-21T10:34:18" time="0.563" tests="9">
+    <testcase classname="TeamService fetchTeamData should fetch team data successfully" name="TeamService fetchTeamData should fetch team data successfully" time="0.007">
+    </testcase>
+    <testcase classname="TeamService fetchTeamData should return fallback data when API fails" name="TeamService fetchTeamData should return fallback data when API fails" time="0.018">
+    </testcase>
+    <testcase classname="TeamService fetchTeamData should return fallback data when no API data found" name="TeamService fetchTeamData should return fallback data when no API data found" time="0.001">
+    </testcase>
+    <testcase classname="TeamService fetchTeamGames should fetch team games successfully" name="TeamService fetchTeamGames should fetch team games successfully" time="0.013">
+    </testcase>
+    <testcase classname="TeamService fetchTeamGames should return empty array when API fails" name="TeamService fetchTeamGames should return empty array when API fails" time="0.001">
+    </testcase>
+    <testcase classname="TeamService calculateTeamStats should calculate team statistics correctly" name="TeamService calculateTeamStats should calculate team statistics correctly" time="0.001">
+    </testcase>
+    <testcase classname="TeamService generateFormArray should generate form array correctly" name="TeamService generateFormArray should generate form array correctly" time="0.001">
+    </testcase>
+    <testcase classname="TeamService validateTeamData should validate correct team data" name="TeamService validateTeamData should validate correct team data" time="0">
+    </testcase>
+    <testcase classname="TeamService validateTeamData should reject invalid team data" name="TeamService validateTeamData should reject invalid team data" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="API Integration Validation" errors="0" failures="2" skipped="0" timestamp="2025-07-21T10:34:18" time="0.616" tests="21">
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamData should fetch and transform team data correctly" name="API Integration Validation Team Service API Integration fetchTeamData should fetch and transform team data correctly" time="0.009">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamData should handle missing optional fields gracefully" name="API Integration Validation Team Service API Integration fetchTeamData should handle missing optional fields gracefully" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamData should use fallback data when API returns empty" name="API Integration Validation Team Service API Integration fetchTeamData should use fallback data when API returns empty" time="0.01">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamData should use fallback data when API throws error" name="API Integration Validation Team Service API Integration fetchTeamData should use fallback data when API throws error" time="0.008">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamData should handle different team IDs correctly" name="API Integration Validation Team Service API Integration fetchTeamData should handle different team IDs correctly" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamGames should fetch and transform game data correctly" name="API Integration Validation Team Service API Integration fetchTeamGames should fetch and transform game data correctly" time="0.014">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamGames should return empty array when no games found" name="API Integration Validation Team Service API Integration fetchTeamGames should return empty array when no games found" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchTeamGames should handle API errors gracefully" name="API Integration Validation Team Service API Integration fetchTeamGames should handle API errors gracefully" time="0.001">
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchLastAndNextGame should correctly separate past and future games" name="API Integration Validation Team Service API Integration fetchLastAndNextGame should correctly separate past and future games" time="0.001">
+      <failure>Error: expect(received).toMatchObject(expected)
+
+Matcher error: received value must be a non-null object
+
+Received has value: null
+    at Object.toMatchObject (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\src\__tests__\integration\api-integration.test.ts:303:33)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="API Integration Validation Team Service API Integration fetchLastAndNextGame should handle no games scenario" name="API Integration Validation Team Service API Integration fetchLastAndNextGame should handle no games scenario" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation League Service API Integration should fetch league standings correctly" name="API Integration Validation League Service API Integration should fetch league standings correctly" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation League Service API Integration should handle league service errors" name="API Integration Validation League Service API Integration should handle league service errors" time="0.001">
+    </testcase>
+    <testcase classname="API Integration Validation Data Transformation Validation should validate team statistics calculation" name="API Integration Validation Data Transformation Validation should validate team statistics calculation" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Data Transformation Validation should generate form array correctly" name="API Integration Validation Data Transformation Validation should generate form array correctly" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Data Transformation Validation should validate team data correctly" name="API Integration Validation Data Transformation Validation should validate team data correctly" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Error Recovery and Fallback Mechanisms should handle network timeouts gracefully" name="API Integration Validation Error Recovery and Fallback Mechanisms should handle network timeouts gracefully" time="0.001">
+    </testcase>
+    <testcase classname="API Integration Validation Error Recovery and Fallback Mechanisms should handle malformed API responses" name="API Integration Validation Error Recovery and Fallback Mechanisms should handle malformed API responses" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation Error Recovery and Fallback Mechanisms should handle partial data corruption" name="API Integration Validation Error Recovery and Fallback Mechanisms should handle partial data corruption" time="0.002">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: &quot;number&quot;
+Received: &quot;string&quot;
+    at Object.toBe (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\src\__tests__\integration\api-integration.test.ts:532:43)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="API Integration Validation Error Recovery and Fallback Mechanisms should retry failed requests appropriately" name="API Integration Validation Error Recovery and Fallback Mechanisms should retry failed requests appropriately" time="0.004">
+    </testcase>
+    <testcase classname="API Integration Validation API Configuration Validation should use correct API base URL" name="API Integration Validation API Configuration Validation should use correct API base URL" time="0">
+    </testcase>
+    <testcase classname="API Integration Validation API Configuration Validation should handle different environment configurations" name="API Integration Validation API Configuration Validation should handle different environment configurations" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Team Management System - End-to-End Integration" errors="0" failures="2" skipped="0" timestamp="2025-07-21T10:34:18" time="2.542" tests="12">
+    <testcase classname="Team Management System - End-to-End Integration Complete User Flow: Team Selection → Data Loading → Component Updates should load initial team data and display all components correctly" name="Team Management System - End-to-End Integration Complete User Flow: Team Selection → Data Loading → Component Updates should load initial team data and display all components correctly" time="0.155">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Complete User Flow: Team Selection → Data Loading → Component Updates should update all components when switching teams" name="Team Management System - End-to-End Integration Complete User Flow: Team Selection → Data Loading → Component Updates should update all components when switching teams" time="0.111">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Complete User Flow: Team Selection → Data Loading → Component Updates should handle rapid team switching without race conditions" name="Team Management System - End-to-End Integration Complete User Flow: Team Selection → Data Loading → Component Updates should handle rapid team switching without race conditions" time="0.138">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle TeamStatus API errors gracefully" name="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle TeamStatus API errors gracefully" time="0.095">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle GameCards API errors gracefully" name="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle GameCards API errors gracefully" time="0.066">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle LeagueTable API errors gracefully" name="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle LeagueTable API errors gracefully" time="0.059">
+      <failure>Error: Team API Error
+    at Object.&lt;anonymous&gt; (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\src\__tests__\integration\team-management-integration.test.tsx:417:57)
+    at Promise.then.completed (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:121:9)
+    at run (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-runner\build\runTest.js:444:34)
+    at Object.worker (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle partial API failures without breaking the page" name="Team Management System - End-to-End Integration Error Handling Scenarios Across Components should handle partial API failures without breaking the page" time="0.075">
+      <failure>Error: Team API Error
+    at Object.&lt;anonymous&gt; (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\src\__tests__\integration\team-management-integration.test.tsx:434:57)
+    at Promise.then.completed (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:121:9)
+    at run (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-runner\build\runTest.js:444:34)
+    at Object.worker (D:\ViktoriaWebseite\ViktoriaWertheim\viktoria-wertheim-frontend\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Data Consistency Between Components should maintain consistent team data across all components" name="Team Management System - End-to-End Integration Data Consistency Between Components should maintain consistent team data across all components" time="0.081">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Data Consistency Between Components should validate data consistency in TeamStatus component" name="Team Management System - End-to-End Integration Data Consistency Between Components should validate data consistency in TeamStatus component" time="0.031">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Data Consistency Between Components should handle empty or null data gracefully" name="Team Management System - End-to-End Integration Data Consistency Between Components should handle empty or null data gracefully" time="0.052">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Loading States and Transitions should show loading states during team switches" name="Team Management System - End-to-End Integration Loading States and Transitions should show loading states during team switches" time="0.369">
+    </testcase>
+    <testcase classname="Team Management System - End-to-End Integration Loading States and Transitions should handle concurrent loading states properly" name="Team Management System - End-to-End Integration Loading States and Transitions should handle concurrent loading states properly" time="0.156">
+    </testcase>
+  </testsuite>
+  <testsuite name="Performance and User Experience Tests" errors="0" failures="0" skipped="0" timestamp="2025-07-21T10:34:18" time="3.064" tests="18">
+    <testcase classname="Performance and User Experience Tests Page Load Performance should load initial page within performance budget" name="Performance and User Experience Tests Page Load Performance should load initial page within performance budget" time="0.187">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Page Load Performance should handle large datasets efficiently" name="Performance and User Experience Tests Page Load Performance should handle large datasets efficiently" time="0.123">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Page Load Performance should optimize API calls to prevent unnecessary requests" name="Performance and User Experience Tests Page Load Performance should optimize API calls to prevent unnecessary requests" time="0.103">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Team Switching Performance should switch teams smoothly within performance budget" name="Performance and User Experience Tests Team Switching Performance should switch teams smoothly within performance budget" time="0.133">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Team Switching Performance should handle rapid team switching without performance degradation" name="Performance and User Experience Tests Team Switching Performance should handle rapid team switching without performance degradation" time="0.28">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Team Switching Performance should debounce API calls during rapid switching" name="Performance and User Experience Tests Team Switching Performance should debounce API calls during rapid switching" time="0.077">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Animation and Transition Performance should render animations smoothly without blocking UI" name="Performance and User Experience Tests Animation and Transition Performance should render animations smoothly without blocking UI" time="0.031">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Animation and Transition Performance should handle form indicator animations efficiently" name="Performance and User Experience Tests Animation and Transition Performance should handle form indicator animations efficiently" time="0.095">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Animation and Transition Performance should optimize re-renders during state changes" name="Performance and User Experience Tests Animation and Transition Performance should optimize re-renders during state changes" time="0.076">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Mobile User Experience should render mobile-optimized layout efficiently" name="Performance and User Experience Tests Mobile User Experience should render mobile-optimized layout efficiently" time="0.031">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Mobile User Experience should handle touch interactions responsively" name="Performance and User Experience Tests Mobile User Experience should handle touch interactions responsively" time="0.095">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Mobile User Experience should optimize mobile table display performance" name="Performance and User Experience Tests Mobile User Experience should optimize mobile table display performance" time="0.125">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Mobile User Experience should handle modal interactions efficiently on mobile" name="Performance and User Experience Tests Mobile User Experience should handle modal interactions efficiently on mobile" time="0.094">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Memory and Resource Management should not cause memory leaks during team switching" name="Performance and User Experience Tests Memory and Resource Management should not cause memory leaks during team switching" time="0.328">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Memory and Resource Management should clean up event listeners properly" name="Performance and User Experience Tests Memory and Resource Management should clean up event listeners properly" time="0.017">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Memory and Resource Management should handle image loading efficiently" name="Performance and User Experience Tests Memory and Resource Management should handle image loading efficiently" time="0.031">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Accessibility Performance should maintain accessibility during rapid interactions" name="Performance and User Experience Tests Accessibility Performance should maintain accessibility during rapid interactions" time="0.033">
+    </testcase>
+    <testcase classname="Performance and User Experience Tests Accessibility Performance should maintain focus management during team switches" name="Performance and User Experience Tests Accessibility Performance should maintain focus management during team switches" time="0.061">
+    </testcase>
+  </testsuite>
+</testsuites>

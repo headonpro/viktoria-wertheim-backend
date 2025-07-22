@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { IconClock, IconMapPin, IconCalendar, IconX, IconUser, IconTrophy, IconCards } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
-import { strapi } from '@/lib/strapi'
-import { Spiel } from '@/types/strapi'
+import { teamService } from '@/services/teamService'
+import { GameDetails, TeamId } from '@/types/strapi'
 import Image from "next/image";
 
 const AnimatedSection = dynamic(
@@ -30,26 +30,7 @@ interface GameCardProps {
   onClick: () => void
 }
 
-interface GameDetails {
-  type: 'last' | 'next'
-  homeTeam: string
-  awayTeam: string
-  homeScore?: number
-  awayScore?: number
-  date: string
-  time: string
-  isHome: boolean
-  stadium: string
-  referee: string
-  goalScorers?: string[]
-  yellowCards?: string[]
-  redCards?: string[]
-  lastMeeting?: {
-    date: string
-    result: string
-    location: string
-  }
-}
+
 
 // Funktion zur Bestimmung des Team-Logos basierend auf dem Teamnamen
 const getTeamLogo = (teamName: string): string | undefined => {
@@ -99,7 +80,10 @@ const getTeamLogo = (teamName: string): string | undefined => {
 }
 
 const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, isHome, onClick }: GameCardProps) => {
-  const isViktoria = homeTeam === 'SV Viktoria Wertheim' || awayTeam === 'SV Viktoria Wertheim' || homeTeam === 'Viktoria Wertheim' || awayTeam === 'Viktoria Wertheim'
+  // Helper function to check if team name is Viktoria (handles variations)
+  const isViktoriaTeam = (teamName: string) => {
+    return teamName.includes('Viktoria Wertheim') || teamName.includes('Viktoria')
+  }
   
   // Funktion zur Bestimmung der Ergebnisfarbe basierend auf dem Spielausgang
   const getResultColor = () => {
@@ -107,7 +91,7 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
       return 'text-gray-800'
     }
     
-    const isViktoriaHome = homeTeam === 'SV Viktoria Wertheim' || homeTeam === 'Viktoria Wertheim'
+    const isViktoriaHome = isViktoriaTeam(homeTeam)
     const viktoriaScore = isViktoriaHome ? homeScore : awayScore
     const opponentScore = isViktoriaHome ? awayScore : homeScore
     
@@ -126,7 +110,7 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
   
   return (
     <div 
-      className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.03] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]"
+      className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
       onClick={onClick}
     >
       <div className="mb-2 md:mb-4 text-center">
@@ -224,8 +208,10 @@ interface GameCardsProps {
 export default function GameCards({ selectedTeam }: GameCardsProps) {
   const [selectedGame, setSelectedGame] = useState<GameDetails | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [games, setGames] = useState<Spiel[]>([])
+  const [lastGame, setLastGame] = useState<GameDetails | null>(null)
+  const [nextGame, setNextGame] = useState<GameDetails | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   
   const openGameModal = (game: GameDetails) => {
     setSelectedGame(game)
@@ -237,68 +223,29 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
     setIsModalOpen(false)
   }
 
-  // Fetch games from API
+  // Fetch team-specific games from API
   useEffect(() => {
-    const fetchGames = async () => {
+    const fetchTeamGames = async () => {
       try {
         setLoading(true)
-        const response = await strapi.get('/spiele', {
-          params: {
-            populate: ['heimmannschaft', 'auswaertsmannschaft'],
-            sort: 'datum:desc',
-            'pagination[limit]': 10
-          }
-        })
+        setError(null)
         
-        const apiGames = response.data.data || []
-        setGames(apiGames)
+        const { lastGame: fetchedLastGame, nextGame: fetchedNextGame } = await teamService.fetchLastAndNextGame(selectedTeam as TeamId)
+        
+        setLastGame(fetchedLastGame)
+        setNextGame(fetchedNextGame)
       } catch (err) {
-        console.error('Error fetching games:', err)
-        setGames([])
+        console.error('Error fetching team games:', err)
+        setError('Spiele konnten nicht geladen werden')
+        setLastGame(null)
+        setNextGame(null)
       } finally {
         setLoading(false)
       }
     }
 
-        fetchGames()
-  }, [])
-
-  // Convert Spiel to GameDetails
-  const convertSpielToGameDetails = (spiel: Spiel): GameDetails => {
-    const now = new Date()
-    const spielDatum = new Date(spiel.attributes.datum)
-    const isLastGame = spielDatum < now
-    const isViktoriaHome = spiel.attributes.heimmannschaft?.data?.attributes?.name === 'SV Viktoria Wertheim';
-
-    return {
-      type: isLastGame ? 'last' : 'next',
-      homeTeam: isViktoriaHome ? 'SV Viktoria Wertheim' : spiel.attributes.auswaertsmannschaft?.data?.attributes?.name || '',
-      awayTeam: isViktoriaHome ? spiel.attributes.auswaertsmannschaft?.data?.attributes?.name || '' : 'SV Viktoria Wertheim',
-      homeScore: isLastGame ? (isViktoriaHome ? spiel.attributes.tore_heim : spiel.attributes.tore_auswaerts) : undefined,
-      awayScore: isLastGame ? (isViktoriaHome ? spiel.attributes.tore_auswaerts : spiel.attributes.tore_heim) : undefined,
-      date: spielDatum.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }),
-      time: spielDatum.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
-      isHome: isViktoriaHome,
-      stadium: spiel.attributes.spielort || 'Sportplatz Wertheim',
-      referee: 'Schmidt, Michael', // TODO: Add referee field to schema
-      goalScorers: [], // TODO: Add goal scorers
-      yellowCards: [], // TODO: Add cards
-      redCards: [],
-      lastMeeting: !isLastGame ? {
-        date: '15.05.2024',
-        result: '2:1',
-        location: 'Heim'
-      } : undefined
-    }
-  }
-
-  // Get last and next game from API data
-  const now = new Date()
-  const pastGames = games.filter(game => new Date(game.attributes.datum) < now)
-  const futureGames = games.filter(game => new Date(game.attributes.datum) >= now)
-  
-  const lastGame = pastGames.length > 0 ? convertSpielToGameDetails(pastGames[0]) : null
-  const nextGame = futureGames.length > 0 ? convertSpielToGameDetails(futureGames[futureGames.length - 1]) : null
+    fetchTeamGames()
+  }, [selectedTeam])
    
   // Funktion zur Bestimmung der Ergebnisfarbe für das letzte Aufeinandertreffen
   const getResultColor = (result: string, location: string) => {
@@ -323,13 +270,18 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
     }
   }
   
+  // Helper function to check if team name is Viktoria (handles variations)
+  const isViktoriaTeam = (teamName: string) => {
+    return teamName.includes('Viktoria Wertheim') || teamName.includes('Viktoria')
+  }
+
   // Funktion zur Bestimmung der Ergebnisfarbe für das Modal
   const getModalResultColor = (game: GameDetails) => {
     if (game.type !== 'last' || game.homeScore === undefined || game.awayScore === undefined) {
       return 'text-viktoria-blue'
     }
     
-    const isViktoriaHome = game.homeTeam === 'SV Viktoria Wertheim' || game.homeTeam === 'Viktoria Wertheim'
+    const isViktoriaHome = isViktoriaTeam(game.homeTeam)
     const viktoriaScore = isViktoriaHome ? game.homeScore : game.awayScore
     const opponentScore = isViktoriaHome ? game.awayScore : game.homeScore
     
@@ -345,11 +297,34 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
   // Mannschaftsspezifische Team-Namen
   const getTeamName = (team: '1' | '2' | '3') => {
     switch (team) {
+      case '1': return '1. Mannschaft'
+      case '2': return '2. Mannschaft'
+      case '3': return '3. Mannschaft'
+      default: return '1. Mannschaft'
+    }
+  }
+
+  // Get display name for team (for UI display)
+  const getTeamDisplayName = (team: '1' | '2' | '3') => {
+    switch (team) {
       case '1': return 'SV Viktoria Wertheim'
       case '2': return 'SV Viktoria Wertheim II'
       case '3': return 'SV Viktoria Wertheim III'
       default: return 'SV Viktoria Wertheim'
     }
+  }
+
+  // Check if a team name matches the selected team (handles variations)
+  const isSelectedTeam = (teamName: string, selectedTeam: '1' | '2' | '3') => {
+    const teamVariations = {
+      '1': ['1. Mannschaft', 'SV Viktoria Wertheim', 'Viktoria Wertheim', 'Viktoria'],
+      '2': ['2. Mannschaft', 'SV Viktoria Wertheim II', 'Viktoria Wertheim II', 'Viktoria II'],
+      '3': ['3. Mannschaft', 'SV Viktoria Wertheim III', 'Viktoria Wertheim III', 'Viktoria III']
+    }
+    
+    return teamVariations[selectedTeam].some(variation => 
+      teamName.includes(variation) || variation.includes(teamName)
+    )
   }
 
 
@@ -360,34 +335,86 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
         <div className="container max-w-6xl">
           <div className="grid grid-cols-2 gap-4 md:gap-8">
             {/* Letztes Spiel */}
-            {lastGame ? (
+            {loading ? (
+              <div 
+                className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]"
+              >
+                <div className="text-center">
+                  <div className="animate-spin w-6 h-6 border-2 border-viktoria-blue border-t-transparent rounded-full mb-2 mx-auto"></div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Lade Spiele für {getTeamName(selectedTeam)}...
+                  </p>
+                </div>
+              </div>
+            ) : error ? (
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-red-400 mb-2">⚠️</div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                    {error}
+                  </p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="text-xs text-viktoria-blue hover:text-viktoria-blue-light underline"
+                  >
+                    Neu laden
+                  </button>
+                </div>
+              </div>
+            ) : lastGame ? (
               <GameCard
                 {...lastGame}
                 onClick={() => openGameModal(lastGame)}
               />
             ) : (
-              <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.03] md:min-h-[240px] shadow-2xl shadow-black/20 dark:shadow-white/[0.25] flex items-center justify-center">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-gray-400 mb-2">⚽</div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Kein letztes Spiel verfügbar
+                    Kein letztes Spiel für {getTeamName(selectedTeam)} verfügbar
                   </p>
                 </div>
               </div>
             )}
             
             {/* Nächstes Spiel */}
-            {nextGame ? (
+            {loading ? (
+              <div 
+                className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]"
+              >
+                <div className="text-center">
+                  <div className="animate-spin w-6 h-6 border-2 border-viktoria-blue border-t-transparent rounded-full mb-2 mx-auto"></div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Lade Spiele für {getTeamName(selectedTeam)}...
+                  </p>
+                </div>
+              </div>
+            ) : error ? (
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-red-400 mb-2">⚠️</div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                    {error}
+                  </p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="text-xs text-viktoria-blue hover:text-viktoria-blue-light underline"
+                  >
+                    Neu laden
+                  </button>
+                </div>
+              </div>
+            ) : nextGame ? (
               <GameCard
                 {...nextGame}
                 onClick={() => openGameModal(nextGame)}
               />
             ) : (
-              <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/40 dark:border-white/[0.03] md:min-h-[240px] shadow-2xl shadow-black/20 dark:shadow-white/[0.25] flex items-center justify-center">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-gray-400 mb-2">📅</div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Kein nächstes Spiel geplant
+                    Kein nächstes Spiel für {getTeamName(selectedTeam)} geplant
                   </p>
                 </div>
               </div>
@@ -398,8 +425,14 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
       
       {/* Game Modal */}
       {isModalOpen && selectedGame && createPortal(
-        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-2 md:p-4">
-          <AnimatedDiv delay={0} className="bg-white/95 dark:bg-white/[0.02] backdrop-blur-sm rounded-xl max-w-lg w-full mx-2 md:mx-0 border border-white/40 dark:border-white/[0.08] shadow-2xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
+        <div 
+          className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 touch-manipulation"
+          onClick={closeGameModal}
+        >
+          <div 
+            className="bg-white/95 dark:bg-white/[0.04] backdrop-blur-sm rounded-xl sm:rounded-2xl max-w-sm sm:max-w-md md:max-w-lg w-full mx-2 sm:mx-4 md:mx-0 border border-white/40 dark:border-white/[0.08] shadow-2xl max-h-[90vh] sm:max-h-[85vh] md:max-h-[90vh] overflow-y-auto transform transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Modal Header with Date/Time and Close Button */}
             <div className="relative rounded-t-xl pt-6 px-4 pb-4 md:pt-8 md:px-6 md:pb-6">
               <div className="flex items-center justify-between h-8">
@@ -417,15 +450,16 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
                 {/* Close Button */}
                 <button
                   onClick={closeGameModal}
-                  className="w-8 h-8 bg-white/20 dark:bg-white/[0.02] hover:bg-white/30 dark:hover:bg-white/[0.04] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-full flex items-center justify-center transition-colors duration-300"
+                  className="w-10 h-10 sm:w-8 sm:h-8 bg-gray-100/80 dark:bg-white/[0.04] hover:bg-white/30 dark:hover:bg-white/[0.04] active:bg-white/40 dark:active:bg-white/[0.06] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-full flex items-center justify-center transition-all duration-200 touch-manipulation transform active:scale-95"
+                  aria-label="Modal schließen"
                 >
-                  <IconX className="text-gray-600 dark:text-gray-300" size={18} />
+                  <IconX className="text-gray-600 dark:text-gray-300" size={20} />
                 </button>
               </div>
             </div>
             
             {/* Modal Body */}
-            <div className="pt-4 px-4 pb-4 md:pt-6 md:px-6 md:pb-6 space-y-6 md:space-y-8">
+            <div className="pt-4 px-4 pb-6 sm:px-6 md:pt-6 md:px-6 md:pb-8 space-y-4 sm:space-y-6 md:space-y-8">
 
               {/* Teams with Score/VS */}
               <div className="relative mb-6 md:mb-8">
@@ -507,70 +541,112 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
               
               {/* Letztes Spiel - Statistiken */}
               {selectedGame.type === 'last' && (
-                <div className="grid grid-cols-2 gap-3 md:gap-4">
-                  {/* Torschützen - Always in left column */}
-                  <div className="col-start-1">
-                    {selectedGame.goalScorers && selectedGame.goalScorers.length > 0 && (
-                      <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:bg-none rounded-lg p-3 md:p-4">
-                        <h3 className="text-viktoria-yellow font-semibold mb-2 md:mb-3 text-center text-sm flex items-center justify-center">
-                          <IconTrophy className="mr-1 md:mr-2" size={18} />
-                          Torschützen
-                        </h3>
-                        <div className="space-y-1 md:space-y-2">
-                          {selectedGame.goalScorers.map((scorer, index) => (
-                            <div key={index} className="text-center">
-                              <p className="text-white dark:text-gray-200 font-semibold text-sm">{scorer}</p>
+                <div className="space-y-4">
+                  {/* Torschützen */}
+                  {selectedGame.goalScorers && selectedGame.goalScorers.length > 0 && (
+                    <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-gray-800 dark:to-gray-700 rounded-lg p-3 md:p-4">
+                      <h3 className="text-viktoria-yellow dark:text-viktoria-yellow font-semibold mb-3 text-center text-sm flex items-center justify-center">
+                        <IconTrophy className="mr-2" size={18} />
+                        Torschützen
+                      </h3>
+                      <div className="space-y-2">
+                        {selectedGame.goalScorers.map((goal, index) => (
+                          <div key={index} className="flex items-center justify-between bg-white/10 dark:bg-white/5 rounded-md p-2">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 bg-viktoria-yellow text-viktoria-blue rounded-full flex items-center justify-center text-xs font-bold">
+                                {goal.minute}&apos;
+                              </div>
+                              <span className="text-white dark:text-gray-200 font-medium text-sm">
+                                {goal.player}
+                              </span>
                             </div>
-                          ))}
-                        </div>
+                            <div className="text-xs text-viktoria-yellow dark:text-gray-300">
+                              {goal.team === 'home' ? selectedGame.homeTeam : selectedGame.awayTeam}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                   
-                  {/* Karten - Always in right column */}
-                  <div className="col-start-2">
-                    {((selectedGame.yellowCards && selectedGame.yellowCards.length > 0) || 
-                      (selectedGame.redCards && selectedGame.redCards.length > 0)) && (
-                      <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:bg-none rounded-lg p-3 md:p-4">
-                        <h3 className="text-viktoria-yellow font-semibold mb-2 md:mb-3 text-center text-sm flex items-center justify-center">
-                          <IconCards className="mr-1 md:mr-2" size={18} />
-                          Karten
-                        </h3>
-                        <div className="space-y-1 md:space-y-2">
-                          {selectedGame.yellowCards && selectedGame.yellowCards.map((card, index) => (
-                            <div key={`yellow-${index}`} className="flex items-center justify-center space-x-2">
-                              <div className="w-3 h-4 bg-yellow-400 rounded-sm flex-shrink-0"></div>
-                              <p className="text-white dark:text-gray-200 font-semibold text-sm">{card}</p>
+                  {/* Karten */}
+                  {((selectedGame.yellowCards && selectedGame.yellowCards.length > 0) || 
+                    (selectedGame.redCards && selectedGame.redCards.length > 0)) && (
+                    <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-gray-800 dark:to-gray-700 rounded-lg p-3 md:p-4">
+                      <h3 className="text-viktoria-yellow dark:text-viktoria-yellow font-semibold mb-3 text-center text-sm flex items-center justify-center">
+                        <IconCards className="mr-2" size={18} />
+                        Karten
+                      </h3>
+                      <div className="space-y-2">
+                        {/* Gelbe Karten */}
+                        {selectedGame.yellowCards && selectedGame.yellowCards.map((card, index) => (
+                          <div key={`yellow-${index}`} className="flex items-center justify-between bg-white/10 dark:bg-white/5 rounded-md p-2">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs font-bold text-black">
+                                {card.minute}&apos;
+                              </div>
+                              <div className="w-3 h-4 bg-yellow-400 rounded-sm"></div>
+                              <span className="text-white dark:text-gray-200 font-medium text-sm">
+                                {card.player}
+                              </span>
                             </div>
-                          ))}
-                          {selectedGame.redCards && selectedGame.redCards.map((card, index) => (
-                            <div key={`red-${index}`} className="flex items-center justify-center space-x-2">
-                              <div className="w-3 h-4 bg-red-500 rounded-sm flex-shrink-0"></div>
-                              <p className="text-white dark:text-gray-200 font-semibold text-sm">{card}</p>
+                            <div className="text-xs text-viktoria-yellow dark:text-gray-300">
+                              {card.team === 'home' ? selectedGame.homeTeam : selectedGame.awayTeam}
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
+                        
+                        {/* Rote Karten */}
+                        {selectedGame.redCards && selectedGame.redCards.map((card, index) => (
+                          <div key={`red-${index}`} className="flex items-center justify-between bg-white/10 dark:bg-white/5 rounded-md p-2">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold text-white">
+                                {card.minute}&apos;
+                              </div>
+                              <div className="w-3 h-4 bg-red-500 rounded-sm"></div>
+                              <span className="text-white dark:text-gray-200 font-medium text-sm">
+                                {card.player}
+                              </span>
+                            </div>
+                            <div className="text-xs text-viktoria-yellow dark:text-gray-300">
+                              {card.team === 'home' ? selectedGame.homeTeam : selectedGame.awayTeam}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               )}
               
               {/* Nächstes Spiel - Letztes Aufeinandertreffen */}
               {selectedGame.type === 'next' && selectedGame.lastMeeting && (
-                <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:bg-none rounded-lg p-3 md:p-4">
-                  <h3 className="text-white dark:text-gray-200 font-semibold mb-3 md:mb-4 text-center text-sm">
-                    LAST MATCH
+                <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light dark:from-gray-800 dark:to-gray-700 rounded-lg p-3 md:p-4">
+                  <h3 className="text-viktoria-yellow dark:text-viktoria-yellow font-semibold mb-3 text-center text-sm flex items-center justify-center">
+                    <IconTrophy className="mr-2" size={18} />
+                    Letztes Aufeinandertreffen
                   </h3>
-                  <div className="text-center">
-                    <div className={`font-bold text-2xl md:text-3xl ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location)} ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location) === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location) === 'text-red-600' ? 'drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'drop-shadow-[0_0_8px_rgba(156,163,175,0.3)]'}`}>
-                      {selectedGame.lastMeeting.result}
+                  <div className="bg-white/10 dark:bg-white/5 rounded-md p-3">
+                    <div className="text-center mb-2">
+                      <div className={`font-bold text-2xl md:text-3xl ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location)} ${getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location) === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : getResultColor(selectedGame.lastMeeting.result, selectedGame.lastMeeting.location) === 'text-red-600' ? 'drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]' : 'drop-shadow-[0_0_8px_rgba(156,163,175,0.3)]'}`}>
+                        {selectedGame.lastMeeting.result}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center space-x-2 text-viktoria-yellow dark:text-gray-300">
+                        <IconCalendar size={14} />
+                        <span>{selectedGame.lastMeeting.date}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-viktoria-yellow dark:text-gray-300">
+                        <IconMapPin size={14} />
+                        <span>{selectedGame.lastMeeting.location === 'heim' ? 'Heimspiel' : 'Auswärtsspiel'}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
             </div>
-          </AnimatedDiv>
+          </div>
         </div>,
         document.body
       )}

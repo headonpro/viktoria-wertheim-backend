@@ -414,7 +414,7 @@ export interface ApiKategorieKategorie extends Struct.CollectionTypeSchema {
   collectionName: 'kategorien';
   info: {
     description: 'Kategorien f\u00FCr News-Artikel';
-    displayName: 'Kategorie';
+    displayName: 'News Kategorien';
     pluralName: 'kategorien';
     singularName: 'kategorie';
   };
@@ -452,7 +452,7 @@ export interface ApiLeaderboardEntryLeaderboardEntry
   extends Struct.CollectionTypeSchema {
   collectionName: 'leaderboard_entries';
   info: {
-    displayName: 'leaderboard-entry';
+    displayName: 'Tabelle';
     pluralName: 'leaderboard-entries';
     singularName: 'leaderboard-entry';
   };
@@ -464,6 +464,14 @@ export interface ApiLeaderboardEntryLeaderboardEntry
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     gegentore: Schema.Attribute.Integer;
+    liga: Schema.Attribute.Enumeration<
+      [
+        'Kreisliga Tauberbischofsheim',
+        'Kreisklasse A Tauberbischofsheim',
+        'Kreisklasse B Tauberbischofsheim',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'Kreisliga Tauberbischofsheim'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -510,12 +518,14 @@ export interface ApiMannschaftMannschaft extends Struct.CollectionTypeSchema {
         'f-jugend',
         'bambini',
       ]
-    >;
+    > &
+      Schema.Attribute.Required;
     bemerkungen: Schema.Attribute.Text;
     beschreibung: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    form_letzte_5: Schema.Attribute.JSON;
     gruendungsjahr: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -528,7 +538,11 @@ export interface ApiMannschaftMannschaft extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::mitglied.mitglied'
     >;
-    liga: Schema.Attribute.String;
+    liga: Schema.Attribute.Enumeration<
+      ['Kreisklasse B', 'Kreisklasse A', 'Kreisliga', 'Landesliga']
+    > &
+      Schema.Attribute.Required;
+    liga_vollname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -538,15 +552,85 @@ export interface ApiMannschaftMannschaft extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    niederlagen: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
+    punkte: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     saison: Schema.Attribute.String & Schema.Attribute.DefaultTo<'2024/25'>;
+    siege: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    spiele_gesamt: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     spielort: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Sportplatz Wertheim'>;
     status: Schema.Attribute.Enumeration<['aktiv', 'inaktiv', 'aufgeloest']> &
-      Schema.Attribute.DefaultTo<'aktiv'>;
+      Schema.Attribute.Required;
+    tabellenplatz: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 20;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
     teamfoto: Schema.Attribute.Media<'images'>;
+    tordifferenz: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    tore_fuer: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    tore_gegen: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     trainer: Schema.Attribute.Relation<'manyToOne', 'api::mitglied.mitglied'>;
+    trainers: Schema.Attribute.Relation<'manyToMany', 'api::trainer.trainer'>;
     trainingszeiten: Schema.Attribute.Text;
+    trend: Schema.Attribute.Enumeration<['steigend', 'gleich', 'fallend']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'gleich'>;
+    unentschieden: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -614,6 +698,7 @@ export interface ApiMitgliedMitglied extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     spieler: Schema.Attribute.Relation<'oneToOne', 'api::spieler.spieler'>;
     telefon: Schema.Attribute.String;
+    trainer: Schema.Attribute.Relation<'oneToOne', 'api::trainer.trainer'>;
     trainer_mannschaften: Schema.Attribute.Relation<
       'oneToMany',
       'api::mannschaft.mannschaft'
@@ -636,7 +721,7 @@ export interface ApiMitgliedMitglied extends Struct.CollectionTypeSchema {
 export interface ApiNewsArtikelNewsArtikel extends Struct.CollectionTypeSchema {
   collectionName: 'news_artikel';
   info: {
-    displayName: 'news-artikel';
+    displayName: 'News Artikel';
     pluralName: 'news-artikels';
     singularName: 'news-artikel';
   };
@@ -690,15 +775,18 @@ export interface ApiSpielSpiel extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     datum: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    gelbe_karten: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
     heimmannschaft: Schema.Attribute.Relation<
       'manyToOne',
       'api::mannschaft.mannschaft'
     >;
+    letztes_aufeinandertreffen: Schema.Attribute.JSON;
     liga: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    rote_karten: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
     saison: Schema.Attribute.String & Schema.Attribute.DefaultTo<'2024/25'>;
     schiedsrichter: Schema.Attribute.String;
     spielbericht: Schema.Attribute.RichText;
@@ -731,6 +819,7 @@ export interface ApiSpielSpiel extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<0>;
+    torschuetzen: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -811,6 +900,7 @@ export interface ApiSpielerSpieler extends Struct.CollectionTypeSchema {
       'api::mannschaft.mannschaft'
     >;
     mitglied: Schema.Attribute.Relation<'oneToOne', 'api::mitglied.mitglied'>;
+    nachname: Schema.Attribute.String;
     position: Schema.Attribute.Enumeration<
       ['torwart', 'abwehr', 'mittelfeld', 'sturm']
     > &
@@ -860,6 +950,7 @@ export interface ApiSpielerSpieler extends Struct.CollectionTypeSchema {
     verletzungshistorie: Schema.Attribute.Text;
     vertragsende: Schema.Attribute.Date;
     vizekapitaen: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    vorname: Schema.Attribute.String;
   };
 }
 
@@ -915,6 +1006,42 @@ export interface ApiSponsorSponsor extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+  };
+}
+
+export interface ApiTrainerTrainer extends Struct.CollectionTypeSchema {
+  collectionName: 'trainers';
+  info: {
+    displayName: 'Trainer';
+    pluralName: 'trainers';
+    singularName: 'trainer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    lizenzstufe: Schema.Attribute.Enumeration<
+      ['Trainer C', 'Trainer B', 'Trainer A']
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::trainer.trainer'
+    > &
+      Schema.Attribute.Private;
+    mannschafts: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::mannschaft.mannschaft'
+    >;
+    mitglied: Schema.Attribute.Relation<'oneToOne', 'api::mitglied.mitglied'>;
+    publishedAt: Schema.Attribute.DateTime;
+    seit: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1517,6 +1644,7 @@ declare module '@strapi/strapi' {
       'api::spiel.spiel': ApiSpielSpiel;
       'api::spieler.spieler': ApiSpielerSpieler;
       'api::sponsor.sponsor': ApiSponsorSponsor;
+      'api::trainer.trainer': ApiTrainerTrainer;
       'api::training.training': ApiTrainingTraining;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

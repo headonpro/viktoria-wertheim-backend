@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_URL = 'http://192.168.178.59:1337';
+const API_URL = 'http://localhost:1337';
 
 async function testSponsorAPI() {
   console.log('🧪 Testing Sponsor API...\n');
@@ -32,7 +32,7 @@ async function testSponsorAPI() {
         console.log('The sponsor content type exists but the API endpoint is not accessible.');
         console.log('This usually means permissions are not set correctly.\n');
         console.log('To fix this:');
-        console.log('1. Open Strapi Admin: http://192.168.178.59:1337/admin');
+        console.log('1. Open Strapi Admin: http://localhost:1337/admin');
         console.log('2. Go to: Settings → Users & Permissions Plugin → Roles → Public');
         console.log('3. Find "Sponsor" section and enable:');
         console.log('   - ✅ find (to read all sponsors)');

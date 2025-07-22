@@ -1,0 +1,4643 @@
+{
+  "totalRecords": 216,
+  "repairedRecords": 216,
+  "skippedRecords": 0,
+  "failedRecords": 0,
+  "repairs": [
+    {
+      "recordId": 38,
+      "recordName": "Test-status-1753134860006",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 39,
+      "recordName": "Test-status-1753134860006",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 40,
+      "recordName": "Admin-Test-status-1753134860095",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 41,
+      "recordName": "Admin-Test-status-1753134860095",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 42,
+      "recordName": "Test-status-1753134860250",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 43,
+      "recordName": "Test-status-1753134860250",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 44,
+      "recordName": "Admin-Test-status-1753134860330",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 45,
+      "recordName": "Admin-Test-status-1753134860330",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 46,
+      "recordName": "Test-status-1753134860384",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 47,
+      "recordName": "Test-status-1753134860384",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 48,
+      "recordName": "Admin-Test-status-1753134860416",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 49,
+      "recordName": "Admin-Test-status-1753134860416",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 50,
+      "recordName": "Test-status-1753134860527",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 51,
+      "recordName": "Test-status-1753134860527",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 52,
+      "recordName": "Admin-Test-status-1753134860553",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 53,
+      "recordName": "Admin-Test-status-1753134860553",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 54,
+      "recordName": "Test-status-1753134860580",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 55,
+      "recordName": "Test-status-1753134860580",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 56,
+      "recordName": "Admin-Test-status-1753134860611",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 57,
+      "recordName": "Admin-Test-status-1753134860611",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 58,
+      "recordName": "Test-liga-1753134860686",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 59,
+      "recordName": "Test-liga-1753134860686",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 60,
+      "recordName": "Admin-Test-liga-1753134860716",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 61,
+      "recordName": "Admin-Test-liga-1753134860716",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 62,
+      "recordName": "Test-liga-1753134860753",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 63,
+      "recordName": "Test-liga-1753134860753",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 64,
+      "recordName": "Admin-Test-liga-1753134860780",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 65,
+      "recordName": "Admin-Test-liga-1753134860780",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 66,
+      "recordName": "Test-liga-1753134860810",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 67,
+      "recordName": "Test-liga-1753134860810",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 68,
+      "recordName": "Admin-Test-liga-1753134860839",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 69,
+      "recordName": "Admin-Test-liga-1753134860839",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 70,
+      "recordName": "Test-liga-1753134860869",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 71,
+      "recordName": "Test-liga-1753134860869",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 72,
+      "recordName": "Admin-Test-liga-1753134860897",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 73,
+      "recordName": "Admin-Test-liga-1753134860897",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 74,
+      "recordName": "Test-liga-1753134860998",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 75,
+      "recordName": "Test-liga-1753134860998",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 76,
+      "recordName": "Admin-Test-liga-1753134861026",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 77,
+      "recordName": "Admin-Test-liga-1753134861026",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 78,
+      "recordName": "Test-liga-1753134861054",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 79,
+      "recordName": "Test-liga-1753134861054",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 80,
+      "recordName": "Admin-Test-liga-1753134861083",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 81,
+      "recordName": "Admin-Test-liga-1753134861083",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 82,
+      "recordName": "Test-altersklasse-1753134861156",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 83,
+      "recordName": "Test-altersklasse-1753134861156",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 84,
+      "recordName": "Admin-Test-altersklasse-1753134861185",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 85,
+      "recordName": "Admin-Test-altersklasse-1753134861185",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 86,
+      "recordName": "Test-altersklasse-1753134861216",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 87,
+      "recordName": "Test-altersklasse-1753134861216",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 88,
+      "recordName": "Admin-Test-altersklasse-1753134861245",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 89,
+      "recordName": "Admin-Test-altersklasse-1753134861245",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 90,
+      "recordName": "Test-altersklasse-1753134861274",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 91,
+      "recordName": "Test-altersklasse-1753134861274",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 92,
+      "recordName": "Admin-Test-altersklasse-1753134861301",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 93,
+      "recordName": "Admin-Test-altersklasse-1753134861301",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 94,
+      "recordName": "Test-altersklasse-1753134861329",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 95,
+      "recordName": "Test-altersklasse-1753134861329",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 96,
+      "recordName": "Admin-Test-altersklasse-1753134861356",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 97,
+      "recordName": "Admin-Test-altersklasse-1753134861356",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 98,
+      "recordName": "Test-altersklasse-1753134861383",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 99,
+      "recordName": "Test-altersklasse-1753134861383",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 100,
+      "recordName": "Admin-Test-altersklasse-1753134861407",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 101,
+      "recordName": "Admin-Test-altersklasse-1753134861407",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 102,
+      "recordName": "Test-altersklasse-1753134861433",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 103,
+      "recordName": "Test-altersklasse-1753134861433",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 104,
+      "recordName": "Admin-Test-altersklasse-1753134861458",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 105,
+      "recordName": "Admin-Test-altersklasse-1753134861458",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 106,
+      "recordName": "Test-altersklasse-1753134861484",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 107,
+      "recordName": "Test-altersklasse-1753134861484",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 108,
+      "recordName": "Admin-Test-altersklasse-1753134861510",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 109,
+      "recordName": "Admin-Test-altersklasse-1753134861510",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 110,
+      "recordName": "Test-altersklasse-1753134861534",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 111,
+      "recordName": "Test-altersklasse-1753134861534",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 112,
+      "recordName": "Admin-Test-altersklasse-1753134861562",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 113,
+      "recordName": "Admin-Test-altersklasse-1753134861562",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 114,
+      "recordName": "Test-altersklasse-1753134861660",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 115,
+      "recordName": "Test-altersklasse-1753134861660",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 116,
+      "recordName": "Admin-Test-altersklasse-1753134861694",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 117,
+      "recordName": "Admin-Test-altersklasse-1753134861694",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 118,
+      "recordName": "Test-altersklasse-1753134861723",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 119,
+      "recordName": "Test-altersklasse-1753134861723",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 120,
+      "recordName": "Admin-Test-altersklasse-1753134861753",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 121,
+      "recordName": "Admin-Test-altersklasse-1753134861753",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 122,
+      "recordName": "Test-trend-1753134861819",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 123,
+      "recordName": "Test-trend-1753134861819",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 124,
+      "recordName": "Admin-Test-trend-1753134861847",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 125,
+      "recordName": "Admin-Test-trend-1753134861847",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 126,
+      "recordName": "Test-trend-1753134861874",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 127,
+      "recordName": "Test-trend-1753134861874",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 128,
+      "recordName": "Admin-Test-trend-1753134861900",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 129,
+      "recordName": "Admin-Test-trend-1753134861900",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 130,
+      "recordName": "Test-trend-1753134861926",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 131,
+      "recordName": "Test-trend-1753134861926",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 132,
+      "recordName": "Admin-Test-trend-1753134861952",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 133,
+      "recordName": "Admin-Test-trend-1753134861952",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 134,
+      "recordName": "Test-trend-1753134862038",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 135,
+      "recordName": "Test-trend-1753134862038",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 136,
+      "recordName": "Admin-Test-trend-1753134862062",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 137,
+      "recordName": "Admin-Test-trend-1753134862062",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 138,
+      "recordName": "Test-trend-1753134862087",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 139,
+      "recordName": "Test-trend-1753134862087",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 140,
+      "recordName": "Admin-Test-trend-1753134862112",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 141,
+      "recordName": "Admin-Test-trend-1753134862112",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 142,
+      "recordName": "Test-status-1753135007410",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 143,
+      "recordName": "Test-status-1753135007410",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 144,
+      "recordName": "Admin-Test-status-1753135007482",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 145,
+      "recordName": "Admin-Test-status-1753135007482",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 146,
+      "recordName": "Test-status-1753135007525",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 147,
+      "recordName": "Test-status-1753135007525",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 148,
+      "recordName": "Admin-Test-status-1753135007561",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 149,
+      "recordName": "Admin-Test-status-1753135007561",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 150,
+      "recordName": "Test-status-1753135007596",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 151,
+      "recordName": "Test-status-1753135007596",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 152,
+      "recordName": "Admin-Test-status-1753135007628",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 153,
+      "recordName": "Admin-Test-status-1753135007628",
+      "repairs": [
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 154,
+      "recordName": "Test-status-1753135007742",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 155,
+      "recordName": "Test-status-1753135007742",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 156,
+      "recordName": "Admin-Test-status-1753135007767",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 157,
+      "recordName": "Admin-Test-status-1753135007767",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 158,
+      "recordName": "Test-status-1753135007801",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 159,
+      "recordName": "Test-status-1753135007801",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 160,
+      "recordName": "Admin-Test-status-1753135007839",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 161,
+      "recordName": "Admin-Test-status-1753135007839",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 162,
+      "recordName": "Test-liga-1753135007902",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 163,
+      "recordName": "Test-liga-1753135007902",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 164,
+      "recordName": "Admin-Test-liga-1753135007929",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 165,
+      "recordName": "Admin-Test-liga-1753135007929",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 166,
+      "recordName": "Test-liga-1753135007954",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 167,
+      "recordName": "Test-liga-1753135007954",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 168,
+      "recordName": "Admin-Test-liga-1753135007979",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 169,
+      "recordName": "Admin-Test-liga-1753135007979",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 170,
+      "recordName": "Test-liga-1753135008006",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 171,
+      "recordName": "Test-liga-1753135008006",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 172,
+      "recordName": "Admin-Test-liga-1753135008028",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 173,
+      "recordName": "Admin-Test-liga-1753135008028",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 174,
+      "recordName": "Test-liga-1753135008052",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 175,
+      "recordName": "Test-liga-1753135008052",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 176,
+      "recordName": "Admin-Test-liga-1753135008077",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 177,
+      "recordName": "Admin-Test-liga-1753135008077",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 178,
+      "recordName": "Test-liga-1753135008159",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 179,
+      "recordName": "Test-liga-1753135008159",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 180,
+      "recordName": "Admin-Test-liga-1753135008182",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 181,
+      "recordName": "Admin-Test-liga-1753135008182",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 182,
+      "recordName": "Test-liga-1753135008205",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 183,
+      "recordName": "Test-liga-1753135008205",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 184,
+      "recordName": "Admin-Test-liga-1753135008229",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 185,
+      "recordName": "Admin-Test-liga-1753135008229",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 186,
+      "recordName": "Test-altersklasse-1753135008286",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 187,
+      "recordName": "Test-altersklasse-1753135008286",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 188,
+      "recordName": "Admin-Test-altersklasse-1753135008313",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 189,
+      "recordName": "Admin-Test-altersklasse-1753135008313",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 190,
+      "recordName": "Test-altersklasse-1753135008336",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 191,
+      "recordName": "Test-altersklasse-1753135008336",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 192,
+      "recordName": "Admin-Test-altersklasse-1753135008362",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 193,
+      "recordName": "Admin-Test-altersklasse-1753135008362",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 194,
+      "recordName": "Test-altersklasse-1753135008386",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 195,
+      "recordName": "Test-altersklasse-1753135008386",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 196,
+      "recordName": "Admin-Test-altersklasse-1753135008410",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 197,
+      "recordName": "Admin-Test-altersklasse-1753135008410",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 198,
+      "recordName": "Test-altersklasse-1753135008444",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 199,
+      "recordName": "Test-altersklasse-1753135008444",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 200,
+      "recordName": "Admin-Test-altersklasse-1753135008468",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 201,
+      "recordName": "Admin-Test-altersklasse-1753135008468",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 202,
+      "recordName": "Test-altersklasse-1753135008491",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 203,
+      "recordName": "Test-altersklasse-1753135008491",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 204,
+      "recordName": "Admin-Test-altersklasse-1753135008514",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 205,
+      "recordName": "Admin-Test-altersklasse-1753135008514",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 206,
+      "recordName": "Test-altersklasse-1753135008537",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 207,
+      "recordName": "Test-altersklasse-1753135008537",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 208,
+      "recordName": "Admin-Test-altersklasse-1753135008561",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 209,
+      "recordName": "Admin-Test-altersklasse-1753135008561",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 210,
+      "recordName": "Test-altersklasse-1753135008584",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 211,
+      "recordName": "Test-altersklasse-1753135008584",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 212,
+      "recordName": "Admin-Test-altersklasse-1753135008606",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 213,
+      "recordName": "Admin-Test-altersklasse-1753135008606",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 214,
+      "recordName": "Test-altersklasse-1753135008628",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 215,
+      "recordName": "Test-altersklasse-1753135008628",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 216,
+      "recordName": "Admin-Test-altersklasse-1753135008651",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 217,
+      "recordName": "Admin-Test-altersklasse-1753135008651",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 218,
+      "recordName": "Test-altersklasse-1753135008734",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 219,
+      "recordName": "Test-altersklasse-1753135008734",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 220,
+      "recordName": "Admin-Test-altersklasse-1753135008758",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 221,
+      "recordName": "Admin-Test-altersklasse-1753135008758",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 222,
+      "recordName": "Test-altersklasse-1753135008781",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 223,
+      "recordName": "Test-altersklasse-1753135008781",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 224,
+      "recordName": "Admin-Test-altersklasse-1753135008803",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 225,
+      "recordName": "Admin-Test-altersklasse-1753135008803",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 226,
+      "recordName": "Test-trend-1753135008858",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 227,
+      "recordName": "Test-trend-1753135008858",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 228,
+      "recordName": "Admin-Test-trend-1753135008882",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 229,
+      "recordName": "Admin-Test-trend-1753135008882",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 230,
+      "recordName": "Test-trend-1753135008904",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 231,
+      "recordName": "Test-trend-1753135008904",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 232,
+      "recordName": "Admin-Test-trend-1753135008927",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 233,
+      "recordName": "Admin-Test-trend-1753135008927",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 234,
+      "recordName": "Test-trend-1753135008951",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 235,
+      "recordName": "Test-trend-1753135008951",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 236,
+      "recordName": "Admin-Test-trend-1753135008972",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 237,
+      "recordName": "Admin-Test-trend-1753135008972",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 238,
+      "recordName": "Test-trend-1753135009051",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 239,
+      "recordName": "Test-trend-1753135009051",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 240,
+      "recordName": "Admin-Test-trend-1753135009078",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 241,
+      "recordName": "Admin-Test-trend-1753135009078",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 242,
+      "recordName": "Test-trend-1753135009101",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 243,
+      "recordName": "Test-trend-1753135009101",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 244,
+      "recordName": "Admin-Test-trend-1753135009126",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 245,
+      "recordName": "Admin-Test-trend-1753135009126",
+      "repairs": [
+        {
+          "field": "status",
+          "originalValue": null,
+          "newValue": "aktiv",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "liga",
+          "originalValue": null,
+          "newValue": "Kreisklasse B",
+          "reason": "NULL_VALUE"
+        },
+        {
+          "field": "altersklasse",
+          "originalValue": null,
+          "newValue": "senioren",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 387,
+      "recordName": "Test-trend-1753135390438",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 388,
+      "recordName": "Test-trend-1753135390438",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 389,
+      "recordName": "Admin-Test-trend-1753135390464",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 390,
+      "recordName": "Admin-Test-trend-1753135390464",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 488,
+      "recordName": "Test-trend-1753135536563",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 489,
+      "recordName": "Test-trend-1753135536563",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 490,
+      "recordName": "Admin-Test-trend-1753135536585",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    },
+    {
+      "recordId": 491,
+      "recordName": "Admin-Test-trend-1753135536585",
+      "repairs": [
+        {
+          "field": "trend",
+          "originalValue": null,
+          "newValue": "gleich",
+          "reason": "NULL_VALUE"
+        }
+      ],
+      "result": "Dry run - no actual changes made"
+    }
+  ],
+  "rollbackData": [],
+  "timestamp": "2025-07-21T22:24:35.629Z",
+  "dryRun": true
+}

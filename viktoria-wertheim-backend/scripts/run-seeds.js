@@ -131,10 +131,94 @@ async function seedSponsors() {
   }
 }
 
+// Import der neuen Seeding-Funktionen
+const { seedMannschaften } = require('./seed-mannschaften');
+const { seedSpiele } = require('./seed-spiele');
+
 async function runAllSeeds() {
-  await seedKategorien();
-  await seedSponsors();
+  console.log('🌱 Starte vollständiges Seeding...\n');
+  
+  try {
+    // 1. Kategorien seeden (für News)
+    console.log('📋 Phase 1: Kategorien');
+    await seedKategorien();
+    
+    // 2. Sponsors seeden
+    console.log('\n💰 Phase 2: Sponsors');
+    await seedSponsors();
+    
+    // 3. Mannschaften seeden (muss vor Spielen erfolgen)
+    console.log('\n⚽ Phase 3: Mannschaften');
+    const mannschaftenSuccess = await seedMannschaften();
+    
+    if (!mannschaftenSuccess) {
+      console.error('❌ Mannschaften-Seeding fehlgeschlagen. Spiele-Seeding wird übersprungen.');
+      return false;
+    }
+    
+    // 4. Spiele seeden (benötigt Mannschaften)
+    console.log('\n🏆 Phase 4: Spiele');
+    const spieleSuccess = await seedSpiele();
+    
+    if (!spieleSuccess) {
+      console.error('❌ Spiele-Seeding fehlgeschlagen.');
+      return false;
+    }
+    
+    console.log('\n🎉 Vollständiges Seeding erfolgreich abgeschlossen!');
+    console.log('📊 Zusammenfassung:');
+    console.log('   ✅ Kategorien erstellt');
+    console.log('   ✅ Sponsors erstellt');
+    console.log('   ✅ Mannschaften erstellt');
+    console.log('   ✅ Spiele erstellt');
+    
+    return true;
+    
+  } catch (error) {
+    console.error('❌ Fehler beim Seeding:', error.message);
+    console.error('Stack:', error.stack);
+    return false;
+  }
 }
 
-// Script ausführen
-runAllSeeds(); 
+// Hilfsfunktion zum Seeding einzelner Bereiche
+async function runSpecificSeed(type) {
+  console.log(`🌱 Starte ${type}-Seeding...\n`);
+  
+  try {
+    switch (type.toLowerCase()) {
+      case 'kategorien':
+        return await seedKategorien();
+      
+      case 'sponsors':
+        return await seedSponsors();
+      
+      case 'mannschaften':
+      case 'teams':
+        return await seedMannschaften();
+      
+      case 'spiele':
+      case 'games':
+        return await seedSpiele();
+      
+      default:
+        console.error(`❌ Unbekannter Seeding-Typ: ${type}`);
+        console.log('Verfügbare Typen: kategorien, sponsors, mannschaften, spiele');
+        return false;
+    }
+  } catch (error) {
+    console.error(`❌ Fehler beim ${type}-Seeding:`, error.message);
+    return false;
+  }
+}
+
+// Command-line Interface
+const args = process.argv.slice(2);
+
+if (args.length > 0) {
+  const seedType = args[0];
+  runSpecificSeed(seedType);
+} else {
+  // Script ausführen
+  runAllSeeds();
+} 

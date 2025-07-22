@@ -57,7 +57,7 @@ export default function ShopPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
               {/* Trikots */}
               <AnimatedDiv 
-                className="group bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-5 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
+                className="group bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl p-5 border-2 border-white/80 dark:border-white/[0.15] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
                 delay={0.4}
               >
                 <div className="text-center">
@@ -76,7 +76,7 @@ export default function ShopPage() {
 
               {/* Fanartikel */}
               <AnimatedDiv 
-                className="group bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-5 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
+                className="group bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl p-5 border-2 border-white/80 dark:border-white/[0.15] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
                 delay={0.5}
               >
                 <div className="text-center">
@@ -95,7 +95,7 @@ export default function ShopPage() {
 
               {/* Mitgliedschaft */}
               <AnimatedDiv 
-                className="group bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-5 border border-white/40 dark:border-white/[0.08] hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
+                className="group bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl p-5 border-2 border-white/80 dark:border-white/[0.15] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
                 delay={0.6}
               >
                 <div className="text-center">

@@ -38,16 +38,17 @@
     },
     "mitgliedsstatus": {
       "type": "enumeration",
+      "default": "aktiv",
       "enum": [
         "aktiv",
         "inaktiv",
         "ausgetreten",
         "ausgeschlossen"
-      ],
-      "default": "aktiv"
+      ]
     },
     "mitgliedstyp": {
       "type": "enumeration",
+      "required": true,
       "enum": [
         "spieler",
         "trainer",
@@ -55,8 +56,7 @@
         "familie",
         "ehrenmitglied",
         "funktionaer"
-      ],
-      "required": true
+      ]
     },
     "beitrittsdatum": {
       "type": "date",
@@ -67,36 +67,36 @@
     },
     "zahlungsstatus": {
       "type": "enumeration",
+      "default": "aktuell",
       "enum": [
         "aktuell",
         "rueckstaendig",
         "befreit"
-      ],
-      "default": "aktuell"
+      ]
     },
     "letzter_beitrag": {
       "type": "date"
     },
     "adresse": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.adresse"
+      "component": "shared.adresse",
+      "repeatable": false
     },
     "notfallkontakt": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.notfallkontakt"
+      "component": "shared.notfallkontakt",
+      "repeatable": false
     },
     "benutzerrolle": {
       "type": "enumeration",
+      "default": "mitglied",
       "enum": [
         "mitglied",
         "spieler",
         "trainer",
         "admin",
         "vorstand"
-      ],
-      "default": "mitglied"
+      ]
     },
     "profilfoto": {
       "type": "media",
@@ -110,8 +110,8 @@
     },
     "datenschutz_akzeptiert": {
       "type": "boolean",
-      "default": false,
-      "required": true
+      "required": true,
+      "default": false
     },
     "newsletter_aktiv": {
       "type": "boolean",
@@ -140,6 +140,12 @@
       "relation": "oneToMany",
       "target": "api::training.training",
       "mappedBy": "trainer"
+    },
+    "trainer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::trainer.trainer",
+      "mappedBy": "mitglied"
     }
   }
-} 
+}

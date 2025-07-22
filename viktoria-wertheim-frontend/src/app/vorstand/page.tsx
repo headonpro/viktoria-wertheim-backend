@@ -29,7 +29,7 @@ interface BoardMember {
 export default function BoardPage() {
   const boardMembers: BoardMember[] = [
     {
-      name: 'Hans Müller',
+      name: 'Fabian Väthjeder',
       position: '1. Vorsitzender',
       description: 'Leitung des Vereins, Vertretung nach außen, strategische Ausrichtung und Koordination aller Vereinsaktivitäten.',
       email: 'vorsitzender@viktoria-wertheim.de',
@@ -99,24 +99,24 @@ export default function BoardPage() {
       {/* Header Section - nur Mobile */}
       
 
-      <main className="pt-8 pb-6">
-        <div className="container space-y-8">
+      <div className="px-4 md:px-6 lg:px-0">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto space-y-6 md:space-y-8">
           
           {/* Einleitung */}
           <AnimatedSection delay={0.2}>
-            <div className="text-center mb-8">
+            <div className="text-center mb-6 md:mb-8">
               <Image 
                 src="/viktorialogo.png" 
                 alt="Viktoria Wertheim Logo"
-                width={64}
-                height={64}
-                className="w-16 h-16 mx-auto mb-4 drop-shadow-lg"
+                width={80}
+                height={80}
+                className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 drop-shadow-lg"
                 priority
               />
-              <h2 className="text-xl font-bold text-viktoria-blue mb-4">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
                 Unser Vorstandsteam
-              </h2>
-              <p className="text-gray-700 leading-relaxed px-4">
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed px-4 text-sm md:text-base">
                 Die ehrenamtliche Vereinsführung arbeitet mit Leidenschaft und Engagement 
                 für den Erfolg und die Weiterentwicklung von Viktoria Wertheim.
               </p>
@@ -129,23 +129,23 @@ export default function BoardPage() {
               <AnimatedDiv 
                 key={index} 
                 delay={0.3 + index * 0.1}
-                className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 p-6 hover:bg-white/50 transition-all duration-300"
+                className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] p-6 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
               >
                 <div className="flex items-start space-x-4">
                   {/* Icon */}
-                  <div className={`${getColorClasses(member.color)} p-3 rounded-lg flex-shrink-0`}>
+                  <div className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 p-3 rounded-lg flex-shrink-0">
                     <member.icon size={24} />
                   </div>
                   
                   {/* Content */}
                   <div className="flex-1">
-                    <h3 className="font-bold text-viktoria-blue text-lg mb-1">
+                    <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-1">
                       {member.name}
                     </h3>
-                    <div className="text-sm font-semibold text-gray-600 mb-3">
+                    <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
                       {member.position}
                     </div>
-                    <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
                       {member.description}
                     </p>
                     
@@ -154,7 +154,7 @@ export default function BoardPage() {
                       {member.email && (
                         <a 
                           href={`mailto:${member.email}`}
-                          className="flex items-center space-x-2 text-sm text-viktoria-blue hover:text-viktoria-blue-light transition-colors"
+                          className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
                         >
                           <IconMail size={16} />
                           <span>{member.email}</span>
@@ -163,7 +163,7 @@ export default function BoardPage() {
                       {member.phone && (
                         <a 
                           href={`tel:${member.phone}`}
-                          className="flex items-center space-x-2 text-sm text-viktoria-blue hover:text-viktoria-blue-light transition-colors"
+                          className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
                         >
                           <IconPhone size={16} />
                           <span>{member.phone}</span>
@@ -178,28 +178,28 @@ export default function BoardPage() {
 
           {/* Ehrenamt Info */}
           <AnimatedSection delay={1.0}>
-            <div className="bg-gradient-to-r from-viktoria-blue-light to-viktoria-blue rounded-xl p-6 text-white text-center">
-              <IconUsers className="text-viktoria-yellow mx-auto mb-4" size={48} />
-              <h2 className="text-xl font-bold text-viktoria-yellow mb-4">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <IconUsers className="text-gray-600 dark:text-gray-400 mx-auto mb-4" size={48} />
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
                 Ehrenamtliches Engagement
               </h2>
-              <p className="text-white/90 mb-6 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-sm">
                 Unser gesamter Vorstand arbeitet ehrenamtlich und investiert seine Freizeit 
                 für den Verein. Wir sind stolz auf das große Engagement und den Zusammenhalt 
                 in unserem Vorstandsteam.
               </p>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-viktoria-yellow">6</div>
-                  <div className="text-xs text-white/80">Vorstandsmitglieder</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">6</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Vorstandsmitglieder</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-viktoria-yellow">100%</div>
-                  <div className="text-xs text-white/80">Ehrenamtlich</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">100%</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Ehrenamtlich</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-viktoria-yellow">24/7</div>
-                  <div className="text-xs text-white/80">Für den Verein</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">24/7</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Für den Verein</div>
                 </div>
               </div>
             </div>
@@ -207,25 +207,27 @@ export default function BoardPage() {
 
           {/* Allgemeine Kontaktinfo */}
           <AnimatedSection delay={1.1}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 p-6">
-              <h2 className="text-lg font-bold text-viktoria-blue mb-4 text-center">
-                Allgemeine Kontaktinformationen
-              </h2>
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center mb-4">
+                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                  Allgemeine Kontaktinformationen
+                </h2>
+              </div>
               <div className="space-y-3">
                 <div className="flex items-center justify-center space-x-2">
-                  <IconMail className="text-viktoria-blue" size={20} />
+                  <IconMail className="text-gray-600 dark:text-gray-400" size={20} />
                   <a 
                     href="mailto:info@viktoria-wertheim.de"
-                    className="text-viktoria-blue hover:text-viktoria-blue-light transition-colors font-medium"
+                    className="text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors font-medium"
                   >
                     info@viktoria-wertheim.de
                   </a>
                 </div>
                 <div className="flex items-center justify-center space-x-2">
-                  <IconPhone className="text-viktoria-blue" size={20} />
+                  <IconPhone className="text-gray-600 dark:text-gray-400" size={20} />
                   <a 
                     href="tel:09342123456"
-                    className="text-viktoria-blue hover:text-viktoria-blue-light transition-colors font-medium"
+                    className="text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors font-medium"
                   >
                     (09342) 123-456
                   </a>
@@ -236,17 +238,17 @@ export default function BoardPage() {
 
           {/* Interesse am Vorstand */}
           <AnimatedSection delay={1.2}>
-            <div className="bg-viktoria-yellow/20 rounded-xl p-6 text-center">
-              <h2 className="text-lg font-bold text-viktoria-blue mb-4">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
                 Interesse am Vorstand?
               </h2>
-              <p className="text-gray-700 mb-6 text-sm leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
                 Sie möchten sich ehrenamtlich für unseren Verein engagieren? 
                 Wir freuen uns immer über neue Mitstreiter im Vorstandsteam!
               </p>
               <a 
                 href="/kontakt" 
-                className="bg-viktoria-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-viktoria-blue-light transition-colors duration-300 inline-block"
+                className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 inline-block"
               >
                 Jetzt Kontakt aufnehmen
               </a>
@@ -254,7 +256,7 @@ export default function BoardPage() {
           </AnimatedSection>
 
         </div>
-      </main>
+      </div>
     </PageLayout>
   )
 } 

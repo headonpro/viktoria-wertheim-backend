@@ -68,7 +68,7 @@ export default function SponsorShowcase() {
 
   if (loading) {
     return (
-      <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-sm rounded-lg border border-white/20 dark:border-white/[0.05] overflow-hidden">
+      <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
         <div className="px-3 py-2 text-center border-b border-white/10">
           <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wide">
             Unsere Partner
@@ -123,7 +123,7 @@ export default function SponsorShowcase() {
   const sponsorDerWoche = sponsors.length > 0 ? sponsors[getWeekOfYear() % sponsors.length] : null
 
   return (
-    <div className="bg-white/10 dark:bg-white/[0.02] backdrop-blur-sm rounded-lg border border-white/20 dark:border-white/[0.03] overflow-hidden shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35] transition-all duration-300">
+    <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] transition-all duration-300 hover:transform hover:translateY(-2px)">
       {/* Header */}
       <div className="px-8 md:px-12 py-4 md:py-6 text-center">
         <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
@@ -133,7 +133,7 @@ export default function SponsorShowcase() {
 
       <div className="p-4 md:p-6 pt-0 md:pt-0 space-y-6">
         {/* Sponsor der Woche und Hauptsponsor nebeneinander */}
-        <div className="bg-white/5 dark:bg-white/[0.02] rounded-lg p-4 md:p-6">
+        <div className="rounded-lg p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-start justify-items-center max-w-4xl mx-auto">
             {/* Sponsor der Woche */}
             {sponsorDerWoche && (

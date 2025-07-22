@@ -1,7 +1,8 @@
 import { AuthService } from './auth';
 import { strapi, API_ENDPOINTS } from './strapi';
+import { getApiUrl } from './apiConfig';
 
-const API_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+const API_URL = getApiUrl();
 
 interface CreateMemberData {
   // User-Daten

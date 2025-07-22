@@ -1,0 +1,59 @@
+{
+  "extraction_metadata": {
+    "extraction_date": "2025-07-21",
+    "source_screenshots": [
+      "screencapture-fussball-de-mannschaft-sv-viktoria-wertheim-sv-vikt-wertheim-2000-baden-saison-2526-team-id-011MIE0UN0000000VTVG0001VTR8C1K7-2025-07-21-01_28_06.png",
+      "Screenshot 2025-07-21 013007.png",
+      "Screenshot 2025-07-21 013016.png",
+      "Screenshot 2025-07-21 013022.png",
+      "Screenshot 2025-07-21 013044.png",
+      "Screenshot 2025-07-21 013105.png",
+      "Screenshot 2025-07-21 013211.png"
+    ],
+    "extractor": "manual",
+    "season": "2025/26",
+    "notes": "Match results extracted manually from fussball.de screenshots"
+  },
+  "completed_matches": [
+    {
+      "match_id": "placeholder_001",
+      "date": "2025-07-21",
+      "home_team": "SV Viktoria Wertheim",
+      "away_team": "TBD - Extract from screenshots",
+      "home_score": null,
+      "away_score": null,
+      "league": "Kreisliga A Würzburg",
+      "match_day": null,
+      "season": "2025/26",
+      "status": "beendet",
+      "venue": null,
+      "notes": "PLACEHOLDER - Replace with actual extracted data"
+    }
+  ],
+  "extraction_instructions": {
+    "step_1": "Open each screenshot and look for match results sections",
+    "step_2": "Look for completed games showing final scores",
+    "step_3": "Extract match dates, team names, and final scores",
+    "step_4": "Note match status (should be 'beendet' for completed)",
+    "step_5": "Update this JSON with all found match results",
+    "data_fields_to_extract": [
+      "Match date (convert to YYYY-MM-DD format)",
+      "Home team name (exact spelling)",
+      "Away team name (exact spelling)", 
+      "Home team final score",
+      "Away team final score",
+      "League/competition name",
+      "Match day/round number (if visible)",
+      "Season (2025/26)",
+      "Match status (beendet for completed)",
+      "Venue (if visible)"
+    ]
+  },
+  "data_quality_notes": [
+    "Screenshots need manual examination for match results",
+    "Date formats may vary and need standardization",
+    "Team names must match those used in league table",
+    "Some match details may be incomplete",
+    "Season may not have started yet - check for actual completed matches"
+  ]
+}

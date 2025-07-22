@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Development Server Started",
+  "description": "Automatically detects when npm run develop or npm run dev commands are executed and provides confirmation that the server has started",
+  "version": "1",
+  "when": {
+    "type": "fileDeleted",
+    "patterns": [
+      "package.json",
+      "viktoria-wertheim-backend/package.json",
+      "viktoria-wertheim-frontend/package.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Der Server wurde gestartet. Du kannst weitermachen."
+  }
+}

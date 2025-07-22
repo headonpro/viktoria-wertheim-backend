@@ -1,0 +1,16 @@
+{
+  "totalRecords": 1012,
+  "validRecords": 1012,
+  "invalidRecords": 0,
+  "issues": [],
+  "summary": {
+    "validationRate": "100.00",
+    "fieldIssues": {},
+    "severityCount": {
+      "HIGH": 0,
+      "MEDIUM": 0
+    },
+    "mostProblematicFields": []
+  },
+  "timestamp": "2025-07-22T00:06:54.997Z"
+}

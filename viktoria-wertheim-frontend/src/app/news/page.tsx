@@ -251,10 +251,10 @@ export default function NewsPage() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg dark:shadow-white/[0.05] ${
+                  className={`flex-shrink-0 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
                     selectedCategory === category
-                      ? 'bg-viktoria-blue text-white shadow-md'
-                      : 'bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-700 dark:text-gray-300 border border-white/40 dark:border-white/[0.08] active:bg-viktoria-blue/10 active:text-viktoria-blue dark:active:text-viktoria-yellow'
+                      ? 'bg-viktoria-yellow text-gray-900 shadow-sm'
+                      : 'bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg text-gray-700 dark:text-gray-300 border-2 border-white/80 dark:border-white/[0.15] active:bg-viktoria-blue/10 active:text-viktoria-blue dark:active:text-viktoria-yellow hover:shadow-sm'
                   }`}
                 >
                   {category}
@@ -273,8 +273,8 @@ export default function NewsPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] ${
                       selectedCategory === category
-                        ? 'bg-viktoria-blue text-white shadow-md'
-                        : 'bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-viktoria-blue/10 hover:text-viktoria-blue dark:hover:text-viktoria-yellow border border-white/40 dark:border-white/[0.08]'
+                        ? 'bg-viktoria-yellow text-gray-900 shadow-md'
+                        : 'bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg text-gray-700 dark:text-gray-300 hover:bg-viktoria-blue/10 hover:text-viktoria-blue dark:hover:text-viktoria-yellow border-2 border-white/80 dark:border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)]'
                     }`}
                   >
                     {category}
@@ -292,7 +292,7 @@ export default function NewsPage() {
         <AnimatedSection delay={0.3}>
           {filteredArticles.length === 0 ? (
             <div className="text-center py-12">
-              <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/40 dark:border-white/[0.08] p-8 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)]">
                 <div className="w-16 h-16 bg-gray-100 dark:bg-white/[0.08] rounded-full flex items-center justify-center mx-auto mb-4">
                   <IconEye className="w-8 h-8 text-gray-400 dark:text-gray-500" />
                 </div>
@@ -309,7 +309,7 @@ export default function NewsPage() {
           ) : (
             <>
               {/* Articles Grid - Clean Design */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="space-y-9 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8">
                 {filteredArticles
                   .filter(article => article && getArticleTitle(article)) // Filter valid articles
                   .map((article, index) => {
@@ -322,7 +322,7 @@ export default function NewsPage() {
                       className="group"
                     >
                       <div 
-                        className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl border border-white/40 dark:border-white/[0.08] overflow-hidden hover:bg-white/30 dark:hover:bg-white/[0.04] hover:shadow-xl dark:hover:shadow-white/[0.08] transition-all duration-300 cursor-pointer h-full flex flex-col shadow-lg dark:shadow-white/[0.05]"
+                        className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px) h-full flex flex-col"
                         onClick={() => openArticleModal(article.id)}
                       >
                         {/* Image */}
@@ -350,29 +350,29 @@ export default function NewsPage() {
                               {getKategorieName(article)}
                             </span>
                           </div>
+                          {/* Date Badge */}
+                          <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
+                            <div className="flex items-center bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm">
+                              <IconClock className="w-3 h-3 mr-1" />
+                              <span>
+                                {new Date(getArticleDate(article)).toLocaleDateString('de-DE', {
+                                  day: '2-digit',
+                                  month: 'short'
+                                })}
+                              </span>
+                            </div>
+                          </div>
                         </div>
 
                         {/* Content */}
                         <div className="p-3 sm:p-5 flex-grow flex flex-col">
-                          {/* Date */}
-                          <div className="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">
-                            <IconClock className="w-4 h-4 mr-2" />
-                            <span>
-                              {new Date(getArticleDate(article)).toLocaleDateString('de-DE', {
-                                day: '2-digit',
-                                month: 'long',
-                                year: 'numeric',
-                              })}
-                            </span>
-                          </div>
-
                           {/* Title */}
-                          <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors line-clamp-2 leading-tight flex-grow">
+                          <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors line-clamp-2 leading-tight flex-grow">
                             {getArticleTitle(article)}
                           </h3>
 
                           {/* Content Preview */}
-                          <p className="text-gray-600 dark:text-gray-300 line-clamp-2 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                          <p className="text-gray-600 dark:text-gray-300 line-clamp-2 text-sm leading-relaxed mb-3 sm:mb-4">
                             {getArticleContent(article) || 'Artikel ansehen...'}
                           </p>
 

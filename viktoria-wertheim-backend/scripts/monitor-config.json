@@ -1,0 +1,43 @@
+{
+  "baseUrl": "http://localhost:1337",
+  "monitorInterval": 30000,
+  "alertThreshold": 3,
+  "logFile": "../validation-reports/monitor-log.json",
+  "alertFile": "../validation-reports/validation-alerts.json",
+  "contentTypes": [
+    {
+      "name": "mannschaft",
+      "testData": {
+        "name": "Monitor Test Team",
+        "status": "aktiv",
+        "liga": "Kreisklasse A",
+        "gruendungsjahr": 2020
+      },
+      "invalidTestData": {
+        "name": "Monitor Test Team Invalid",
+        "status": "invalid_status",
+        "liga": "invalid_liga"
+      }
+    },
+    {
+      "name": "spieler", 
+      "testData": {
+        "name": "Monitor Test Player",
+        "position": "Torwart"
+      },
+      "invalidTestData": {
+        "name": "",
+        "position": "invalid_position"
+      }
+    }
+  ],
+  "notifications": {
+    "enabled": true,
+    "methods": ["console", "file"],
+    "email": {
+      "enabled": false,
+      "recipients": [],
+      "smtp": {}
+    }
+  }
+}

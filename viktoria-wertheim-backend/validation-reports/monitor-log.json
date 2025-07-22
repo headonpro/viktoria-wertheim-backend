@@ -1,0 +1,187 @@
+[
+  {
+    "timestamp": "2025-07-21T23:55:56.910Z",
+    "results": {
+      "mannschaft": {
+        "api": {
+          "success": false,
+          "status": 405,
+          "error": "Request failed with status code 405",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": false
+      },
+      "spieler": {
+        "api": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": true
+      }
+    },
+    "hasInconsistencies": true,
+    "consecutiveFailures": 0
+  },
+  {
+    "timestamp": "2025-07-22T00:00:18.031Z",
+    "results": {
+      "mannschaft": {
+        "api": {
+          "success": false,
+          "status": 405,
+          "error": "Request failed with status code 405",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": false
+      },
+      "spieler": {
+        "api": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": true
+      }
+    },
+    "hasInconsistencies": true,
+    "consecutiveFailures": 0
+  },
+  {
+    "timestamp": "2025-07-22T00:02:47.175Z",
+    "results": {
+      "mannschaft": {
+        "api": {
+          "success": false,
+          "status": 405,
+          "error": "Request failed with status code 405",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": false
+      },
+      "spieler": {
+        "api": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": true
+      }
+    },
+    "hasInconsistencies": true,
+    "consecutiveFailures": 0
+  },
+  {
+    "timestamp": "2025-07-22T00:04:59.652Z",
+    "results": {
+      "mannschaft": {
+        "api": {
+          "success": false,
+          "status": 405,
+          "error": "Request failed with status code 405",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": false
+      },
+      "spieler": {
+        "api": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": true
+      }
+    },
+    "hasInconsistencies": true,
+    "consecutiveFailures": 0
+  },
+  {
+    "timestamp": "2025-07-22T00:06:49.230Z",
+    "results": {
+      "mannschaft": {
+        "api": {
+          "success": false,
+          "status": 405,
+          "error": "Request failed with status code 405",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": false
+      },
+      "spieler": {
+        "api": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "admin": {
+          "success": false,
+          "status": 401,
+          "error": "Missing or invalid credentials",
+          "validationPassed": false
+        },
+        "consistent": true
+      }
+    },
+    "hasInconsistencies": true,
+    "consecutiveFailures": 0
+  }
+]

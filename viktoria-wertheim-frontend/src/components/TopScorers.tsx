@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { IconTrophy } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
+import axios from 'axios'
 
 const AnimatedSection = dynamic(
   () => import('@/components/AnimatedSection'),
@@ -19,8 +20,22 @@ interface TopScorer {
   isOwnPlayer?: boolean
 }
 
+interface SpielerData {
+  id: number
+  documentId: string
+  vorname: string | null
+  nachname: string | null
+  tore_saison: number
+  spiele_saison: number
+  position: string
+  status: string
+}
+
 const TopScorers = () => {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [topScorers, setTopScorers] = useState<TopScorer[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   
   // Hilfsfunktion zur Aufteiling von Vor- und Nachnamen
   const splitName = (fullName: string) => {
@@ -29,71 +44,81 @@ const TopScorers = () => {
     const firstName = parts.slice(0, -1).join(' ')
     return { firstName, lastName }
   }
-  
-  const topScorers: TopScorer[] = [
-    {
-      position: 1,
-      name: 'Okan Cirakoglu',
-      team: 'Viktoria Wertheim',
-      goals: 19,
-      games: 16,
-      isOwnPlayer: true
-    },
-    {
-      position: 2,
-      name: 'Silas Jacob',
-      team: 'Viktoria Wertheim',
-      goals: 15,
-      games: 18,
-      isOwnPlayer: true
-    },
-    {
-      position: 3,
-      name: 'Justin Schulz',
-      team: 'Viktoria Wertheim',
-      goals: 12,
-      games: 17,
-      isOwnPlayer: true
-    },
-    {
-      position: 4,
-      name: 'Marco Klein',
-      team: 'Viktoria Wertheim',
-      goals: 11,
-      games: 18,
-      isOwnPlayer: true
-    },
-    {
-      position: 5,
-      name: 'David Bauer',
-      team: 'Viktoria Wertheim',
-      goals: 10,
-      games: 16,
-      isOwnPlayer: true
-    },
-    {
-      position: 6,
-      name: 'Alex Schmidt',
-      team: 'Viktoria Wertheim',
-      goals: 9,
-      games: 18,
-      isOwnPlayer: true
-    }
-  ]
 
-  const displayedScorers = isExpanded ? topScorers : topScorers.slice(0, 3)
+  // API-Daten laden
+  useEffect(() => {
+    const fetchTopScorers = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}/api/spielers`, {
+          params: {
+            sort: ['tore_saison:desc'],
+            filters: {
+              tore_saison: {
+                $gt: 0
+              }
+            },
+            pagination: {
+              limit: 10
+            }
+          }
+        })
+
+        const spielerData: SpielerData[] = response.data.data
+        const formattedScorers: TopScorer[] = spielerData.map((spieler, index) => ({
+          position: index + 1,
+          name: `${spieler.vorname || 'Unbekannt'} ${spieler.nachname || ''}`.trim(),
+          team: 'Viktoria Wertheim',
+          goals: spieler.tore_saison,
+          games: spieler.spiele_saison,
+          isOwnPlayer: true
+        }))
+
+        setTopScorers(formattedScorers)
+        setError(null)
+      } catch (err) {
+        console.error('Fehler beim Laden der Torschützendaten:', err)
+        setError('Torschützendaten konnten nicht geladen werden')
+        // Fallback zu statischen Daten
+        setTopScorers([
+          { position: 1, name: 'Thomas Müller', team: 'Viktoria Wertheim', goals: 12, games: 18, isOwnPlayer: true },
+          { position: 2, name: 'Michael Schmidt', team: 'Viktoria Wertheim', goals: 9, games: 18, isOwnPlayer: true },
+          { position: 3, name: 'Patrick Weber', team: 'Viktoria Wertheim', goals: 8, games: 17, isOwnPlayer: true }
+        ])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTopScorers()
+  }, [])
+
+  const displayedScorers = isExpanded ? topScorers : topScorers.slice(0, 5)
+
+  if (loading) {
+    return (
+      <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-8 text-center shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/3 mx-auto mb-4"></div>
+          <div className="space-y-3">
+            <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded"></div>
+            <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded"></div>
+            <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded"></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <AnimatedSection>
-      <div className="container max-w-6xl">
-        <div
-          className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
+    <div
+      className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+      onClick={() => setIsExpanded(!isExpanded)}
+    >
           {/* Title Header */}
           <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-            <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
-              Torschützen König
+            <h2 className="text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+              Torschützenkönig
             </h2>
           </div>
 
@@ -114,7 +139,7 @@ const TopScorers = () => {
                 key={scorer.position}
                 className={`px-4 md:px-8 py-3 md:py-4 transition-all duration-300 relative overflow-hidden ${
                   scorer.position === 1 
-                    ? 'bg-viktoria-blue-light rounded-lg md:rounded-xl hover:bg-viktoria-blue hover:shadow-lg hover:shadow-viktoria-blue/20 hover:scale-[1.02] cursor-pointer' 
+                    ? 'bg-gray-900/80 dark:bg-gray-800/90 rounded-lg md:rounded-xl hover:bg-gray-900/90 dark:hover:bg-gray-800/95 hover:shadow-lg hover:shadow-gray-900/30 hover:scale-[1.02] cursor-pointer' 
                     : 'hover:bg-white/30'
                 }`}
               >
@@ -228,9 +253,7 @@ const TopScorers = () => {
               {isExpanded ? <ChevronUp size={16} className="md:w-5 md:h-5" /> : <ChevronDown size={16} className="md:w-5 md:h-5" />}
             </div>
           </div>
-        </div>
-      </div>
-    </AnimatedSection>
+    </div>
   )
 }
 

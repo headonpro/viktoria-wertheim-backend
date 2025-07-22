@@ -4,7 +4,7 @@
   "info": {
     "singularName": "kategorie",
     "pluralName": "kategorien",
-    "displayName": "Kategorie",
+    "displayName": "News Kategorien",
     "description": "Kategorien für News-Artikel"
   },
   "options": {
@@ -35,4 +35,4 @@
       "mappedBy": "kategorie"
     }
   }
-} 
+}

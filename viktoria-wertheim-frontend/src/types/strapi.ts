@@ -167,6 +167,21 @@ export interface Mannschaft {
     name: string;
     trainer?: string;
     liga?: string;
+    // New fields for team management
+    tabellenplatz?: number;
+    punkte?: number;
+    spiele_gesamt?: number;
+    siege?: number;
+    unentschieden?: number;
+    niederlagen?: number;
+    tore_fuer?: number;
+    tore_gegen?: number;
+    tordifferenz?: number;
+    form_letzte_5?: ('S' | 'U' | 'N')[];
+    trend?: 'steigend' | 'gleich' | 'fallend';
+    liga_vollname?: string;
+    altersklasse?: string;
+    status?: 'aktiv' | 'inaktiv' | 'aufgeloest';
     teamfoto?: {
       data: {
         id: number;
@@ -223,8 +238,100 @@ export interface Spiel {
     wetter?: 'sonnig' | 'bewoelkt' | 'regen' | 'schnee' | 'wind';
     schiedsrichter?: string;
     bemerkungen?: string;
+    // New fields for match events
+    torschuetzen?: Array<{
+      minute: number;
+      player: string;
+      team: 'home' | 'away';
+    }>;
+    gelbe_karten?: Array<{
+      minute: number;
+      player: string;
+      team: 'home' | 'away';
+    }>;
+    rote_karten?: Array<{
+      minute: number;
+      player: string;
+      team: 'home' | 'away';
+    }>;
+    letztes_aufeinandertreffen?: {
+      date: string;
+      result: string;
+      location: 'heim' | 'auswaerts';
+    };
     publishedAt: string;
     createdAt: string;
     updatedAt: string;
   };
-} 
+}
+
+// Enhanced interfaces for team management system
+export interface TeamData {
+  id: number;
+  name: string;
+  liga: string;
+  liga_vollname: string;
+  tabellenplatz: number;
+  punkte: number;
+  spiele_gesamt: number;
+  siege: number;
+  unentschieden: number;
+  niederlagen: number;
+  tore_fuer: number;
+  tore_gegen: number;
+  tordifferenz: number;
+  form_letzte_5: ('S' | 'U' | 'N')[];
+  trend: 'steigend' | 'gleich' | 'fallend';
+  status: 'aktiv' | 'inaktiv' | 'aufgeloest';
+  trainer?: string;
+  altersklasse?: string;
+}
+
+export interface GameDetails {
+  id: number;
+  type: 'last' | 'next';
+  homeTeam: string;
+  awayTeam: string;
+  homeScore?: number;
+  awayScore?: number;
+  date: string;
+  time: string;
+  isHome: boolean;
+  stadium: string;
+  referee: string;
+  status: 'geplant' | 'live' | 'beendet' | 'abgesagt' | 'verschoben';
+  goalScorers: Array<{
+    minute: number;
+    player: string;
+    team: 'home' | 'away';
+  }>;
+  yellowCards: Array<{
+    minute: number;
+    player: string;
+    team: 'home' | 'away';
+  }>;
+  redCards: Array<{
+    minute: number;
+    player: string;
+    team: 'home' | 'away';
+  }>;
+  lastMeeting?: {
+    date: string;
+    result: string;
+    location: 'heim' | 'auswaerts';
+  };
+}
+
+// Team selection types
+export type TeamId = '1' | '2' | '3';
+
+export interface TeamStats {
+  punkte: number;
+  spiele_gesamt: number;
+  siege: number;
+  unentschieden: number;
+  niederlagen: number;
+  tore_fuer: number;
+  tore_gegen: number;
+  tordifferenz: number;
+}

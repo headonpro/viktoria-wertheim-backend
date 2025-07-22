@@ -38,7 +38,8 @@
     "trainer": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::mitglied.mitglied"
+      "target": "api::mitglied.mitglied",
+      "inversedBy": "trainings_als_trainer"
     },
     "beschreibung": {
       "type": "richtext"
@@ -122,4 +123,4 @@
       "target": "api::training.training"
     }
   }
-} 
+}

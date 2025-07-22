@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import PageLayout from '@/components/PageLayout'
 import GameCards from '@/components/GameCards'
 import LeagueTable from '@/components/LeagueTable'
+import TopScorers from '@/components/TopScorers'
 import NewsModal from '@/components/NewsModal'
 import NewsTicker from '@/components/NewsTicker'
 import TeamStatus from '@/components/TeamStatus'
@@ -37,6 +38,13 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [selectedTeam, setSelectedTeam] = useState<'1' | '2' | '3'>('1')
 
+  // Team names mapping - memoized to prevent re-renders
+  const teamNames = useMemo(() => ({
+    '1': '1. Mannschaft',
+    '2': '2. Mannschaft',
+    '3': '3. Mannschaft'
+  }), [])
+
 
 
   // Fetch data from API
@@ -45,15 +53,19 @@ export default function HomePage() {
       try {
         setLoading(true)
 
-        // Fetch top scorers (sorted by goals)
+        // Get team name for filtering
+        const selectedTeamName = teamNames[selectedTeam]
+
+        // Fetch top scorers - all players with goals (since team assignment isn't working yet)
         const [playersResponse, newsResponse] = await Promise.all([
           strapi.get('/spielers', {
             params: {
-              populate: {
-                mitglied: true,
-                mannschaft: true
+              sort: ['tore_saison:desc'],
+              filters: {
+                tore_saison: {
+                  $gt: 0
+                }
               },
-              sort: 'tore_saison:desc',
               pagination: {
                 limit: 5
               }
@@ -70,14 +82,20 @@ export default function HomePage() {
           })
         ])
 
-        // Use API data
+        // Use API data with fallback for missing player data
         const apiPlayers = playersResponse.data.data || []
         const apiNews = newsResponse.data.data || []
+        
+        // If no players found for selected team, show fallback message
+        if (apiPlayers.length === 0 && process.env.NODE_ENV !== 'test') {
+          console.warn(`No players found for team: ${selectedTeamName}`)
+        }
+        
         setTopScorers(apiPlayers)
         setNewsArticles(apiNews)
       } catch (err) {
         console.error('Error fetching homepage data:', err)
-        // Show empty state
+        // Show empty state with team context
         setTopScorers([])
         setNewsArticles([])
       } finally {
@@ -86,7 +104,7 @@ export default function HomePage() {
     }
 
     fetchData()
-  }, [])
+  }, [selectedTeam, teamNames]) // Add selectedTeam and teamNames as dependencies
 
   const openModal = (article: NewsArtikel) => {
     setSelectedArticle(article)
@@ -140,127 +158,7 @@ export default function HomePage() {
               <div className="lg:grid lg:grid-cols-2 lg:gap-8">
                 {/* Top Scorers Column */}
                 <div>
-                  <div
-                    className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.08] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08]"
-                  >
-                    {/* Title Header */}
-                    <div className="px-8 md:px-12 py-6 md:py-8 text-center">
-                      <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
-                        Torschützenkönig
-                      </h2>
-                    </div>
-                    
-                    {/* Header */}
-                    <div className="px-4 md:px-6 py-3">
-                      <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wide">
-                        <div className="col-span-1">#</div>
-                        <div className="col-span-7">Spieler</div>
-                        <div className="col-span-2 text-center">Spiele</div>
-                        <div className="col-span-2 text-center font-bold">Tore</div>
-                      </div>
-                    </div>
-                    {/* Top Scorers Content */}
-                    <div className="py-6 md:py-8">
-                      {topScorers.length === 0 ? (
-                        <div className="text-center py-8">
-                          <div className="text-gray-400 mb-2">⚽</div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Keine Torschützendaten verfügbar
-                          </p>
-                        </div>
-                      ) : (
-                        <>
-                          {/* Torschützenkönig - Modernes Design mit Hintergrundbild */}
-                          <div className="holo-card relative overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 hover:shadow-xl md:hover:shadow-2xl cursor-pointer group h-full flex flex-col shadow-lg mb-2 md:mb-4">
-                        {/* Overlay für Lesbarkeit - Header-Hintergrund */}
-                        <div className="absolute inset-0 backdrop-blur-[0.5px] z-0 header-gradient"></div>
-
-                        {/* Leichter Glow um den Spieler */}
-                        <div className="absolute inset-0 z-5" style={{ background: 'radial-gradient(circle at center, rgba(254, 240, 138, 0.05) 0%, transparent 60%)' }}></div>
-
-                        {/* Subtile Holo-Effekte */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-viktoria-yellow/8 to-transparent animate-shimmer-slow z-0"></div>
-
-                        {/* Hintergrundbild */}
-                        <div
-                          className="absolute inset-0 bg-contain bg-center bg-no-repeat z-10"
-                          style={{
-                            backgroundImage: "url('/Okan_normal.png')",
-                            filter: 'drop-shadow(4px 4px 12px rgba(0,0,0,0.6))'
-                          }}
-                        ></div>
-
-                        <div className="relative z-20 px-4 md:px-6 py-4 md:py-6 flex-1 flex flex-col justify-center">
-                          <div className="grid grid-cols-12 gap-2 md:gap-4 items-center mb-6 md:mb-8">
-                            {/* Spieler Name */}
-                            <div className="col-span-8">
-                              <span className="text-white font-semibold text-2xl md:text-4xl leading-tight drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
-                                <span className="font-light">{topScorers[0]?.attributes.mitglied?.data?.attributes.vorname || 'Okan'}</span><br />
-                                <span className="font-bold">{topScorers[0]?.attributes.mitglied?.data?.attributes.nachname || 'Cirakoglu'}</span>
-                              </span>
-                            </div>
-
-                            {/* Spiele */}
-                            <div className="col-span-2 text-center text-base md:text-lg text-viktoria-yellow font-medium drop-shadow">
-                              {topScorers[0]?.attributes.spiele_saison || 16}
-                            </div>
-
-                            {/* Tore */}
-                            <div className="col-span-2 text-center">
-                              <span className="font-bold text-viktoria-yellow text-xl md:text-2xl drop-shadow-lg">
-                                {topScorers[0]?.attributes.tore_saison || 19}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Zusätzliche Stats - erweitert */}
-                          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6">
-                            <div className="text-center">
-                              <div className="text-viktoria-yellow font-bold text-base md:text-lg drop-shadow">
-                                {topScorers[0] ? (topScorers[0].attributes.tore_saison / topScorers[0].attributes.spiele_saison).toFixed(2) : '1.19'}
-                              </div>
-                              <div className="text-white/90 text-sm md:text-base drop-shadow">Tore/Spiel</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-viktoria-yellow font-bold text-base md:text-lg drop-shadow">
-                                {topScorers[0]?.attributes.rueckennummer || 9}
-                              </div>
-                              <div className="text-white/90 text-sm md:text-base drop-shadow">
-                                {topScorers[0]?.attributes.position || 'Stürmer'}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Plätze 2-5 */}
-                      {topScorers.slice(1).map((player, index) => (
-                        <div key={player.id} className="px-4 md:px-6 py-1.5 md:py-2 transition-all duration-300 hover:bg-white/30 dark:hover:bg-viktoria-dark-lighter/30">
-                          <div className="grid grid-cols-12 gap-2 md:gap-4 items-center">
-                            <div className="col-span-1 flex items-center">
-                              <span className="font-bold text-sm md:text-lg text-gray-600 dark:text-gray-300">{index + 2}.</span>
-                            </div>
-                            <div className="col-span-7">
-                              <span className="text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium">
-                                <span className="font-light">{player.attributes.mitglied?.data?.attributes.vorname}</span>{' '}
-                                <span className="font-semibold">{player.attributes.mitglied?.data?.attributes.nachname}</span>
-                              </span>
-                            </div>
-                            <div className="col-span-2 text-center text-sm md:text-base text-gray-600 dark:text-gray-300">
-                              {player.attributes.spiele_saison}
-                            </div>
-                            <div className="col-span-2 text-center">
-                              <span className="font-bold text-sm md:text-base text-gray-600 dark:text-gray-300">
-                                {player.attributes.tore_saison}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                        </>
-                      )}
-                    </div>
-                  </div>
+                  <TopScorers />
                 </div>
 
                 {/* Latest News Column - Desktop only */}

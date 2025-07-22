@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 // Strapi API Base URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
+import { getApiUrl } from '../lib/apiConfig';
+const API_BASE_URL = getApiUrl();
 
 // Strapi Response Interface (Strapi 5 format)
 interface StrapiLeaderboardEntry {
@@ -17,13 +18,27 @@ interface StrapiLeaderboardEntry {
   gegentore: number
   tordifferenz: number
   punkte: number
+  liga?: string
   logo?: {
-    data?: {
-      attributes: {
-        url: string
-        name: string
-      }
-    }
+    id: number
+    documentId: string
+    name: string
+    alternativeText?: string
+    caption?: string
+    width: number
+    height: number
+    formats?: any
+    hash: string
+    ext: string
+    mime: string
+    size: number
+    url: string
+    previewUrl?: string
+    provider: string
+    provider_metadata?: any
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
   }
   createdAt: string
   updatedAt: string
@@ -62,8 +77,8 @@ const transformStrapiToTeam = (strapiEntry: StrapiLeaderboardEntry): Team => {
   return {
     position: strapiEntry.position,
     name: strapiEntry.teamname,
-    logo: strapiEntry.logo?.data?.attributes?.url
-      ? `${API_BASE_URL}${strapiEntry.logo.data.attributes.url}`
+    logo: strapiEntry.logo?.url
+      ? `${API_BASE_URL}${strapiEntry.logo.url}`
       : undefined,
     games: strapiEntry.spiele || 0,
     wins: strapiEntry.siege || 0,
@@ -107,6 +122,39 @@ export const leagueService = {
     } catch (error) {
       console.error('Error fetching league standings:', error)
       throw new Error('Failed to fetch league standings')
+    }
+  },
+
+  /**
+   * Fetch league standings for a specific league
+   * @param leagueName - Name of the league to filter by
+   * @returns Promise<Team[]> - Array of teams in the specified league
+   */
+  async fetchLeagueStandingsByLeague(leagueName: string): Promise<Team[]> {
+    try {
+      const response = await axios.get<StrapiResponse>(
+        `${API_BASE_URL}/api/leaderboard-entries`,
+        {
+          params: {
+            'filters[liga][$eq]': leagueName,
+            'sort[0]': 'position:asc',
+            'pagination[pageSize]': 100,
+            'populate': 'logo'
+          }
+        }
+      )
+
+      if (!response.data?.data) {
+        return []
+      }
+
+      return response.data.data
+        .map(transformStrapiToTeam)
+        .sort((a, b) => a.position - b.position)
+
+    } catch (error) {
+      console.error(`Error fetching league standings for ${leagueName}:`, error)
+      return []
     }
   },
 

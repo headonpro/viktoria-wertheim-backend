@@ -17,7 +17,9 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   // Desktop sidebar version - vertical list layout
   if (isDesktopSidebar) {
     return (
-      <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] overflow-hidden cursor-pointer hover:bg-white/30 dark:hover:bg-white/[0.04] transition-all duration-300 shadow-2xl hover:shadow-3xl shadow-black/20 hover:shadow-black/30 dark:shadow-white/[0.25] dark:hover:shadow-white/[0.35]">
+      <div 
+        className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+      >
         {/* Title Header */}
         <div className="px-8 md:px-12 py-6 md:py-8 text-center">
           <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
@@ -140,7 +142,9 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
 
   // Mobile/tablet version - horizontal carousel
   return (
-    <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl md:rounded-2xl border border-white/40 dark:border-white/[0.03] shadow-2xl shadow-black/20 dark:shadow-white/[0.25] p-8 md:p-12">
+    <div 
+      className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-8 md:p-12 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:transform hover:translateY(-2px)"
+    >
       {/* Title Header */}
       <div className="mb-6 md:mb-8">
         <div className="text-center">
@@ -159,7 +163,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
           msOverflowStyle: 'none',
           width: '100vw',
           marginLeft: 'calc(-50vw + 50%)',
-          paddingLeft: 'calc(50vw - 50% - 8rem)',
+          paddingLeft: 'calc(50vw - 50% + 50% - 7rem)',
           paddingRight: 'calc(50vw - 50% - 8rem)'
         }}
       >
@@ -194,9 +198,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
             return (
               <div
                 key={article.id}
-                className={`flex-shrink-0 w-56 sm:w-64 md:w-72 lg:w-80 bg-white/10 dark:bg-white/[0.02] rounded-lg overflow-hidden cursor-pointer hover:bg-white/20 dark:hover:bg-white/[0.05] transition-all duration-300 group border border-white/20 dark:border-white/[0.05] ${
-                  index === 0 ? 'ml-[25vw] md:ml-0' : ''
-                }`}
+                className="flex-shrink-0 w-56 sm:w-64 md:w-72 lg:w-80 bg-white/80 dark:bg-white/[0.04] backdrop-blur-md rounded-lg overflow-hidden cursor-pointer hover:bg-white/90 dark:hover:bg-white/[0.06] transition-all duration-300 group border border-white/60 dark:border-white/[0.12] shadow-lg hover:shadow-xl"
                 onClick={() => onNewsClick(article)}
               >
                 {/* Image */}
@@ -271,7 +273,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                   </p>
 
                   {/* Read More Indicator */}
-                  <div className="mt-3 pt-3 border-t border-white/10 dark:border-white/[0.05]">
+                  <div className="mt-3 pt-3 border-t border-white/10 dark:border-white/[0.12]">
                     <span className="text-xs text-viktoria-blue dark:text-viktoria-yellow font-medium group-hover:underline">
                       Weiterlesen →
                     </span>

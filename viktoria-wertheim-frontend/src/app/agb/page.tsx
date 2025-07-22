@@ -12,11 +12,11 @@ export default function AGBPage() {
           
           {/* Titel */}
           <AnimatedSection delay={0.1}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h1 className="text-xl font-bold text-viktoria-blue flex items-center">
-                  <IconFileText className="mr-3 text-viktoria-yellow" size={24} />
-                  Allgemeine Nutzungsbedingungen für viktoria-wertheim.de
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6">
+                <h1 className="text-xl md:text-2xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
+                  <IconFileText className="mr-3 text-viktoria-yellow w-6 h-6 md:w-8 md:h-8 flex-shrink-0" />
+                  <span className="leading-tight">Allgemeine Nutzungsbedingungen für viktoria-wertheim.de</span>
                 </h1>
               </div>
             </div>
@@ -24,13 +24,11 @@ export default function AGBPage() {
 
           {/* 1. Informationen zum Urheberrecht */}
           <AnimatedSection delay={0.2}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm md:text-base leading-relaxed space-y-4">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white mb-4">
                   1. Informationen zum Urheberrecht
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <p>
                   Alle Informationen dieser Web-Seite werden wie angegeben ohne Anspruch auf Richtigkeit, Vollständigkeit oder Aktualität zur Verfügung gestellt.
                 </p>
@@ -49,13 +47,11 @@ export default function AGBPage() {
 
           {/* 2. Vertragliche Zusicherungen und Verzichtserklärungen */}
           <AnimatedSection delay={0.3}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white mb-4">
                   2. Vertragliche Zusicherungen und Verzichtserklärungen
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <p>
                   Die Website viktoria-wertheim.de steht Ihnen - soweit nicht anders vereinbart - kostenlos zur Verfügung. Die Betreiber übernehmen keinerlei Gewähr für Richtigkeit der enthaltenen Informationen, Verfügbarkeit der Dienste, Verlust von auf viktoria-wertheim.de abgespeicherten Daten oder Nutzbarkeit für irgendeinen bestimmten Zweck.
                 </p>
@@ -74,20 +70,18 @@ export default function AGBPage() {
 
           {/* 3. Meinungsäußerungen bei Kommentaren und im Forum */}
           <AnimatedSection delay={0.4}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue flex items-center">
-                  <IconMessage className="mr-3 text-viktoria-yellow" size={20} />
-                  3. Meinungsäußerungen bei Kommentaren und im Forum
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
+                  <IconMessage className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  <span className="leading-tight">3. Meinungsäußerungen bei Kommentaren und im Forum</span>
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <p>
                   Aufgrund der sich ständig verändernden Inhalte bei Kommentaren und im Forum ist es dem Betreiber nicht möglich, alle Beiträge lückenlos zu sichten, inhaltlich zu prüfen und die unmittelbare aktive Kontrolle darüber auszuüben. Es wird keine Verantwortung für den Inhalt, die Korrektheit und die Form der eingestellten Beiträge übernommen.
                 </p>
                 
                 <div className="bg-viktoria-blue/5 rounded-lg p-4 border border-viktoria-blue/20">
-                  <h3 className="font-semibold text-viktoria-blue mb-3">3a. Spezielle Bestimmungen für angemeldete Nutzer</h3>
+                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-3">3a. Spezielle Bestimmungen für angemeldete Nutzer</h3>
                   <p className="mb-3">
                     Mit der Anmeldung bei viktoria-wertheim.de erklärt sich der Nutzer - nachfolgend »Mitglied« gegenüber dem Betreiber mit folgenden Nutzungsbedingungen einverstanden:
                   </p>
@@ -107,14 +101,12 @@ export default function AGBPage() {
 
           {/* 4. Einreichen von Beiträgen und Artikeln */}
           <AnimatedSection delay={0.5}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue flex items-center">
-                  <IconUpload className="mr-3 text-viktoria-yellow" size={20} />
-                  4. Einreichen von Beiträgen und Artikeln
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
+                  <IconUpload className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  <span className="leading-tight">4. Einreichen von Beiträgen und Artikeln</span>
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <p>
                   Soweit das Mitglied von der Möglichkeit Gebrauch macht, eigene Beiträge für redaktionellen Teil von »viktoria-wertheim.de« einzureichen, gilt Folgendes:
                 </p>
@@ -135,14 +127,12 @@ export default function AGBPage() {
 
           {/* 5. Erklärung zum Datenschutz */}
           <AnimatedSection delay={0.6}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue flex items-center">
-                  <IconShield className="mr-3 text-viktoria-yellow" size={20} />
-                  5. Erklärung zum Datenschutz (Privacy Policy)
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
+                  <IconShield className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  <span className="leading-tight">5. Erklärung zum Datenschutz (Privacy Policy)</span>
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <p>
                   Sofern innerhalb des Internetangebotes die Möglichkeit zur Eingabe persönlicher oder geschäftlicher Daten genutzt wird, so erfolgt die Preisgabe dieser Daten seitens des Nutzers auf ausdrücklich freiwilliger Basis. Die Inanspruchnahme unseres Dienstes ist - soweit technisch möglich und zumutbar - auch ohne Angabe solcher Daten bzw. unter Angabe anonymisierter Daten oder eines Pseudonyms gestattet.
                 </p>
@@ -155,14 +145,12 @@ export default function AGBPage() {
 
           {/* 6. Registrierung und Passwort */}
           <AnimatedSection delay={0.7}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue flex items-center">
-                  <IconKey className="mr-3 text-viktoria-yellow" size={20} />
-                  6. Registrierung und Passwort
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
+                  <IconKey className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  <span className="leading-tight">6. Registrierung und Passwort</span>
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed">
                 <p>
                   Der Benutzer ist verpflichtet, die Kombination Benutzername/Passwort vertraulich zu behandeln und nicht an Dritte weiterzugeben. Bei Verdacht auf Missbrauch der Zugangsdaten ist der Betreiber zu informieren.
                 </p>
@@ -172,14 +160,12 @@ export default function AGBPage() {
 
           {/* 7. Hinweis gemäß Teledienstgesetz */}
           <AnimatedSection delay={0.8}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue flex items-center">
-                  <IconLink className="mr-3 text-viktoria-yellow" size={20} />
-                  7. Hinweis gemäß Teledienstgesetz
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
+                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
+                  <IconLink className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
+                  <span className="leading-tight">7. Hinweis gemäß Teledienstgesetz</span>
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <p>
                   Für Internetseiten Dritter, auf die dieses Angebot durch sog. Links verweist, tragen die jeweiligen Anbieter die Verantwortung. Der Betreiber ist für den Inhalt solcher Seiten Dritter nicht verantwortlich.
                 </p>
@@ -195,22 +181,20 @@ export default function AGBPage() {
 
           {/* Kontakt und Rechtswirksamkeit */}
           <AnimatedSection delay={0.9}>
-            <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
-              <div className="bg-white/30 px-4 py-3 border-b border-white/20">
-                <h2 className="text-lg font-bold text-viktoria-blue">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
+                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white mb-4">
                   Kontakt & Rechtswirksamkeit
                 </h2>
-              </div>
-              <div className="p-6 text-gray-700 text-sm leading-relaxed space-y-4">
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue mb-2">Kontakt</h3>
+                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">Kontakt</h3>
                   <p>
                     Fragen rund um viktoria-wertheim.de bitte an den Webmaster richten.
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue mb-2">Rechtswirksamkeit</h3>
+                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">Rechtswirksamkeit</h3>
                   <p>
                     Diese Allgemeinen Nutzungsbedingungen beziehen sich auf viktoria-wertheim.de.
                   </p>

@@ -1,0 +1,2320 @@
+{
+  "metadata": {
+    "title": "Master Validation Diagnostic Report",
+    "generated": "2025-07-21T21:56:47.334Z",
+    "strapiUrl": "http://localhost:1337",
+    "version": "1.0.0"
+  },
+  "executiveSummary": {
+    "status": "NEEDS_ATTENTION",
+    "criticalIssues": 2,
+    "recommendedActions": 2,
+    "estimatedFixTime": "31 hours",
+    "confidence": 0.8500000000000001
+  },
+  "diagnosticResults": {
+    "comprehensive": {
+      "metadata": {
+        "title": "Comprehensive Validation Diagnostic Report",
+        "generated": "2025-07-21T21:56:49.190Z",
+        "strapiUrl": "http://localhost:1337",
+        "version": "1.0.0"
+      },
+      "summary": {
+        "executionTime": 1853,
+        "totalTests": 59,
+        "discrepancyCount": 8,
+        "highSeverityCount": 8,
+        "mediumSeverityCount": 0,
+        "fieldsWithIssues": [
+          "status",
+          "liga",
+          "altersklasse",
+          "trend"
+        ],
+        "overallHealth": "GOOD",
+        "timestamp": "2025-07-21T21:56:49.189Z"
+      },
+      "schemaAnalysis": {
+        "liga": {
+          "enum": [
+            "Kreisklasse B",
+            "Kreisklasse A",
+            "Kreisliga",
+            "Landesliga"
+          ],
+          "required": false,
+          "default": null
+        },
+        "status": {
+          "enum": [
+            "aktiv",
+            "inaktiv",
+            "aufgeloest"
+          ],
+          "required": false,
+          "default": null
+        },
+        "altersklasse": {
+          "enum": [
+            "senioren",
+            "a-jugend",
+            "b-jugend",
+            "c-jugend",
+            "d-jugend",
+            "e-jugend",
+            "f-jugend",
+            "bambini"
+          ],
+          "required": false,
+          "default": null
+        },
+        "trend": {
+          "enum": [
+            "steigend",
+            "gleich",
+            "fallend"
+          ],
+          "required": false,
+          "default": "gleich"
+        }
+      },
+      "apiResults": {
+        "status": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "123"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.870Z"
+          },
+          "aktiv": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 143,
+                "documentId": "xw0250acqtwclpeiw5extna7",
+                "name": "Test-status-1753135007410",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": "aktiv",
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.424Z",
+                "updatedAt": "2025-07-21T21:56:47.424Z",
+                "publishedAt": "2025-07-21T21:56:47.456Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.472Z"
+          },
+          "inaktiv": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 147,
+                "documentId": "r77fy981p57oajjd6wy6ml37",
+                "name": "Test-status-1753135007525",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": "inaktiv",
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.532Z",
+                "updatedAt": "2025-07-21T21:56:47.532Z",
+                "publishedAt": "2025-07-21T21:56:47.543Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.553Z"
+          },
+          "aufgeloest": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 151,
+                "documentId": "c4xgvvaqh2mdu3gd4sbj04ci",
+                "name": "Test-status-1753135007596",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": "aufgeloest",
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.602Z",
+                "updatedAt": "2025-07-21T21:56:47.602Z",
+                "publishedAt": "2025-07-21T21:56:47.613Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.621Z"
+          },
+          "active": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "active"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.663Z"
+          },
+          "inactive": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "inactive"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.684Z"
+          },
+          "dissolved": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "dissolved"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.697Z"
+          },
+          "AKTIV": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "AKTIV"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.710Z"
+          },
+          "Aktiv": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "Aktiv"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.723Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be a `string` type, but the final value was: `[]`.",
+                  "name": "ValidationError",
+                  "value": []
+                },
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": []
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.896Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 155,
+                "documentId": "axhyuf5m4f54evxogf45gdzu",
+                "name": "Test-status-1753135007742",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.746Z",
+                "updatedAt": "2025-07-21T21:56:47.746Z",
+                "publishedAt": "2025-07-21T21:56:47.754Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.760Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 159,
+                "documentId": "sd8p9vbdpjp0zo72vahpsm1z",
+                "name": "Test-status-1753135007801",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.810Z",
+                "updatedAt": "2025-07-21T21:56:47.810Z",
+                "publishedAt": "2025-07-21T21:56:47.824Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.832Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "status"
+                  ],
+                  "message": "status must be one of the following values: aktiv, inaktiv, aufgeloest, ",
+                  "name": "ValidationError",
+                  "value": "true"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:47.884Z"
+          }
+        },
+        "liga": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": "123"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.258Z"
+          },
+          "Kreisklasse B": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 163,
+                "documentId": "xo45qalm48wic7615d2kia7w",
+                "name": "Test-liga-1753135007902",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.908Z",
+                "updatedAt": "2025-07-21T21:56:47.908Z",
+                "publishedAt": "2025-07-21T21:56:47.915Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": "Kreisklasse B"
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.922Z"
+          },
+          "Kreisklasse A": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 167,
+                "documentId": "eixl3qkaiac71vz5naky0bew",
+                "name": "Test-liga-1753135007954",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:47.961Z",
+                "updatedAt": "2025-07-21T21:56:47.961Z",
+                "publishedAt": "2025-07-21T21:56:47.967Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": "Kreisklasse A"
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:47.974Z"
+          },
+          "Kreisliga": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 171,
+                "documentId": "di8wtcrviax4hxaklee4t35o",
+                "name": "Test-liga-1753135008006",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.010Z",
+                "updatedAt": "2025-07-21T21:56:48.010Z",
+                "publishedAt": "2025-07-21T21:56:48.017Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": "Kreisliga"
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.023Z"
+          },
+          "Landesliga": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 175,
+                "documentId": "wh4ixfmfw48ptpyrjk16bf62",
+                "name": "Test-liga-1753135008052",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.057Z",
+                "updatedAt": "2025-07-21T21:56:48.057Z",
+                "publishedAt": "2025-07-21T21:56:48.063Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": "Landesliga"
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.070Z"
+          },
+          "Kreisklasse C": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": "Kreisklasse C"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.106Z"
+          },
+          "Bezirksliga": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": "Bezirksliga"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.117Z"
+          },
+          "Oberliga": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": "Oberliga"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.128Z"
+          },
+          "KREISKLASSE A": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": "KREISKLASSE A"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.140Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be a `string` type, but the final value was: `[]`.",
+                  "name": "ValidationError",
+                  "value": []
+                },
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": []
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.281Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 179,
+                "documentId": "d82n1r1w3pc6ev14p1oev4xu",
+                "name": "Test-liga-1753135008159",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.163Z",
+                "updatedAt": "2025-07-21T21:56:48.163Z",
+                "publishedAt": "2025-07-21T21:56:48.170Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.176Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 183,
+                "documentId": "kein2miurqkd2xt252ha0e67",
+                "name": "Test-liga-1753135008205",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.210Z",
+                "updatedAt": "2025-07-21T21:56:48.210Z",
+                "publishedAt": "2025-07-21T21:56:48.216Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.223Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "liga"
+                  ],
+                  "message": "liga must be one of the following values: Kreisklasse B, Kreisklasse A, Kreisliga, Landesliga, ",
+                  "name": "ValidationError",
+                  "value": "true"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.270Z"
+          }
+        },
+        "altersklasse": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": "123"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.831Z"
+          },
+          "senioren": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 187,
+                "documentId": "qvo9klz4c5b47ugvh2xvgeuz",
+                "name": "Test-altersklasse-1753135008286",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "senioren",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.291Z",
+                "updatedAt": "2025-07-21T21:56:48.291Z",
+                "publishedAt": "2025-07-21T21:56:48.298Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.304Z"
+          },
+          "a-jugend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 191,
+                "documentId": "fcl5bc8w6agc0d6rbc7f7zjq",
+                "name": "Test-altersklasse-1753135008336",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "a-jugend",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.341Z",
+                "updatedAt": "2025-07-21T21:56:48.341Z",
+                "publishedAt": "2025-07-21T21:56:48.347Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.354Z"
+          },
+          "b-jugend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 195,
+                "documentId": "e849ua12defwnuvri94notmb",
+                "name": "Test-altersklasse-1753135008386",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "b-jugend",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.391Z",
+                "updatedAt": "2025-07-21T21:56:48.391Z",
+                "publishedAt": "2025-07-21T21:56:48.397Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.403Z"
+          },
+          "c-jugend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 199,
+                "documentId": "txy8ry3g07dw6irm7nyrnty7",
+                "name": "Test-altersklasse-1753135008444",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "c-jugend",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.449Z",
+                "updatedAt": "2025-07-21T21:56:48.449Z",
+                "publishedAt": "2025-07-21T21:56:48.455Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.461Z"
+          },
+          "d-jugend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 203,
+                "documentId": "izgak71elygaoxyuyj7sxm3t",
+                "name": "Test-altersklasse-1753135008491",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "d-jugend",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.495Z",
+                "updatedAt": "2025-07-21T21:56:48.495Z",
+                "publishedAt": "2025-07-21T21:56:48.502Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.508Z"
+          },
+          "e-jugend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 207,
+                "documentId": "gbp85hndz7cmz908yirfofkr",
+                "name": "Test-altersklasse-1753135008537",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "e-jugend",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.542Z",
+                "updatedAt": "2025-07-21T21:56:48.542Z",
+                "publishedAt": "2025-07-21T21:56:48.548Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.554Z"
+          },
+          "f-jugend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 211,
+                "documentId": "blmrnyowl3lg38k8r1egx261",
+                "name": "Test-altersklasse-1753135008584",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "f-jugend",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.588Z",
+                "updatedAt": "2025-07-21T21:56:48.588Z",
+                "publishedAt": "2025-07-21T21:56:48.594Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.600Z"
+          },
+          "bambini": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 215,
+                "documentId": "vyzpnqkxnfhrpt3w1lqe7whv",
+                "name": "Test-altersklasse-1753135008628",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": "bambini",
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.633Z",
+                "updatedAt": "2025-07-21T21:56:48.633Z",
+                "publishedAt": "2025-07-21T21:56:48.639Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.645Z"
+          },
+          "senior": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": "senior"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.684Z"
+          },
+          "a_jugend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": "a_jugend"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.694Z"
+          },
+          "A-Jugend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": "A-Jugend"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.705Z"
+          },
+          "herren": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": "herren"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.717Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be a `string` type, but the final value was: `[]`.",
+                  "name": "ValidationError",
+                  "value": []
+                },
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": []
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.853Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 219,
+                "documentId": "c0iefqjj7dk1h7pbmfzurxc8",
+                "name": "Test-altersklasse-1753135008734",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.738Z",
+                "updatedAt": "2025-07-21T21:56:48.738Z",
+                "publishedAt": "2025-07-21T21:56:48.745Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.751Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 223,
+                "documentId": "ztb971yilk1ho4jdjxwgssuf",
+                "name": "Test-altersklasse-1753135008781",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.785Z",
+                "updatedAt": "2025-07-21T21:56:48.785Z",
+                "publishedAt": "2025-07-21T21:56:48.791Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.797Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "altersklasse"
+                  ],
+                  "message": "altersklasse must be one of the following values: senioren, a-jugend, b-jugend, c-jugend, d-jugend, e-jugend, f-jugend, bambini, ",
+                  "name": "ValidationError",
+                  "value": "true"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:48.842Z"
+          }
+        },
+        "trend": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": "123"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.160Z"
+          },
+          "steigend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 227,
+                "documentId": "qzmb3h1yl5pm2aylgs26dbfb",
+                "name": "Test-trend-1753135008858",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.862Z",
+                "updatedAt": "2025-07-21T21:56:48.862Z",
+                "publishedAt": "2025-07-21T21:56:48.868Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "steigend",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.876Z"
+          },
+          "gleich": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 231,
+                "documentId": "qnqzpqf2qrqov92l9yuh3e6w",
+                "name": "Test-trend-1753135008904",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.909Z",
+                "updatedAt": "2025-07-21T21:56:48.909Z",
+                "publishedAt": "2025-07-21T21:56:48.915Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.921Z"
+          },
+          "fallend": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 235,
+                "documentId": "k5d28q3fe9m5i9njvqf0ku0z",
+                "name": "Test-trend-1753135008951",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:48.955Z",
+                "updatedAt": "2025-07-21T21:56:48.955Z",
+                "publishedAt": "2025-07-21T21:56:48.961Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "fallend",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:48.967Z"
+          },
+          "aufsteigend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": "aufsteigend"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.000Z"
+          },
+          "stabil": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": "stabil"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.012Z"
+          },
+          "absteigend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": "absteigend"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.023Z"
+          },
+          "STEIGEND": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": "STEIGEND"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.033Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be a `string` type, but the final value was: `[]`.",
+                  "name": "ValidationError",
+                  "value": []
+                },
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": []
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.183Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 239,
+                "documentId": "g33q8jrnjhdnzbxf1vjvuump",
+                "name": "Test-trend-1753135009051",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:49.057Z",
+                "updatedAt": "2025-07-21T21:56:49.057Z",
+                "publishedAt": "2025-07-21T21:56:49.063Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": null,
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:49.070Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "statusCode": 200,
+            "validationDetails": null,
+            "response": {
+              "data": {
+                "id": 243,
+                "documentId": "p9gq0oaz0ednakxt6lzowt2l",
+                "name": "Test-trend-1753135009101",
+                "beschreibung": null,
+                "gruendungsjahr": null,
+                "vereinsfarben": null,
+                "spielort": "Sportplatz Wertheim",
+                "saison": "2024/25",
+                "status": null,
+                "altersklasse": null,
+                "trainingszeiten": null,
+                "bemerkungen": null,
+                "createdAt": "2025-07-21T21:56:49.106Z",
+                "updatedAt": "2025-07-21T21:56:49.106Z",
+                "publishedAt": "2025-07-21T21:56:49.112Z",
+                "tabellenplatz": 1,
+                "punkte": 0,
+                "spiele_gesamt": 0,
+                "siege": 0,
+                "unentschieden": 0,
+                "niederlagen": 0,
+                "tore_fuer": 0,
+                "tore_gegen": 0,
+                "tordifferenz": 0,
+                "form_letzte_5": null,
+                "trend": "gleich",
+                "liga_vollname": null,
+                "liga": null
+              },
+              "meta": {}
+            },
+            "timestamp": "2025-07-21T21:56:49.119Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "statusCode": 400,
+            "validationDetails": {
+              "errors": [
+                {
+                  "path": [
+                    "trend"
+                  ],
+                  "message": "trend must be one of the following values: steigend, gleich, fallend, ",
+                  "name": "ValidationError",
+                  "value": "true"
+                }
+              ]
+            },
+            "response": null,
+            "timestamp": "2025-07-21T21:56:49.172Z"
+          }
+        }
+      },
+      "adminResults": {
+        "status": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.877Z"
+          },
+          "aktiv": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.512Z"
+          },
+          "inaktiv": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.588Z"
+          },
+          "aufgeloest": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.648Z"
+          },
+          "active": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.674Z"
+          },
+          "inactive": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.691Z"
+          },
+          "dissolved": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.704Z"
+          },
+          "AKTIV": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.717Z"
+          },
+          "Aktiv": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.729Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.902Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.789Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.857Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:47.889Z"
+          }
+        },
+        "liga": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.264Z"
+          },
+          "Kreisklasse B": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.947Z"
+          },
+          "Kreisklasse A": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:47.999Z"
+          },
+          "Kreisliga": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.046Z"
+          },
+          "Landesliga": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.094Z"
+          },
+          "Kreisklasse C": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.112Z"
+          },
+          "Bezirksliga": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.122Z"
+          },
+          "Oberliga": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.134Z"
+          },
+          "KREISKLASSE A": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.147Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.286Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.198Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.246Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.275Z"
+          }
+        },
+        "altersklasse": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.836Z"
+          },
+          "senioren": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.329Z"
+          },
+          "a-jugend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.379Z"
+          },
+          "b-jugend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.434Z"
+          },
+          "c-jugend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.484Z"
+          },
+          "d-jugend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.530Z"
+          },
+          "e-jugend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.578Z"
+          },
+          "f-jugend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.622Z"
+          },
+          "bambini": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.671Z"
+          },
+          "senior": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.689Z"
+          },
+          "a_jugend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.699Z"
+          },
+          "A-Jugend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.711Z"
+          },
+          "herren": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.722Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.858Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.774Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.820Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:48.847Z"
+          }
+        },
+        "trend": {
+          "123": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.166Z"
+          },
+          "steigend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.899Z"
+          },
+          "gleich": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.944Z"
+          },
+          "fallend": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:48.989Z"
+          },
+          "aufsteigend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.005Z"
+          },
+          "stabil": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.017Z"
+          },
+          "absteigend": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.028Z"
+          },
+          "STEIGEND": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.038Z"
+          },
+          "": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.189Z"
+          },
+          "null": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:49.095Z"
+          },
+          "undefined": {
+            "success": true,
+            "error": null,
+            "timestamp": "2025-07-21T21:56:49.148Z"
+          },
+          "true": {
+            "success": false,
+            "error": "Request failed with status code 400",
+            "timestamp": "2025-07-21T21:56:49.177Z"
+          }
+        }
+      },
+      "discrepancies": [
+        {
+          "field": "status",
+          "value": null,
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"null\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:47.801Z"
+        },
+        {
+          "field": "status",
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"undefined\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:47.864Z"
+        },
+        {
+          "field": "liga",
+          "value": null,
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"null\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:48.205Z"
+        },
+        {
+          "field": "liga",
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"undefined\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:48.252Z"
+        },
+        {
+          "field": "altersklasse",
+          "value": null,
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"null\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:48.781Z"
+        },
+        {
+          "field": "altersklasse",
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"undefined\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:48.825Z"
+        },
+        {
+          "field": "trend",
+          "value": null,
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"null\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:49.101Z"
+        },
+        {
+          "field": "trend",
+          "apiResult": true,
+          "adminResult": false,
+          "description": "Invalid value \"undefined\" was accepted by API - possible validation bypass",
+          "severity": "HIGH",
+          "timestamp": "2025-07-21T21:56:49.154Z"
+        }
+      ],
+      "recommendations": [
+        {
+          "priority": "HIGH",
+          "category": "Validation Discrepancy",
+          "issue": "API accepts values that admin interface rejects",
+          "solution": "Check admin panel validation logic and schema compilation",
+          "affectedFields": [
+            "status",
+            "liga",
+            "altersklasse",
+            "trend"
+          ]
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Schema Inconsistency",
+          "issue": "Field \"status\" accepts values not defined in schema",
+          "solution": "Update schema definition or fix validation logic",
+          "details": {
+            "unexpectedValues": [
+              "null",
+              "undefined"
+            ],
+            "schemaEnum": [
+              "aktiv",
+              "inaktiv",
+              "aufgeloest"
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Schema Inconsistency",
+          "issue": "Field \"liga\" accepts values not defined in schema",
+          "solution": "Update schema definition or fix validation logic",
+          "details": {
+            "unexpectedValues": [
+              "null",
+              "undefined"
+            ],
+            "schemaEnum": [
+              "Kreisklasse B",
+              "Kreisklasse A",
+              "Kreisliga",
+              "Landesliga"
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Schema Inconsistency",
+          "issue": "Field \"altersklasse\" accepts values not defined in schema",
+          "solution": "Update schema definition or fix validation logic",
+          "details": {
+            "unexpectedValues": [
+              "null",
+              "undefined"
+            ],
+            "schemaEnum": [
+              "senioren",
+              "a-jugend",
+              "b-jugend",
+              "c-jugend",
+              "d-jugend",
+              "e-jugend",
+              "f-jugend",
+              "bambini"
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Schema Inconsistency",
+          "issue": "Field \"trend\" accepts values not defined in schema",
+          "solution": "Update schema definition or fix validation logic",
+          "details": {
+            "unexpectedValues": [
+              "null",
+              "undefined"
+            ],
+            "schemaEnum": [
+              "steigend",
+              "gleich",
+              "fallend"
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Insufficient Validation",
+          "issue": "Field \"status\" accepts invalid values",
+          "solution": "Strengthen validation rules for this field",
+          "details": {
+            "invalidValuesAccepted": [
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Insufficient Validation",
+          "issue": "Field \"liga\" accepts invalid values",
+          "solution": "Strengthen validation rules for this field",
+          "details": {
+            "invalidValuesAccepted": [
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Insufficient Validation",
+          "issue": "Field \"altersklasse\" accepts invalid values",
+          "solution": "Strengthen validation rules for this field",
+          "details": {
+            "invalidValuesAccepted": [
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "priority": "MEDIUM",
+          "category": "Insufficient Validation",
+          "issue": "Field \"trend\" accepts invalid values",
+          "solution": "Strengthen validation rules for this field",
+          "details": {
+            "invalidValuesAccepted": [
+              null,
+              null
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "rootCauseAnalysis": {
+    "primaryIssues": [
+      {
+        "type": "SCHEMA_INCONSISTENCY",
+        "severity": "HIGH",
+        "description": "Schema definitions do not match actual validation behavior",
+        "evidence": [
+          "status: null",
+          "status: undefined",
+          "liga: null",
+          "liga: undefined",
+          "altersklasse: null",
+          "altersklasse: undefined",
+          "trend: null",
+          "trend: undefined"
+        ],
+        "likelihood": 0.8
+      },
+      {
+        "type": "VALIDATION_BYPASS",
+        "severity": "HIGH",
+        "description": "API accepts invalid values that should be rejected",
+        "evidence": [
+          "status: null",
+          "status: undefined",
+          "liga: null",
+          "liga: undefined",
+          "altersklasse: null",
+          "altersklasse: undefined",
+          "trend: null",
+          "trend: undefined"
+        ],
+        "likelihood": 0.9
+      }
+    ],
+    "secondaryIssues": [],
+    "systemHealth": "GOOD",
+    "confidence": 0.8500000000000001
+  },
+  "actionPlan": {
+    "immediate": [
+      {
+        "action": "Verify and update schema definitions",
+        "description": "Check mannschaft schema.json for correct enum definitions",
+        "commands": [
+          "node scripts/rebuild-schema.js",
+          "npm run develop -- --watch-admin"
+        ],
+        "priority": "HIGH",
+        "estimatedTime": "30 minutes"
+      },
+      {
+        "action": "Fix validation logic",
+        "description": "Strengthen validation rules to reject invalid enum values",
+        "commands": [
+          "Check src/api/mannschaft/content-types/mannschaft/schema.json",
+          "Restart Strapi server to reload validation"
+        ],
+        "priority": "HIGH",
+        "estimatedTime": "1 hour"
+      }
+    ],
+    "shortTerm": [],
+    "longTerm": [
+      {
+        "action": "Implement comprehensive validation testing",
+        "description": "Create automated test suite for all content type validations",
+        "commands": [
+          "Extend validation test coverage",
+          "Add performance validation tests"
+        ],
+        "priority": "LOW",
+        "estimatedTime": "8 hours"
+      }
+    ],
+    "preventive": [
+      {
+        "action": "Implement validation monitoring",
+        "description": "Set up automated tests to catch validation discrepancies",
+        "commands": [
+          "Add validation tests to CI/CD pipeline",
+          "Create validation health checks"
+        ],
+        "priority": "MEDIUM",
+        "estimatedTime": "4 hours"
+      },
+      {
+        "action": "Document validation procedures",
+        "description": "Create troubleshooting guide for future validation issues",
+        "commands": [
+          "Document schema update procedures",
+          "Create validation testing checklist"
+        ],
+        "priority": "LOW",
+        "estimatedTime": "2 hours"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "title": "Address Critical Validation Issues",
+      "description": "Fix identified validation discrepancies immediately to prevent data integrity issues",
+      "impact": "Prevents invalid data entry and ensures consistent user experience"
+    },
+    {
+      "priority": "MEDIUM",
+      "title": "Implement Validation Monitoring",
+      "description": "Set up automated validation testing to prevent future issues",
+      "impact": "Proactive issue detection and prevention"
+    }
+  ]
+}

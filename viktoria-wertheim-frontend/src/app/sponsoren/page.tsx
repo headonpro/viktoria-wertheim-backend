@@ -3,9 +3,9 @@
 import PageLayout from '@/components/PageLayout'
 import dynamic from 'next/dynamic'
 import { IconBuildingStore, IconHeart, IconTrophy, IconMail, IconPhone, IconStar, IconGift } from '@tabler/icons-react'
-import Image from "next/image";
+import Image from "next/image"
 
-// Dynamic Import für animierte Komponenten
+// Dynamic Import für animierte Komponenten - löst SSR-Probleme
 const AnimatedSection = dynamic(
   () => import('@/components/AnimatedSection'),
   { ssr: false }
@@ -170,11 +170,8 @@ export default function SponsorsPage() {
 
   return (
     <PageLayout>
-      {/* Header Section - nur Mobile */}
-      
-
-      <main className="pt-8 pb-6">
-        <div className="container space-y-8">
+      <div className="px-4 md:px-6 lg:px-0">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto space-y-6 md:space-y-8">
           
           {/* Einleitung */}
           <AnimatedSection delay={0.2}>
@@ -187,10 +184,10 @@ export default function SponsorsPage() {
                 className="w-16 h-16 mx-auto mb-4 drop-shadow-lg"
                 priority
               />
-              <h2 className="text-xl font-bold text-viktoria-blue mb-4">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
                 Unsere wertvollen Partner
-              </h2>
-              <p className="text-gray-700 leading-relaxed px-4">
+              </h1>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed px-4 text-sm md:text-base">
                 Ohne unsere Sponsoren wäre der Vereinssport nicht möglich. 
                 Wir sind stolz auf die langjährigen Partnerschaften und bedanken 
                 uns für die Unterstützung.
@@ -201,37 +198,39 @@ export default function SponsorsPage() {
           {/* Aktuelle Sponsoren */}
           <AnimatedSection delay={0.3}>
             <div>
-              <h2 className="text-lg font-bold text-viktoria-blue mb-6 text-center">
-                Unsere aktuellen Sponsoren
-              </h2>
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center mb-6">
+                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                  Unsere aktuellen Sponsoren
+                </h2>
+              </div>
               <div className="space-y-4">
                 {sponsors.map((sponsor, index) => (
                   <AnimatedDiv 
                     key={index} 
                     delay={0.4 + index * 0.1}
-                    className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/20 p-6 hover:bg-white/50 transition-all duration-300"
+                    className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-3">
-                          <h3 className="font-bold text-viktoria-blue text-lg">
+                          <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg">
                             {sponsor.name}
                           </h3>
                           <span className={`${getCategoryColor(sponsor.category)} text-xs font-bold px-2 py-1 rounded-full`}>
                             {sponsor.category}
                           </span>
                         </div>
-                        <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-3">
                           {sponsor.description}
                         </p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600 mb-3">
+                        <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mb-3">
                           <span>Partner seit {sponsor.since}</span>
                           {sponsor.website && (
                             <a 
                               href={sponsor.website}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-viktoria-blue hover:text-viktoria-blue-light transition-colors"
+                              className="text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
                             >
                               Zur Website →
                             </a>
@@ -241,7 +240,7 @@ export default function SponsorsPage() {
                           {sponsor.benefits.map((benefit, benefitIndex) => (
                             <span 
                               key={benefitIndex}
-                              className="bg-viktoria-blue/10 text-viktoria-blue text-xs px-2 py-1 rounded"
+                              className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2 py-1 rounded"
                             >
                               {benefit}
                             </span>
@@ -258,21 +257,21 @@ export default function SponsorsPage() {
           {/* Sponsoring-Pakete */}
           <AnimatedSection delay={0.8}>
             <div>
-              <h2 className="text-lg font-bold text-viktoria-blue mb-6 text-center">
-                Werden Sie unser Partner!
-              </h2>
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center mb-6">
+                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                  Werden Sie unser Partner!
+                </h2>
+              </div>
               <div className="space-y-4">
                 {sponsoringPackages.map((pkg, index) => (
                   <AnimatedDiv 
                     key={index} 
                     delay={0.9 + index * 0.1}
-                    className={`relative bg-white/40 backdrop-blur-sm rounded-xl border-2 border-white/20 p-6 hover:bg-white/50 transition-all duration-300 ${
-                      pkg.popular ? 'ring-2 ring-viktoria-yellow/50' : ''
-                    }`}
+                    className="relative bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
                   >
                     {pkg.popular && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <span className="bg-viktoria-yellow text-viktoria-blue text-xs font-bold px-3 py-1 rounded-full">
+                        <span className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-bold px-3 py-1 rounded-full">
                           BELIEBT
                         </span>
                       </div>
@@ -281,30 +280,30 @@ export default function SponsorsPage() {
                     <div className="flex items-start space-x-4">
                       {/* Icon & Price */}
                       <div className="flex-shrink-0 text-center">
-                        <div className={`${getPackageColorClasses(pkg.color)} p-3 rounded-lg mb-2`}>
+                        <div className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 p-3 rounded-lg mb-2">
                           <pkg.icon size={24} />
                         </div>
-                        <div className="text-sm font-bold text-viktoria-blue">
+                        <div className="text-sm font-bold text-gray-800 dark:text-gray-200">
                           {pkg.price}
                         </div>
                       </div>
                       
                       {/* Content */}
                       <div className="flex-1">
-                        <h3 className="font-bold text-viktoria-blue text-lg mb-2">
+                        <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-2">
                           {pkg.name}
                         </h3>
-                        <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
                           {pkg.description}
                         </p>
                         
                         {/* Benefits */}
                         <div>
-                          <h4 className="font-semibold text-gray-800 text-sm mb-2">Leistungen:</h4>
+                          <h4 className="font-semibold text-gray-800 dark:text-gray-200 text-sm mb-2">Leistungen:</h4>
                           <ul className="grid grid-cols-1 gap-1">
                             {pkg.benefits.map((benefit, benefitIndex) => (
-                              <li key={benefitIndex} className="flex items-start space-x-2 text-sm text-gray-700">
-                                <span className="text-green-600 mt-0.5">✓</span>
+                              <li key={benefitIndex} className="flex items-start space-x-2 text-sm text-gray-600 dark:text-gray-400">
+                                <span className="text-gray-600 dark:text-gray-400 mt-0.5">✓</span>
                                 <span>{benefit}</span>
                               </li>
                             ))}
@@ -320,28 +319,28 @@ export default function SponsorsPage() {
 
           {/* Warum Sponsor werden */}
           <AnimatedSection delay={1.4}>
-            <div className="bg-gradient-to-r from-viktoria-blue-light to-viktoria-blue rounded-xl p-6 text-white text-center">
-              <IconGift className="text-viktoria-yellow mx-auto mb-4" size={48} />
-              <h2 className="text-xl font-bold text-viktoria-yellow mb-4">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <IconGift className="text-gray-600 dark:text-gray-400 mx-auto mb-4" size={48} />
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
                 Warum Viktoria sponsern?
               </h2>
-              <p className="text-white/90 mb-6 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-sm">
                 Als Sponsor unterstützen Sie nicht nur den Sport, sondern investieren 
                 in die Gemeinschaft. Profitieren Sie von der positiven Ausstrahlung 
                 und der regionalen Verbundenheit unseres Vereins.
               </p>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-viktoria-yellow">250+</div>
-                  <div className="text-xs text-white/80">Mitglieder</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">250+</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Mitglieder</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-viktoria-yellow">1000+</div>
-                  <div className="text-xs text-white/80">Fans</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">1000+</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Fans</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-viktoria-yellow">20+</div>
-                  <div className="text-xs text-white/80">Heimspiele/Jahr</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">20+</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Heimspiele/Jahr</div>
                 </div>
               </div>
             </div>
@@ -349,25 +348,25 @@ export default function SponsorsPage() {
 
           {/* Kontakt für Sponsoring */}
           <AnimatedSection delay={1.5}>
-            <div className="bg-viktoria-yellow/20 rounded-xl p-6 text-center">
-              <h2 className="text-lg font-bold text-viktoria-blue mb-4">
+            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
                 Interesse an einer Partnerschaft?
               </h2>
-              <p className="text-gray-700 mb-6 text-sm leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
                 Gerne erstellen wir Ihnen ein individuelles Sponsoring-Angebot. 
                 Kontaktieren Sie unseren Vorstand für ein persönliches Gespräch.
               </p>
               <div className="grid grid-cols-1 gap-3">
                 <a 
                   href="mailto:vorsitzender@viktoria-wertheim.de?subject=Sponsoring-Anfrage"
-                  className="bg-viktoria-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-viktoria-blue-light transition-colors duration-300 flex items-center justify-center space-x-2"
+                  className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
                 >
                   <IconMail size={20} />
                   <span>E-Mail senden</span>
                 </a>
                 <a 
                   href="tel:09342123456"
-                  className="bg-viktoria-yellow text-viktoria-blue px-6 py-3 rounded-lg font-semibold hover:bg-viktoria-yellow/90 transition-colors duration-300 flex items-center justify-center space-x-2"
+                  className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
                 >
                   <IconPhone size={20} />
                   <span>(09342) 123-456</span>
@@ -377,7 +376,7 @@ export default function SponsorsPage() {
           </AnimatedSection>
 
         </div>
-      </main>
+      </div>
     </PageLayout>
   )
 } 

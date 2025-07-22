@@ -12,10 +12,17 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "vorname": {
+      "type": "string"
+    },
+    "nachname": {
+      "type": "string"
+    },
     "mitglied": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::mitglied.mitglied"
+      "target": "api::mitglied.mitglied",
+      "inversedBy": "spieler"
     },
     "mannschaft": {
       "type": "relation",
@@ -79,7 +86,7 @@
         "innenverteidiger",
         "aussenverteidiger",
         "defensives_mittelfeld",
-        "zentrales_mittelfeld", 
+        "zentrales_mittelfeld",
         "offensives_mittelfeld",
         "fluegelstuermer",
         "mittelstuermer"
@@ -120,4 +127,4 @@
       ]
     }
   }
-} 
+}

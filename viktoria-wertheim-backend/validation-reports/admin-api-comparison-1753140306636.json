@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "title": "Admin vs API Validation Comparison Report",
+    "generated": "2025-07-21T23:25:06.636Z",
+    "strapiUrl": "http://localhost:1337"
+  },
+  "authentication": {
+    "success": false,
+    "error": "Request failed with status code 405",
+    "timestamp": "2025-07-21T23:25:06.636Z"
+  },
+  "discrepancies": [],
+  "allResults": []
+}
