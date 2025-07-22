@@ -11,7 +11,7 @@
 
 ## Backend Stack
 - **CMS**: Strapi 5+ (Headless CMS)
-- **Database**: SQLite (development), PostgreSQL (production)
+- **Database**: PostgreSQL (all environments)
 - **Language**: TypeScript/JavaScript
 - **Deployment**: DigitalOcean/Heroku
 
@@ -26,12 +26,27 @@
 
 // Backend
 "@strapi/strapi": "5.18.0"
-"better-sqlite3": "11.3.0"
+"pg": "^8.11.0"
 ```
 
 ## Common Commands
 
-### Frontend (viktoria-wertheim-frontend/)
+### Root (Monorepo)
+```bash
+# Start both services
+npm run dev
+
+# Build both applications
+npm run build
+
+# Start both in production
+npm run start
+
+# Install all dependencies
+npm run install:all
+```
+
+### Frontend (frontend/)
 ```bash
 # Development
 npm run dev
@@ -46,7 +61,7 @@ npm run start
 npm run lint
 ```
 
-### Backend (viktoria-wertheim-backend/)
+### Backend (backend/)
 ```bash
 # Development with auto-reload
 npm run develop

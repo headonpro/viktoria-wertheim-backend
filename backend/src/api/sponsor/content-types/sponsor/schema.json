@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sponsoren",
+  "info": {
+    "singularName": "sponsor",
+    "pluralName": "sponsoren",
+    "displayName": "Sponsor",
+    "description": "Sponsoren des Vereins mit drei-stufigem Kategoriensystem"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "website": {
+      "type": "string",
+      "regex": "^(https?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+(\\/.*)?$"
+    },
+    "beschreibung": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "kategorie": {
+      "type": "enumeration",
+      "enum": ["Hauptsponsor", "Premium", "Partner"],
+      "required": true,
+      "default": "Partner"
+    },
+    "kontakt": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "aktiv": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "reihenfolge": {
+      "type": "integer",
+      "default": 0,
+      "min": 0,
+      "max": 999
+    }
+  }
+}

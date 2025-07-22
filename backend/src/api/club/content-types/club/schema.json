@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clubs",
+  "info": {
+    "singularName": "club",
+    "pluralName": "clubs",
+    "displayName": "Club",
+    "description": "Football clubs with logos and contact information"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "kurz_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "vereinsfarben": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "heimstadion": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "adresse": {
+      "type": "text"
+    },
+    "website": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "kontakt": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "ist_unser_verein": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "ligas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::liga.liga",
+      "mappedBy": "clubs"
+    },
+    "teams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team.team",
+      "mappedBy": "club"
+    },
+    "tabellen_eintraege": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tabellen-eintrag.tabellen-eintrag",
+      "mappedBy": "club"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "news_artikel",
+  "info": {
+    "singularName": "news-artikel",
+    "pluralName": "news-artikels",
+    "displayName": "News-Artikel",
+    "description": "News-Artikel des Vereins"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titel": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "inhalt": {
+      "type": "richtext",
+      "required": true
+    },
+    "datum": {
+      "type": "datetime",
+      "required": true
+    },
+    "autor": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "titelbild": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "kategorie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kategorie.kategorie",
+      "inversedBy": "news_artikel",
+      "required": true
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "kurzbeschreibung": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "titel",
+      "required": true
+    },
+    "seo_titel": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "seo_beschreibung": {
+      "type": "text",
+      "maxLength": 160
+    },
+    "lesezeit": {
+      "type": "integer",
+      "min": 1
+    }
+  }
+}

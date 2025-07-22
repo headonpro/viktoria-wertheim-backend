@@ -1,0 +1,103 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spiele",
+  "info": {
+    "singularName": "spiel",
+    "pluralName": "spiele",
+    "displayName": "Spiel",
+    "description": "Matches with comprehensive event tracking and club relationships"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "datum": {
+      "type": "datetime",
+      "required": true
+    },
+    "heimclub": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "required": true
+    },
+    "auswaertsclub": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "required": true
+    },
+    "unser_team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::team.team",
+      "inversedBy": "spiele",
+      "required": true
+    },
+    "liga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::liga.liga",
+      "required": true
+    },
+    "saison": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::saison.saison",
+      "required": true
+    },
+    "ist_heimspiel": {
+      "type": "boolean",
+      "required": true
+    },
+    "tore_heim": {
+      "type": "integer",
+      "min": 0
+    },
+    "tore_auswaerts": {
+      "type": "integer",
+      "min": 0
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["geplant", "laufend", "beendet", "abgesagt"],
+      "default": "geplant",
+      "required": true
+    },
+    "spielort": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "schiedsrichter": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "spieltag": {
+      "type": "integer",
+      "min": 1
+    },
+    "torschuetzen": {
+      "type": "json",
+      "default": []
+    },
+    "karten": {
+      "type": "json",
+      "default": []
+    },
+    "wechsel": {
+      "type": "json",
+      "default": []
+    },
+    "spielbericht": {
+      "type": "richtext"
+    },
+    "zuschauer": {
+      "type": "integer",
+      "min": 0
+    },
+    "notizen": {
+      "type": "text"
+    }
+  }
+}

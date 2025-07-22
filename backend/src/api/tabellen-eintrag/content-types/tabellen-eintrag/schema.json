@@ -1,0 +1,85 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tabellen_eintraege",
+  "info": {
+    "singularName": "tabellen-eintrag",
+    "pluralName": "tabellen-eintraege",
+    "displayName": "Tabellen Eintrag",
+    "description": "League table entries with automatic position calculations and form tracking"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "liga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::liga.liga",
+      "required": true
+    },
+    "club": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "required": true
+    },
+    "platz": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "spiele": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "siege": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "unentschieden": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "niederlagen": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "tore_fuer": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "tore_gegen": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "tordifferenz": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "punkte": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "form_letzte_5": {
+      "type": "json",
+      "required": false
+    }
+  }
+}

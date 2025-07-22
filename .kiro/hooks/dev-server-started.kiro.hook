@@ -7,8 +7,8 @@
     "type": "fileDeleted",
     "patterns": [
       "package.json",
-      "viktoria-wertheim-backend/package.json",
-      "viktoria-wertheim-frontend/package.json"
+      "backend/package.json",
+      "frontend/package.json"
     ]
   },
   "then": {

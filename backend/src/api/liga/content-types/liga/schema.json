@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ligas",
+  "info": {
+    "singularName": "liga",
+    "pluralName": "ligas",
+    "displayName": "Liga",
+    "description": "Football leagues with club relationships and season organization"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "kurz_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "saison": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::saison.saison",
+      "inversedBy": "ligas"
+    },
+    "clubs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::club.club",
+      "inversedBy": "ligas"
+    },
+    "spieltage_gesamt": {
+      "type": "integer",
+      "default": 30,
+      "min": 1
+    },
+    "teams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team.team",
+      "mappedBy": "liga"
+    },
+    "tabellen_eintraege": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tabellen-eintrag.tabellen-eintrag",
+      "mappedBy": "liga"
+    }
+  }
+}

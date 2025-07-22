@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "saisons",
+  "info": {
+    "singularName": "saison",
+    "pluralName": "saisons",
+    "displayName": "Saison",
+    "description": "Football seasons with start/end dates and active status"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 20
+    },
+    "start_datum": {
+      "type": "date",
+      "required": true
+    },
+    "end_datum": {
+      "type": "date",
+      "required": true
+    },
+    "aktiv": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "beschreibung": {
+      "type": "text"
+    },
+    "ligas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::liga.liga",
+      "mappedBy": "saison"
+    },
+    "teams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team.team",
+      "mappedBy": "saison"
+    }
+  }
+}

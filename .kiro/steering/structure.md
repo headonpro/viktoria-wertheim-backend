@@ -6,16 +6,16 @@ This is a monorepo containing both frontend and backend applications:
 
 ```
 viktoria-wertheim/
-├── viktoria-wertheim-frontend/    # Next.js frontend application
-├── viktoria-wertheim-backend/     # Strapi CMS backend
-├── src/                          # Shared resources (if any)
-├── PRD.md                        # Product Requirements Document
-└── Anweisungsdatei.md           # Instructions document
+├── frontend/                   # Next.js frontend application
+├── backend/                    # Strapi CMS backend
+├── package.json               # Monorepo workspace configuration
+├── README.md                  # Project documentation
+└── .env.example              # Environment variables template
 ```
 
-## Frontend Structure (viktoria-wertheim-frontend/)
+## Frontend Structure (frontend/)
 ```
-viktoria-wertheim-frontend/
+frontend/
 ├── src/
 │   └── app/                     # Next.js App Router pages
 ├── public/                      # Static assets
@@ -24,12 +24,12 @@ viktoria-wertheim-frontend/
 └── package.json                # Dependencies and scripts
 ```
 
-## Backend Structure (viktoria-wertheim-backend/)
+## Backend Structure (backend/)
 ```
-viktoria-wertheim-backend/
+backend/
 ├── src/                        # Strapi application code
 ├── config/                     # Strapi configuration
-├── database/                   # Database files (SQLite)
+├── database/                   # Database migrations and schema
 ├── public/                     # Public uploads
 ├── types/                      # TypeScript type definitions
 └── package.json               # Dependencies and scripts
@@ -42,8 +42,10 @@ viktoria-wertheim-backend/
 
 ## Development Workflow
 
-1. Start backend: `cd viktoria-wertheim-backend && npm run develop`
-2. Start frontend: `cd viktoria-wertheim-frontend && npm run dev`
+1. Start both services: `npm run dev` (from root)
+2. Or individually:
+   - Backend: `cd backend && npm run develop`
+   - Frontend: `cd frontend && npm run dev`
 3. Backend runs on port 1337, frontend on port 3000
 
 ## Content Models (Strapi)

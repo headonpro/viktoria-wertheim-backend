@@ -1,46 +1,30 @@
 {
-  "name": "viktoria-wertheim-backend",
-  "version": "0.1.0",
+  "name": "viktoria-wertheim",
+  "version": "1.0.0",
   "private": true,
-  "description": "A Strapi application",
+  "description": "Viktoria Wertheim Football Club Website - Monorepo",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "build": "strapi build",
-    "console": "strapi console",
-    "deploy": "strapi deploy",
-    "dev": "strapi develop",
-    "develop": "strapi develop",
-    "start": "strapi start",
-    "strapi": "strapi",
-    "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "seed:leaderboard": "node scripts/seed-leaderboard.js",
-    "seed:leaderboard:clear": "node scripts/seed-leaderboard.js --clear"
-  },
-  "dependencies": {
-    "@strapi/plugin-cloud": "5.18.0",
-    "@strapi/plugin-graphql": "^5.18.1",
-    "@strapi/plugin-users-permissions": "5.18.0",
-    "@strapi/strapi": "5.18.0",
-    "axios": "^1.10.0",
-    "better-sqlite3": "11.3.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-easy-crop": "^5.5.0",
-    "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run develop",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm run start",
+    "start:frontend": "cd frontend && npm run start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5"
+    "concurrently": "^8.2.2"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"
   },
-  "strapi": {
-    "uuid": "0b73a874-c78e-4cdf-b5dc-9ae2c7d69ffc",
-    "installId": "25ae1fa5b8226a0ea6a79a86f1f009a1812198c8f45061eb8bc0c8c6c2e11eee"
-  }
+  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a"
 }

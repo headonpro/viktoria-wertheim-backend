@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "teams",
+  "info": {
+    "singularName": "team",
+    "pluralName": "teams",
+    "displayName": "Team",
+    "description": "Teams des Vereins mit Liga- und Saison-Zuordnung"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 50
+    },
+    "club": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "inversedBy": "teams"
+    },
+    "liga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::liga.liga",
+      "inversedBy": "teams"
+    },
+    "saison": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::saison.saison",
+      "inversedBy": "teams"
+    },
+    "trainer": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "co_trainer": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "trainingszeiten": {
+      "type": "text"
+    },
+    "trainingsort": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "heimspieltag": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "teamfoto": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "spieler": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::spieler.spieler",
+      "mappedBy": "hauptteam"
+    },
+    "aushilfe_spieler": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::spieler.spieler",
+      "mappedBy": "aushilfe_teams"
+    },
+    "spiele": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::spiel.spiel",
+      "mappedBy": "unser_team"
+    }
+  }
+}
