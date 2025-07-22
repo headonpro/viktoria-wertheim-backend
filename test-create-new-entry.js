@@ -18,4 +18,30 @@ async function testCreateNewEntry() {
         tore: 15,
         gegentore: 10,
         tordifferenz: 5,
+        punkte: 18,
+        logo: null // Optional logo field
+      }
+    };
+
+    const response = await axios.post(`${API_BASE_URL}/api/leaderboard-entries`, newEntryData);
+    
+    console.log('✅ Successfully created new entry:', response.data);
+    return response.data;
+    
+  } catch (error) {
+    console.error('❌ Error creating new entry:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+// Run the test
+testCreateNewEntry()
+  .then(() => {
+    console.log('Test completed successfully');
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('Test failed:', error.message);
+    process.exit(1);
+  });
         

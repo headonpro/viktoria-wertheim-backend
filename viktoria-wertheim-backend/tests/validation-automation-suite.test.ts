@@ -8,7 +8,7 @@
  */
 
 import axios, { AxiosResponse } from 'axios';
-import * as fs from 'fs/promises';
+import { promises as fs } from 'fs';
 import * as path from 'path';
 
 // Test configuration
@@ -839,7 +839,7 @@ describe('Validation Test Automation Suite', () => {
       };
 
       // Check against thresholds
-      const alerts = [];
+      const alerts: Array<{ level: string; message: string }> = [];
       
       if (report.summary.successRate < thresholds.success_rate_critical) {
         alerts.push({ level: 'CRITICAL', message: 'Validation success rate critically low' });
