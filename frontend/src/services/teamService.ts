@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { getApiUrl } from '../lib/apiConfig'
-import { Mannschaft, Spiel, TeamData, GameDetails, TeamId, TeamStats } from '../types/strapi'
+import { Team, Spiel, TeamData, GameDetails, TeamId, TeamStats } from '../types/strapi'
 
 // Strapi API Base URL
 const API_BASE_URL = getApiUrl()
 
 // Strapi Response Interfaces
-interface StrapiMannschaftResponse {
-  data: Mannschaft[]
+interface StrapiTeamResponse {
+  data: Team[]
   meta: {
     pagination: {
       page: number
@@ -37,7 +37,7 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       id: 1,
       name: '1. Mannschaft',
       liga: 'Kreisliga',
-      liga_vollname: 'Kreisliga Würzburg',
+      liga_vollname: 'Kreisliga',
       tabellenplatz: 8,
       punkte: 24,
       spiele_gesamt: 18,
@@ -56,7 +56,7 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       id: 2,
       name: '2. Mannschaft',
       liga: 'Kreisklasse A',
-      liga_vollname: 'Kreisklasse A Würzburg',
+      liga_vollname: 'Kreisklasse A',
       tabellenplatz: 5,
       punkte: 28,
       spiele_gesamt: 16,
@@ -76,7 +76,7 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       id: 3,
       name: '3. Mannschaft',
       liga: 'Kreisklasse B',
-      liga_vollname: 'Kreisklasse B Würzburg',
+      liga_vollname: 'Kreisklasse B',
       tabellenplatz: 12,
       punkte: 15,
       spiele_gesamt: 14,
@@ -97,15 +97,15 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
   return fallbackData[teamId]
 }
 
-// Transform Strapi Mannschaft to TeamData
-const transformStrapiToTeamData = (strapiTeam: Mannschaft): TeamData => {
+// Transform Strapi Team to TeamData
+const transformStrapiToTeamData = (strapiTeam: Team): TeamData => {
   const attrs = strapiTeam.attributes
   
   return {
     id: strapiTeam.id,
     name: attrs.name,
-    liga: attrs.liga || '',
-    liga_vollname: attrs.liga_vollname || attrs.liga || '',
+    liga: attrs.liga_name || '',
+    liga_vollname: attrs.liga_vollname || attrs.liga_name || '',
     tabellenplatz: attrs.tabellenplatz || 1,
     punkte: attrs.punkte || 0,
     spiele_gesamt: attrs.spiele_gesamt || 0,
@@ -170,8 +170,8 @@ export const teamService = {
         '3': '3. Mannschaft'
       }
       
-      const response = await axios.get<StrapiMannschaftResponse>(
-        `${API_BASE_URL}/api/mannschafts`,
+      const response = await axios.get<StrapiTeamResponse>(
+        `${API_BASE_URL}/api/teams`,
         {
           params: {
             'filters[name][$eq]': teamNames[teamId],

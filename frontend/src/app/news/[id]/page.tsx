@@ -10,6 +10,7 @@ import { strapi } from '@/lib/strapi'
 import { NewsArtikel } from '@/types/strapi'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getApiUrl } from '@/lib/apiConfig'
 
 
 
@@ -184,7 +185,7 @@ export default function NewsArticlePage() {
           <AnimatedSection delay={0.3}>
             <div className="relative h-64 md:h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl overflow-hidden">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${article.attributes.titelbild.data.attributes.url}`}
+                src={`${getApiUrl()}${article.attributes.titelbild.data.attributes.url}`}
                 alt={article.attributes.titelbild.data.attributes.alternativeText || article.attributes.titel}
                 fill
                 className="object-cover"

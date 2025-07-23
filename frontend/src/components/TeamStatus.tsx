@@ -117,10 +117,10 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
 
   const getFormColor = (result: 'S' | 'U' | 'N') => {
     switch (result) {
-      case 'S': return 'bg-green-500 text-white shadow-green-500/40 shadow-lg drop-shadow-[0_0_8px_rgba(34,197,94,0.5)] hover:shadow-green-500/60 hover:scale-110'
-      case 'U': return 'bg-yellow-500 text-white shadow-yellow-500/40 shadow-lg drop-shadow-[0_0_8px_rgba(234,179,8,0.5)] hover:shadow-yellow-500/60 hover:scale-110'
-      case 'N': return 'bg-red-500 text-white shadow-red-500/40 shadow-lg drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] hover:shadow-red-500/60 hover:scale-110'
-      default: return 'bg-gray-400 text-white shadow-gray-400/40 shadow-lg drop-shadow-[0_0_8px_rgba(156,163,175,0.4)] hover:shadow-gray-400/60 hover:scale-110'
+      case 'S': return 'bg-green-500 text-white hover:bg-green-600'
+      case 'U': return 'bg-yellow-500 text-white hover:bg-yellow-600'
+      case 'N': return 'bg-red-500 text-white hover:bg-red-600'
+      default: return 'bg-gray-400 text-white hover:bg-gray-500'
     }
   }
 
@@ -134,12 +134,11 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
   }
 
   const getTrendIcon = (trend: 'steigend' | 'gleich' | 'fallend') => {
-    const baseClasses = "transition-all duration-300 hover:scale-125"
     switch (trend) {
-      case 'steigend': return <IconTrendingUp size={16} className={`text-green-500 ${baseClasses} hover:text-green-400`} />
-      case 'gleich': return <IconArrowRight size={16} className={`text-gray-400 ${baseClasses} hover:text-gray-300`} />
-      case 'fallend': return <IconTrendingDown size={16} className={`text-red-500 ${baseClasses} hover:text-red-400`} />
-      default: return <IconArrowRight size={16} className={`text-gray-400 ${baseClasses}`} />
+      case 'steigend': return <IconTrendingUp size={16} className="text-green-500" />
+      case 'gleich': return <IconArrowRight size={16} className="text-gray-400" />
+      case 'fallend': return <IconTrendingDown size={16} className="text-red-500" />
+      default: return <IconArrowRight size={16} className="text-gray-400" />
     }
   }
 
@@ -177,7 +176,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
   return (
     <div className="container max-w-6xl">
       <AnimatedDiv
-        className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+        className="bg-gray-100/40 dark:bg-white/[0.04] rounded-xl md:rounded-2xl border border-gray-200/60 dark:border-white/[0.08] overflow-hidden hover:bg-gray-100/60 dark:hover:bg-white/[0.06] transition-colors duration-150 shadow-sm hover:shadow-md"
         delay={0.1}
       >
         {/* Mannschaftsauswahl Buttons */}
@@ -197,14 +196,13 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                     min-h-[48px] min-w-[48px] 
                     px-4 py-3 sm:px-6 sm:py-2 md:px-8 md:py-3 
                     rounded-lg text-sm md:text-base font-semibold 
-                    transition-all duration-300 
+                    transition-all duration-200 
                     whitespace-nowrap flex items-center justify-center gap-2
                     touch-manipulation
                     active:scale-95
-                    hover:scale-105 md:hover:scale-110
                     ${selectedTeam === team
-                      ? 'bg-viktoria-yellow text-gray-800 shadow-lg shadow-viktoria-yellow/30 transform scale-105'
-                      : 'bg-gray-200/80 dark:bg-white/[0.05] text-gray-700 dark:text-gray-300 hover:bg-gray-300/80 dark:hover:bg-white/[0.08] border border-gray-300/50 dark:border-transparent'
+                      ? 'bg-viktoria-yellow text-gray-800'
+                      : 'bg-gray-200 dark:bg-white/[0.05] text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-white/[0.08] border border-gray-300/50 dark:border-white/[0.05]'
                     }
                   `}
                   aria-label={`${team}. Mannschaft auswählen`}
@@ -272,7 +270,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                       <div
                         key={index}
                         title={`${getFormTooltip(result)} (Spiel ${teamData.form_letzte_5.length - index})`}
-                        className={`w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-7 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-all duration-300 shadow-sm cursor-help transform hover:z-10 relative touch-manipulation`}
+                        className={`w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-7 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-colors duration-150 cursor-help relative touch-manipulation`}
                         style={{ 
                           animationDelay: `${index * 100}ms`,
                           animation: 'fadeInScale 0.5s ease-out forwards'

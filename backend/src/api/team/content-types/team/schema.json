@@ -78,6 +78,76 @@
       "relation": "oneToMany",
       "target": "api::spiel.spiel",
       "mappedBy": "unser_team"
+    },
+    "liga_name": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "liga_vollname": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "tabellenplatz": {
+      "type": "integer",
+      "min": 1,
+      "default": 1
+    },
+    "punkte": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "spiele_gesamt": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "siege": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "unentschieden": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "niederlagen": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "tore_fuer": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "tore_gegen": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "tordifferenz": {
+      "type": "integer",
+      "default": 0
+    },
+    "form_letzte_5": {
+      "type": "json",
+      "default": []
+    },
+    "trend": {
+      "type": "enumeration",
+      "enum": ["steigend", "gleich", "fallend"],
+      "default": "gleich"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["aktiv", "inaktiv", "pausiert"],
+      "default": "aktiv"
+    },
+    "altersklasse": {
+      "type": "string",
+      "maxLength": 50
     }
   }
 }

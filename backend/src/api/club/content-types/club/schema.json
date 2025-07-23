@@ -5,7 +5,7 @@
     "singularName": "club",
     "pluralName": "clubs",
     "displayName": "Club",
-    "description": "Football clubs with logos and contact information"
+    "description": "Football clubs with logos, contact information and league table data"
   },
   "options": {
     "draftAndPublish": false
@@ -52,11 +52,54 @@
       "default": false,
       "required": true
     },
-    "ligas": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::liga.liga",
-      "mappedBy": "clubs"
+    "liga": {
+      "type": "string",
+      "maxLength": 100,
+      "default": "Kreisliga Tauberbischofsheim"
+    },
+    "platz": {
+      "type": "integer",
+      "min": 1,
+      "default": 1
+    },
+    "spiele": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "siege": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "unentschieden": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "niederlagen": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "tore_fuer": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "tore_gegen": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "tordifferenz": {
+      "type": "integer",
+      "default": 0
+    },
+    "punkte": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
     },
     "teams": {
       "type": "relation",
@@ -64,11 +107,11 @@
       "target": "api::team.team",
       "mappedBy": "club"
     },
-    "tabellen_eintraege": {
+    "ligas": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::tabellen-eintrag.tabellen-eintrag",
-      "mappedBy": "club"
+      "relation": "manyToMany",
+      "target": "api::liga.liga",
+      "mappedBy": "clubs"
     }
   }
 }

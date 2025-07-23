@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { IconTrophy } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
 import axios from 'axios'
+import { getApiUrl } from '@/lib/apiConfig'
 
 const AnimatedSection = dynamic(
   () => import('@/components/AnimatedSection'),
@@ -65,7 +66,7 @@ const TopScorers = () => {
     const fetchTopScorers = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}/api/spielerstatistiks`, {
+        const response = await axios.get(`${getApiUrl()}/api/spielerstatistiks`, {
           params: {
             sort: 'tore:desc',
             'filters[tore][$gt]': 0,

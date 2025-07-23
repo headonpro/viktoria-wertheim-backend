@@ -35,6 +35,12 @@
       "inversedBy": "spiele",
       "required": true
     },
+    "unsere_mannschaft": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::mannschaft.mannschaft",
+      "inversedBy": "spiele"
+    },
     "liga": {
       "type": "relation",
       "relation": "manyToOne",

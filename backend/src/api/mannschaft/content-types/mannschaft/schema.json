@@ -84,6 +84,20 @@
       "type": "integer",
       "default": 0
     },
+    "form_letzte_5": {
+      "type": "json",
+      "default": []
+    },
+    "trend": {
+      "type": "enumeration",
+      "enum": ["steigend", "gleich", "fallend"],
+      "default": "gleich"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["aktiv", "inaktiv", "pausiert"],
+      "default": "aktiv"
+    },
     "spieler": {
       "type": "relation",
       "relation": "oneToMany",

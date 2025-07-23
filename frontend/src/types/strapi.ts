@@ -161,13 +161,14 @@ export interface Spieler {
   };
 }
 
-export interface Mannschaft {
+export interface Team {
   id: number;
   attributes: {
     name: string;
     trainer?: string;
-    liga?: string;
-    // New fields for team management
+    liga_name?: string;
+    liga_vollname?: string;
+    // Team statistics and management
     tabellenplatz?: number;
     punkte?: number;
     spiele_gesamt?: number;
@@ -179,8 +180,11 @@ export interface Mannschaft {
     tordifferenz?: number;
     form_letzte_5?: ('S' | 'U' | 'N')[];
     trend?: 'steigend' | 'gleich' | 'fallend';
-    liga_vollname?: string;
+    status?: 'aktiv' | 'inaktiv' | 'pausiert';
     altersklasse?: string;
+    co_trainer?: string;
+    trainingszeiten?: string;
+    heimspieltag?: string;
     teamfoto?: {
       data: {
         id: number;

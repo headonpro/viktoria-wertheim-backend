@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
+import { getApiUrl } from '@/lib/apiConfig'
 
 interface Sponsor {
   id: number
@@ -33,7 +34,7 @@ interface SponsorCardProps {
 export default function SponsorCard({ sponsor, index, isMainSponsor = false }: SponsorCardProps) {
   const { name, logo, website_url, beschreibung, kategorie } = sponsor.attributes
   const logoUrl = logo?.data?.attributes?.url
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
+  const baseUrl = getApiUrl()
 
   const handleClick = () => {
     if (website_url) {

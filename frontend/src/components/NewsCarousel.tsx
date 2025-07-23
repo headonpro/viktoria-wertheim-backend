@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import { IconClock, IconTrophy } from '@tabler/icons-react'
 import { NewsArtikel } from '@/types/strapi'
+import { getApiUrl } from '@/lib/apiConfig'
 
 interface NewsCarouselProps {
   newsArticles: NewsArtikel[]
@@ -68,7 +69,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                     <div className="relative w-32 md:w-40 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue" style={{ aspectRatio: '8/5' }}>
                       {imageUrl ? (
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${imageUrl}`}
+                          src={`${getApiUrl()}${imageUrl}`}
                           alt={titel || 'News Artikel'}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -205,7 +206,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                 <div className="relative w-full h-48 md:h-56 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue">
                   {imageUrl ? (
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${imageUrl}`}
+                      src={`${getApiUrl()}${imageUrl}`}
                       alt={titel || 'News Artikel'}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"

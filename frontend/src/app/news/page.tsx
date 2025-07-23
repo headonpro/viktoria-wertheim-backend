@@ -9,6 +9,7 @@ import { IconClock, IconTag, IconEye, IconArrowRight, IconFilter, IconChevronDow
 import { strapi } from '@/lib/strapi'
 import { NewsArtikel, Kategorie, StrapiBlock } from '@/types/strapi'
 import Image from 'next/image'
+import { getApiUrl } from '@/lib/apiConfig'
 
 
 
@@ -329,7 +330,7 @@ export default function NewsPage() {
                         <div className="relative h-32 sm:h-48 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden flex-shrink-0">
                           {getArticleImage(article) ? (
                             <Image
-                              src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${(getArticleImage(article) as any)?.url || (getArticleImage(article) as any)?.attributes?.url}`}
+                              src={`${getApiUrl()}${(getArticleImage(article) as any)?.url || (getArticleImage(article) as any)?.attributes?.url}`}
                               alt={(getArticleImage(article) as any)?.alternativeText || (getArticleImage(article) as any)?.attributes?.alternativeText || getArticleTitle(article)}
                               fill
                               className="object-cover object-top group-hover:scale-105 transition-transform duration-300"

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { IconX, IconClock, IconTag, IconShare } from '@tabler/icons-react'
 import { NewsArtikel } from '@/types/strapi'
 import Image from 'next/image'
+import { getApiUrl } from '@/lib/apiConfig'
 
 interface NewsModalProps {
   article: NewsArtikel | null
@@ -123,7 +124,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
               {((article.titelbild && article.titelbild.url) || (article.attributes?.titelbild?.data)) && (
                 <div className="relative h-48 md:h-64 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${
+                    src={`${getApiUrl()}${
                       article.titelbild?.url || article.attributes?.titelbild?.data?.attributes?.url
                     }`}
                     alt={

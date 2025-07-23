@@ -6,7 +6,8 @@ import PageLayout from '@/components/PageLayout'
 import { IconUsers, IconTrophy, IconMapPin } from '@tabler/icons-react'
 import { strapi } from '@/lib/strapi'
 import { Mannschaft } from '@/types/strapi'
-import Image from "next/image";
+import Image from "next/image"
+import { getApiUrl } from '@/lib/apiConfig'
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Mannschaft[]>([])
@@ -98,7 +99,7 @@ export default function TeamsPage() {
                     <div className="relative h-24 md:h-32 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
                       {team.attributes.teamfoto?.data ? (
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${team.attributes.teamfoto.data.attributes.url}`}
+                          src={`${getApiUrl()}${team.attributes.teamfoto.data.attributes.url}`}
                           alt={team.attributes.teamfoto.data.attributes.alternativeText || team.attributes.name}
                           width={400}
                           height={128}
