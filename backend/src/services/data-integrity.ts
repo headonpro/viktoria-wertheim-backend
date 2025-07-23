@@ -10,7 +10,11 @@ export interface IntegrityCheckResult {
     total: number;
     critical: number;
     warnings: number;
+    totalIssues: number;
+    errorCount: number;
+    warningCount: number;
   };
+  isValid: boolean;
 }
 
 export interface IntegrityIssue {
@@ -117,14 +121,21 @@ export class DataIntegrityService {
       });
     }
 
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
     return {
       contentType: 'api::saison.saison',
       issues,
       summary: {
         total: issues.length,
-        critical: issues.filter(i => i.severity === 'critical').length,
-        warnings: issues.filter(i => i.severity === 'warning').length
-      }
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
     };
   }
 
@@ -244,14 +255,21 @@ export class DataIntegrityService {
       });
     }
 
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
     return {
       contentType: 'api::spieler.spieler',
       issues,
       summary: {
         total: issues.length,
-        critical: issues.filter(i => i.severity === 'critical').length,
-        warnings: issues.filter(i => i.severity === 'warning').length
-      }
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
     };
   }
 
@@ -321,14 +339,21 @@ export class DataIntegrityService {
       });
     }
 
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
     return {
       contentType: 'api::team.team',
       issues,
       summary: {
         total: issues.length,
-        critical: issues.filter(i => i.severity === 'critical').length,
-        warnings: issues.filter(i => i.severity === 'warning').length
-      }
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
     };
   }
 
@@ -392,14 +417,21 @@ export class DataIntegrityService {
       });
     }
 
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
     return {
       contentType: 'api::spiel.spiel',
       issues,
       summary: {
         total: issues.length,
-        critical: issues.filter(i => i.severity === 'critical').length,
-        warnings: issues.filter(i => i.severity === 'warning').length
-      }
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
     };
   }
 
@@ -498,14 +530,21 @@ export class DataIntegrityService {
       });
     }
 
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
     return {
       contentType: 'api::spielerstatistik.spielerstatistik',
       issues,
       summary: {
         total: issues.length,
-        critical: issues.filter(i => i.severity === 'critical').length,
-        warnings: issues.filter(i => i.severity === 'warning').length
-      }
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
     };
   }
 
@@ -572,14 +611,67 @@ export class DataIntegrityService {
       });
     }
 
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
     return {
       contentType: 'api::tabellen-eintrag.tabellen-eintrag',
       issues,
       summary: {
         total: issues.length,
-        critical: issues.filter(i => i.severity === 'critical').length,
-        warnings: issues.filter(i => i.severity === 'warning').length
-      }
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
+    };
+  }
+
+  /**
+   * Checks table integrity (alias for checkLeagueTableIntegrity)
+   */
+  static async checkTableIntegrity(): Promise<IntegrityCheckResult> {
+    return await this.checkLeagueTableIntegrity();
+  }
+
+  /**
+   * Checks referential integrity for a specific content type
+   */
+  static async checkReferentialIntegrity(contentType: string): Promise<IntegrityCheckResult> {
+    const issues: IntegrityIssue[] = [];
+
+    try {
+      // This is a placeholder implementation - would need specific logic per content type
+      strapi.log.info(`Checking referential integrity for ${contentType}`);
+      
+      // Add specific referential integrity checks here based on content type
+      
+    } catch (error) {
+      issues.push({
+        id: 'check-error',
+        severity: 'critical',
+        type: 'system_error',
+        message: `Fehler bei Referenz-Integritätsprüfung: ${error.message}`
+      });
+    }
+
+    const critical = issues.filter(i => i.severity === 'critical').length;
+    const warnings = issues.filter(i => i.severity === 'warning').length;
+    
+    return {
+      contentType,
+      issues,
+      summary: {
+        total: issues.length,
+        critical,
+        warnings,
+        totalIssues: issues.length,
+        errorCount: critical,
+        warningCount: warnings
+      },
+      isValid: issues.length === 0
     };
   }
 

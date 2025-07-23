@@ -189,7 +189,13 @@ async function validateSeasonDeletion(seasonId: any) {
     pagination: { limit: 1 }
   });
   
-  if (teams && teams.length > 0) {
+  // Handle both array and single object responses
+  let teamsArray: any[] = [];
+  if (teams) {
+    teamsArray = Array.isArray(teams) ? teams : [teams];
+  }
+  
+  if (teamsArray.length > 0) {
     throw new Error('Saison kann nicht gelöscht werden: Es sind noch Teams zugeordnet');
   }
   
@@ -199,7 +205,13 @@ async function validateSeasonDeletion(seasonId: any) {
     pagination: { limit: 1 }
   });
   
-  if (matches && matches.length > 0) {
+  // Handle both array and single object responses
+  let matchesArray: any[] = [];
+  if (matches) {
+    matchesArray = Array.isArray(matches) ? matches : [matches];
+  }
+  
+  if (matchesArray.length > 0) {
     throw new Error('Saison kann nicht gelöscht werden: Es sind noch Spiele zugeordnet');
   }
   
@@ -209,7 +221,13 @@ async function validateSeasonDeletion(seasonId: any) {
     pagination: { limit: 1 }
   });
   
-  if (leagues && leagues.length > 0) {
+  // Handle both array and single object responses
+  let leaguesArray: any[] = [];
+  if (leagues) {
+    leaguesArray = Array.isArray(leagues) ? leagues : [leagues];
+  }
+  
+  if (leaguesArray.length > 0) {
     throw new Error('Saison kann nicht gelöscht werden: Es sind noch Ligen zugeordnet');
   }
 }

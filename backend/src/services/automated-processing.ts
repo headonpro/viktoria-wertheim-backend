@@ -417,6 +417,64 @@ export class AutomatedProcessingService {
   }
 
   /**
+   * Calculates player statistics from match events
+   */
+  static calculatePlayerStatistics(matchData: any): any {
+    const stats = {
+      goals: 0,
+      assists: 0,
+      yellowCards: 0,
+      redCards: 0,
+      substitutions: 0
+    };
+
+    // Process goals
+    if (matchData.torschuetzen && Array.isArray(matchData.torschuetzen)) {
+      stats.goals = matchData.torschuetzen.length;
+      stats.assists = matchData.torschuetzen.filter((goal: any) => goal.assist_spieler_id).length;
+    }
+
+    // Process cards
+    if (matchData.karten && Array.isArray(matchData.karten)) {
+      for (const card of matchData.karten) {
+        if (card.typ === 'gelb') {
+          stats.yellowCards++;
+        } else if (card.typ === 'rot' || card.typ === 'gelb-rot') {
+          stats.redCards++;
+        }
+      }
+    }
+
+    // Process substitutions
+    if (matchData.wechsel && Array.isArray(matchData.wechsel)) {
+      stats.substitutions = matchData.wechsel.length;
+    }
+
+    return stats;
+  }
+
+  /**
+   * Updates table positions for a league
+   */
+  static async updateTablePositions(ligaId: any): Promise<void> {
+    const tableEntries = await strapi.entityService.findMany('api::tabellen-eintrag.tabellen-eintrag' as any, {
+      filters: { liga: ligaId },
+      sort: ['punkte:desc', 'tordifferenz:desc', 'tore_fuer:desc']
+    });
+
+    const entriesArray = Array.isArray(tableEntries) ? tableEntries : [tableEntries];
+    
+    for (let i = 0; i < entriesArray.length; i++) {
+      const entry = entriesArray[i];
+      if (entry) {
+        await strapi.entityService.update('api::tabellen-eintrag.tabellen-eintrag' as any, entry.id, {
+          data: { position: i + 1 }
+        });
+      }
+    }
+  }
+
+  /**
    * Processes season transition (deactivate old, activate new)
    */
   static async processSeasonTransition(oldSeasonId: any, newSeasonId: any): Promise<ProcessingResult> {

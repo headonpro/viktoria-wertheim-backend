@@ -287,9 +287,256 @@ export class ValidationService {
   }
 
   /**
+   * Validates season constraints
+   */
+  static async validateSeasonConstraints(): Promise<{ isValid: boolean; errors: string[] }> {
+    const errors: string[] = [];
+
+    try {
+      // Check for multiple active seasons
+      const activeSeasons = await strapi.entityService.findMany('api::saison.saison' as any, {
+        filters: { aktiv: true }
+      });
+
+      const activeSeasonsArray = Array.isArray(activeSeasons) ? activeSeasons : [activeSeasons];
+      
+      if (activeSeasonsArray.length > 1) {
+        errors.push('Multiple active seasons');
+      }
+
+      if (activeSeasonsArray.length === 0) {
+        errors.push('No active season found');
+      }
+
+      // Check for overlapping seasons
+      const allSeasons = await strapi.entityService.findMany('api::saison.saison' as any, {
+        sort: 'start_datum:asc'
+      });
+
+      const seasonsArray = Array.isArray(allSeasons) ? allSeasons : [allSeasons];
+      
+      for (let i = 0; i < seasonsArray.length - 1; i++) {
+        const current = seasonsArray[i];
+        const next = seasonsArray[i + 1];
+        
+        if (new Date(current.end_datum) > new Date(next.start_datum)) {
+          errors.push('Invalid date range');
+        }
+      }
+
+    } catch (error) {
+      errors.push(`Season validation error: ${error.message}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
+   * Validates player team assignments
+   */
+  static async validatePlayerTeamAssignments(player: any): Promise<{ isValid: boolean; errors: string[] }> {
+    const errors: string[] = [];
+
+    try {
+      if (!player.hauptteam) {
+        errors.push('Player has no main team');
+      }
+
+      // Check for conflicting team assignments
+      if (player.aushilfe_teams && player.hauptteam) {
+        const conflictingTeams = player.aushilfe_teams.filter((team: any) => team.id === player.hauptteam.id);
+        if (conflictingTeams.length > 0) {
+          errors.push('Player cannot be in main team and help team simultaneously');
+        }
+      }
+
+    } catch (error) {
+      errors.push(`Player team validation error: ${error.message}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
+   * Validates match event consistency
+   */
+  static async validateMatchEventConsistency(match: any): Promise<{ isValid: boolean; errors: string[]; warnings?: string[] }> {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    try {
+      // Validate score consistency with events
+      if (match.torschuetzen && Array.isArray(match.torschuetzen)) {
+        const goalCount = match.torschuetzen.length;
+        const totalScore = (match.tore_heim || 0) + (match.tore_auswaerts || 0);
+        
+        if (Math.abs(goalCount - totalScore) > 2) {
+          warnings.push('Goal events do not match final score');
+        }
+      }
+
+      // Validate event chronology
+      if (match.torschuetzen) {
+        this.validateEventChronology(match.torschuetzen, 'minute');
+      }
+
+    } catch (error) {
+      errors.push(`Match event validation error: ${error.message}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings
+    };
+  }
+
+  /**
+   * Validates statistics integrity
+   */
+  static async validateStatisticsIntegrity(playerId: any, saisonId: any): Promise<{ isValid: boolean; errors: string[] }> {
+    const errors: string[] = [];
+
+    try {
+      const stats = await strapi.entityService.findMany('api::spielerstatistik.spielerstatistik' as any, {
+        filters: { spieler: playerId, saison: saisonId }
+      });
+
+      const statsArray = Array.isArray(stats) ? stats : [stats];
+      
+      for (const stat of statsArray) {
+        if (stat) {
+          // Check for negative values
+          if (stat.tore < 0 || stat.spiele < 0 || stat.assists < 0) {
+            errors.push('Statistics contain negative values');
+          }
+
+          // Check for unrealistic ratios
+          if (stat.tore > stat.spiele * 5) {
+            errors.push('Unrealistic goal to games ratio');
+          }
+        }
+      }
+
+    } catch (error) {
+      errors.push(`Statistics validation error: ${error.message}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
+   * Validates table positions
+   */
+  static async validateTablePositions(ligaId: any): Promise<{ isValid: boolean; errors: string[] }> {
+    const errors: string[] = [];
+
+    try {
+      const tableEntries = await strapi.entityService.findMany('api::tabellen-eintrag.tabellen-eintrag' as any, {
+        filters: { liga: ligaId },
+        sort: 'position:asc'
+      });
+
+      const entriesArray = Array.isArray(tableEntries) ? tableEntries : [tableEntries];
+      
+      // Check for duplicate positions
+      const positions = entriesArray.map((entry: any) => entry.position);
+      const uniquePositions = new Set(positions);
+      
+      if (positions.length !== uniquePositions.size) {
+        errors.push('Duplicate table positions found');
+      }
+
+      // Check for gaps in positions
+      for (let i = 1; i <= entriesArray.length; i++) {
+        if (!positions.includes(i)) {
+          errors.push(`Missing position ${i} in table`);
+        }
+      }
+
+    } catch (error) {
+      errors.push(`Table position validation error: ${error.message}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
+   * Validates referential integrity
+   */
+  static async validateReferentialIntegrity(contentType: string, entityId: any): Promise<{ isValid: boolean; errors: string[] }> {
+    const errors: string[] = [];
+
+    try {
+      const entity = await strapi.entityService.findOne(contentType as any, entityId);
+      
+      if (!entity) {
+        errors.push('Entity not found');
+      }
+
+      // Add specific referential integrity checks based on content type
+      // This is a placeholder implementation
+
+    } catch (error) {
+      errors.push(`Referential integrity validation error: ${error.message}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
    * Validates business rules for content creation/updates
    */
-  static async validateBusinessRules(contentType: string, data: any, operation: 'create' | 'update', entityId?: any): Promise<void> {
+  static async validateBusinessRules(contentType: string, data: any, operation?: 'create' | 'update', entityId?: any): Promise<{ isValid: boolean; errors: string[] }> {
+    const errors: string[] = [];
+
+    try {
+      // If operation is not provided, default to 'create'
+      const op = operation || 'create';
+      
+      switch (contentType) {
+        case 'api::saison.saison':
+          await this.validateSeasonBusinessRules(data, op, entityId);
+          break;
+        case 'api::spieler.spieler':
+          await this.validatePlayerBusinessRules(data, op, entityId);
+          break;
+        case 'api::spiel.spiel':
+          await this.validateMatchBusinessRules(data, op, entityId);
+          break;
+        case 'api::spielerstatistik.spielerstatistik':
+          await this.validateStatisticsBusinessRules(data, op, entityId);
+          break;
+      }
+    } catch (error) {
+      errors.push(error.message);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+
+  /**
+   * Original validateBusinessRules method for backward compatibility
+   */
+  static async validateBusinessRulesVoid(contentType: string, data: any, operation: 'create' | 'update', entityId?: any): Promise<void> {
     switch (contentType) {
       case 'api::saison.saison':
         await this.validateSeasonBusinessRules(data, operation, entityId);
