@@ -110,7 +110,7 @@ const TopScorers = () => {
 
   if (loading) {
     return (
-      <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-8 text-center shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+      <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-8 text-center overflow-hidden shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0">
         <div className="animate-pulse">
           <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/3 mx-auto mb-4"></div>
           <div className="space-y-3">
@@ -125,19 +125,19 @@ const TopScorers = () => {
 
   return (
     <div
-      className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden cursor-pointer hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
       onClick={() => setIsExpanded(!isExpanded)}
     >
           {/* Title Header */}
           <div className="px-4 md:px-8 py-3 md:py-4 text-center">
-            <h2 className="text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               Torschützenkönig
             </h2>
           </div>
 
           {/* Table Header */}
           <div className="px-4 md:px-8 py-3 md:py-3">
-            <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+            <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               <div className="col-span-1">#</div>
               <div className="col-span-7">Spieler</div>
               <div className="col-span-2 text-center">Spiele</div>
@@ -210,7 +210,7 @@ const TopScorers = () => {
                     ) : (
                       <span className={`font-bold text-sm md:text-lg ${
                         scorer.position === 2 ? 'text-gray-600 dark:text-gray-300' :
-                        'text-gray-700 dark:text-gray-300'
+                        'text-gray-800 dark:text-gray-200'
                       }`}>
                         {scorer.position}.
                       </span>
@@ -261,7 +261,7 @@ const TopScorers = () => {
           
           {/* Expand/Collapse Indicator */}
           <div className="px-4 md:px-8 py-4 md:py-5 text-center transition-colors">
-            <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+            <div className="flex items-center justify-center space-x-2 text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               <span>{isExpanded ? 'Weniger anzeigen' : 'Alle Torschützen anzeigen'}</span>
               {isExpanded ? <ChevronUp size={16} className="md:w-5 md:h-5" /> : <ChevronDown size={16} className="md:w-5 md:h-5" />}
             </div>

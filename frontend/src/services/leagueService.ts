@@ -87,7 +87,7 @@ const transformStrapiClubToTeam = (strapiClub: StrapiClub): Team => {
     logo: strapiClub.logo?.url
       ? `${API_BASE_URL}${strapiClub.logo.url}`
       : undefined,
-    games: strapiClub.spiele || 0,
+    games: 0, // spiele removed since Spiel content type was removed
     wins: strapiClub.siege || 0,
     draws: strapiClub.unentschieden || 0,
     losses: strapiClub.niederlagen || 0,

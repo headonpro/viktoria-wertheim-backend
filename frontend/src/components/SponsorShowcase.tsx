@@ -68,7 +68,7 @@ export default function SponsorShowcase() {
 
   if (loading) {
     return (
-      <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
+      <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0">
         <div className="px-3 py-2 text-center border-b border-white/10">
           <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wide">
             Unsere Partner
@@ -123,10 +123,10 @@ export default function SponsorShowcase() {
   const sponsorDerWoche = sponsors.length > 0 ? sponsors[getWeekOfYear() % sponsors.length] : null
 
   return (
-    <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] transition-all duration-300 hover:transform hover:translateY(-2px)">
+    <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden transition-all duration-500 hover:bg-gray-100/13 dark:hover:bg-white/[0.016] hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0">
       {/* Header */}
       <div className="px-8 md:px-12 py-4 md:py-6 text-center">
-        <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
+        <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
           Unsere Partner
         </h2>
       </div>
@@ -146,7 +146,7 @@ export default function SponsorShowcase() {
                 <div className="text-center w-full max-w-xs mx-auto px-3 py-4">
                   {/* Titel - gleiche Höhe */}
                   <div className="h-6 mb-3 flex items-center justify-center">
-                    <span className="text-xs font-bold italic text-gray-800 dark:text-viktoria-yellow uppercase tracking-wide">
+                    <span className="text-xs font-bold italic text-white dark:text-viktoria-yellow uppercase tracking-wide">
                       Sponsor der Woche
                     </span>
                   </div>
@@ -173,7 +173,7 @@ export default function SponsorShowcase() {
                   {/* Beschreibung */}
                   <div>
                     {sponsorDerWoche.attributes.beschreibung && (
-                      <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                      <p className="text-xs text-gray-300 dark:text-gray-400 leading-relaxed whitespace-pre-line">
                         {sponsorDerWoche.attributes.beschreibung}
                       </p>
                     )}
@@ -224,7 +224,7 @@ export default function SponsorShowcase() {
                                 className="h-12 md:h-16 w-auto object-contain brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300"
                               />
                             ) : (
-                              <span className="text-lg md:text-xl font-bold text-gray-600 dark:text-gray-400 text-center">
+                              <span className="text-lg md:text-xl font-bold text-white dark:text-gray-400 text-center">
                                 {sponsor.attributes.name}
                               </span>
                             )}
@@ -238,7 +238,7 @@ export default function SponsorShowcase() {
                   <div>
                     {hauptsponsoren.map((sponsor) => (
                       sponsor.attributes.beschreibung && (
-                        <p key={sponsor.id} className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
+                        <p key={sponsor.id} className="text-xs text-gray-300 dark:text-gray-400 leading-relaxed whitespace-pre-line">
                           {sponsor.attributes.beschreibung}
                         </p>
                       )
@@ -263,14 +263,14 @@ export default function SponsorShowcase() {
 
                   {/* Logo - gleiche Höhe */}
                   <div className="h-16 md:h-20 mb-3 flex items-center justify-center">
-                    <span className="text-sm md:text-base text-gray-500 dark:text-gray-400 italic">
+                    <span className="text-sm md:text-base text-gray-300 dark:text-gray-400 italic">
                       Platz für Hauptsponsor
                     </span>
                   </div>
 
                   {/* Beschreibung */}
                   <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-300 dark:text-gray-400">
                       Interesse? Kontakt aufnehmen
                     </p>
                   </div>
@@ -288,7 +288,7 @@ export default function SponsorShowcase() {
               className="pt-2"
             >
               <div className="mb-3">
-                <h3 className="text-xs font-semibold text-gray-600 dark:text-viktoria-yellow uppercase tracking-wide text-center">
+                <h3 className="text-xs font-semibold text-white dark:text-viktoria-yellow uppercase tracking-wide text-center">
                   Premium Partner
                 </h3>
               </div>
@@ -338,7 +338,7 @@ export default function SponsorShowcase() {
               className="pt-2 md:pt-12"
             >
               <div className="mb-3">
-                <h3 className="text-xs font-semibold text-gray-600 dark:text-viktoria-yellow uppercase tracking-wide text-center">
+                <h3 className="text-xs font-semibold text-white dark:text-viktoria-yellow uppercase tracking-wide text-center">
                   Partner
                 </h3>
               </div>
@@ -367,7 +367,7 @@ export default function SponsorShowcase() {
                             className="h-8 w-auto object-contain brightness-0 dark:brightness-0 dark:invert hover:scale-110 transition-all duration-300"
                           />
                         ) : (
-                          <span className="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">
+                          <span className="text-xs font-medium text-white dark:text-gray-400 text-center">
                             {sponsor.attributes.name.substring(0, 8)}
                           </span>
                         )}
@@ -385,10 +385,10 @@ export default function SponsorShowcase() {
           {sponsors.length === 0 && !loading && (
             <div className="text-center py-8">
               <div className="text-gray-400 mb-3">🤝</div>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
+              <p className="text-gray-300 dark:text-gray-400 text-sm mb-4">
                 Derzeit sind keine Partner-Daten verfügbar
               </p>
-              <p className="text-gray-600 dark:text-gray-300 text-xs">
+              <p className="text-gray-200 dark:text-gray-300 text-xs">
                 Interesse an einer Partnerschaft? Kontaktieren Sie uns!
               </p>
             </div>

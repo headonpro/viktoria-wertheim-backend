@@ -45,32 +45,32 @@ const shortenTeamName = (name: string): string => {
     'TuS Großrinderfeld': 'TuS GRO',
     'SpG Impfingen/Tauberbischofsheim 2': 'SpG IMP'
   };
-  
+
   // Prüfe ob eine spezielle Abkürzung existiert
   if (teamAbbreviations[name]) {
     return teamAbbreviations[name];
   }
-  
+
   // Automatische Generierung für unbekannte Teams
   const words = name.split(' ').filter(word => word.length > 0);
-  
+
   // Bekannte Präfixe
   const prefixes = ['SV', 'FC', 'TSV', 'FV', 'SG', 'SpG', 'VfR', 'VfB', 'TuS', 'Kickers'];
-  
+
   if (words.length >= 2) {
     const firstWord = words[0];
-    
+
     // Prüfe ob das erste Wort ein bekanntes Präfix ist
     if (prefixes.includes(firstWord)) {
       const mainWord = words[1] || words[0];
       return `${firstWord} ${mainWord.substring(0, 3).toUpperCase()}`;
     }
-    
+
     // Fallback: Nimm die ersten 3 Buchstaben des Hauptnamens (nach dem Präfix)
     const mainWord = words[1] || words[0];
     return mainWord.substring(0, 3).toUpperCase();
   }
-  
+
   // Default: Erste 3 Buchstaben des ersten Wortes
   return words[0].substring(0, 3).toUpperCase();
 }
@@ -79,12 +79,12 @@ const shortenTeamName = (name: string): string => {
 const TeamNameDisplay = ({ team, isViktoriaTeam }: { team: { name: string }, isViktoriaTeam: boolean }) => (
   <>
     {/* Mobile: Gekürzte Namen */}
-    <span className={`font-medium text-sm lg:hidden ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'
+    <span className={`text-sm lg:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-100 font-medium'
       }`}>
       {shortenTeamName(team.name)}
     </span>
     {/* Desktop: Vollständige Namen */}
-    <span className={`font-medium text-base hidden lg:inline ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'
+    <span className={`text-base hidden lg:inline ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-100 font-medium'
       }`}>
       {team.name}
     </span>
@@ -107,12 +107,12 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
   // Get league name from team data or fallback to static names
   const [leagueName, setLeagueName] = useState<string>('')
-  
+
   const getLeagueName = (team: '1' | '2' | '3') => {
     // Static fallback names
     const fallbackNames = {
       '1': 'Kreisliga Tauberbischofsheim',
-      '2': 'Kreisklasse A Tauberbischofsheim', 
+      '2': 'Kreisklasse A Tauberbischofsheim',
       '3': 'Kreisklasse B Tauberbischofsheim'
     }
     return leagueName || fallbackNames[team]
@@ -134,17 +134,17 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
     try {
       setLoading(true)
       setError(null)
-      
+
       // First, get team data to determine league information
       const teamData = await teamService.fetchTeamData(selectedTeam)
-      
+
       if (teamData && teamData.liga_vollname) {
         setLeagueName(teamData.liga_vollname)
-        
+
         // Try to fetch league-specific data first
         try {
           const leagueTeams = await leagueService.fetchLeagueStandingsByLeague(teamData.liga_vollname)
-          
+
           if (leagueTeams && leagueTeams.length > 0) {
             setTeams(leagueTeams)
             setLastUpdated(new Date())
@@ -154,12 +154,12 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           console.warn(`League-specific data not available for ${teamData.liga_vollname}:`, leagueError)
         }
       }
-      
+
       // Fallback: For team 1, try to get general league standings
       if (selectedTeam === '1') {
         try {
           const apiTeams = await leagueService.fetchLeagueStandings()
-          
+
           if (apiTeams && apiTeams.length > 0) {
             setTeams(apiTeams)
             setLastUpdated(new Date())
@@ -179,7 +179,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
         }
         setTeams([])
       }
-      
+
     } catch (err) {
       console.error('Failed to fetch league data for team', selectedTeam, ':', err)
       setError('Tabelle konnte nicht geladen werden')
@@ -200,64 +200,64 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
   // Get current Viktoria team name and implement proper team matching
   const currentViktoriaTeam = getViktoriaTeamName(selectedTeam)
-  
+
   // Enhanced team matching function to handle different name variations
   const isViktoriaTeamMatch = (teamName: string, selectedTeam: '1' | '2' | '3'): boolean => {
     const normalizedTeamName = teamName.toLowerCase().trim()
-    
+
     // Check for exact matches first
     if (teamName === currentViktoriaTeam) return true
-    
+
     // Check for variations of Viktoria team names
     const viktoriaVariations = [
       'sv viktoria wertheim',
       'viktoria wertheim',
       'sv viktoria wertheim i',
-      'sv viktoria wertheim ii', 
+      'sv viktoria wertheim ii',
       'sv viktoria wertheim iii',
       'viktoria wertheim i',
       'viktoria wertheim ii',
       'viktoria wertheim iii'
     ]
-    
+
     // For team 1, match base name and "I" variations
     if (selectedTeam === '1') {
-      return viktoriaVariations.slice(0, 3).some(variation => 
+      return viktoriaVariations.slice(0, 3).some(variation =>
         normalizedTeamName.includes(variation) || normalizedTeamName === variation
       )
     }
-    
+
     // For team 2, match "II" variations
     if (selectedTeam === '2') {
-      return viktoriaVariations.slice(3, 5).some(variation => 
+      return viktoriaVariations.slice(3, 5).some(variation =>
         normalizedTeamName.includes(variation) || normalizedTeamName === variation
       )
     }
-    
+
     // For team 3, match "III" variations  
     if (selectedTeam === '3') {
-      return viktoriaVariations.slice(5).some(variation => 
+      return viktoriaVariations.slice(5).some(variation =>
         normalizedTeamName.includes(variation) || normalizedTeamName === variation
       )
     }
-    
+
     return false
   }
 
   // Filter teams for compact view: show more teams on desktop (5 total including 6th and 10th)
   const viktoriaTeam = teams.find(team => isViktoriaTeamMatch(team.name, selectedTeam))
   const viktoriaPosition = viktoriaTeam?.position || 8
-  
+
   // Get teams for mobile (3 teams) and desktop (5 teams including 6th and 10th)
   const { mobileTeams, desktopTeams } = useMemo(() => {
     if (isExpanded) return { mobileTeams: teams, desktopTeams: teams }
-    
+
     // Mobile: show 3 teams (team above, Viktoria, team below)
     const mobile = teams.filter(team =>
-      team.position >= Math.max(1, viktoriaPosition - 1) && 
+      team.position >= Math.max(1, viktoriaPosition - 1) &&
       team.position <= Math.min(teams.length, viktoriaPosition + 1)
     )
-    
+
     // Desktop: show 5 teams including specific positions (6th, 10th, Viktoria +/- 1)
     const desktopPositions = new Set([
       6, // Show 6th place  
@@ -266,11 +266,11 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
       viktoriaPosition, // Viktoria team
       Math.min(teams.length, viktoriaPosition + 1) // Team below Viktoria
     ])
-    
-    const desktop = teams.filter(team => 
+
+    const desktop = teams.filter(team =>
       desktopPositions.has(team.position) && team.position <= teams.length
     ).sort((a, b) => a.position - b.position) // Ensure proper ordering
-    
+
     return { mobileTeams: mobile, desktopTeams: desktop }
   }, [teams, isExpanded, viktoriaPosition])
 
@@ -280,19 +280,19 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
     <AnimatedSection>
       <div className="container max-w-6xl">
         <div
-          className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+          className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 cursor-pointer hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
           onClick={toggleExpanded}
         >
           {/* Title Header */}
-          <div className="px-8 md:px-12 py-6 md:py-8 text-center">
-            <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <div className="relative z-10 px-8 md:px-12 py-6 md:py-8 text-center">
+            <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               {getLeagueName(selectedTeam)}
             </h2>
           </div>
 
           {/* Table Header */}
-          <div className="px-4 sm:px-6 md:px-8 py-3 md:py-3">
-            <div className="flex items-center text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <div className="relative z-10 px-4 sm:px-6 md:px-8 py-3 md:py-3">
+            <div className="flex items-center text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               <div className="w-8 sm:w-10 md:w-12 text-left">#</div>
               <div className="flex-1 min-w-0 text-left">Verein</div>
               <div className="w-8 sm:w-10 md:w-12 text-center">Sp</div>
@@ -307,21 +307,21 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
           {/* Loading State */}
           {loading && (
-            <div className="px-4 md:px-8 py-8 text-center">
+            <div className="relative z-10 px-4 md:px-8 py-8 text-center">
               <div className="flex items-center justify-center space-x-2">
                 <div className="w-4 h-4 bg-viktoria-blue rounded-full animate-pulse"></div>
                 <div className="w-4 h-4 bg-viktoria-blue rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
                 <div className="w-4 h-4 bg-viktoria-blue rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
               </div>
-              <p className="text-sm text-gray-600 mt-2">Tabelle wird geladen...</p>
+              <p className="text-sm text-gray-800 dark:text-gray-100 mt-2">Tabelle wird geladen...</p>
             </div>
           )}
 
           {/* Error State */}
           {error && !loading && (
-            <div className="px-4 md:px-8 py-6 text-center">
+            <div className="relative z-10 px-4 md:px-8 py-6 text-center">
               <div className="text-red-500 mb-2">⚠️</div>
-              <p className="text-sm text-red-600 mb-3">{error}</p>
+              <p className="text-sm text-red-400 dark:text-red-300 mb-3">{error}</p>
               <button
                 onClick={refreshData}
                 className="px-4 py-2 bg-viktoria-blue text-white rounded-lg text-sm hover:bg-viktoria-blue-light transition-colors"
@@ -333,18 +333,18 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
           {/* Empty State */}
           {!loading && !error && teams.length === 0 && (
-            <div className="px-4 md:px-8 py-8 text-center">
+            <div className="relative z-10 px-4 md:px-8 py-8 text-center">
               <div className="text-gray-400 mb-2">📊</div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                {selectedTeam === '1' 
-                  ? 'Keine Tabellendaten für die Kreisliga verfügbar' 
+              <p className="text-sm text-gray-800 dark:text-gray-100 mb-3">
+                {selectedTeam === '1'
+                  ? 'Keine Tabellendaten für die Kreisliga verfügbar'
                   : selectedTeam === '2'
                     ? 'Keine Tabellendaten für die Kreisklasse A verfügbar'
                     : 'Keine Tabellendaten für die Kreisklasse B verfügbar'
                 }
               </p>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mb-4">
-                {selectedTeam === '1' 
+              <p className="text-xs text-gray-200 dark:text-gray-300 mb-4">
+                {selectedTeam === '1'
                   ? 'Die Tabellendaten werden möglicherweise noch aktualisiert.'
                   : 'Tabellendaten für diese Liga sind derzeit nicht verfügbar.'
                 }
@@ -361,221 +361,233 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
           {/* Teams - Mobile View */}
           {!loading && !error && teams.length > 0 && (
-            <div className="md:hidden">
+            <div className="relative z-10 md:hidden">
               {mobileTeams.map((team) => {
                 const isViktoriaTeam = isViktoriaTeamMatch(team.name, selectedTeam)
                 return (
-                <div
-                  key={team.position}
-                  className={`
+                  <div
+                    key={team.position}
+                    className={`
                     px-4 sm:px-6 md:px-8 py-3 sm:py-2.5 md:py-3 
                     transition-all duration-300 
                     touch-manipulation
                     min-h-[48px] flex items-center
+                    relative overflow-hidden
                     ${isViktoriaTeam
-                      ? 'bg-viktoria-yellow/10 hover:bg-viktoria-yellow/15 cursor-pointer'
-                      : 'hover:bg-white/20 dark:hover:bg-white/10 active:bg-white/30 dark:active:bg-white/15'
-                    }
+                        ? 'cursor-pointer'
+                        : 'hover:bg-white/20 dark:hover:bg-white/10 active:bg-white/30 dark:active:bg-white/15'
+                      }
                   `}
-                >
-                  <div className="flex items-center text-sm md:text-base w-full">
-                    {/* Position */}
-                    <div className="w-8 sm:w-10 md:w-12 text-left">
-                      <span className={`font-semibold text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'
-                        }`}>
-                        {team.position}.
-                      </span>
-                    </div>
+                  >
+                    {/* Viktoria team highlighting background - properly contained */}
+                    {isViktoriaTeam && (
+                      <div className="absolute inset-0 bg-viktoria-yellow opacity-90" />
+                    )}
+                    <div className="flex items-center text-sm md:text-base w-full relative z-10">
+                      {/* Position */}
+                      <div className="w-8 sm:w-10 md:w-12 text-left">
+                        <span className={`text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-200'
+                          }`}>
+                          {team.position}.
+                        </span>
+                      </div>
 
-                    {/* Team Name & Logo */}
-                    <div className="flex-1 min-w-0 flex items-center space-x-1.5 sm:space-x-2 md:space-x-3">
-                      {team.logo ? (
-                        <Image
-                          src={team.logo}
-                          alt={`${team.name} Logo`}
-                          width={48}
-                          height={48}
-                          className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 object-contain drop-shadow-sm flex-shrink-0"
-                          priority
-                        />
-                      ) : (
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-xs md:text-sm">
-                            {team.name.charAt(0)}
-                          </span>
+                      {/* Team Name & Logo */}
+                      <div className="flex-1 min-w-0 flex items-center space-x-1.5 sm:space-x-2 md:space-x-3">
+                        {team.logo ? (
+                          <Image
+                            src={team.logo}
+                            alt={`${team.name} Logo`}
+                            width={48}
+                            height={48}
+                            className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 object-contain drop-shadow-sm flex-shrink-0"
+                            priority
+                          />
+                        ) : (
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-bold text-xs md:text-sm">
+                              {team.name.charAt(0)}
+                            </span>
+                          </div>
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <TeamNameDisplay team={team} isViktoriaTeam={isViktoriaTeam} />
                         </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <TeamNameDisplay team={team} isViktoriaTeam={isViktoriaTeam} />
+                      </div>
+
+                      {/* Games */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.games}
+                      </div>
+
+                      {/* Wins - Hidden on mobile */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.wins}
+                      </div>
+
+                      {/* Draws - Hidden on mobile */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.draws}
+                      </div>
+
+                      {/* Losses - Hidden on mobile */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.losses}
+                      </div>
+
+                      {/* Goals - Mobile shows goals, desktop hidden */}
+                      <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.goalsFor}:{team.goalsAgainst}
+                      </div>
+
+                      {/* Goal Difference */}
+                      <div className="w-10 sm:w-12 md:w-16 text-center">
+                        <span className={`text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' :
+                          team.goalDifference > 0 ? 'text-green-600' :
+                            team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600 dark:text-gray-300'
+                          }`}>
+                          {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
+                        </span>
+                      </div>
+
+                      {/* Points */}
+                      <div className="w-10 sm:w-12 md:w-16 text-center">
+                        <span className={`text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-300'
+                          }`}>
+                          {team.points}
+                        </span>
                       </div>
                     </div>
-
-                    {/* Games */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.games}
-                    </div>
-
-                    {/* Wins - Hidden on mobile */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.wins}
-                    </div>
-
-                    {/* Draws - Hidden on mobile */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.draws}
-                    </div>
-
-                    {/* Losses - Hidden on mobile */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.losses}
-                    </div>
-
-                    {/* Goals - Mobile shows goals, desktop hidden */}
-                    <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.goalsFor}:{team.goalsAgainst}
-                    </div>
-
-                    {/* Goal Difference */}
-                    <div className="w-10 sm:w-12 md:w-16 text-center">
-                      <span className={`text-xs sm:text-sm md:text-base font-medium ${isViktoriaTeam ? 'text-gray-800 dark:text-white' :
-                        team.goalDifference > 0 ? 'text-green-600' :
-                          team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600 dark:text-gray-300'
-                        }`}>
-                        {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
-                      </span>
-                    </div>
-
-                    {/* Points */}
-                    <div className="w-10 sm:w-12 md:w-16 text-center">
-                      <span className={`font-bold text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-800 dark:text-gray-300'
-                        }`}>
-                        {team.points}
-                      </span>
-                    </div>
                   </div>
-                </div>
-              )})}
+                )
+              })}
             </div>
           )}
 
           {/* Teams - Desktop View */}
           {!loading && !error && teams.length > 0 && (
-            <div className="hidden md:block">
+            <div className="relative z-10 hidden md:block">
               {desktopTeams.map((team) => {
                 const isViktoriaTeam = isViktoriaTeamMatch(team.name, selectedTeam)
                 return (
-                <div
-                  key={team.position}
-                  className={`
+                  <div
+                    key={team.position}
+                    className={`
                     px-4 sm:px-6 md:px-8 py-3 sm:py-2.5 md:py-3 
                     transition-all duration-300 
                     touch-manipulation
                     min-h-[48px] flex items-center
+                    relative overflow-hidden
                     ${isViktoriaTeam
-                      ? 'bg-viktoria-yellow/10 hover:bg-viktoria-yellow/15 cursor-pointer'
-                      : 'hover:bg-white/20 dark:hover:bg-white/10 active:bg-white/30 dark:active:bg-white/15'
-                    }
+                        ? 'cursor-pointer'
+                        : 'hover:bg-white/20 dark:hover:bg-white/10 active:bg-white/30 dark:active:bg-white/15'
+                      }
                   `}
-                >
-                  <div className="flex items-center text-sm md:text-base w-full">
-                    {/* Position */}
-                    <div className="w-8 sm:w-10 md:w-12 text-left">
-                      <span className={`font-semibold text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'
-                        }`}>
-                        {team.position}.
-                      </span>
-                    </div>
+                  >
+                    {/* Viktoria team highlighting background - properly contained */}
+                    {isViktoriaTeam && (
+                      <div className="absolute inset-0 bg-viktoria-yellow opacity-90" />
+                    )}
+                    <div className="flex items-center text-sm md:text-base w-full relative z-10">
+                      {/* Position */}
+                      <div className="w-8 sm:w-10 md:w-12 text-left">
+                        <span className={`text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-200'
+                          }`}>
+                          {team.position}.
+                        </span>
+                      </div>
 
-                    {/* Team Name & Logo */}
-                    <div className="flex-1 min-w-0 flex items-center space-x-1.5 sm:space-x-2 md:space-x-3">
-                      {team.logo ? (
-                        <Image
-                          src={team.logo}
-                          alt={`${team.name} Logo`}
-                          width={48}
-                          height={48}
-                          className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 object-contain drop-shadow-sm flex-shrink-0"
-                          priority
-                        />
-                      ) : (
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-xs md:text-sm">
-                            {team.name.charAt(0)}
-                          </span>
+                      {/* Team Name & Logo */}
+                      <div className="flex-1 min-w-0 flex items-center space-x-1.5 sm:space-x-2 md:space-x-3">
+                        {team.logo ? (
+                          <Image
+                            src={team.logo}
+                            alt={`${team.name} Logo`}
+                            width={48}
+                            height={48}
+                            className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 object-contain drop-shadow-sm flex-shrink-0"
+                            priority
+                          />
+                        ) : (
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-bold text-xs md:text-sm">
+                              {team.name.charAt(0)}
+                            </span>
+                          </div>
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <TeamNameDisplay team={team} isViktoriaTeam={isViktoriaTeam} />
                         </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <TeamNameDisplay team={team} isViktoriaTeam={isViktoriaTeam} />
+                      </div>
+
+                      {/* Games */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.games}
+                      </div>
+
+                      {/* Wins - Hidden on mobile */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.wins}
+                      </div>
+
+                      {/* Draws - Hidden on mobile */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.draws}
+                      </div>
+
+                      {/* Losses - Hidden on mobile */}
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.losses}
+                      </div>
+
+                      {/* Goals - Mobile shows goals, desktop hidden */}
+                      <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                        }`}>
+                        {team.goalsFor}:{team.goalsAgainst}
+                      </div>
+
+                      {/* Goal Difference */}
+                      <div className="w-10 sm:w-12 md:w-16 text-center">
+                        <span className={`text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' :
+                          team.goalDifference > 0 ? 'text-green-600' :
+                            team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600 dark:text-gray-300'
+                          }`}>
+                          {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
+                        </span>
+                      </div>
+
+                      {/* Points */}
+                      <div className="w-10 sm:w-12 md:w-16 text-center">
+                        <span className={`text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-300'
+                          }`}>
+                          {team.points}
+                        </span>
                       </div>
                     </div>
-
-                    {/* Games */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.games}
-                    </div>
-
-                    {/* Wins - Hidden on mobile */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.wins}
-                    </div>
-
-                    {/* Draws - Hidden on mobile */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.draws}
-                    </div>
-
-                    {/* Losses - Hidden on mobile */}
-                    <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.losses}
-                    </div>
-
-                    {/* Goals - Mobile shows goals, desktop hidden */}
-                    <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                      }`}>
-                      {team.goalsFor}:{team.goalsAgainst}
-                    </div>
-
-                    {/* Goal Difference */}
-                    <div className="w-10 sm:w-12 md:w-16 text-center">
-                      <span className={`text-xs sm:text-sm md:text-base font-medium ${isViktoriaTeam ? 'text-gray-800 dark:text-white' :
-                        team.goalDifference > 0 ? 'text-green-600' :
-                          team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600 dark:text-gray-300'
-                        }`}>
-                        {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
-                      </span>
-                    </div>
-
-                    {/* Points */}
-                    <div className="w-10 sm:w-12 md:w-16 text-center">
-                      <span className={`font-bold text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-800 dark:text-white' : 'text-gray-800 dark:text-gray-300'
-                        }`}>
-                        {team.points}
-                      </span>
-                    </div>
                   </div>
-                </div>
-              )})}
+                )
+              })}
             </div>
           )}
 
           {/* Expand/Collapse Indicator */}
-          <div className="px-6 sm:px-8 md:px-12 py-4 sm:py-6 md:py-8 text-center transition-colors touch-manipulation">
+          <div className="relative z-10 px-6 sm:px-8 md:px-12 py-4 sm:py-6 md:py-8 text-center transition-colors touch-manipulation">
             <div className="flex items-center justify-center space-x-2 text-xs sm:text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 tracking-wide min-h-[44px] cursor-pointer hover:text-gray-800 dark:hover:text-gray-100 transition-colors duration-200 opacity-70">
               <span className="select-none">
                 {isExpanded ? 'Weniger anzeigen' : 'Vollständige Tabelle anzeigen'}
               </span>
               <div className="transition-transform duration-300 ease-in-out">
-                {isExpanded ? 
-                  <ChevronUp size={18} className="sm:w-5 sm:h-5 md:w-6 md:h-6" /> : 
+                {isExpanded ?
+                  <ChevronUp size={18} className="sm:w-5 sm:h-5 md:w-6 md:h-6" /> :
                   <ChevronDown size={18} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
                 }
               </div>
@@ -596,4 +608,10 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
   )
 }
 
-export default LeagueTable 
+export default LeagueTable
+
+
+
+
+
+

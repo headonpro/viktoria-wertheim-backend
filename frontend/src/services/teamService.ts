@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getApiUrl } from '../lib/apiConfig'
-import { Team, Spiel, TeamData, GameDetails, TeamId, TeamStats } from '../types/strapi'
+import { Team, TeamData, GameDetails, TeamId, TeamStats } from '../types/strapi'
 
 // Strapi API Base URL
 const API_BASE_URL = getApiUrl()
@@ -18,17 +18,7 @@ interface StrapiTeamResponse {
   }
 }
 
-interface StrapiSpielResponse {
-  data: Spiel[]
-  meta: {
-    pagination: {
-      page: number
-      pageSize: number
-      pageCount: number
-      total: number
-    }
-  }
-}
+// StrapiSpielResponse removed since Spiel content type was removed
 
 // Static fallback data for graceful degradation
 const getFallbackTeamData = (teamId: TeamId): TeamData => {
@@ -123,37 +113,8 @@ const transformStrapiToTeamData = (strapiTeam: Team): TeamData => {
   }
 }
 
-// Transform Strapi Spiel to GameDetails
-const transformStrapiToGameDetails = (strapiGame: Spiel, teamName: string): GameDetails => {
-  const attrs = strapiGame.attributes
-  const homeTeam = attrs.heimmannschaft?.data?.attributes?.name || ''
-  const awayTeam = attrs.auswaertsmannschaft?.data?.attributes?.name || ''
-  const isHome = homeTeam.includes(teamName) || homeTeam.includes('Viktoria')
-  
-  // Determine if this is a past or future game
-  const gameDate = new Date(attrs.datum)
-  const now = new Date()
-  const type: 'last' | 'next' = gameDate < now ? 'last' : 'next'
-  
-  return {
-    id: strapiGame.id,
-    type,
-    homeTeam,
-    awayTeam,
-    homeScore: attrs.tore_heim,
-    awayScore: attrs.tore_auswaerts,
-    date: gameDate.toLocaleDateString('de-DE'),
-    time: gameDate.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
-    isHome,
-    stadium: attrs.spielort || 'Unbekannt',
-    referee: attrs.schiedsrichter || 'N/A',
-    status: attrs.status,
-    goalScorers: attrs.torschuetzen || [],
-    yellowCards: attrs.gelbe_karten || [],
-    redCards: attrs.rote_karten || [],
-    lastMeeting: attrs.letztes_aufeinandertreffen
-  }
-}
+// transformStrapiToGameDetails removed since Spiel content type was removed
+// Use Game Cards instead
 
 // Team Service Implementation
 export const teamService = {
@@ -194,47 +155,18 @@ export const teamService = {
   },
 
   /**
-   * Fetch games for a specific team
+   * Fetch games for a specific team - REMOVED since Spiel content type was removed
+   * Use fetchLastAndNextGame() instead for current game data
    * @param teamId - ID of the team
-   * @returns Promise<GameDetails[]> - Array of games for the team
+   * @returns Promise<GameDetails[]> - Empty array since Spiel API was removed
    */
   async fetchTeamGames(teamId: TeamId): Promise<GameDetails[]> {
-    try {
-      const teamNames = {
-        '1': '1. Mannschaft',
-        '2': '2. Mannschaft',
-        '3': '3. Mannschaft'
-      }
-      
-      const teamName = teamNames[teamId]
-      
-      const response = await axios.get<StrapiSpielResponse>(
-        `${API_BASE_URL}/api/spiels`,
-        {
-          params: {
-            'filters[$or][0][heimmannschaft][name][$contains]': teamName,
-            'filters[$or][1][auswaertsmannschaft][name][$contains]': teamName,
-            'populate': 'heimmannschaft,auswaertsmannschaft',
-            'sort[0]': 'datum:desc',
-            'pagination[pageSize]': 10
-          }
-        }
-      )
-
-      if (!response.data?.data) {
-        return []
-      }
-
-      return response.data.data.map(game => transformStrapiToGameDetails(game, teamName))
-
-    } catch (error) {
-      console.warn(`Error fetching games for team ${teamId}:`, error)
-      return []
-    }
+    console.warn(`fetchTeamGames() deprecated - Spiel content type was removed. Use fetchLastAndNextGame() instead.`);
+    return [];
   },
 
   /**
-   * Get the last and next game for a team
+   * Get the last and next game for a team using the new Game Card API
    * @param teamId - ID of the team
    * @returns Promise<{lastGame: GameDetails | null, nextGame: GameDetails | null}>
    */
@@ -243,20 +175,54 @@ export const teamService = {
     nextGame: GameDetails | null
   }> {
     try {
-      const games = await this.fetchTeamGames(teamId)
-      const now = new Date()
+      // Use the separate Game Card API endpoints
+      const [lastResponse, nextResponse] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/game-cards/last`),
+        axios.get(`${API_BASE_URL}/api/next-game-cards/next`)
+      ])
       
-      const pastGames = games
-        .filter(game => new Date(game.date) < now)
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      const lastGameData = lastResponse.data?.data
+      const nextGameData = nextResponse.data?.data
       
-      const futureGames = games
-        .filter(game => new Date(game.date) >= now)
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      // Transform Game Card data to GameDetails format
+      const transformGameCardToGameDetails = (gameCard: any, type: 'last' | 'next'): GameDetails | null => {
+        if (!gameCard) return null
+        
+        const gameDate = new Date(gameCard.datum)
+        const isHome = gameCard.ist_heimspiel
+        
+        // Get opponent name - for last games it's a string, for next games it's a club relation
+        const opponentName = type === 'last' 
+          ? gameCard.gegner 
+          : gameCard.gegner_club?.name || gameCard.gegner_club?.kurz_name || 'Unbekannter Gegner'
+        
+        // Determine team names based on whether it's a home or away game
+        const homeTeam = isHome ? 'SV Viktoria Wertheim' : opponentName
+        const awayTeam = isHome ? opponentName : 'SV Viktoria Wertheim'
+        
+        return {
+          id: gameCard.id,
+          type,
+          homeTeam,
+          awayTeam,
+          homeScore: type === 'last' ? (isHome ? gameCard.unsere_tore : gameCard.gegner_tore) : undefined,
+          awayScore: type === 'last' ? (isHome ? gameCard.gegner_tore : gameCard.unsere_tore) : undefined,
+          date: gameDate.toLocaleDateString('de-DE'),
+          time: gameDate.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
+          isHome,
+          stadium: isHome ? 'Viktoria-Stadion Wertheim' : `Auswärts bei ${opponentName}`,
+          referee: 'N/A',
+          status: type === 'last' ? 'beendet' : 'geplant',
+          goalScorers: [],
+          yellowCards: [],
+          redCards: [],
+          lastMeeting: undefined
+        }
+      }
       
       return {
-        lastGame: pastGames[0] || null,
-        nextGame: futureGames[0] || null
+        lastGame: transformGameCardToGameDetails(lastGameData, 'last'),
+        nextGame: transformGameCardToGameDetails(nextGameData, 'next')
       }
     } catch (error) {
       console.warn(`Error fetching last/next games for team ${teamId}:`, error)

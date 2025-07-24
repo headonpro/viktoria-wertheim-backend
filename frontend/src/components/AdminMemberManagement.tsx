@@ -102,8 +102,8 @@ export function AdminDashboard() {
                   {loading ? '...' : stats.totalPlayers}
                 </p>
               </div>
-              <div className="bg-yellow-100 rounded-lg p-3">
-                <IconTrophy className="text-yellow-600" size={24} />
+              <div className="bg-viktoria-yellow/10 rounded-lg p-3">
+                <IconTrophy className="text-viktoria-yellow" size={24} />
               </div>
             </div>
           </motion.div>
@@ -154,7 +154,7 @@ export function AdminDashboard() {
               <button className="w-full text-left p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors text-green-700 font-medium">
                 → Neues Mitglied erstellen
               </button>
-              <button className="w-full text-left p-3 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors text-yellow-700 font-medium">
+              <button className="w-full text-left p-3 bg-viktoria-yellow/10 hover:bg-viktoria-yellow/20 rounded-lg transition-colors text-viktoria-yellow font-medium">
                 → Mitgliedsdaten exportieren
               </button>
             </div>
@@ -226,8 +226,8 @@ export function AdminDashboard() {
             className="bg-white/70 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center gap-4 mb-4">
-              <div className="bg-yellow-100 rounded-lg p-3">
-                <IconChartBar className="text-yellow-600" size={24} />
+              <div className="bg-viktoria-yellow/20 rounded-lg p-3">
+                <IconChartBar className="text-viktoria-yellow" size={24} />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-800">Berichte & Analytics</h3>
@@ -235,7 +235,7 @@ export function AdminDashboard() {
               </div>
             </div>
             <div className="space-y-2">
-              <button className="w-full text-left p-3 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors text-yellow-700 font-medium">
+              <button className="w-full text-left p-3 bg-viktoria-yellow/10 hover:bg-viktoria-yellow/20 rounded-lg transition-colors text-viktoria-yellow font-medium">
                 → Mitgliederstatistiken
               </button>
               <button className="w-full text-left p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors text-blue-700 font-medium">
@@ -270,7 +270,7 @@ export function AdminDashboard() {
               <button className="w-full text-left p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors text-blue-700 font-medium">
                 → System-Backup
               </button>
-              <button className="w-full text-left p-3 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors text-yellow-700 font-medium">
+              <button className="w-full text-left p-3 bg-viktoria-yellow/10 hover:bg-viktoria-yellow/20 rounded-lg transition-colors text-viktoria-yellow font-medium">
                 → Einstellungen
               </button>
             </div>
@@ -322,9 +322,9 @@ export function AdminDashboard() {
               <IconCalendar className="text-purple-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
               <span className="text-purple-700 text-sm font-medium">Events</span>
             </button>
-            <button className="flex flex-col items-center p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg hover:from-yellow-100 hover:to-yellow-200 transition-all duration-200 group">
-              <IconChartBar className="text-yellow-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
-              <span className="text-yellow-700 text-sm font-medium">Berichte</span>
+            <button className="flex flex-col items-center p-4 bg-gradient-to-br from-viktoria-yellow/10 to-viktoria-yellow/20 rounded-lg hover:from-viktoria-yellow/20 hover:to-viktoria-yellow/30 transition-all duration-200 group">
+              <IconChartBar className="text-viktoria-yellow mb-2 group-hover:scale-110 transition-transform" size={24} />
+              <span className="text-viktoria-yellow text-sm font-medium">Berichte</span>
             </button>
             <button className="flex flex-col items-center p-4 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg hover:from-indigo-100 hover:to-indigo-200 transition-all duration-200 group">
               <IconMail className="text-indigo-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
@@ -806,7 +806,7 @@ export default function AdminMemberManagement() {
                       <td className="py-3 px-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                           member.mitgliedsstatus === 'aktiv' ? 'bg-green-100 text-green-800' :
-                          'bg-yellow-100 text-yellow-800'
+                          'bg-viktoria-yellow/20 text-viktoria-yellow'
                         }`}>
                           {member.mitgliedsstatus}
                         </span>

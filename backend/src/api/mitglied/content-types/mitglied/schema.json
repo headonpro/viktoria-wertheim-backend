@@ -65,6 +65,11 @@
       "type": "text",
       "private": true
     },
+    "nationalitaet": {
+      "type": "string",
+      "maxLength": 5,
+      "required": false
+    },
     "oeffentlich_sichtbar": {
       "type": "boolean",
       "default": false,

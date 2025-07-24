@@ -1,6 +1,11 @@
 export default [
   'strapi::logger',
   'strapi::errors',
+  // Enhanced error handler for better validation messages
+  {
+    name: 'global::enhanced-error-handler',
+    config: {},
+  },
   'strapi::security',
   {
     name: 'strapi::cors',

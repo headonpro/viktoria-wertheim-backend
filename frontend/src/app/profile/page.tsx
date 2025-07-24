@@ -95,7 +95,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="text-center">
-                  <div className="bg-yellow-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <div className="bg-viktoria-yellow/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl">❓</span>
                   </div>
                   <h3 className="font-medium text-gray-900 mb-2">Häufige Fragen</h3>

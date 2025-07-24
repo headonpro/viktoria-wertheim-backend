@@ -120,14 +120,15 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
         filters: { aktiv: true },
       });
 
-      if (currentSeason.length === 0) {
+      const currentSeasonArray = Array.isArray(currentSeason) ? currentSeason : [currentSeason];
+      if (currentSeasonArray.length === 0) {
         return { type: 'player', data: {} };
       }
 
       const stats = await strapi.entityService.findMany('api::spielerstatistik.spielerstatistik', {
         filters: {
           spieler: { id: player[0].id },
-          saison: { id: currentSeason[0].id },
+          saison: { id: currentSeasonArray[0].id },
         },
       });
 

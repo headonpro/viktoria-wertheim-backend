@@ -317,146 +317,33 @@ export default ({ strapi }) => ({
   // ===== MATCH TIMELINE AND EVENTS SERVICES =====
 
   /**
-   * Get match timeline with events
+   * Get match timeline - REMOVED since Spiel content type was removed
    */
   async getMatchTimeline(matchId: number) {
-    try {
-      const match: any = await strapi.entityService.findOne('api::spiel.spiel', matchId, {
-        populate: {
-          heimclub: true,
-          auswaertsclub: true,
-          unser_team: {
-            populate: ['club']
-          },
-          liga: true,
-          saison: true
-        }
-      });
-
-      if (!match) {
-        throw new Error('Match not found');
-      }
-
-      // Parse and structure events
-      const timeline = this.buildMatchTimeline(match);
-
-      return {
-        match,
-        timeline,
-        summary: this.generateMatchSummary(match, timeline)
-      };
-    } catch (error) {
-      strapi.log.error('Error fetching match timeline:', error);
-      throw error;
-    }
+    throw new Error('Match timeline not available - Spiel content type removed');
   },
 
   /**
-   * Get structured match events
+   * Get structured match events - REMOVED since Spiel content type was removed
    */
   async getMatchEvents(matchId: number) {
-    try {
-      const match: any = await strapi.entityService.findOne('api::spiel.spiel', matchId, {
-        populate: {
-          heimclub: true,
-          auswaertsclub: true,
-          unser_team: true
-        }
-      });
-
-      if (!match) {
-        throw new Error('Match not found');
-      }
-
-      const events = {
-        goals: this.parseMatchEvents(match.torschuetzen || [], 'goal'),
-        cards: this.parseMatchEvents(match.karten || [], 'card'),
-        substitutions: this.parseMatchEvents(match.wechsel || [], 'substitution')
-      };
-
-      return {
-        match: {
-          id: match.id,
-          datum: match.datum,
-          heimclub: match.heimclub,
-          auswaertsclub: match.auswaertsclub,
-          tore_heim: match.tore_heim,
-          tore_auswaerts: match.tore_auswaerts,
-          status: match.status
-        },
-        events
-      };
-    } catch (error) {
-      strapi.log.error('Error fetching match events:', error);
-      throw error;
-    }
+    throw new Error('Match events not available - Spiel content type removed');
   },
 
   /**
-   * Get recent matches for a team
+   * Get recent matches - REMOVED since Spiel content type was removed
    */
   async getRecentMatches(teamId: number, limit: number = 5) {
-    try {
-      const matches: any[] = await strapi.entityService.findMany('api::spiel.spiel', {
-        filters: {
-          unser_team: teamId,
-          status: 'beendet',
-          datum: { $lt: new Date().toISOString() }
-        },
-        populate: {
-          heimclub: true,
-          auswaertsclub: true,
-          unser_team: true,
-          liga: true
-        },
-        sort: 'datum:desc',
-        limit
-      });
-
-      return matches.map(match => ({
-        ...match,
-        result: this.determineMatchResult(match, teamId),
-        events: {
-          goals: (match.torschuetzen || []).length,
-          cards: (match.karten || []).length,
-          substitutions: (match.wechsel || []).length
-        }
-      }));
-    } catch (error) {
-      strapi.log.error('Error fetching recent matches:', error);
-      throw error;
-    }
+    // Return empty array since Spiel content type was removed
+    return [];
   },
 
   /**
-   * Get upcoming matches for a team
+   * Get upcoming matches - REMOVED since Spiel content type was removed
    */
   async getUpcomingMatches(teamId: number, limit: number = 5) {
-    try {
-      const matches: any[] = await strapi.entityService.findMany('api::spiel.spiel', {
-        filters: {
-          unser_team: teamId,
-          status: { $in: ['geplant', 'laufend'] },
-          datum: { $gte: new Date().toISOString() }
-        },
-        populate: {
-          heimclub: true,
-          auswaertsclub: true,
-          unser_team: true,
-          liga: true
-        },
-        sort: 'datum:asc',
-        limit
-      });
-
-      return matches.map(match => ({
-        ...match,
-        daysUntilMatch: this.calculateDaysUntilMatch(match.datum)
-      }));
-    } catch (error) {
-      strapi.log.error('Error fetching upcoming matches:', error);
-      throw error;
-    }
+    // Return empty array since Spiel content type was removed
+    return [];
   },
 
   // ===== TEAM ROSTER AND FORMATION SERVICES =====

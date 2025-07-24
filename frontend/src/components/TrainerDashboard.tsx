@@ -201,7 +201,7 @@ export default function TrainerDashboard() {
 
   const getAttendanceColor = (rate: number) => {
     if (rate >= 80) return 'text-green-600'
-    if (rate >= 60) return 'text-yellow-600'
+    if (rate >= 60) return 'text-viktoria-yellow'
     return 'text-red-600'
   }
 
@@ -419,7 +419,7 @@ export default function TrainerDashboard() {
                       <div 
                         className={`h-2 rounded-full transition-all duration-300 ${
                           player.attendanceRate >= 80 ? 'bg-green-500' : 
-                          player.attendanceRate >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                          player.attendanceRate >= 60 ? 'bg-viktoria-yellow' : 'bg-red-500'
                         }`}
                         style={{ width: `${player.attendanceRate}%` }}
                       ></div>

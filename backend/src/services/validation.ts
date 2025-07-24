@@ -500,6 +500,20 @@ export class ValidationService {
   }
 
   /**
+   * Validates enum field values
+   */
+  static validateEnumField(data: any, fieldName: string, allowedValues: string[], defaultValue?: string): void {
+    if (data[fieldName] && !allowedValues.includes(data[fieldName])) {
+      if (defaultValue) {
+        data[fieldName] = defaultValue;
+        strapi.log.warn(`Invalid ${fieldName} value '${data[fieldName]}' replaced with default '${defaultValue}'`);
+      } else {
+        throw new Error(`${fieldName} muss einer der folgenden Werte sein: ${allowedValues.join(', ')}`);
+      }
+    }
+  }
+
+  /**
    * Validates business rules for content creation/updates
    */
   static async validateBusinessRules(contentType: string, data: any, operation?: 'create' | 'update', entityId?: any): Promise<{ isValid: boolean; errors: string[] }> {
@@ -516,11 +530,12 @@ export class ValidationService {
         case 'api::spieler.spieler':
           await this.validatePlayerBusinessRules(data, op, entityId);
           break;
-        case 'api::spiel.spiel':
-          await this.validateMatchBusinessRules(data, op, entityId);
-          break;
+
         case 'api::spielerstatistik.spielerstatistik':
           await this.validateStatisticsBusinessRules(data, op, entityId);
+          break;
+        case 'api::team.team':
+          await this.validateTeamBusinessRules(data, op, entityId);
           break;
       }
     } catch (error) {
@@ -544,9 +559,7 @@ export class ValidationService {
       case 'api::spieler.spieler':
         await this.validatePlayerBusinessRules(data, operation, entityId);
         break;
-      case 'api::spiel.spiel':
-        await this.validateMatchBusinessRules(data, operation, entityId);
-        break;
+
       case 'api::spielerstatistik.spielerstatistik':
         await this.validateStatisticsBusinessRules(data, operation, entityId);
         break;
@@ -577,19 +590,7 @@ export class ValidationService {
     }
   }
 
-  private static async validateMatchBusinessRules(data: any, operation: string, entityId?: any): Promise<void> {
-    // Validate score ranges
-    this.validateNumericRanges(data, {
-      tore_heim: { min: 0, max: 50 },
-      tore_auswaerts: { min: 0, max: 50 },
-      zuschauer: { min: 0, max: 100000 }
-    });
 
-    // Validate that home and away clubs are different
-    if (data.heimclub && data.auswaertsclub && data.heimclub === data.auswaertsclub) {
-      throw new Error('Heim- und Auswärtsverein müssen unterschiedlich sein');
-    }
-  }
 
   private static async validateStatisticsBusinessRules(data: any, operation: string, entityId?: any): Promise<void> {
     // Validate non-negative values
@@ -605,6 +606,45 @@ export class ValidationService {
     // Validate unique combination
     if (data.spieler && data.team && data.saison) {
       await this.validateUniqueCombo('api::spielerstatistik.spielerstatistik', data, ['spieler', 'team', 'saison'], entityId);
+    }
+  }
+
+  private static async validateTeamBusinessRules(data: any, operation: string, entityId?: any): Promise<void> {
+    // Validate enum fields
+    this.validateEnumField(data, 'status', ['aktiv', 'inaktiv', 'pausiert'], 'aktiv');
+    this.validateEnumField(data, 'trend', ['steigend', 'gleich', 'fallend'], 'gleich');
+
+    // Validate numeric ranges
+    this.validateNumericRanges(data, {
+      tabellenplatz: { min: 1 },
+      punkte: { min: 0 },
+      spiele_gesamt: { min: 0 },
+      siege: { min: 0 },
+      unentschieden: { min: 0 },
+      niederlagen: { min: 0 },
+      tore_fuer: { min: 0 },
+      tore_gegen: { min: 0 }
+    });
+
+    // Validate team name uniqueness within club and season
+    if (data.name && data.club && data.saison) {
+      await this.validateUniqueCombo('api::team.team', data, ['name', 'club', 'saison'], entityId);
+    }
+
+    // Validate mathematical consistency
+    if (data.siege !== undefined && data.unentschieden !== undefined && data.niederlagen !== undefined && data.spiele_gesamt !== undefined) {
+      const calculatedGames = (data.siege || 0) + (data.unentschieden || 0) + (data.niederlagen || 0);
+      if (calculatedGames !== data.spiele_gesamt) {
+        throw new Error('Siege + Unentschieden + Niederlagen muss gleich Spiele gesamt sein');
+      }
+    }
+
+    // Validate goal difference
+    if (data.tore_fuer !== undefined && data.tore_gegen !== undefined && data.tordifferenz !== undefined) {
+      const calculatedDiff = data.tore_fuer - data.tore_gegen;
+      if (calculatedDiff !== data.tordifferenz) {
+        throw new Error('Tordifferenz muss Tore für minus Tore gegen entsprechen');
+      }
     }
   }
 }

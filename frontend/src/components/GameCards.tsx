@@ -40,6 +40,7 @@ const getTeamLogo = (teamName: string): string | undefined => {
     'FC Eichel': '/fceichel.png',
     'TSV Assamstadt': '/Assamstadt.png',
     'Türkgücü Wertheim': '/Türkgücü.png',
+    'Türk Gücü Wertheim': '/Türkgücü.png', // Backend-Schreibweise
     'TSV Tauberbischofsheim': '/Tauberbischofsheim.png',
     'FV Brehmbachtal': '/Brehmbachtal.png',
     'SV Brehmbachtal': '/Brehmbachtal.png',
@@ -110,11 +111,11 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
   
   return (
     <div 
-      className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 cursor-pointer md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-6 overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 cursor-pointer md:min-h-[240px] hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
       onClick={onClick}
     >
       <div className="mb-2 md:mb-4 text-center">
-        <div className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+        <div className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
           {type === 'last' ? 'Last' : 'Next'}
         </div>
       </div>
@@ -122,18 +123,18 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
       <div className="flex items-center justify-between mb-3 md:mb-8">
         {/* Home Team */}
         <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-0 md:mb-3">
+          <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 mb-0 md:mb-3">
             {homeLogo ? (
               <Image 
                 src={homeLogo} 
                 alt={`${homeTeam} Logo`}
                 width={64}
                 height={64}
-                className="w-10 h-10 md:w-16 md:h-16 object-contain drop-shadow-sm"
+                className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-sm"
                 priority
               />
             ) : (
-              <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-400 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xs md:text-base">{homeTeam.charAt(0)}</span>
               </div>
             )}
@@ -149,8 +150,16 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         {/* Score/VS */}
         <div className="text-center px-2 md:px-6 flex-shrink-0">
           {type === 'last' && homeScore !== undefined && awayScore !== undefined ? (
-            <div className={`font-bold text-xl md:text-4xl ${getResultColor()} ${getResultColor() === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : ''}`} style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
-              {homeScore}<span style={{ position: 'relative', top: '-0.1em' }}>:</span>{awayScore}
+            <div className={`font-bold text-xl md:text-4xl ${getResultColor()} ${getResultColor() === 'text-green-600' ? 'drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]' : ''}`} style={{ lineHeight: '1' }}>
+              <span style={{ letterSpacing: 'normal' }}>{homeScore}</span>
+              <span 
+                className="relative"
+                style={{ 
+                  top: '-0.1em', 
+                  margin: '0 0.08em'
+                }}
+              >:</span>
+              <span style={{ letterSpacing: 'normal' }}>{awayScore}</span>
             </div>
           ) : (
             <div 
@@ -163,18 +172,18 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         
         {/* Away Team */}
         <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center justify-center w-10 h-10 md:w-16 md:h-16 mb-0 md:mb-3">
+          <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 mb-0 md:mb-3">
             {awayLogo ? (
               <Image 
                 src={awayLogo} 
                 alt={`${awayTeam} Logo`}
                 width={64}
                 height={64}
-                className="w-10 h-10 md:w-16 md:h-16 object-contain drop-shadow-sm"
+                className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-sm"
                 priority
               />
             ) : (
-              <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-400 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-400 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xs md:text-base">{awayTeam.charAt(0)}</span>
               </div>
             )}
@@ -188,13 +197,25 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         </div>
       </div>
       
-      <div className="flex items-center justify-between text-xs md:text-sm text-gray-500 dark:text-gray-400">
-        <div className="flex items-center space-x-1 md:space-x-2">
-          <IconClock size={12} className="md:w-4 md:h-4" />
-          <span className="text-xs md:text-sm">{time}</span>
+      <div className="flex items-center justify-between">
+        {/* Time - aligned under home team */}
+        <div className="flex flex-col items-center flex-1">
+          <div className="flex items-center space-x-1 md:space-x-2 text-xs md:text-sm text-gray-500 dark:text-gray-400">
+            <IconClock size={12} className="md:w-4 md:h-4" />
+            <span>{time}</span>
+          </div>
         </div>
-        <div className="text-xs md:text-sm">
-          {date.replace(/(\d{2})\.(\d{2})/, '$1.$2.')}
+        
+        {/* Empty center space - matches the VS/Score area above */}
+        <div className="text-center px-2 md:px-6 flex-shrink-0">
+          {/* Empty space for alignment */}
+        </div>
+        
+        {/* Date - aligned under away team */}
+        <div className="flex flex-col items-center flex-1">
+          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
+            {date.replace(/(\d{2})\.(\d{2})/, '$1.$2.')}
+          </div>
         </div>
       </div>
     </div>
@@ -335,18 +356,7 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
         <div className="container max-w-6xl">
           <div className="grid grid-cols-2 gap-4 md:gap-8">
             {/* Letztes Spiel */}
-            {loading ? (
-              <div 
-                className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]"
-              >
-                <div className="text-center">
-                  <div className="animate-spin w-6 h-6 border-2 border-viktoria-blue border-t-transparent rounded-full mb-2 mx-auto"></div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Lade Spiele für {getTeamName(selectedTeam)}...
-                  </p>
-                </div>
-              </div>
-            ) : error ? (
+            {error ? (
               <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-red-400 mb-2">⚠️</div>
@@ -378,18 +388,7 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
             )}
             
             {/* Nächstes Spiel */}
-            {loading ? (
-              <div 
-                className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]"
-              >
-                <div className="text-center">
-                  <div className="animate-spin w-6 h-6 border-2 border-viktoria-blue border-t-transparent rounded-full mb-2 mx-auto"></div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Lade Spiele für {getTeamName(selectedTeam)}...
-                  </p>
-                </div>
-              </div>
-            ) : error ? (
+            {error ? (
               <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-red-400 mb-2">⚠️</div>
@@ -582,10 +581,10 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
                         {selectedGame.yellowCards && selectedGame.yellowCards.map((card, index) => (
                           <div key={`yellow-${index}`} className="flex items-center justify-between bg-white/10 dark:bg-white/5 rounded-md p-2">
                             <div className="flex items-center space-x-2">
-                              <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs font-bold text-black">
+                              <div className="w-6 h-6 bg-viktoria-yellow rounded-full flex items-center justify-center text-xs font-bold text-gray-800">
                                 {card.minute}&apos;
                               </div>
-                              <div className="w-3 h-4 bg-yellow-400 rounded-sm"></div>
+                              <div className="w-3 h-4 bg-viktoria-yellow rounded-sm"></div>
                               <span className="text-white dark:text-gray-200 font-medium text-sm">
                                 {card.player}
                               </span>

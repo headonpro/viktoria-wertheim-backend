@@ -22,7 +22,7 @@ export class AuditLoggerService {
   private static readonly CRITICAL_CONTENT_TYPES = [
     'api::saison.saison',
     'api::spieler.spieler',
-    'api::spiel.spiel',
+
     'api::spielerstatistik.spielerstatistik',
     'api::tabellen-eintrag.tabellen-eintrag'
   ];
@@ -30,7 +30,7 @@ export class AuditLoggerService {
   private static readonly CRITICAL_FIELDS = {
     'api::saison.saison': ['aktiv', 'start_datum', 'end_datum'],
     'api::spieler.spieler': ['hauptteam', 'rueckennummer', 'kapitaen', 'status'],
-    'api::spiel.spiel': ['status', 'tore_heim', 'tore_auswaerts', 'torschuetzen', 'karten'],
+
     'api::spielerstatistik.spielerstatistik': ['tore', 'spiele', 'assists', 'gelbe_karten', 'rote_karten'],
     'api::tabellen-eintrag.tabellen-eintrag': ['punkte', 'platz', 'tordifferenz']
   };
@@ -255,9 +255,7 @@ export class AuditLoggerService {
         return 'critical';
       }
       
-      if (contentType === 'api::spiel.spiel' && (changes.status || changes.tore_heim || changes.tore_auswaerts)) {
-        return 'high';
-      }
+      // Spiel-specific logic removed since content type was removed
 
       return 'high';
     }
@@ -288,7 +286,7 @@ export class AuditLoggerService {
     const categoryMap: Record<string, string> = {
       'api::saison.saison': 'season_management',
       'api::spieler.spieler': 'player_management',
-      'api::spiel.spiel': 'match_management',
+
       'api::spielerstatistik.spielerstatistik': 'statistics',
       'api::tabellen-eintrag.tabellen-eintrag': 'league_table',
       'api::team.team': 'team_management',
@@ -313,7 +311,7 @@ export class AuditLoggerService {
     const typeText = {
       'api::saison.saison': 'Saison',
       'api::spieler.spieler': 'Spieler',
-      'api::spiel.spiel': 'Spiel',
+
       'api::spielerstatistik.spielerstatistik': 'Spielerstatistik',
       'api::tabellen-eintrag.tabellen-eintrag': 'Tabelleneintrag',
       'api::team.team': 'Team'

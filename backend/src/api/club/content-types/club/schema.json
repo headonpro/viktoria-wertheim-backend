@@ -112,6 +112,19 @@
       "relation": "manyToMany",
       "target": "api::liga.liga",
       "mappedBy": "clubs"
+    },
+
+    "tabellen_eintraege": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tabellen-eintrag.tabellen-eintrag",
+      "mappedBy": "club"
+    },
+    "next_game_cards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::next-game-card.next-game-card",
+      "mappedBy": "gegner_club"
     }
   }
 }

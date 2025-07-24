@@ -18,7 +18,7 @@ export const API_ENDPOINTS = {
   mitglieder: '/mitglieder',
   mannschaften: '/mannschaften',
   spielers: '/spielers',
-  spiele: '/spiele',
+  // spiele: '/spiele', // removed since Spiel content type was removed
   trainings: '/trainings',
   kategorien: '/kategorien',
   newsArtikel: '/news-artikels',

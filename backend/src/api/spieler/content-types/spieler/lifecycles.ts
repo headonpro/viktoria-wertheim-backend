@@ -138,7 +138,7 @@ async function validateTeamAssignments(data: any) {
     }
 
     // Get all aushilfe teams and validate they belong to the same club and season
-    const aushilfeTeams: any[] = await strapi.entityService.findMany('api::team.team', {
+    const aushilfeTeamsResult = await strapi.entityService.findMany('api::team.team', {
       filters: {
         id: {
           $in: data.aushilfe_teams
@@ -146,6 +146,7 @@ async function validateTeamAssignments(data: any) {
       },
       populate: ['club', 'saison']
     });
+    const aushilfeTeams: any[] = Array.isArray(aushilfeTeamsResult) ? aushilfeTeamsResult : [aushilfeTeamsResult];
 
     for (const team of aushilfeTeams) {
       if (team.club?.id !== hauptteam.club?.id) {
@@ -252,22 +253,8 @@ async function validatePlayerDeletion(playerId: any) {
     throw new Error('Spieler kann nicht gelöscht werden: Es existieren noch Statistiken für diesen Spieler');
   }
 
-  // Check for match events (goals, cards, substitutions)
-  const matchesWithEvents = await strapi.entityService.findMany('api::spiel.spiel' as any, {
-    filters: {
-      $or: [
-        { torschuetzen: { $contains: `"spieler_id":${playerId}` } },
-        { karten: { $contains: `"spieler_id":${playerId}` } },
-        { wechsel: { $contains: `"raus_id":${playerId}` } },
-        { wechsel: { $contains: `"rein_id":${playerId}` } }
-      ]
-    },
-    pagination: { limit: 1 }
-  });
-
-  if (matchesWithEvents && matchesWithEvents.length > 0) {
-    throw new Error('Spieler kann nicht gelöscht werden: Spieler ist in Spielereignissen referenziert');
-  }
+  // Note: Match events check removed since Spiel content type was removed
+  // Players can now be deleted if they only have statistics
 }
 
 /**

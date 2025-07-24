@@ -1,0 +1,545 @@
+{
+  "timestamp": "2025-07-23T05:53:18.355Z",
+  "summary": {
+    "totalSchemas": 14,
+    "duplicateGroups": 2,
+    "brokenRelations": 0,
+    "orphanedDirectories": 2,
+    "inconsistentMappings": 4
+  },
+  "details": {
+    "duplicateSchemas": [
+      {
+        "group": "Team/Mannschaft Duplication",
+        "reason": "Both represent team entities with similar attributes",
+        "schemas": [
+          {
+            "key": "api::team.team",
+            "path": "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\backend\\src\\api\\team\\content-types\\team\\schema.json",
+            "content": {
+              "kind": "collectionType",
+              "collectionName": "teams",
+              "info": {
+                "singularName": "team",
+                "pluralName": "teams",
+                "displayName": "Team",
+                "description": "Teams des Vereins mit Liga- und Saison-Zuordnung"
+              },
+              "options": {
+                "draftAndPublish": false
+              },
+              "pluginOptions": {},
+              "attributes": {
+                "name": {
+                  "type": "string",
+                  "required": true,
+                  "unique": true,
+                  "maxLength": 50
+                },
+                "club": {
+                  "type": "relation",
+                  "relation": "manyToOne",
+                  "target": "api::club.club",
+                  "inversedBy": "teams"
+                },
+                "liga": {
+                  "type": "relation",
+                  "relation": "manyToOne",
+                  "target": "api::liga.liga",
+                  "inversedBy": "teams"
+                },
+                "saison": {
+                  "type": "relation",
+                  "relation": "manyToOne",
+                  "target": "api::saison.saison",
+                  "inversedBy": "teams"
+                },
+                "trainer": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "co_trainer": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "trainingszeiten": {
+                  "type": "text"
+                },
+                "trainingsort": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "heimspieltag": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "teamfoto": {
+                  "type": "media",
+                  "multiple": false,
+                  "required": false,
+                  "allowedTypes": [
+                    "images"
+                  ]
+                },
+                "spieler": {
+                  "type": "relation",
+                  "relation": "oneToMany",
+                  "target": "api::spieler.spieler",
+                  "mappedBy": "hauptteam"
+                },
+                "aushilfe_spieler": {
+                  "type": "relation",
+                  "relation": "manyToMany",
+                  "target": "api::spieler.spieler",
+                  "mappedBy": "aushilfe_teams"
+                },
+                "spiele": {
+                  "type": "relation",
+                  "relation": "oneToMany",
+                  "target": "api::spiel.spiel",
+                  "mappedBy": "unser_team"
+                },
+                "liga_name": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "liga_vollname": {
+                  "type": "string",
+                  "maxLength": 150
+                },
+                "tabellenplatz": {
+                  "type": "integer",
+                  "min": 1,
+                  "default": 1
+                },
+                "punkte": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "spiele_gesamt": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "siege": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "unentschieden": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "niederlagen": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "tore_fuer": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "tore_gegen": {
+                  "type": "integer",
+                  "min": 0,
+                  "default": 0
+                },
+                "tordifferenz": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "form_letzte_5": {
+                  "type": "json",
+                  "default": []
+                },
+                "trend": {
+                  "type": "enumeration",
+                  "enum": [
+                    "steigend",
+                    "gleich",
+                    "fallend"
+                  ],
+                  "default": "gleich"
+                },
+                "status": {
+                  "type": "enumeration",
+                  "enum": [
+                    "aktiv",
+                    "inaktiv",
+                    "pausiert"
+                  ],
+                  "default": "aktiv"
+                },
+                "altersklasse": {
+                  "type": "string",
+                  "maxLength": 50
+                }
+              }
+            },
+            "apiDir": "team",
+            "contentType": "team"
+          },
+          {
+            "key": "api::mannschaft.mannschaft",
+            "path": "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\backend\\src\\api\\mannschaft\\content-types\\mannschaft\\schema.json",
+            "content": {
+              "kind": "collectionType",
+              "collectionName": "mannschaften",
+              "info": {
+                "singularName": "mannschaft",
+                "pluralName": "mannschaften",
+                "displayName": "Mannschaft",
+                "description": "Teams des Vereins"
+              },
+              "options": {
+                "draftAndPublish": false
+              },
+              "pluginOptions": {},
+              "attributes": {
+                "name": {
+                  "type": "string",
+                  "required": true,
+                  "unique": true
+                },
+                "display_name": {
+                  "type": "string"
+                },
+                "liga": {
+                  "type": "string",
+                  "required": true
+                },
+                "liga_vollname": {
+                  "type": "string"
+                },
+                "trainer": {
+                  "type": "string"
+                },
+                "co_trainer": {
+                  "type": "string"
+                },
+                "trainingszeiten": {
+                  "type": "text"
+                },
+                "heimspieltag": {
+                  "type": "string"
+                },
+                "altersklasse": {
+                  "type": "string"
+                },
+                "teamfoto": {
+                  "type": "media",
+                  "multiple": false,
+                  "required": false,
+                  "allowedTypes": [
+                    "images"
+                  ]
+                },
+                "tabellenplatz": {
+                  "type": "integer"
+                },
+                "punkte": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "spiele_gesamt": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "siege": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "unentschieden": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "niederlagen": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "tore_fuer": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "tore_gegen": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "tordifferenz": {
+                  "type": "integer",
+                  "default": 0
+                },
+                "form_letzte_5": {
+                  "type": "json",
+                  "default": []
+                },
+                "trend": {
+                  "type": "enumeration",
+                  "enum": [
+                    "steigend",
+                    "gleich",
+                    "fallend"
+                  ],
+                  "default": "gleich"
+                },
+                "status": {
+                  "type": "enumeration",
+                  "enum": [
+                    "aktiv",
+                    "inaktiv",
+                    "pausiert"
+                  ],
+                  "default": "aktiv"
+                },
+                "spieler": {
+                  "type": "relation",
+                  "relation": "oneToMany",
+                  "target": "api::spieler.spieler",
+                  "mappedBy": "mannschaft"
+                },
+                "spiele": {
+                  "type": "relation",
+                  "relation": "oneToMany",
+                  "target": "api::spiel.spiel",
+                  "mappedBy": "unsere_mannschaft"
+                }
+              }
+            },
+            "apiDir": "mannschaft",
+            "contentType": "mannschaft"
+          }
+        ],
+        "potentialOrphans": []
+      },
+      {
+        "group": "Player Statistics Duplication",
+        "reason": "Multiple player statistics concepts detected",
+        "schemas": [
+          {
+            "key": "api::spielerstatistik.spielerstatistik",
+            "path": "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\backend\\src\\api\\spielerstatistik\\content-types\\spielerstatistik\\schema.json",
+            "content": {
+              "kind": "collectionType",
+              "collectionName": "spielerstatistiken",
+              "info": {
+                "singularName": "spielerstatistik",
+                "pluralName": "spielerstatistiks",
+                "displayName": "Spieler Statistik",
+                "description": "Saison-basierte Spielerstatistiken mit Team-Zuordnung"
+              },
+              "options": {
+                "draftAndPublish": false
+              },
+              "pluginOptions": {},
+              "attributes": {
+                "spieler": {
+                  "type": "relation",
+                  "relation": "manyToOne",
+                  "target": "api::spieler.spieler",
+                  "required": true
+                },
+                "saison": {
+                  "type": "relation",
+                  "relation": "manyToOne",
+                  "target": "api::saison.saison",
+                  "required": true
+                },
+                "team": {
+                  "type": "relation",
+                  "relation": "manyToOne",
+                  "target": "api::team.team",
+                  "required": true
+                },
+                "tore": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "spiele": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "assists": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "gelbe_karten": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "rote_karten": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "minuten_gespielt": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "einsaetze_startelf": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                },
+                "einsaetze_einwechslung": {
+                  "type": "integer",
+                  "default": 0,
+                  "min": 0
+                }
+              }
+            },
+            "apiDir": "spielerstatistik",
+            "contentType": "spielerstatistik"
+          }
+        ],
+        "potentialOrphans": [
+          "spieler-statistik",
+          "spieler-saison-statistik"
+        ]
+      }
+    ],
+    "brokenRelations": [],
+    "orphanedDirectories": [
+      {
+        "path": "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\backend\\src\\api\\spieler-saison-statistik\\content-types\\spieler-saison-statistik",
+        "apiDir": "spieler-saison-statistik",
+        "contentType": "spieler-saison-statistik",
+        "reason": "Directory exists but schema.json is missing"
+      },
+      {
+        "path": "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\backend\\src\\api\\spieler-statistik\\content-types\\spieler-statistik",
+        "apiDir": "spieler-statistik",
+        "contentType": "spieler-statistik",
+        "reason": "Directory exists but schema.json is missing"
+      }
+    ],
+    "inconsistentMappings": [
+      {
+        "schema": "api::spiel.spiel",
+        "relations": [
+          {
+            "sourceSchema": "api::spiel.spiel",
+            "sourceAttribute": "unser_team",
+            "targetSchema": "api::team.team",
+            "relationType": "manyToOne",
+            "inversedBy": "spiele"
+          },
+          {
+            "sourceSchema": "api::spiel.spiel",
+            "sourceAttribute": "unsere_mannschaft",
+            "targetSchema": "api::mannschaft.mannschaft",
+            "relationType": "manyToOne",
+            "inversedBy": "spiele"
+          }
+        ],
+        "reason": "Schema has relations to both team and mannschaft concepts"
+      },
+      {
+        "schema": "api::spieler.spieler",
+        "relations": [
+          {
+            "sourceSchema": "api::spieler.spieler",
+            "sourceAttribute": "hauptteam",
+            "targetSchema": "api::team.team",
+            "relationType": "manyToOne",
+            "inversedBy": "spieler"
+          },
+          {
+            "sourceSchema": "api::spieler.spieler",
+            "sourceAttribute": "aushilfe_teams",
+            "targetSchema": "api::team.team",
+            "relationType": "manyToMany",
+            "inversedBy": "aushilfe_spieler"
+          },
+          {
+            "sourceSchema": "api::spieler.spieler",
+            "sourceAttribute": "mannschaft",
+            "targetSchema": "api::mannschaft.mannschaft",
+            "relationType": "manyToOne",
+            "inversedBy": "spieler"
+          }
+        ],
+        "reason": "Schema has relations to both team and mannschaft concepts"
+      },
+      {
+        "schema": "api::spiel.spiel",
+        "relations": [
+          {
+            "sourceSchema": "api::spiel.spiel",
+            "sourceAttribute": "unser_team",
+            "targetSchema": "api::team.team",
+            "relationType": "manyToOne",
+            "inversedBy": "spiele"
+          },
+          {
+            "sourceSchema": "api::spiel.spiel",
+            "sourceAttribute": "unsere_mannschaft",
+            "targetSchema": "api::mannschaft.mannschaft",
+            "relationType": "manyToOne",
+            "inversedBy": "spiele"
+          }
+        ],
+        "reason": "Schema has relations to multiple schemas in duplicate group: Team/Mannschaft Duplication"
+      },
+      {
+        "schema": "api::spieler.spieler",
+        "relations": [
+          {
+            "sourceSchema": "api::spieler.spieler",
+            "sourceAttribute": "hauptteam",
+            "targetSchema": "api::team.team",
+            "relationType": "manyToOne",
+            "inversedBy": "spieler"
+          },
+          {
+            "sourceSchema": "api::spieler.spieler",
+            "sourceAttribute": "aushilfe_teams",
+            "targetSchema": "api::team.team",
+            "relationType": "manyToMany",
+            "inversedBy": "aushilfe_spieler"
+          },
+          {
+            "sourceSchema": "api::spieler.spieler",
+            "sourceAttribute": "mannschaft",
+            "targetSchema": "api::mannschaft.mannschaft",
+            "relationType": "manyToOne",
+            "inversedBy": "spieler"
+          }
+        ],
+        "reason": "Schema has relations to multiple schemas in duplicate group: Team/Mannschaft Duplication"
+      }
+    ],
+    "missingInverseRelations": []
+  },
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "category": "Schema Consolidation",
+      "issue": "Team/Mannschaft duplication",
+      "recommendation": "Consolidate team and mannschaft into a single content type. Migrate all relations and data to the chosen schema.",
+      "affectedSchemas": [
+        "api::team.team",
+        "api::mannschaft.mannschaft"
+      ],
+      "estimatedEffort": "Medium"
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Code Cleanup",
+      "issue": "Orphaned directories",
+      "recommendation": "Remove orphaned directories or create proper schema files if they are needed.",
+      "affectedDirectories": [
+        "spieler-saison-statistik/spieler-saison-statistik",
+        "spieler-statistik/spieler-statistik"
+      ],
+      "estimatedEffort": "Low"
+    }
+  ]
+}

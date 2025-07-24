@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "next_game_cards",
+  "info": {
+    "singularName": "next-game-card",
+    "pluralName": "next-game-cards",
+    "displayName": "Next Game Card",
+    "description": "Einfache Spieldaten für nächstes Spiel auf Homepage"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "datum": {
+      "type": "datetime",
+      "required": true
+    },
+    "gegner_club": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "inversedBy": "next_game_cards"
+    },
+    "ist_heimspiel": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}

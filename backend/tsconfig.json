@@ -13,7 +13,8 @@
     "noEmitOnError": true,
     "noImplicitThis": true,
     "outDir": "dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "types": ["jest", "node"]
   },
   "include": [
     // Include root files
@@ -23,7 +24,9 @@
     // Include all js files
     "./**/*.js",
     // Force the JSON files in the src folder to be included
-    "src/**/*.json"
+    "src/**/*.json",
+    // Include type definitions
+    "types/**/*.d.ts"
   ],
 
   "exclude": [

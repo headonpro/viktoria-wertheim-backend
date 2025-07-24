@@ -203,7 +203,7 @@ export default function ProfileForm({ onSuccess }: ProfileFormProps) {
   const membershipStatus = {
     'aktiv': { label: 'Aktiv', color: 'text-green-600', bg: 'bg-green-100' },
     'inaktiv': { label: 'Inaktiv', color: 'text-gray-600', bg: 'bg-gray-100' },
-    'pausiert': { label: 'Pausiert', color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    'pausiert': { label: 'Pausiert', color: 'text-viktoria-yellow', bg: 'bg-viktoria-yellow/10' },
     'gekuendigt': { label: 'Gekündigt', color: 'text-red-600', bg: 'bg-red-100' }
   }
 

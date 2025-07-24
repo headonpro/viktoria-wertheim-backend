@@ -4,7 +4,7 @@
  */
 
 import { factories } from '@strapi/strapi';
-import AutomatedProcessingService from '../../../services/automated-processing';
+// AutomatedProcessingService removed - functionality moved to other services
 import ScheduledTasksService from '../../../services/scheduled-tasks';
 import DataIntegrityService from '../../../services/data-integrity';
 import AuditLoggerService from '../../../services/audit-logger';
@@ -21,7 +21,15 @@ export default ({ strapi }) => ({
       
       switch (type) {
         case 'full':
-          result = await AutomatedProcessingService.runDataConsistencyMaintenance();
+          // Use Data Integrity Service instead of removed AutomatedProcessingService
+          const dataIntegrityService = new DataIntegrityService(strapi);
+          const integrityResult = await dataIntegrityService.validateAllData();
+          result = {
+            success: integrityResult.isValid,
+            message: integrityResult.isValid ? 'Data consistency check passed' : 'Data consistency issues found',
+            errors: integrityResult.errors,
+            details: integrityResult
+          };
           break;
         case 'daily':
           result = await ScheduledTasksService.triggerMaintenanceTask('daily');
@@ -79,13 +87,14 @@ export default ({ strapi }) => ({
    */
   async checkIntegrity(ctx) {
     try {
-      const results = await DataIntegrityService.runFullIntegrityCheck();
+      const dataIntegrityService = new DataIntegrityService(strapi);
+      const results = await dataIntegrityService.runFullIntegrityCheck();
       
       const summary = {
-        totalContentTypes: results.length,
-        totalIssues: results.reduce((sum, result) => sum + result.summary.total, 0),
-        criticalIssues: results.reduce((sum, result) => sum + result.summary.critical, 0),
-        warnings: results.reduce((sum, result) => sum + result.summary.warnings, 0)
+        totalContentTypes: 1,
+        totalIssues: results.errors.length + results.warnings.length,
+        criticalIssues: results.errors.length,
+        warnings: results.warnings.length
       };
 
       await AuditLoggerService.logSystemEvent(
@@ -114,48 +123,10 @@ export default ({ strapi }) => ({
   },
 
   /**
-   * Process specific match completion
+   * Process specific match completion - REMOVED since Spiel content type was removed
    */
   async processMatch(ctx) {
-    try {
-      const { matchId } = ctx.params;
-      
-      if (!matchId) {
-        return ctx.badRequest('Match ID is required');
-      }
-
-      // Verify match exists
-      const match = await strapi.entityService.findOne('api::spiel.spiel', matchId);
-      if (!match) {
-        return ctx.notFound('Match not found');
-      }
-
-      const result = await AutomatedProcessingService.processMatchCompletion(matchId);
-
-      await AuditLoggerService.logSystemEvent(
-        'manual_match_processing',
-        result.success ? 'medium' : 'high',
-        `Manual match processing for match ${matchId}: ${result.success ? 'success' : 'failed'}`,
-        { 
-          userId: ctx.state.user?.id,
-          matchId,
-          result 
-        }
-      );
-
-      ctx.body = {
-        success: result.success,
-        message: result.message,
-        matchId,
-        timestamp: new Date().toISOString(),
-        details: result.details,
-        errors: result.errors
-      };
-
-    } catch (error) {
-      strapi.log.error('Error processing match:', error);
-      return ctx.internalServerError('Failed to process match', { error: error.message });
-    }
+    return ctx.badRequest('Match processing not available - Spiel content type removed');
   },
 
   /**
@@ -169,13 +140,8 @@ export default ({ strapi }) => ({
         pagination: { limit: 1 }
       });
 
-      // Get recent matches
-      const recentMatches = await strapi.entityService.findMany('api::spiel.spiel' as any, {
-        filters: { status: 'beendet' },
-        sort: 'datum:desc',
-        pagination: { limit: 5 },
-        populate: ['heimclub', 'auswaertsclub']
-      });
+      // Recent matches removed since Spiel content type was removed
+      const recentMatches = [];
 
       // Get statistics summary
       const statsCount = await strapi.entityService.count('api::spielerstatistik.spielerstatistik' as any);
@@ -227,16 +193,18 @@ export default ({ strapi }) => ({
    */
   async autoFix(ctx) {
     try {
+      const dataIntegrityService = new DataIntegrityService(strapi);
+      
       // First run integrity check
-      const integrityResults = await DataIntegrityService.runFullIntegrityCheck();
+      const integrityResults = await dataIntegrityService.runFullIntegrityCheck();
       
       // Attempt auto-fix
-      const fixResults = await DataIntegrityService.autoFixIssues(integrityResults);
+      const fixResults = await dataIntegrityService.autoFixIssues(integrityResults);
 
       await AuditLoggerService.logSystemEvent(
         'auto_fix_triggered',
         'high',
-        `Auto-fix completed: ${fixResults.fixed} fixed, ${fixResults.failed} failed`,
+        `Auto-fix completed: ${fixResults.summary.fixedIssues} fixed, ${fixResults.summary.remainingIssues} failed`,
         { 
           userId: ctx.state.user?.id,
           fixResults,
@@ -250,7 +218,7 @@ export default ({ strapi }) => ({
         timestamp: new Date().toISOString(),
         results: {
           fixed: fixResults.fixed,
-          failed: fixResults.failed,
+          failed: fixResults.couldNotFix,
           integrityCheck: integrityResults
         }
       };

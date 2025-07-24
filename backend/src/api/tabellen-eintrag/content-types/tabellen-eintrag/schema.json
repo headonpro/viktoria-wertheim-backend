@@ -16,12 +16,14 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::liga.liga",
+      "inversedBy": "tabellen_eintraege",
       "required": true
     },
     "club": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::club.club",
+      "inversedBy": "tabellen_eintraege",
       "required": true
     },
     "platz": {

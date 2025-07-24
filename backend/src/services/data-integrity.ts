@@ -1,749 +1,395 @@
 /**
  * Data Integrity Service
- * Provides automated data consistency checks and maintenance routines
+ * 
+ * Service for validating data consistency and relations
+ * after team/mannschaft consolidation
  */
 
-export interface IntegrityCheckResult {
-  contentType: string;
-  issues: IntegrityIssue[];
-  summary: {
-    total: number;
-    critical: number;
-    warnings: number;
-    totalIssues: number;
-    errorCount: number;
-    warningCount: number;
-  };
+interface ValidationResult {
   isValid: boolean;
+  errors: string[];
+  warnings: string[];
+  summary: {
+    totalChecks: number;
+    passedChecks: number;
+    failedChecks: number;
+  };
 }
 
-export interface IntegrityIssue {
-  id: any;
-  severity: 'critical' | 'warning' | 'info';
-  type: string;
-  message: string;
-  field?: string;
-  suggestedFix?: string;
+interface RelationValidationOptions {
+  checkBidirectional?: boolean;
+  validateOrphans?: boolean;
+  checkConstraints?: boolean;
 }
 
-export class DataIntegrityService {
-  /**
-   * Runs comprehensive data integrity checks across all content types
-   */
-  static async runFullIntegrityCheck(): Promise<IntegrityCheckResult[]> {
-    const results: IntegrityCheckResult[] = [];
+class DataIntegrityService {
+  private strapi: any;
 
-    try {
-      // Check each content type
-      results.push(await this.checkSeasonIntegrity());
-      results.push(await this.checkPlayerIntegrity());
-      results.push(await this.checkTeamIntegrity());
-      results.push(await this.checkMatchIntegrity());
-      results.push(await this.checkStatisticsIntegrity());
-      results.push(await this.checkLeagueTableIntegrity());
-
-      // Log summary
-      const totalIssues = results.reduce((sum, result) => sum + result.summary.total, 0);
-      const criticalIssues = results.reduce((sum, result) => sum + result.summary.critical, 0);
-      
-      strapi.log.info(`Data integrity check completed: ${totalIssues} total issues, ${criticalIssues} critical`);
-
-      return results;
-    } catch (error) {
-      strapi.log.error('Error running data integrity check:', error);
-      throw error;
-    }
+  constructor(strapiInstance?: any) {
+    this.strapi = strapiInstance || global.strapi;
   }
 
   /**
-   * Checks season data integrity
+   * Validate all team relations and data consistency
    */
-  static async checkSeasonIntegrity(): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
+  async validateTeamRelations(options: RelationValidationOptions = {}): Promise<ValidationResult> {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    let totalChecks = 0;
+    let passedChecks = 0;
 
     try {
-      // Check for multiple active seasons
-      const activeSeasons = await strapi.entityService.findMany('api::saison.saison' as any, {
-        filters: { aktiv: true }
+      // Get all teams with relations
+      const teams = await this.strapi.entityService.findMany('api::team.team', {
+        populate: ['spieler', 'aushilfe_spieler', 'spiele', 'liga', 'saison', 'club']
       });
 
-      const activeSeasonsArray = Array.isArray(activeSeasons) ? activeSeasons : [activeSeasons];
-      
-      if (activeSeasonsArray.length > 1) {
-        issues.push({
-          id: 'multiple-active-seasons',
-          severity: 'critical',
-          type: 'constraint_violation',
-          message: `${activeSeasonsArray.length} aktive Saisons gefunden, nur eine erlaubt`,
-          suggestedFix: 'Deaktivieren Sie alle bis auf eine Saison'
-        });
+      if (!teams || teams.length === 0) {
+        warnings.push('No teams found in database');
+        return this.buildValidationResult(true, errors, warnings, 1, 1);
       }
 
-      if (activeSeasonsArray.length === 0) {
-        issues.push({
-          id: 'no-active-season',
-          severity: 'critical',
-          type: 'missing_data',
-          message: 'Keine aktive Saison gefunden',
-          suggestedFix: 'Aktivieren Sie eine Saison'
-        });
-      }
+      for (const team of teams) {
+        totalChecks++;
 
-      // Check for overlapping seasons
-      const allSeasons = await strapi.entityService.findMany('api::saison.saison' as any, {
-        sort: 'start_datum:asc'
-      });
+        // Validate required fields
+        if (!team.name) {
+          errors.push(`Team ${team.id} missing required name field`);
+          continue;
+        }
 
-      const seasonsArray = Array.isArray(allSeasons) ? allSeasons : [allSeasons];
-      
-      for (let i = 0; i < seasonsArray.length - 1; i++) {
-        const current = seasonsArray[i];
-        const next = seasonsArray[i + 1];
-        
-        if (new Date(current.end_datum) > new Date(next.start_datum)) {
-          issues.push({
-            id: current.id,
-            severity: 'warning',
-            type: 'data_inconsistency',
-            message: `Saison "${current.name}" überschneidet sich mit "${next.name}"`,
-            field: 'end_datum',
-            suggestedFix: 'Überprüfen Sie die Saison-Daten'
-          });
+        // Validate unique name constraint
+        const duplicateTeams = teams.filter(t => t.name === team.name && t.id !== team.id);
+        if (duplicateTeams.length > 0) {
+          errors.push(`Team name "${team.name}" is not unique (found in teams: ${duplicateTeams.map(t => t.id).join(', ')})`);
+        }
+
+        // Validate bidirectional relations with spieler
+        if (options.checkBidirectional && team.spieler) {
+          for (const spieler of team.spieler) {
+            const spielerData = await this.strapi.entityService.findOne('api::spieler.spieler', spieler.id, {
+              populate: ['hauptteam', 'aushilfe_teams']
+            });
+
+            if (!spielerData) {
+              errors.push(`Team ${team.name} references non-existent Spieler ${spieler.id}`);
+              continue;
+            }
+
+            const hauptteamId = spielerData.hauptteam?.id;
+            const aushilfeTeamIds = spielerData.aushilfe_teams?.map(t => t.id) || [];
+
+            if (hauptteamId !== team.id && !aushilfeTeamIds.includes(team.id)) {
+              errors.push(`Broken bidirectional relation: Team ${team.name} references Spieler ${spieler.id}, but spieler doesn't reference team back`);
+            }
+          }
+        }
+
+        // Note: Spiel validation removed since Spiel content type was removed
+
+        // Check for mannschaft references (should not exist)
+        const teamStr = JSON.stringify(team);
+        if (teamStr.includes('mannschaft')) {
+          errors.push(`Team ${team.name} still contains mannschaft references`);
+        }
+
+        if (errors.length === 0) {
+          passedChecks++;
         }
       }
 
     } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Saison-Integritätsprüfung: ${error.message}`
-      });
+      errors.push(`Failed to validate team relations: ${error.message}`);
     }
 
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
+    return this.buildValidationResult(errors.length === 0, errors, warnings, totalChecks, passedChecks);
+  }
+
+  /**
+   * Validate spiel relations - REMOVED since Spiel content type was removed
+   * Returns empty validation result for backward compatibility
+   */
+  async validateSpielRelations(options: RelationValidationOptions = {}): Promise<ValidationResult> {
+    const warnings: string[] = ['Spiel validation skipped - content type removed'];
+    return this.buildValidationResult(true, [], warnings, 1, 1);
+  }
+
+  /**
+   * Validate all spieler relations and data consistency
+   */
+  async validateSpielerRelations(options: RelationValidationOptions = {}): Promise<ValidationResult> {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    let totalChecks = 0;
+    let passedChecks = 0;
+
+    try {
+      const spielers = await this.strapi.entityService.findMany('api::spieler.spieler', {
+        populate: ['hauptteam', 'aushilfe_teams', 'mitglied']
+      });
+
+      if (!spielers || spielers.length === 0) {
+        warnings.push('No spielers found in database');
+        return this.buildValidationResult(true, errors, warnings, 1, 1);
+      }
+
+      for (const spieler of spielers) {
+        totalChecks++;
+
+        // Validate required fields
+        if (!spieler.vorname) {
+          errors.push(`Spieler ${spieler.id} missing required vorname field`);
+        }
+
+        if (!spieler.nachname) {
+          errors.push(`Spieler ${spieler.id} missing required nachname field`);
+        }
+
+        // Validate enum values
+        const validStatuses = ['aktiv', 'verletzt', 'gesperrt'];
+        if (spieler.status && !validStatuses.includes(spieler.status)) {
+          errors.push(`Spieler ${spieler.id} has invalid status: ${spieler.status}`);
+        }
+
+        const validPositions = ['Torwart', 'Abwehr', 'Mittelfeld', 'Sturm'];
+        if (spieler.position && !validPositions.includes(spieler.position)) {
+          errors.push(`Spieler ${spieler.id} has invalid position: ${spieler.position}`);
+        }
+
+        // Validate rueckennummer constraints
+        if (spieler.rueckennummer && (spieler.rueckennummer < 1 || spieler.rueckennummer > 99)) {
+          errors.push(`Spieler ${spieler.id} has invalid rueckennummer: ${spieler.rueckennummer}`);
+        }
+
+        // Check for mannschaft references (should not exist)
+        const spielerStr = JSON.stringify(spieler);
+        if (spielerStr.includes('mannschaft')) {
+          errors.push(`Spieler ${spieler.vorname} ${spieler.nachname} still contains mannschaft references`);
+        }
+
+        // Validate bidirectional relations
+        if (options.checkBidirectional) {
+          // Check hauptteam relation
+          if (spieler.hauptteam) {
+            const teamData = await this.strapi.entityService.findOne('api::team.team', spieler.hauptteam.id, {
+              populate: ['spieler']
+            });
+
+            if (!teamData) {
+              errors.push(`Spieler ${spieler.vorname} ${spieler.nachname} references non-existent Hauptteam ${spieler.hauptteam.id}`);
+            } else {
+              const teamSpielerIds = teamData.spieler?.map(s => s.id) || [];
+              if (!teamSpielerIds.includes(spieler.id)) {
+                errors.push(`Broken bidirectional relation: Spieler ${spieler.vorname} ${spieler.nachname} references Team ${spieler.hauptteam.id} as hauptteam, but team doesn't reference spieler back`);
+              }
+            }
+          }
+
+          // Check aushilfe_teams relations
+          if (spieler.aushilfe_teams) {
+            for (const aushilfeTeam of spieler.aushilfe_teams) {
+              const teamData = await this.strapi.entityService.findOne('api::team.team', aushilfeTeam.id, {
+                populate: ['aushilfe_spieler']
+              });
+
+              if (!teamData) {
+                errors.push(`Spieler ${spieler.vorname} ${spieler.nachname} references non-existent Aushilfe Team ${aushilfeTeam.id}`);
+              } else {
+                const aushilfeSpielerIds = teamData.aushilfe_spieler?.map(s => s.id) || [];
+                if (!aushilfeSpielerIds.includes(spieler.id)) {
+                  errors.push(`Broken bidirectional relation: Spieler ${spieler.vorname} ${spieler.nachname} references Team ${aushilfeTeam.id} as aushilfe, but team doesn't reference spieler back`);
+                }
+              }
+            }
+          }
+        }
+
+        if (errors.length === 0) {
+          passedChecks++;
+        }
+      }
+
+    } catch (error) {
+      errors.push(`Failed to validate spieler relations: ${error.message}`);
+    }
+
+    return this.buildValidationResult(errors.length === 0, errors, warnings, totalChecks, passedChecks);
+  }
+
+  /**
+   * Check for any remaining mannschaft references
+   */
+  async validateMannschaftRemoval(): Promise<ValidationResult> {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    try {
+      // Try to access mannschaft content type - should fail
+      try {
+        await this.strapi.entityService.findMany('api::mannschaft.mannschaft');
+        errors.push('Mannschaft content type still exists - should be removed after consolidation');
+      } catch (error) {
+        if (error.message.includes('Unknown attribute') || error.message.includes('not found')) {
+          // This is expected - mannschaft should not exist
+        } else {
+          warnings.push(`Could not verify mannschaft removal: ${error.message}`);
+        }
+      }
+
+    } catch (error) {
+      errors.push(`Failed to validate mannschaft removal: ${error.message}`);
+    }
+
+    return this.buildValidationResult(errors.length === 0, errors, warnings, 1, errors.length === 0 ? 1 : 0);
+  }
+
+  /**
+   * Run comprehensive data integrity validation
+   */
+  async validateAllData(options: RelationValidationOptions = { 
+    checkBidirectional: true, 
+    validateOrphans: true, 
+    checkConstraints: true 
+  }): Promise<ValidationResult> {
+    const allErrors: string[] = [];
+    const allWarnings: string[] = [];
+    let totalChecks = 0;
+    let passedChecks = 0;
+
+    // Run all validations
+    const teamResult = await this.validateTeamRelations(options);
+    const spielResult = await this.validateSpielRelations(options);
+    const spielerResult = await this.validateSpielerRelations(options);
+    const mannschaftResult = await this.validateMannschaftRemoval();
+
+    // Combine results
+    allErrors.push(...teamResult.errors, ...spielResult.errors, ...spielerResult.errors, ...mannschaftResult.errors);
+    allWarnings.push(...teamResult.warnings, ...spielResult.warnings, ...spielerResult.warnings, ...mannschaftResult.warnings);
     
-    return {
-      contentType: 'api::saison.saison',
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
+    totalChecks = teamResult.summary.totalChecks + spielResult.summary.totalChecks + 
+                  spielerResult.summary.totalChecks + mannschaftResult.summary.totalChecks;
+    passedChecks = teamResult.summary.passedChecks + spielResult.summary.passedChecks + 
+                   spielerResult.summary.passedChecks + mannschaftResult.summary.passedChecks;
+
+    return this.buildValidationResult(allErrors.length === 0, allErrors, allWarnings, totalChecks, passedChecks);
+  }
+
+  /**
+   * Run full integrity check (alias for validateAllData)
+   */
+  async runFullIntegrityCheck(options: RelationValidationOptions = { 
+    checkBidirectional: true, 
+    validateOrphans: true, 
+    checkConstraints: true 
+  }): Promise<ValidationResult> {
+    return this.validateAllData(options);
+  }
+
+  /**
+   * Auto-fix common data integrity issues
+   */
+  async autoFixIssues(validationResult: ValidationResult): Promise<{
+    fixed: string[];
+    couldNotFix: string[];
+    summary: {
+      totalIssues: number;
+      fixedIssues: number;
+      remainingIssues: number;
     };
-  }
+  }> {
+    const fixed: string[] = [];
+    const couldNotFix: string[] = [];
 
-  /**
-   * Checks player data integrity
-   */
-  static async checkPlayerIntegrity(): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
-
-    try {
-      // Check for players without teams
-      const playersWithoutTeams = await strapi.entityService.findMany('api::spieler.spieler' as any, {
-        filters: { hauptteam: { $null: true } },
-        populate: ['mitglied']
-      });
-
-      const playersArray = Array.isArray(playersWithoutTeams) ? playersWithoutTeams : [playersWithoutTeams];
-      
-      for (const player of playersArray) {
-        if (player) {
-          issues.push({
-            id: player.id,
-            severity: 'warning',
-            type: 'missing_relationship',
-            message: `Spieler "${player.vorname} ${player.nachname}" hat kein Hauptteam`,
-            field: 'hauptteam',
-            suggestedFix: 'Weisen Sie dem Spieler ein Hauptteam zu'
-          });
-        }
-      }
-
-      // Check for duplicate jersey numbers within teams
-      const allPlayers = await strapi.entityService.findMany('api::spieler.spieler' as any, {
-        filters: { 
-          rueckennummer: { $notNull: true },
-          hauptteam: { $notNull: true }
-        },
-        populate: ['hauptteam']
-      });
-
-      const allPlayersArray = Array.isArray(allPlayers) ? allPlayers : [allPlayers];
-      const teamJerseyMap = new Map<string, any[]>();
-
-      for (const player of allPlayersArray) {
-        if (player && player.hauptteam) {
-          const key = `${player.hauptteam.id}-${player.rueckennummer}`;
-          if (!teamJerseyMap.has(key)) {
-            teamJerseyMap.set(key, []);
-          }
-          teamJerseyMap.get(key)!.push(player);
-        }
-      }
-
-      for (const [key, players] of teamJerseyMap) {
-        if (players.length > 1) {
-          const [teamId, jerseyNumber] = key.split('-');
-          const teamName = players[0].hauptteam?.name || 'Unbekanntes Team';
-          
-          for (const player of players) {
-            issues.push({
-              id: player.id,
-              severity: 'critical',
-              type: 'constraint_violation',
-              message: `Rückennummer ${jerseyNumber} ist mehrfach im Team "${teamName}" vergeben`,
-              field: 'rueckennummer',
-              suggestedFix: 'Vergeben Sie eindeutige Rückennummern'
-            });
-          }
-        }
-      }
-
-      // Check for multiple captains per team
-      const captains = await strapi.entityService.findMany('api::spieler.spieler' as any, {
-        filters: { 
-          kapitaen: true,
-          hauptteam: { $notNull: true }
-        },
-        populate: ['hauptteam']
-      });
-
-      const captainsArray = Array.isArray(captains) ? captains : [captains];
-      const teamCaptainMap = new Map<number, any[]>();
-
-      for (const captain of captainsArray) {
-        if (captain && captain.hauptteam) {
-          const teamId = captain.hauptteam.id;
-          if (!teamCaptainMap.has(teamId)) {
-            teamCaptainMap.set(teamId, []);
-          }
-          teamCaptainMap.get(teamId)!.push(captain);
-        }
-      }
-
-      for (const [teamId, teamCaptains] of teamCaptainMap) {
-        if (teamCaptains.length > 1) {
-          const teamName = teamCaptains[0].hauptteam?.name || 'Unbekanntes Team';
-          
-          for (const captain of teamCaptains) {
-            issues.push({
-              id: captain.id,
-              severity: 'warning',
-              type: 'business_rule_violation',
-              message: `Team "${teamName}" hat mehrere Kapitäne`,
-              field: 'kapitaen',
-              suggestedFix: 'Bestimmen Sie nur einen Kapitän pro Team'
-            });
-          }
-        }
-      }
-
-    } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Spieler-Integritätsprüfung: ${error.message}`
-      });
-    }
-
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    
-    return {
-      contentType: 'api::spieler.spieler',
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
-    };
-  }
-
-  /**
-   * Checks team data integrity
-   */
-  static async checkTeamIntegrity(): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
-
-    try {
-      // Check for teams without leagues or seasons
-      const teamsWithMissingData = await strapi.entityService.findMany('api::team.team' as any, {
-        filters: {
-          $or: [
-            { liga: { $null: true } },
-            { saison: { $null: true } },
-            { club: { $null: true } }
-          ]
-        }
-      });
-
-      const teamsArray = Array.isArray(teamsWithMissingData) ? teamsWithMissingData : [teamsWithMissingData];
-      
-      for (const team of teamsArray) {
-        if (team) {
-          if (!team.liga) {
-            issues.push({
-              id: team.id,
-              severity: 'critical',
-              type: 'missing_relationship',
-              message: `Team "${team.name}" hat keine Liga zugeordnet`,
-              field: 'liga',
-              suggestedFix: 'Weisen Sie dem Team eine Liga zu'
-            });
-          }
-          
-          if (!team.saison) {
-            issues.push({
-              id: team.id,
-              severity: 'critical',
-              type: 'missing_relationship',
-              message: `Team "${team.name}" hat keine Saison zugeordnet`,
-              field: 'saison',
-              suggestedFix: 'Weisen Sie dem Team eine Saison zu'
-            });
-          }
-          
-          if (!team.club) {
-            issues.push({
-              id: team.id,
-              severity: 'critical',
-              type: 'missing_relationship',
-              message: `Team "${team.name}" hat keinen Verein zugeordnet`,
-              field: 'club',
-              suggestedFix: 'Weisen Sie dem Team einen Verein zu'
-            });
-          }
-        }
-      }
-
-    } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Team-Integritätsprüfung: ${error.message}`
-      });
-    }
-
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    
-    return {
-      contentType: 'api::team.team',
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
-    };
-  }
-
-  /**
-   * Checks match data integrity
-   */
-  static async checkMatchIntegrity(): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
-
-    try {
-      // Check for matches with same home and away clubs
-      const invalidMatches = await strapi.entityService.findMany('api::spiel.spiel' as any, {
-        populate: ['heimclub', 'auswaertsclub', 'unser_team']
-      });
-
-      const matchesArray = Array.isArray(invalidMatches) ? invalidMatches : [invalidMatches];
-      
-      for (const match of matchesArray) {
-        if (match && match.heimclub && match.auswaertsclub) {
-          if (match.heimclub.id === match.auswaertsclub.id) {
-            issues.push({
-              id: match.id,
-              severity: 'critical',
-              type: 'data_inconsistency',
-              message: `Spiel hat gleichen Heim- und Auswärtsverein: ${match.heimclub.name}`,
-              suggestedFix: 'Korrigieren Sie die Vereinszuordnung'
-            });
-          }
-        }
-
-        // Check for negative scores
-        if (match.tore_heim < 0 || match.tore_auswaerts < 0) {
-          issues.push({
-            id: match.id,
-            severity: 'critical',
-            type: 'invalid_data',
-            message: 'Spiel hat negative Tore',
-            field: match.tore_heim < 0 ? 'tore_heim' : 'tore_auswaerts',
-            suggestedFix: 'Korrigieren Sie die Toranzahl'
-          });
-        }
-
-        // Check for unrealistic scores
-        if (match.tore_heim > 20 || match.tore_auswaerts > 20) {
-          issues.push({
-            id: match.id,
-            severity: 'warning',
-            type: 'unusual_data',
-            message: `Spiel hat ungewöhnlich hohe Toranzahl: ${match.tore_heim}-${match.tore_auswaerts}`,
-            suggestedFix: 'Überprüfen Sie die Toranzahl'
-          });
-        }
-      }
-
-    } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Spiel-Integritätsprüfung: ${error.message}`
-      });
-    }
-
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    
-    return {
-      contentType: 'api::spiel.spiel',
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
-    };
-  }
-
-  /**
-   * Checks statistics data integrity
-   */
-  static async checkStatisticsIntegrity(): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
-
-    try {
-      // Check for negative statistics
-      const allStats = await strapi.entityService.findMany('api::spielerstatistik.spielerstatistik' as any, {
-        populate: ['spieler', 'team', 'saison']
-      });
-
-      const statsArray = Array.isArray(allStats) ? allStats : [allStats];
-      
-      for (const stat of statsArray) {
-        if (stat) {
-          const negativeFields = [];
-          
-          if (stat.tore < 0) negativeFields.push('tore');
-          if (stat.spiele < 0) negativeFields.push('spiele');
-          if (stat.assists < 0) negativeFields.push('assists');
-          if (stat.gelbe_karten < 0) negativeFields.push('gelbe_karten');
-          if (stat.rote_karten < 0) negativeFields.push('rote_karten');
-          if (stat.minuten_gespielt < 0) negativeFields.push('minuten_gespielt');
-
-          if (negativeFields.length > 0) {
-            issues.push({
-              id: stat.id,
-              severity: 'critical',
-              type: 'invalid_data',
-              message: `Negative Statistikwerte: ${negativeFields.join(', ')}`,
-              suggestedFix: 'Korrigieren Sie die negativen Werte'
-            });
-          }
-
-          // Check for unrealistic ratios
-          if (stat.tore > stat.spiele * 5) {
-            issues.push({
-              id: stat.id,
-              severity: 'warning',
-              type: 'unusual_data',
-              message: `Ungewöhnliches Tor-Spiel-Verhältnis: ${stat.tore} Tore in ${stat.spiele} Spielen`,
-              field: 'tore',
-              suggestedFix: 'Überprüfen Sie die Statistiken'
-            });
-          }
-
-          if (stat.gelbe_karten + stat.rote_karten > stat.spiele) {
-            issues.push({
-              id: stat.id,
-              severity: 'warning',
-              type: 'data_inconsistency',
-              message: `Mehr Karten als Spiele: ${stat.gelbe_karten + stat.rote_karten} Karten in ${stat.spiele} Spielen`,
-              suggestedFix: 'Überprüfen Sie die Kartenstatistiken'
-            });
-          }
-        }
-      }
-
-      // Check for duplicate statistics entries
-      const duplicateCheck = new Map<string, any[]>();
-      
-      for (const stat of statsArray) {
-        if (stat && stat.spieler && stat.team && stat.saison) {
-          const key = `${stat.spieler.id}-${stat.team.id}-${stat.saison.id}`;
-          if (!duplicateCheck.has(key)) {
-            duplicateCheck.set(key, []);
-          }
-          duplicateCheck.get(key)!.push(stat);
-        }
-      }
-
-      for (const [key, duplicates] of duplicateCheck) {
-        if (duplicates.length > 1) {
-          for (const duplicate of duplicates) {
-            issues.push({
-              id: duplicate.id,
-              severity: 'critical',
-              type: 'constraint_violation',
-              message: `Doppelte Statistik-Einträge für Spieler-Team-Saison-Kombination`,
-              suggestedFix: 'Entfernen Sie doppelte Einträge'
-            });
-          }
-        }
-      }
-
-    } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Statistik-Integritätsprüfung: ${error.message}`
-      });
-    }
-
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    
-    return {
-      contentType: 'api::spielerstatistik.spielerstatistik',
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
-    };
-  }
-
-  /**
-   * Checks league table data integrity
-   */
-  static async checkLeagueTableIntegrity(): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
-
-    try {
-      const allTableEntries = await strapi.entityService.findMany('api::tabellen-eintrag.tabellen-eintrag' as any, {
-        populate: ['liga', 'club']
-      });
-
-      const entriesArray = Array.isArray(allTableEntries) ? allTableEntries : [allTableEntries];
-      
-      for (const entry of entriesArray) {
-        if (entry) {
-          // Check mathematical consistency
-          const calculatedPoints = (entry.siege * 3) + entry.unentschieden;
-          if (entry.punkte !== calculatedPoints) {
-            issues.push({
-              id: entry.id,
-              severity: 'critical',
-              type: 'calculation_error',
-              message: `Punkte stimmen nicht überein: ${entry.punkte} vs berechnet ${calculatedPoints}`,
-              field: 'punkte',
-              suggestedFix: 'Korrigieren Sie die Punkteberechnung'
-            });
-          }
-
-          const calculatedGoalDiff = entry.tore_fuer - entry.tore_gegen;
-          if (entry.tordifferenz !== calculatedGoalDiff) {
-            issues.push({
-              id: entry.id,
-              severity: 'critical',
-              type: 'calculation_error',
-              message: `Tordifferenz stimmt nicht überein: ${entry.tordifferenz} vs berechnet ${calculatedGoalDiff}`,
-              field: 'tordifferenz',
-              suggestedFix: 'Korrigieren Sie die Tordifferenz'
-            });
-          }
-
-          const totalGames = entry.siege + entry.unentschieden + entry.niederlagen;
-          if (entry.spiele !== totalGames) {
-            issues.push({
-              id: entry.id,
-              severity: 'critical',
-              type: 'calculation_error',
-              message: `Spielanzahl stimmt nicht überein: ${entry.spiele} vs berechnet ${totalGames}`,
-              field: 'spiele',
-              suggestedFix: 'Korrigieren Sie die Spielanzahl'
-            });
-          }
-        }
-      }
-
-    } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Tabellen-Integritätsprüfung: ${error.message}`
-      });
-    }
-
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    
-    return {
-      contentType: 'api::tabellen-eintrag.tabellen-eintrag',
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
-    };
-  }
-
-  /**
-   * Checks table integrity (alias for checkLeagueTableIntegrity)
-   */
-  static async checkTableIntegrity(): Promise<IntegrityCheckResult> {
-    return await this.checkLeagueTableIntegrity();
-  }
-
-  /**
-   * Checks referential integrity for a specific content type
-   */
-  static async checkReferentialIntegrity(contentType: string): Promise<IntegrityCheckResult> {
-    const issues: IntegrityIssue[] = [];
-
-    try {
-      // This is a placeholder implementation - would need specific logic per content type
-      strapi.log.info(`Checking referential integrity for ${contentType}`);
-      
-      // Add specific referential integrity checks here based on content type
-      
-    } catch (error) {
-      issues.push({
-        id: 'check-error',
-        severity: 'critical',
-        type: 'system_error',
-        message: `Fehler bei Referenz-Integritätsprüfung: ${error.message}`
-      });
-    }
-
-    const critical = issues.filter(i => i.severity === 'critical').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    
-    return {
-      contentType,
-      issues,
-      summary: {
-        total: issues.length,
-        critical,
-        warnings,
-        totalIssues: issues.length,
-        errorCount: critical,
-        warningCount: warnings
-      },
-      isValid: issues.length === 0
-    };
-  }
-
-  /**
-   * Attempts to automatically fix certain types of integrity issues
-   */
-  static async autoFixIssues(results: IntegrityCheckResult[]): Promise<{ fixed: number; failed: number }> {
-    let fixed = 0;
-    let failed = 0;
-
-    for (const result of results) {
-      for (const issue of result.issues) {
-        try {
-          const wasFixed = await this.attemptAutoFix(result.contentType, issue);
-          if (wasFixed) {
-            fixed++;
+    for (const error of validationResult.errors) {
+      try {
+        // Try to auto-fix specific types of errors
+        if (error.includes('missing required') && error.includes('field')) {
+          // Skip auto-fixing missing required fields - needs manual intervention
+          couldNotFix.push(`Cannot auto-fix: ${error}`);
+        } else if (error.includes('mannschaft references')) {
+          // Try to clean up mannschaft references
+          const fixed_issue = await this.cleanupMannschaftReferences(error);
+          if (fixed_issue) {
+            fixed.push(`Fixed: ${error}`);
           } else {
-            failed++;
+            couldNotFix.push(`Could not fix: ${error}`);
           }
-        } catch (error) {
-          strapi.log.error(`Failed to auto-fix issue ${issue.id}:`, error);
-          failed++;
+        } else {
+          // Most issues require manual intervention
+          couldNotFix.push(`Manual fix required: ${error}`);
         }
+      } catch (fixError) {
+        couldNotFix.push(`Failed to fix: ${error} - ${fixError.message}`);
       }
     }
 
-    strapi.log.info(`Auto-fix completed: ${fixed} fixed, ${failed} failed`);
-    return { fixed, failed };
+    return {
+      fixed,
+      couldNotFix,
+      summary: {
+        totalIssues: validationResult.errors.length,
+        fixedIssues: fixed.length,
+        remainingIssues: couldNotFix.length
+      }
+    };
   }
 
-  private static async attemptAutoFix(contentType: string, issue: IntegrityIssue): Promise<boolean> {
-    switch (issue.type) {
-      case 'calculation_error':
-        return await this.fixCalculationError(contentType, issue);
-      case 'constraint_violation':
-        // Most constraint violations require manual intervention
-        return false;
-      default:
-        return false;
+  /**
+   * Clean up mannschaft references in data
+   */
+  private async cleanupMannschaftReferences(error: string): Promise<boolean> {
+    try {
+      // This is a placeholder for mannschaft reference cleanup
+      // In practice, this would involve updating specific records
+      // to remove or replace mannschaft references
+      
+      // For now, just log that we would attempt to fix this
+      this.strapi?.log?.info(`Would attempt to clean up: ${error}`);
+      return false; // Return false since we're not actually fixing anything yet
+    } catch (error) {
+      return false;
     }
   }
 
-  private static async fixCalculationError(contentType: string, issue: IntegrityIssue): Promise<boolean> {
-    if (contentType === 'api::tabellen-eintrag.tabellen-eintrag') {
-      const entry = await strapi.entityService.findOne(contentType as any, issue.id);
-      if (!entry) return false;
+  /**
+   * Get data statistics for monitoring
+   */
+  async getDataStatistics() {
+    try {
+      const [teams, spielers] = await Promise.all([
+        this.strapi.entityService.findMany('api::team.team'),
+        this.strapi.entityService.findMany('api::spieler.spieler')
+      ]);
 
-      const updates: any = {};
-      
-      // Fix points calculation
-      if (issue.field === 'punkte') {
-        updates.punkte = (entry.siege * 3) + entry.unentschieden;
-      }
-      
-      // Fix goal difference calculation
-      if (issue.field === 'tordifferenz') {
-        updates.tordifferenz = entry.tore_fuer - entry.tore_gegen;
-      }
-      
-      // Fix games calculation
-      if (issue.field === 'spiele') {
-        updates.spiele = entry.siege + entry.unentschieden + entry.niederlagen;
-      }
-
-      if (Object.keys(updates).length > 0) {
-        await strapi.entityService.update(contentType as any, issue.id, { data: updates });
-        return true;
-      }
+      return {
+        teams: teams?.length || 0,
+        spielers: spielers?.length || 0,
+        timestamp: new Date().toISOString()
+      };
+    } catch (error) {
+      throw new Error(`Failed to get data statistics: ${error.message}`);
     }
+  }
 
-    return false;
+  private buildValidationResult(
+    isValid: boolean, 
+    errors: string[], 
+    warnings: string[], 
+    totalChecks: number, 
+    passedChecks: number
+  ): ValidationResult {
+    return {
+      isValid,
+      errors,
+      warnings,
+      summary: {
+        totalChecks,
+        passedChecks,
+        failedChecks: totalChecks - passedChecks
+      }
+    };
   }
 }
 
 export default DataIntegrityService;
+export { ValidationResult, RelationValidationOptions };

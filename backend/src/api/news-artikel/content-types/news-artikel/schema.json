@@ -34,14 +34,15 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "kategorie": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::kategorie.kategorie",
-      "inversedBy": "news_artikel",
-      "required": true
+      "inversedBy": "news_artikel"
     },
     "featured": {
       "type": "boolean",

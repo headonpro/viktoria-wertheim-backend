@@ -11,6 +11,7 @@ import NewsTicker from '@/components/NewsTicker'
 import TeamStatus from '@/components/TeamStatus'
 import SponsorShowcase from '@/components/SponsorShowcase'
 import NewsCarousel from '@/components/NewsCarousel'
+import DarkModeToggle from '@/components/DarkModeToggle'
 
 import { IconClock, IconTrophy } from '@tabler/icons-react'
 import { NewsArtikel, Spieler } from '@/types/strapi'
@@ -116,13 +117,20 @@ export default function HomePage() {
       <div>
         {/* News Ticker Section */}
         <div className="mt-3 md:-mt-2 lg:px-0">
-          <div className="lg:max-w-5xl lg:mx-auto">
+          <div className="lg:max-w-5xl lg:mx-auto relative">
             <NewsTicker onNewsClick={openModal} />
+            
+            {/* Dark Mode Toggle - Always visible */}
+            <div className="absolute top-2 md:top-3 right-4 z-10">
+              <div className="bg-white dark:bg-gray-800 backdrop-blur-md text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md border border-white/40 dark:border-white/[0.03] shadow-lg shadow-black/15 dark:shadow-white/[0.20]">
+                <DarkModeToggle />
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Team Status Section */}
-        <AnimatedSection className="px-4 md:px-6 lg:px-0 py-2 md:py-3 -mt-4 md:-mt-6" delay={0.1}>
+        <AnimatedSection className="px-4 md:px-6 lg:px-0 py-2 md:py-3 mt-3 md:-mt-2" delay={0.1}>
           <div className="lg:max-w-5xl lg:mx-auto">
             <TeamStatus 
               selectedTeam={selectedTeam} 

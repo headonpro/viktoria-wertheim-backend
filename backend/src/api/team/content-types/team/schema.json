@@ -73,12 +73,8 @@
       "target": "api::spieler.spieler",
       "mappedBy": "aushilfe_teams"
     },
-    "spiele": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::spiel.spiel",
-      "mappedBy": "unser_team"
-    },
+
+
     "liga_name": {
       "type": "string",
       "maxLength": 100

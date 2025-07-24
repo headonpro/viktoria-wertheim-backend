@@ -138,12 +138,7 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
             </div>
           </div>
 
-          {/* Dark Mode Toggle mit Badge Design */}
-          <div className="flex-shrink-0 ml-4">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md border border-white/40 dark:border-white/[0.03] shadow-lg shadow-black/15 dark:shadow-white/[0.20]">
-              <DarkModeToggle />
-            </div>
-          </div>
+
 
           {/* CSS Animation */}
           <style jsx>{`

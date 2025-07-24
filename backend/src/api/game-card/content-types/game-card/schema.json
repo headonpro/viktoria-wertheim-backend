@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_cards",
+  "info": {
+    "singularName": "game-card",
+    "pluralName": "game-cards",
+    "displayName": "Last Game Card",
+    "description": "Einfache Spieldaten für Homepage-Anzeige"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "datum": {
+      "type": "datetime",
+      "required": true
+    },
+    "gegner": {
+      "type": "string",
+      "maxLength": 50,
+      "required": true
+    },
+    "ist_heimspiel": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "unsere_tore": {
+      "type": "integer",
+      "min": 0
+    },
+    "gegner_tore": {
+      "type": "integer",
+      "min": 0
+    }
+  }
+}

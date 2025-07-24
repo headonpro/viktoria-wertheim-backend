@@ -200,73 +200,15 @@ export interface Team {
     spielers?: {
       data: Spieler[];
     };
-    spiele?: {
-      data: Spiel[];
-    };
+    // spiele removed since Spiel content type was removed
     publishedAt: string;
     createdAt: string;
     updatedAt: string;
   };
 }
 
-export interface Spiel {
-  id: number;
-  attributes: {
-    datum: string;
-    heimmannschaft?: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-        };
-      };
-    };
-    auswaertsmannschaft?: {
-      data: {
-        id: number;
-        attributes: {
-          name: string;
-        };
-      };
-    };
-    tore_heim?: number;
-    tore_auswaerts?: number;
-    spielort?: string;
-    liga?: string;
-    spieltag?: number;
-    saison?: string;
-    status: 'geplant' | 'live' | 'beendet' | 'abgesagt' | 'verschoben';
-    spielbericht?: string;
-    zuschauer?: number;
-    wetter?: 'sonnig' | 'bewoelkt' | 'regen' | 'schnee' | 'wind';
-    schiedsrichter?: string;
-    bemerkungen?: string;
-    // New fields for match events
-    torschuetzen?: Array<{
-      minute: number;
-      player: string;
-      team: 'home' | 'away';
-    }>;
-    gelbe_karten?: Array<{
-      minute: number;
-      player: string;
-      team: 'home' | 'away';
-    }>;
-    rote_karten?: Array<{
-      minute: number;
-      player: string;
-      team: 'home' | 'away';
-    }>;
-    letztes_aufeinandertreffen?: {
-      date: string;
-      result: string;
-      location: 'heim' | 'auswaerts';
-    };
-    publishedAt: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
+// Spiel interface removed since Spiel content type was removed
+// Use Game Cards instead for match data
 
 // Enhanced interfaces for team management system
 export interface TeamData {
@@ -322,6 +264,53 @@ export interface GameDetails {
     date: string;
     result: string;
     location: 'heim' | 'auswaerts';
+  };
+}
+
+export interface Mannschaft {
+  id: number;
+  documentId?: string;
+  attributes: {
+    name: string;
+    display_name?: string;
+    liga: string;
+    liga_vollname?: string;
+    trainer?: string;
+    co_trainer?: string;
+    trainingszeiten?: string;
+    heimspieltag?: string;
+    altersklasse?: string;
+    teamfoto?: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+          alternativeText?: string;
+          caption?: string;
+          width: number;
+          height: number;
+        };
+      };
+    };
+    tabellenplatz?: number;
+    punkte: number;
+    spiele_gesamt: number;
+    siege: number;
+    unentschieden: number;
+    niederlagen: number;
+    tore_fuer: number;
+    tore_gegen: number;
+    tordifferenz: number;
+    form_letzte_5: ('S' | 'U' | 'N')[];
+    trend: 'steigend' | 'gleich' | 'fallend';
+    status: 'aktiv' | 'inaktiv' | 'pausiert';
+    spielers?: {
+      data: Spieler[];
+    };
+    // spiele removed since Spiel content type was removed
+    publishedAt?: string;
+    createdAt: string;
+    updatedAt: string;
   };
 }
 

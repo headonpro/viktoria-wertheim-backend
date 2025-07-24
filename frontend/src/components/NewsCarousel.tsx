@@ -19,11 +19,11 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   if (isDesktopSidebar) {
     return (
       <div 
-        className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+        className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden cursor-pointer hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
       >
         {/* Title Header */}
         <div className="px-8 md:px-12 py-6 md:py-8 text-center">
-          <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
             Neueste Nachrichten
           </h2>
         </div>
@@ -144,12 +144,12 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   // Mobile/tablet version - horizontal carousel
   return (
     <div 
-      className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-8 md:p-12 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:transform hover:translateY(-2px)"
+      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-8 md:p-12 overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
     >
       {/* Title Header */}
       <div className="mb-6 md:mb-8">
         <div className="text-center">
-          <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
             Neueste Nachrichten
           </h2>
         </div>

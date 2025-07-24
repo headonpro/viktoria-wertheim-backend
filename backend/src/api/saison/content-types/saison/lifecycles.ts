@@ -183,6 +183,8 @@ async function enforceActiveSeasonConstraint(data: any, excludeId?: any) {
  * Validates that a season can be safely deleted
  */
 async function validateSeasonDeletion(seasonId: any) {
+  // Match dependency check removed since Spiel content type was removed
+  
   // Check for dependent teams
   const teams = await strapi.entityService.findMany('api::team.team' as any, {
     filters: { saison: seasonId },
@@ -197,22 +199,6 @@ async function validateSeasonDeletion(seasonId: any) {
   
   if (teamsArray.length > 0) {
     throw new Error('Saison kann nicht gelöscht werden: Es sind noch Teams zugeordnet');
-  }
-  
-  // Check for dependent matches
-  const matches = await strapi.entityService.findMany('api::spiel.spiel' as any, {
-    filters: { saison: seasonId },
-    pagination: { limit: 1 }
-  });
-  
-  // Handle both array and single object responses
-  let matchesArray: any[] = [];
-  if (matches) {
-    matchesArray = Array.isArray(matches) ? matches : [matches];
-  }
-  
-  if (matchesArray.length > 0) {
-    throw new Error('Saison kann nicht gelöscht werden: Es sind noch Spiele zugeordnet');
   }
   
   // Check for dependent leagues

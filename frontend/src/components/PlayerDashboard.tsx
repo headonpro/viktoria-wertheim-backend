@@ -248,7 +248,7 @@ export default function PlayerDashboard() {
               )}
             </div>
             {playerData.attributes.rueckennummer && (
-              <div className="absolute -bottom-2 -right-2 bg-yellow-500 text-green-900 text-xs font-bold rounded-full w-8 h-8 flex items-center justify-center">
+              <div className="absolute -bottom-2 -right-2 bg-viktoria-yellow text-gray-800 text-xs font-bold rounded-full w-8 h-8 flex items-center justify-center">
                 {playerData.attributes.rueckennummer}
               </div>
             )}
@@ -564,7 +564,7 @@ export default function PlayerDashboard() {
 
           <Link 
             href="/news"
-            className="flex flex-col items-center p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors"
+            className="flex flex-col items-center p-4 bg-viktoria-yellow/10 rounded-lg hover:bg-viktoria-yellow/20 transition-colors"
           >
             <span className="text-2xl mb-2">📰</span>
             <span className="text-sm font-medium text-gray-700">News</span>

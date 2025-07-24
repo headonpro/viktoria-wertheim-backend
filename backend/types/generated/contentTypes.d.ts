@@ -457,6 +457,10 @@ export interface ApiClubClub extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
+    next_game_cards: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::next-game-card.next-game-card'
+    >;
     niederlagen: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -498,6 +502,10 @@ export interface ApiClubClub extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<0>;
+    tabellen_eintraege: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tabellen-eintrag.tabellen-eintrag'
+    >;
     teams: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
     tordifferenz: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     tore_fuer: Schema.Attribute.Integer &
@@ -538,11 +546,62 @@ export interface ApiClubClub extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGameCardGameCard extends Struct.CollectionTypeSchema {
+  collectionName: 'game_cards';
+  info: {
+    description: 'Einfache Spieldaten f\u00FCr Homepage-Anzeige';
+    displayName: 'Last Game Card';
+    pluralName: 'game-cards';
+    singularName: 'game-card';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    datum: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    gegner: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    gegner_tore: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    ist_heimspiel: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-card.game-card'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    unsere_tore: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiKategorieKategorie extends Struct.CollectionTypeSchema {
   collectionName: 'kategorien';
   info: {
     description: 'Kategorien f\u00FCr News-Artikel';
-    displayName: 'Kategorie';
+    displayName: 'News Kategorien';
     pluralName: 'kategorien';
     singularName: 'kategorie';
   };
@@ -626,62 +685,6 @@ export interface ApiLigaLiga extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiMannschaftMannschaft extends Struct.CollectionTypeSchema {
-  collectionName: 'mannschaften';
-  info: {
-    description: 'Teams des Vereins';
-    displayName: 'Mannschaft';
-    pluralName: 'mannschaften';
-    singularName: 'mannschaft';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    altersklasse: Schema.Attribute.String;
-    co_trainer: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    display_name: Schema.Attribute.String;
-    form_letzte_5: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
-    heimspieltag: Schema.Attribute.String;
-    liga: Schema.Attribute.String & Schema.Attribute.Required;
-    liga_vollname: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::mannschaft.mannschaft'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    niederlagen: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    publishedAt: Schema.Attribute.DateTime;
-    punkte: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    siege: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    spiele: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'>;
-    spiele_gesamt: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    spieler: Schema.Attribute.Relation<'oneToMany', 'api::spieler.spieler'>;
-    status: Schema.Attribute.Enumeration<['aktiv', 'inaktiv', 'pausiert']> &
-      Schema.Attribute.DefaultTo<'aktiv'>;
-    tabellenplatz: Schema.Attribute.Integer;
-    teamfoto: Schema.Attribute.Media<'images'>;
-    tordifferenz: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    tore_fuer: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    tore_gegen: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    trainer: Schema.Attribute.String;
-    trainingszeiten: Schema.Attribute.Text;
-    trend: Schema.Attribute.Enumeration<['steigend', 'gleich', 'fallend']> &
-      Schema.Attribute.DefaultTo<'gleich'>;
-    unentschieden: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiMitgliedMitglied extends Struct.CollectionTypeSchema {
   collectionName: 'mitglieder';
   info: {
@@ -722,6 +725,10 @@ export interface ApiMitgliedMitglied extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 50;
+      }>;
+    nationalitaet: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 5;
       }>;
     notizen: Schema.Attribute.Text & Schema.Attribute.Private;
     oeffentlich_sichtbar: Schema.Attribute.Boolean &
@@ -779,8 +786,7 @@ export interface ApiNewsArtikelNewsArtikel extends Struct.CollectionTypeSchema {
     kategorie: Schema.Attribute.Relation<
       'manyToOne',
       'api::kategorie.kategorie'
-    > &
-      Schema.Attribute.Required;
+    >;
     kurzbeschreibung: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
@@ -814,6 +820,40 @@ export interface ApiNewsArtikelNewsArtikel extends Struct.CollectionTypeSchema {
         maxLength: 200;
       }>;
     titelbild: Schema.Attribute.Media<'images'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNextGameCardNextGameCard
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'next_game_cards';
+  info: {
+    description: 'Einfache Spieldaten f\u00FCr n\u00E4chstes Spiel auf Homepage';
+    displayName: 'Next Game Card';
+    pluralName: 'next-game-cards';
+    singularName: 'next-game-card';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    datum: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    gegner_club: Schema.Attribute.Relation<'manyToOne', 'api::club.club'>;
+    ist_heimspiel: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::next-game-card.next-game-card'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -859,93 +899,6 @@ export interface ApiSaisonSaison extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-  };
-}
-
-export interface ApiSpielSpiel extends Struct.CollectionTypeSchema {
-  collectionName: 'spiele';
-  info: {
-    description: 'Matches with comprehensive event tracking and club relationships';
-    displayName: 'Spiel';
-    pluralName: 'spiele';
-    singularName: 'spiel';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    auswaertsclub: Schema.Attribute.Relation<'manyToOne', 'api::club.club'> &
-      Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    datum: Schema.Attribute.DateTime & Schema.Attribute.Required;
-    heimclub: Schema.Attribute.Relation<'manyToOne', 'api::club.club'> &
-      Schema.Attribute.Required;
-    ist_heimspiel: Schema.Attribute.Boolean & Schema.Attribute.Required;
-    karten: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
-    liga: Schema.Attribute.Relation<'manyToOne', 'api::liga.liga'> &
-      Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'> &
-      Schema.Attribute.Private;
-    notizen: Schema.Attribute.Text;
-    publishedAt: Schema.Attribute.DateTime;
-    saison: Schema.Attribute.Relation<'manyToOne', 'api::saison.saison'> &
-      Schema.Attribute.Required;
-    schiedsrichter: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
-    spielbericht: Schema.Attribute.RichText;
-    spielort: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
-    spieltag: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 1;
-        },
-        number
-      >;
-    status: Schema.Attribute.Enumeration<
-      ['geplant', 'laufend', 'beendet', 'abgesagt']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'geplant'>;
-    tore_auswaerts: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    tore_heim: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
-    torschuetzen: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
-    unser_team: Schema.Attribute.Relation<'manyToOne', 'api::team.team'> &
-      Schema.Attribute.Required;
-    unsere_mannschaft: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::mannschaft.mannschaft'
-    >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    wechsel: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
-    zuschauer: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      >;
   };
 }
 
@@ -1352,7 +1305,6 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<0>;
-    spiele: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'>;
     spiele_gesamt: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -2014,13 +1966,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::club.club': ApiClubClub;
+      'api::game-card.game-card': ApiGameCardGameCard;
       'api::kategorie.kategorie': ApiKategorieKategorie;
       'api::liga.liga': ApiLigaLiga;
-      'api::mannschaft.mannschaft': ApiMannschaftMannschaft;
       'api::mitglied.mitglied': ApiMitgliedMitglied;
       'api::news-artikel.news-artikel': ApiNewsArtikelNewsArtikel;
+      'api::next-game-card.next-game-card': ApiNextGameCardNextGameCard;
       'api::saison.saison': ApiSaisonSaison;
-      'api::spiel.spiel': ApiSpielSpiel;
       'api::spieler.spieler': ApiSpielerSpieler;
       'api::spielerstatistik.spielerstatistik': ApiSpielerstatistikSpielerstatistik;
       'api::sponsor.sponsor': ApiSponsorSponsor;

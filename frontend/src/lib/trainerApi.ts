@@ -25,7 +25,7 @@ export interface TrainerTeam {
           position: string
           rueckennummer?: number
           tore: number
-          spiele: number
+          spiele: number // kept for compatibility but not populated from Spiel API
           foto?: {
             data: {
               attributes: {

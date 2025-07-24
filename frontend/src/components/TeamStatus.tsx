@@ -118,7 +118,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
   const getFormColor = (result: 'S' | 'U' | 'N') => {
     switch (result) {
       case 'S': return 'bg-green-500 text-white hover:bg-green-600'
-      case 'U': return 'bg-yellow-500 text-white hover:bg-yellow-600'
+      case 'U': return 'bg-viktoria-yellow text-gray-800 hover:bg-viktoria-yellow/90'
       case 'N': return 'bg-red-500 text-white hover:bg-red-600'
       default: return 'bg-gray-400 text-white hover:bg-gray-500'
     }
@@ -166,24 +166,23 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
       : "text-gray-700 dark:text-gray-300"; // Normale Schrift für inaktive Buttons
     
     switch (team) {
-      case '1': return <IconCircle1 size={32} className={iconClass} strokeWidth={2.5} />
-      case '2': return <IconCircle2 size={32} className={iconClass} strokeWidth={2.5} />
-      case '3': return <IconCircle3 size={32} className={iconClass} strokeWidth={2.5} />
-      default: return <IconCircle1 size={32} className={iconClass} strokeWidth={2.5} />
+      case '1': return <IconCircle1 size={24} className={iconClass} strokeWidth={2.5} />
+      case '2': return <IconCircle2 size={24} className={iconClass} strokeWidth={2.5} />
+      case '3': return <IconCircle3 size={24} className={iconClass} strokeWidth={2.5} />
+      default: return <IconCircle1 size={24} className={iconClass} strokeWidth={2.5} />
     }
   }
 
   return (
     <div className="container max-w-6xl">
-      <AnimatedDiv
-        className="bg-gray-100/40 dark:bg-white/[0.04] rounded-xl md:rounded-2xl border border-gray-200/60 dark:border-white/[0.08] overflow-hidden hover:bg-gray-100/60 dark:hover:bg-white/[0.06] transition-colors duration-150 shadow-sm hover:shadow-md"
-        delay={0.1}
+      <div
+        className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 cursor-pointer hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
       >
         {/* Mannschaftsauswahl Buttons */}
-        <div className="px-8 py-6 md:px-12 md:py-8">
+        <div className="relative z-10 px-8 py-6 md:px-12 md:py-8">
           {/* Titel */}
           <div className="text-center mb-6 md:mb-8">
-            <h3 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+            <h3 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               Mannschaften
             </h3>
           </div>
@@ -193,16 +192,16 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                 <button
                   onClick={() => handleTeamChange(team)}
                   className={`
-                    min-h-[48px] min-w-[48px] 
-                    px-4 py-3 sm:px-6 sm:py-2 md:px-8 md:py-3 
+                    min-h-[36px] min-w-[48px] 
+                    px-4 py-1.5 sm:px-6 sm:py-1.5 md:px-8 md:py-2 
                     rounded-lg text-sm md:text-base font-semibold 
-                    transition-all duration-200 
+                    transition-all duration-300 
                     whitespace-nowrap flex items-center justify-center gap-2
                     touch-manipulation
                     active:scale-95
                     ${selectedTeam === team
-                      ? 'bg-viktoria-yellow text-gray-800'
-                      : 'bg-gray-200 dark:bg-white/[0.05] text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-white/[0.08] border border-gray-300/50 dark:border-white/[0.05]'
+                      ? 'bg-viktoria-yellow text-gray-800 shadow-lg shadow-viktoria-yellow/30'
+                      : 'bg-white/10 backdrop-blur-sm text-gray-700 dark:text-gray-200 hover:bg-white/15 hover:text-gray-600 dark:hover:text-white border border-white/20 hover:border-white/30 shadow-md hover:shadow-lg'
                     }
                   `}
                   aria-label={`${team}. Mannschaft auswählen`}
@@ -210,7 +209,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                   aria-selected={selectedTeam === team}
                 >
                   <span className="block sm:hidden">{getTeamIcon(team, selectedTeam === team)}</span>
-                  <span className="hidden sm:flex items-center gap-2">
+                  <span className="hidden sm:flex items-center gap-1">
                     {getTeamIcon(team, selectedTeam === team)}
                     <span className="hidden md:inline">Mannschaft</span>
                   </span>
@@ -219,58 +218,38 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
             ))}
           </div>
 
-          {/* Loading State */}
-          {(loading || isTransitioning) && (
-            <div className="text-center py-8">
-              <div className="inline-flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-viktoria-yellow border-t-transparent rounded-full animate-spin"></div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {isTransitioning ? 'Wechsle Mannschaft...' : 'Lade Mannschaftsdaten...'}
-                </div>
-              </div>
-            </div>
-          )}
 
-          {/* Error State */}
-          {error && !loading && (
-            <div className="text-center py-4">
-              <div className="text-sm text-orange-600 dark:text-orange-400 mb-2">
-                {error}
-              </div>
-            </div>
-          )}
 
-          {/* Team Data Display */}
-          {!loading && teamData && (
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-end transition-all duration-500 ease-in-out">
+          {/* Team Data Display - Always show, no loading states */}
+          <div className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-end transition-all duration-500 ease-in-out">
               
               {/* Platz - Links */}
               <div className="text-center">
-                <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
+                <div className="text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
                   Platz
                 </div>
                 <div className="flex items-center justify-center space-x-1 h-8 md:h-10">
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 transition-all duration-300">
-                    {teamData.tabellenplatz}
+                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 transition-all duration-300">
+                    {teamData?.tabellenplatz || '-'}
                   </div>
-                  <div className="flex items-center ml-1" title={getTrendText(teamData.trend)}>
-                    {getTrendIcon(teamData.trend)}
+                  <div className="flex items-center ml-1" title={getTrendText(teamData?.trend || 'gleich')}>
+                    {getTrendIcon(teamData?.trend || 'gleich')}
                   </div>
                 </div>
               </div>
 
               {/* Form - Mitte */}
               <div className="text-center">
-                <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
+                <div className="text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
                   Form
                 </div>
                 <div className="flex space-x-1 sm:space-x-1.5 justify-center items-center h-8 md:h-10">
-                  {teamData.form_letzte_5.length > 0 ? (
+                  {teamData?.form_letzte_5 && teamData.form_letzte_5.length > 0 ? (
                     teamData.form_letzte_5.map((result, index) => (
                       <div
                         key={index}
                         title={`${getFormTooltip(result)} (Spiel ${teamData.form_letzte_5.length - index})`}
-                        className={`w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-7 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-colors duration-150 cursor-help relative touch-manipulation`}
+                        className={`w-3 h-3.5 sm:w-4 sm:h-4 md:w-4 md:h-5 rounded-full flex items-center justify-center text-xs font-bold ${getFormColor(result)} transition-colors duration-150 cursor-help relative touch-manipulation shadow-lg`}
                         style={{ 
                           animationDelay: `${index * 100}ms`,
                           animation: 'fadeInScale 0.5s ease-out forwards'
@@ -280,7 +259,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                       </div>
                     ))
                   ) : (
-                    <div className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
+                    <div className="text-sm text-gray-400 dark:text-gray-500 animate-pulse">
                       Keine Daten
                     </div>
                   )}
@@ -289,28 +268,27 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
 
               {/* Liga - Rechts */}
               <div className="text-center">
-                <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide mb-2">
+                <div className="text-xs font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
                   Liga
                 </div>
                 <div className="flex items-center justify-center h-8 md:h-10">
-                  <div className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 dark:text-gray-200 leading-tight text-center max-w-full overflow-hidden">
+                  <div className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 leading-tight text-center max-w-full overflow-hidden">
                     <span className="block sm:hidden">
-                      {teamData.liga_vollname ? 
+                      {teamData?.liga_vollname ? 
                         teamData.liga_vollname.split(' ').slice(0, 2).join(' ') : 
-                        teamData.liga
+                        teamData?.liga || '-'
                       }
                     </span>
                     <span className="hidden sm:block">
-                      {teamData.liga_vollname || teamData.liga}
+                      {teamData?.liga_vollname || teamData?.liga || '-'}
                     </span>
                   </div>
                 </div>
               </div>
               
             </div>
-          )}
         </div>
-      </AnimatedDiv>
+      </div>
     </div>
   )
 } 

@@ -3,7 +3,7 @@
  * Handles periodic maintenance tasks and automated data processing
  */
 
-import AutomatedProcessingService from './automated-processing';
+// AutomatedProcessingService removed - functionality moved to other services
 import AuditLoggerService from './audit-logger';
 
 export class ScheduledTasksService {
@@ -82,17 +82,8 @@ export class ScheduledTasksService {
     );
 
     try {
-      // Run data consistency maintenance
-      const maintenanceResult = await AutomatedProcessingService.runDataConsistencyMaintenance();
-      
-      if (!maintenanceResult.success) {
-        await AuditLoggerService.logSystemEvent(
-          'daily_maintenance_issues',
-          'high',
-          `Daily maintenance completed with issues: ${maintenanceResult.errors?.join(', ')}`,
-          { result: maintenanceResult }
-        );
-      }
+      // Data consistency maintenance moved to individual services
+      strapi.log.info('Running simplified daily maintenance tasks');
 
       // Clean up old audit logs (keep last 30 days)
       await this.cleanupOldAuditLogs(30);
@@ -173,25 +164,18 @@ export class ScheduledTasksService {
     );
 
     try {
-      // Run comprehensive integrity check
-      const integrityResult = await AutomatedProcessingService.runDataConsistencyMaintenance();
+      // Run simplified integrity check using Data Integrity Service
+      const dataIntegrityService = strapi.service('api::system-maintenance.data-integrity');
+      const integrityResult = await dataIntegrityService.validateAllData();
       
-      // Count critical issues
-      const criticalIssues = integrityResult.details?.reduce((count: number, result: any) => {
-        if (result.operation === 'integrity_check' && result.results) {
-          return count + result.results.reduce((sum: number, checkResult: any) => {
-            return sum + checkResult.summary.critical;
-          }, 0);
-        }
-        return count;
-      }, 0) || 0;
+      const criticalIssues = integrityResult.errors?.length || 0;
 
       if (criticalIssues > 0) {
         await AuditLoggerService.logSystemEvent(
           'weekly_integrity_critical_issues',
           'critical',
           `Weekly integrity check found ${criticalIssues} critical issues`,
-          { criticalIssues, result: integrityResult }
+          { criticalIssues, errors: integrityResult.errors }
         );
       }
 
@@ -303,7 +287,6 @@ export class ScheduledTasksService {
         season: season.name,
         generatedAt: new Date(),
         topScorers: await strapi.service('api::spielerstatistik.spielerstatistik').getTopScorers(season.id, 10),
-        matchesThisWeek: await this.getMatchesFromLastWeek(),
         statisticsSummary: await this.getStatisticsSummary(season.id)
       };
 
@@ -314,7 +297,7 @@ export class ScheduledTasksService {
         'weekly_report_generated',
         'low',
         `Weekly statistics report generated for season ${season.name}`,
-        { reportSummary: { topScorersCount: report.topScorers.length, matchesCount: report.matchesThisWeek.length } }
+        { reportSummary: { topScorersCount: report.topScorers.length } }
       );
 
     } catch (error) {
@@ -322,23 +305,7 @@ export class ScheduledTasksService {
     }
   }
 
-  /**
-   * Get matches from the last week
-   */
-  private static async getMatchesFromLastWeek(): Promise<any[]> {
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-    const matches = await strapi.entityService.findMany('api::spiel.spiel' as any, {
-      filters: {
-        datum: { $gte: oneWeekAgo.toISOString() },
-        status: 'beendet'
-      },
-      populate: ['heimclub', 'auswaertsclub', 'unser_team']
-    });
-
-    return Array.isArray(matches) ? matches : [matches];
-  }
 
   /**
    * Get statistics summary for a season

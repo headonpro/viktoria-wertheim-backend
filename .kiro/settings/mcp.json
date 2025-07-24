@@ -19,6 +19,43 @@
         "browser_get_console_logs",
         "browser_press_key"
       ]
+    },
+    "strapi-mcp": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\debug-mcp-server.js"
+      ],
+      "env": {
+        "STRAPI_URL": "http://localhost:1337",
+        "STRAPI_ADMIN_EMAIL": "cirakoglu.onur@gmail.com",
+        "STRAPI_ADMIN_PASSWORD": "VW123c0nnect!",
+        "STRAPI_DEV_MODE": "true"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "list_content_types",
+        "get_entries",
+        "get_entry",
+        "create_entry",
+        "update_entry",
+        "delete_entry"
+      ]
+    },
+    "strapi-mcp-test": {
+      "command": "npx",
+      "args": [
+        "strapi-mcp"
+      ],
+      "env": {
+        "STRAPI_URL": "http://localhost:1337",
+        "STRAPI_ADMIN_EMAIL": "cirakoglu.onur@gmail.com",
+        "STRAPI_ADMIN_PASSWORD": "VW123c0nnect!",
+        "STRAPI_DEV_MODE": "true"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "list_content_types"
+      ]
     }
   }
 }
