@@ -9,6 +9,10 @@ export default (config, { strapi }) => {
     try {
       await next();
     } catch (error) {
+      // Skip error handling for Strapi admin routes to avoid interference
+      if (ctx.url.startsWith('/admin') || ctx.url.startsWith('/content-manager')) {
+        throw error; // Let Strapi handle admin errors natively
+      }
       // Log the error for debugging
       strapi.log.error('API Error occurred:', {
         url: ctx.url,

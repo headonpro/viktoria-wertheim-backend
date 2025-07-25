@@ -97,6 +97,21 @@
       "relation": "oneToMany",
       "target": "api::next-game-card.next-game-card",
       "mappedBy": "gegner_team"
+    },
+    "form_letzte_5": {
+      "type": "string",
+      "maxLength": 5,
+      "regex": "^[SUN]{0,5}$"
+    },
+    "team_typ": {
+      "type": "enumeration",
+      "enum": ["viktoria_mannschaft", "gegner_verein"],
+      "default": "gegner_verein"
+    },
+    "trend": {
+      "type": "enumeration",
+      "enum": ["steigend", "neutral", "fallend"],
+      "default": "neutral"
     }
   }
 }

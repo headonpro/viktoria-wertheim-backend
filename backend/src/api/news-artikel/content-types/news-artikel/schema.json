@@ -46,6 +46,12 @@
       "type": "uid",
       "targetField": "titel",
       "required": true
+    },
+    "kategorie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kategorie.kategorie",
+      "inversedBy": "news_artikels"
     }
   }
 }

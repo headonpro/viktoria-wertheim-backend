@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react'
 import dynamic from 'next/dynamic'
-import { IconCircle1, IconCircle2, IconCircle3 } from '@tabler/icons-react'
+import { IconCircle1, IconCircle2, IconCircle3, IconTrendingUp, IconTrendingDown, IconMinus } from '@tabler/icons-react'
 import { teamService } from '@/services/teamService'
 import { TeamData, TeamId } from '@/types/strapi'
 
@@ -130,6 +130,17 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
     }
   }
 
+  const getTrendIcon = (trend?: 'steigend' | 'neutral' | 'fallend') => {
+    const iconClass = "text-gray-600 dark:text-gray-400"
+    
+    switch (trend) {
+      case 'steigend': return <IconTrendingUp size={16} className="text-green-500" strokeWidth={2} />
+      case 'fallend': return <IconTrendingDown size={16} className="text-red-500" strokeWidth={2} />
+      case 'neutral':
+      default: return <IconMinus size={16} className={iconClass} strokeWidth={2} />
+    }
+  }
+
   return (
     <div className="container max-w-6xl">
       <div
@@ -186,20 +197,39 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                   Platz
                 </div>
                 <div className="flex items-center justify-center h-8 md:h-10">
-                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 transition-all duration-300">
-                    {teamData?.tabellenplatz || '-'}
+                  <div className="flex items-center gap-2">
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 transition-all duration-300">
+                      {teamData?.tabellenplatz || '-'}
+                    </div>
+                    {teamData?.trend && (
+                      <div className="flex items-center">
+                        {getTrendIcon(teamData.trend)}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Punkte - Mitte */}
+              {/* Form */}
               <div className="text-center">
                 <div className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
-                  Punkte
+                  Form
                 </div>
                 <div className="flex items-center justify-center h-8 md:h-10">
-                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 transition-all duration-300">
-                    {teamData?.punkte || 0}
+                  <div className="flex space-x-1">
+                    {(teamData?.form_letzte_5 || '-----').split('').map((result, index) => (
+                      <div
+                        key={index}
+                        className={`w-4 h-4 md:w-5 md:h-5 rounded-full text-xs flex items-center justify-center font-bold ${
+                          result === 'S' ? 'bg-green-500 text-white' :
+                          result === 'U' ? 'bg-yellow-500 text-white' :
+                          result === 'N' ? 'bg-red-500 text-white' :
+                          'bg-gray-300 dark:bg-gray-600'
+                        }`}
+                      >
+                        {result !== '-' ? result : ''}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

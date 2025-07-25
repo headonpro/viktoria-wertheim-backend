@@ -57,18 +57,8 @@ export default function HomePage() {
         // Get team name for filtering
         const selectedTeamName = teamNames[selectedTeam]
 
-        // Fetch top scorers and news
-        const [playersResponse, newsResponse] = await Promise.all([
-          strapi.get('/spielerstatistiks', {
-            params: {
-              sort: 'tore:desc',
-              'filters[tore][$gt]': 0,
-              'pagination[limit]': 5,
-              'populate[0]': 'spieler',
-              'populate[1]': 'team',
-              'populate[2]': 'saison'
-            }
-          }),
+        // Fetch news only - spielerstatistiks endpoint was removed in backend simplification
+        const [newsResponse] = await Promise.all([
           strapi.get('/news-artikels', {
             params: {
               populate: '*', // Strapi 5 format
@@ -78,20 +68,16 @@ export default function HomePage() {
           })
         ])
 
-        // Use API data with fallback for missing player data
-        const apiPlayers = playersResponse.data.data || []
+        // Use API data for news, fallback data for players since spielerstatistiks was removed
         const apiNews = newsResponse.data.data || []
         
-        // If no players found for selected team, show fallback message
-        if (apiPlayers.length === 0 && process.env.NODE_ENV !== 'test') {
-          console.warn(`No players found for team: ${selectedTeamName}`)
-        }
-        
-        setTopScorers(apiPlayers)
+        // Use empty array for top scorers since the API was removed
+        console.warn('HomePage: spielerstatistiks API was removed - TopScorers component will handle its own data')
+        setTopScorers([])
         setNewsArticles(apiNews)
       } catch (err) {
         console.error('Error fetching homepage data:', err)
-        // Show empty state with team context
+        // Show empty state
         setTopScorers([])
         setNewsArticles([])
       } finally {

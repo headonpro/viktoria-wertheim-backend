@@ -228,6 +228,10 @@ export interface TeamData {
   tore_gegen: number;
   tordifferenz: number;
   trainer?: string;
+  form_letzte_5?: string;
+  team_typ?: 'viktoria_mannschaft' | 'gegner_verein';
+  liga_name?: string;
+  trend?: 'steigend' | 'neutral' | 'fallend';
 }
 
 export interface GameDetails {

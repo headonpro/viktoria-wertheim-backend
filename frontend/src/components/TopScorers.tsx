@@ -4,52 +4,25 @@ import { useState, useEffect } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { IconTrophy } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
-import axios from 'axios'
-import { getApiUrl } from '@/lib/apiConfig'
+import { topScorersService, TopScorer } from '@/services/topScorersService'
 
 const AnimatedSection = dynamic(
   () => import('@/components/AnimatedSection'),
   { ssr: false }
 )
 
-interface TopScorer {
+interface TopScorerDisplay {
   position: number
   name: string
   team: string
   goals: number
   games: number
-  isOwnPlayer?: boolean
-}
-
-interface SpielerStatistikData {
-  id: number
-  documentId: string
-  tore: number
-  spiele: number
-  assists: number
-  spieler: {
-    id: number
-    documentId: string
-    vorname: string
-    nachname: string
-    position?: string
-    status: string
-  }
-  team: {
-    id: number
-    documentId: string
-    name: string
-  }
-  saison: {
-    id: number
-    documentId: string
-    name: string
-  }
+  isOwnPlayer: boolean
 }
 
 const TopScorers = () => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const [topScorers, setTopScorers] = useState<TopScorer[]>([])
+  const [topScorers, setTopScorers] = useState<TopScorerDisplay[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   
@@ -61,38 +34,32 @@ const TopScorers = () => {
     return { firstName, lastName }
   }
 
-  // API-Daten laden
+  // API-Daten laden mit neuem Service
   useEffect(() => {
     const fetchTopScorers = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`${getApiUrl()}/api/spielerstatistiks`, {
-          params: {
-            sort: 'tore:desc',
-            'filters[tore][$gt]': 0,
-            'pagination[limit]': 10,
-            'populate[0]': 'spieler',
-            'populate[1]': 'team',
-            'populate[2]': 'saison'
-          }
-        })
-
-        const spielerStatistikData: SpielerStatistikData[] = response.data.data
-        const formattedScorers: TopScorer[] = spielerStatistikData.map((statistik, index) => ({
-          position: index + 1,
-          name: `${statistik.spieler.vorname || 'Unbekannt'} ${statistik.spieler.nachname || ''}`.trim(),
-          team: statistik.team?.name || 'Viktoria Wertheim',
-          goals: statistik.tore,
-          games: statistik.spiele,
-          isOwnPlayer: true
-        }))
-
-        setTopScorers(formattedScorers)
         setError(null)
+        
+        const apiData = await topScorersService.fetchTopScorers(10)
+        
+        // Transform API data to display format
+        const displayData: TopScorerDisplay[] = apiData.map((scorer, index) => ({
+          position: index + 1,
+          name: scorer.name,
+          team: scorer.team_name,
+          goals: scorer.tore,
+          games: scorer.spiele,
+          isOwnPlayer: scorer.ist_viktoria_spieler
+        }))
+        
+        setTopScorers(displayData)
       } catch (err) {
         console.error('Fehler beim Laden der Torschützendaten:', err)
         setError('Torschützendaten konnten nicht geladen werden')
-        // Fallback zu statischen Daten
+        
+        // Service handles fallback internally, so this shouldn't happen
+        // But keep minimal fallback just in case
         setTopScorers([
           { position: 1, name: 'Thomas Müller', team: 'Viktoria Wertheim', goals: 12, games: 18, isOwnPlayer: true },
           { position: 2, name: 'Michael Schmidt', team: 'Viktoria Wertheim', goals: 9, games: 18, isOwnPlayer: true },

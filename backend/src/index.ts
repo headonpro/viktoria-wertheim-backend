@@ -18,6 +18,7 @@ async function setupPublicPermissions(strapi: any) {
     // Define the content types that should be publicly accessible
     const publicContentTypes = [
       'api::news-artikel.news-artikel',
+      'api::kategorie.kategorie',
       'api::tabellen-eintrag.tabellen-eintrag',
       'api::team.team',
       'api::liga.liga',
@@ -101,6 +102,50 @@ export default {
     try {
       // Set up public API permissions for frontend access
       await setupPublicPermissions(strapi);
+
+      // Create default categories if they don't exist
+      try {
+        const existingCategories = await strapi.entityService.findMany('api::kategorie.kategorie');
+        
+        if (existingCategories.length === 0) {
+          const defaultCategories = [
+            {
+              name: 'Mannschaft',
+              beschreibung: 'News über die Mannschaften',
+              farbe: '#FFD700',
+              reihenfolge: 1
+            },
+            {
+              name: 'Verein',
+              beschreibung: 'Vereinsnachrichten',
+              farbe: '#003366',
+              reihenfolge: 2
+            },
+            {
+              name: 'Jugend',
+              beschreibung: 'Jugendmannschaften',
+              farbe: '#354992',
+              reihenfolge: 3
+            },
+            {
+              name: 'Veranstaltungen',
+              beschreibung: 'Vereinsveranstaltungen',
+              farbe: '#FF6B35',
+              reihenfolge: 4
+            }
+          ];
+
+          for (const category of defaultCategories) {
+            await strapi.entityService.create('api::kategorie.kategorie', {
+              data: category
+            });
+          }
+          
+          strapi.log.info('✅ Default categories created successfully');
+        }
+      } catch (error) {
+        strapi.log.error('❌ Error creating default categories:', error);
+      }
 
       strapi.log.info('Backend initialization completed successfully');
 

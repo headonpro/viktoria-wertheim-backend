@@ -1,7 +1,7 @@
 export default [
   'strapi::logger',
   'strapi::errors',
-  'global::error-handler', // Custom error handler for consistent error formatting
+  'global::error-handler', // Re-enabled with admin route exclusion
   'strapi::security',
   {
     name: 'strapi::cors',

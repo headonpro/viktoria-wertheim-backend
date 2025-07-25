@@ -20,6 +20,10 @@ interface StrapiV5Team {
   tore_fuer?: number
   tore_gegen?: number
   tordifferenz?: number
+  form_letzte_5?: string
+  team_typ?: 'viktoria_mannschaft' | 'gegner_verein'
+  liga_name?: string
+  trend?: 'steigend' | 'neutral' | 'fallend'
   liga?: {
     id: number
     documentId: string
@@ -54,7 +58,8 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       tore_fuer: 32,
       tore_gegen: 28,
       tordifferenz: 4,
-      trainer: 'Max Mustermann'
+      trainer: 'Max Mustermann',
+      trend: 'neutral'
     },
     '2': {
       id: 2,
@@ -69,7 +74,8 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       tore_fuer: 35,
       tore_gegen: 22,
       tordifferenz: 13,
-      trainer: 'Hans Schmidt'
+      trainer: 'Hans Schmidt',
+      trend: 'steigend'
     },
     '3': {
       id: 3,
@@ -84,7 +90,8 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       tore_fuer: 18,
       tore_gegen: 31,
       tordifferenz: -13,
-      trainer: 'Peter Weber'
+      trainer: 'Peter Weber',
+      trend: 'fallend'
     }
   }
   
@@ -93,9 +100,10 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
 
 // Transform Strapi v5 Team to TeamData
 const transformStrapiV5ToTeamData = (strapiTeam: StrapiV5Team): TeamData => {
-  // Get liga name from relation if available
+  // Get liga name from relation if available, fallback to liga_name field
   const ligaName = strapiTeam.liga?.name || 
                    strapiTeam.liga?.kurz_name || 
+                   strapiTeam.liga_name ||
                    'Unbekannte Liga'
   
   return {
@@ -111,7 +119,11 @@ const transformStrapiV5ToTeamData = (strapiTeam: StrapiV5Team): TeamData => {
     tore_fuer: strapiTeam.tore_fuer || 0,
     tore_gegen: strapiTeam.tore_gegen || 0,
     tordifferenz: strapiTeam.tordifferenz || 0,
-    trainer: strapiTeam.trainer
+    trainer: strapiTeam.trainer,
+    form_letzte_5: strapiTeam.form_letzte_5,
+    team_typ: strapiTeam.team_typ,
+    liga_name: strapiTeam.liga_name,
+    trend: strapiTeam.trend || 'neutral'
   }
 }
 
@@ -133,25 +145,22 @@ export const teamService = {
         '3': '3. Mannschaft'
       }
       
-      const response = await axios.get<StrapiV5Team[]>(
+      const response = await axios.get(
         `${API_BASE_URL}/api/teams`,
         {
           params: {
             'filters[name][$eq]': teamNames[teamId],
-            'populate': {
-              liga: true,
-              saison: true
-            }
+            populate: '*'
           }
         }
       )
 
-      if (!response.data || response.data.length === 0) {
+      if (!response.data || !response.data.data || response.data.data.length === 0) {
         console.warn(`No API data found for team ${teamId}, using fallback`)
         return getFallbackTeamData(teamId)
       }
 
-      return transformStrapiV5ToTeamData(response.data[0])
+      return transformStrapiV5ToTeamData(response.data.data[0])
 
     } catch (error) {
       console.warn(`Error fetching team data for ${teamId}:`, error)

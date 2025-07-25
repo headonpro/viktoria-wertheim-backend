@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spieler_statistiks",
+  "info": {
+    "singularName": "spieler-statistik",
+    "pluralName": "spieler-statistiks",
+    "displayName": "Spieler Statistik",
+    "description": "Einfache Spielerstatistiken ohne Relations"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "team_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "tore": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "spiele": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "ist_viktoria_spieler": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

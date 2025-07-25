@@ -86,36 +86,43 @@ const transformStrapiV5TabellenEintragToTeam = (strapiEntry: StrapiV5TabellenEin
 // API Service Functions
 export const leagueService = {
   /**
-   * Fetch all league standings from Strapi (using tabellen-eintraege)
+   * Fetch all league standings from Strapi (using teams endpoint)
    * @returns Promise<Team[]> - Array of teams sorted by position
    */
   async fetchLeagueStandings(): Promise<Team[]> {
     try {
-      const response = await axios.get<StrapiV5Response>(
-        `${API_BASE_URL}/api/tabellen-eintraege`,
+      const response = await axios.get(
+        `${API_BASE_URL}/api/teams`,
         {
           params: {
-            sort: 'platz:asc', // Sort by position ascending
+            sort: 'tabellenplatz:asc', // Sort by position ascending
             'pagination[pageSize]': 100, // Get all teams
-            'populate': {
-              team: {
-                populate: ['teamfoto']
-              },
-              liga: true
-            }
+            populate: '*'
           }
         }
       )
 
-      if (!response.data?.data) {
+      if (!response.data || !response.data.data) {
         throw new Error('Invalid API response structure')
       }
 
-      // Transform and return sorted data
+      // Transform team data to league table format
       return response.data.data
-        .map(transformStrapiV5TabellenEintragToTeam)
-        .filter(team => team.position > 0) // Only teams with valid positions
-        .sort((a, b) => a.position - b.position)
+        .map((team: any) => ({
+          position: team.tabellenplatz || 0,
+          name: team.name || 'Unknown Team',
+          logo: team.teamfoto?.url ? `${API_BASE_URL}${team.teamfoto.url}` : undefined,
+          games: team.spiele_gesamt || 0,
+          wins: team.siege || 0,
+          draws: team.unentschieden || 0,
+          losses: team.niederlagen || 0,
+          goalsFor: team.tore_fuer || 0,
+          goalsAgainst: team.tore_gegen || 0,
+          goalDifference: team.tordifferenz || 0,
+          points: team.punkte || 0
+        }))
+        .filter((team: Team) => team.position > 0) // Only teams with valid positions
+        .sort((a: Team, b: Team) => a.position - b.position)
 
     } catch (error) {
       console.error('Error fetching league standings:', error)
@@ -130,31 +137,52 @@ export const leagueService = {
    */
   async fetchLeagueStandingsByLeague(leagueName: string): Promise<Team[]> {
     try {
-      const response = await axios.get<StrapiV5Response>(
-        `${API_BASE_URL}/api/tabellen-eintraege`,
-        {
+      // Try both liga relation and liga_name field for flexibility
+      const [relationResponse, nameResponse] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/teams`, {
           params: {
             'filters[liga][name][$eq]': leagueName,
-            sort: 'platz:asc',
+            sort: 'tabellenplatz:asc',
             'pagination[pageSize]': 100,
-            'populate': {
-              team: {
-                populate: ['teamfoto']
-              },
-              liga: true
-            }
+            populate: '*'
           }
-        }
+        }).catch(() => ({ data: [] })),
+        axios.get(`${API_BASE_URL}/api/teams`, {
+          params: {
+            'filters[liga_name][$eq]': leagueName,
+            sort: 'tabellenplatz:asc',
+            'pagination[pageSize]': 100,
+            populate: '*'
+          }
+        }).catch(() => ({ data: [] }))
+      ])
+
+      // Combine results and remove duplicates
+      const allTeams = [...(relationResponse.data?.data || []), ...(nameResponse.data?.data || [])]
+      const uniqueTeams = allTeams.filter((team, index, self) => 
+        index === self.findIndex(t => t.id === team.id)
       )
 
-      if (!response.data?.data) {
+      if (uniqueTeams.length === 0) {
         return []
       }
 
-      return response.data.data
-        .map(transformStrapiV5TabellenEintragToTeam)
-        .filter(team => team.position > 0)
-        .sort((a, b) => a.position - b.position)
+      return uniqueTeams
+        .map((team: any) => ({
+          position: team.tabellenplatz || 0,
+          name: team.name || 'Unknown Team',
+          logo: team.teamfoto?.url ? `${API_BASE_URL}${team.teamfoto.url}` : undefined,
+          games: team.spiele_gesamt || 0,
+          wins: team.siege || 0,
+          draws: team.unentschieden || 0,
+          losses: team.niederlagen || 0,
+          goalsFor: team.tore_fuer || 0,
+          goalsAgainst: team.tore_gegen || 0,
+          goalDifference: team.tordifferenz || 0,
+          points: team.punkte || 0
+        }))
+        .filter((team: Team) => team.position > 0)
+        .sort((a: Team, b: Team) => a.position - b.position)
 
     } catch (error) {
       console.error(`Error fetching league standings for ${leagueName}:`, error)
@@ -169,26 +197,34 @@ export const leagueService = {
    */
   async fetchTeamStanding(teamName: string): Promise<Team | null> {
     try {
-      const response = await axios.get<StrapiV5Response>(
-        `${API_BASE_URL}/api/tabellen-eintraege`,
+      const response = await axios.get(
+        `${API_BASE_URL}/api/teams`,
         {
           params: {
-            'filters[team][name][$eq]': teamName,
-            'populate': {
-              team: {
-                populate: ['teamfoto']
-              },
-              liga: true
-            }
+            'filters[name][$eq]': teamName,
+            populate: '*'
           }
         }
       )
 
-      if (!response.data?.data || response.data.data.length === 0) {
+      if (!response.data || !response.data.data || response.data.data.length === 0) {
         return null
       }
 
-      return transformStrapiV5TabellenEintragToTeam(response.data.data[0])
+      const team = response.data.data[0]
+      return {
+        position: team.tabellenplatz || 0,
+        name: team.name || 'Unknown Team',
+        logo: team.teamfoto?.url ? `${API_BASE_URL}${team.teamfoto.url}` : undefined,
+        games: team.spiele_gesamt || 0,
+        wins: team.siege || 0,
+        draws: team.unentschieden || 0,
+        losses: team.niederlagen || 0,
+        goalsFor: team.tore_fuer || 0,
+        goalsAgainst: team.tore_gegen || 0,
+        goalDifference: team.tordifferenz || 0,
+        points: team.punkte || 0
+      }
 
     } catch (error) {
       console.error(`Error fetching team standing for ${teamName}:`, error)

@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kategorien",
+  "info": {
+    "singularName": "kategorie",
+    "pluralName": "kategorien",
+    "displayName": "Kategorie",
+    "description": "Kategorien für News-Artikel"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 100
+    },
+    "beschreibung": {
+      "type": "text",
+      "required": false
+    },
+    "farbe": {
+      "type": "string",
+      "required": false,
+      "maxLength": 7,
+      "regex": "^#[0-9A-Fa-f]{6}$"
+    },
+    "reihenfolge": {
+      "type": "integer",
+      "required": false,
+      "default": 0
+    },
+    "news_artikels": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::news-artikel.news-artikel",
+      "mappedBy": "kategorie"
+    }
+  }
+}

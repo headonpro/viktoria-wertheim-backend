@@ -51,15 +51,6 @@ export default {
       },
     },
     
-    // Simplified custom route for league-specific team queries
-    {
-      method: 'GET',
-      path: '/teams/by-league',
-      handler: 'team.byLeague',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
+
   ],
 };

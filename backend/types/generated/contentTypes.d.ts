@@ -461,6 +461,50 @@ export interface ApiGameCardGameCard extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiKategorieKategorie extends Struct.CollectionTypeSchema {
+  collectionName: 'kategorien';
+  info: {
+    description: 'Kategorien f\u00FCr News-Artikel';
+    displayName: 'Kategorie';
+    pluralName: 'kategorien';
+    singularName: 'kategorie';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    beschreibung: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    farbe: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 7;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kategorie.kategorie'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    news_artikels: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::news-artikel.news-artikel'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    reihenfolge: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLigaLiga extends Struct.CollectionTypeSchema {
   collectionName: 'ligas';
   info: {
@@ -525,6 +569,10 @@ export interface ApiNewsArtikelNewsArtikel extends Struct.CollectionTypeSchema {
     datum: Schema.Attribute.DateTime & Schema.Attribute.Required;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     inhalt: Schema.Attribute.RichText & Schema.Attribute.Required;
+    kategorie: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::kategorie.kategorie'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -614,6 +662,63 @@ export interface ApiSaisonSaison extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     start_datum: Schema.Attribute.Date & Schema.Attribute.Required;
     teams: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSpielerStatistikSpielerStatistik
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'spieler_statistiks';
+  info: {
+    description: 'Einfache Spielerstatistiken ohne Relations';
+    displayName: 'Spieler Statistik';
+    pluralName: 'spieler-statistiks';
+    singularName: 'spieler-statistik';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ist_viktoria_spieler: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::spieler-statistik.spieler-statistik'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    spiele: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    team_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    tore: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -804,6 +909,10 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    form_letzte_5: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 5;
+      }>;
     liga: Schema.Attribute.Relation<'manyToOne', 'api::liga.liga'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::team.team'> &
@@ -864,6 +973,10 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<1>;
+    team_typ: Schema.Attribute.Enumeration<
+      ['viktoria_mannschaft', 'gegner_verein']
+    > &
+      Schema.Attribute.DefaultTo<'gegner_verein'>;
     teamfoto: Schema.Attribute.Media<'images'>;
     tordifferenz: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     tore_fuer: Schema.Attribute.Integer &
@@ -886,6 +999,8 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
+    trend: Schema.Attribute.Enumeration<['steigend', 'neutral', 'fallend']> &
+      Schema.Attribute.DefaultTo<'neutral'>;
     unentschieden: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -1487,10 +1602,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::game-card.game-card': ApiGameCardGameCard;
+      'api::kategorie.kategorie': ApiKategorieKategorie;
       'api::liga.liga': ApiLigaLiga;
       'api::news-artikel.news-artikel': ApiNewsArtikelNewsArtikel;
       'api::next-game-card.next-game-card': ApiNextGameCardNextGameCard;
       'api::saison.saison': ApiSaisonSaison;
+      'api::spieler-statistik.spieler-statistik': ApiSpielerStatistikSpielerStatistik;
       'api::sponsor.sponsor': ApiSponsorSponsor;
       'api::tabellen-eintrag.tabellen-eintrag': ApiTabellenEintragTabellenEintrag;
       'api::team.team': ApiTeamTeam;

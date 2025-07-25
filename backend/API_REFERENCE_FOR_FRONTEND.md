@@ -28,8 +28,9 @@ const headers = {
 | Ligas | `/api/ligas` | Football leagues | Teams, Saison |
 | Saisons | `/api/saisons` | Football seasons | Teams, Ligas |
 | News-Artikels | `/api/news-artikels` | News articles | None |
-| Tabellen-Eintraege | `/api/tabellen-eintraege` | League table entries | Team, Liga |
+| Teams | `/api/teams` | Teams with league table data | Liga, Saison |
 | Game-Cards | `/api/game-cards` | Match information | Teams |
+| Next-Game-Cards | `/api/next-game-cards` | Upcoming matches | Teams |
 | Sponsors | `/api/sponsors` | Club sponsors | None |
 
 ## Teams API
@@ -46,6 +47,14 @@ const { data } = await response.json();
 
 // With filters
 const response = await fetch(`${API_BASE_URL}/api/teams?filters[liga][id][$eq]=1&sort=tabellenplatz:asc`);
+const { data } = await response.json();
+
+// Filter by team type
+const response = await fetch(`${API_BASE_URL}/api/teams?filters[team_typ][$eq]=viktoria_mannschaft`);
+const { data } = await response.json();
+
+// Filter by league name
+const response = await fetch(`${API_BASE_URL}/api/teams?filters[liga_name][$eq]=Kreisliga Tauberbischofsheim`);
 const { data } = await response.json();
 ```
 
@@ -65,6 +74,9 @@ interface Team {
     tore_gegen: number;              // Goals against (default: 0)
     tordifferenz: number;            // Goal difference (default: 0)
     tabellenplatz: number;           // Table position (default: 1)
+    form_letzte_5?: string;          // Form of last 5 games (S/U/N, max 5 chars)
+    team_typ?: 'viktoria_mannschaft' | 'gegner_verein'; // Team type (default: gegner_verein)
+    liga_name?: string;              // League name for simple filtering
     teamfoto?: {                     // Team photo
       data?: {
         id: number;
@@ -537,5 +549,78 @@ export const strapiService = new StrapiService();
 - Use TypeScript interfaces for all API responses
 - Validate API responses at runtime if needed
 - Keep types in sync with backend schema
+
+## Spieler-Statistiks API
+
+### Get Top Scorers
+```typescript
+// Get all player statistics
+const response = await fetch(`${API_BASE_URL}/api/spieler-statistiks?sort=tore:desc`);
+const { data } = await response.json();
+
+// Get top 10 scorers
+const response = await fetch(`${API_BASE_URL}/api/spieler-statistiks?sort=tore:desc&pagination[limit]=10`);
+const { data } = await response.json();
+
+// Get only Viktoria players
+const response = await fetch(`${API_BASE_URL}/api/spieler-statistiks?filters[ist_viktoria_spieler][$eq]=true&sort=tore:desc`);
+const { data } = await response.json();
+```
+
+### Spieler-Statistik Data Structure
+```typescript
+interface SpielerStatistik {
+  id: number;
+  attributes: {
+    name: string;                    // Player full name (required)
+    team_name: string;               // Team name as string (required)
+    tore: number;                    // Goals scored (default: 0)
+    spiele: number;                  // Games played (default: 0)
+    ist_viktoria_spieler: boolean;   // Is Viktoria player (default: false)
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+```
+
+### Example Usage
+```typescript
+// TopScorersService.ts
+export const getTopScorers = async (limit: number = 10): Promise<SpielerStatistik[]> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/spieler-statistiks?sort=tore:desc&pagination[limit]=${limit}`
+  );
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch top scorers');
+  }
+  
+  const { data } = await response.json();
+  return data;
+};
+
+// Component usage
+const TopScorers = () => {
+  const [topScorers, setTopScorers] = useState<SpielerStatistik[]>([]);
+  
+  useEffect(() => {
+    getTopScorers(10)
+      .then(setTopScorers)
+      .catch(console.error);
+  }, []);
+  
+  return (
+    <div>
+      {topScorers.map(player => (
+        <div key={player.id} className={player.attributes.ist_viktoria_spieler ? 'viktoria-player' : ''}>
+          <h3>{player.attributes.name}</h3>
+          <p>Team: {player.attributes.team_name}</p>
+          <p>Goals: {player.attributes.tore} in {player.attributes.spiele} games</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+```
 
 This API reference provides everything needed to integrate with the simplified Viktoria Wertheim backend. The API follows standard REST conventions and provides predictable, well-structured responses for all frontend needs.
