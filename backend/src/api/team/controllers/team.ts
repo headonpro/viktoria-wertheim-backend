@@ -1,264 +1,221 @@
 /**
- * team controller
+ * team controller - Ultra-simplified version with enhanced error handling
  */
 
 import { factories } from '@strapi/strapi';
+import { ValidationService } from '../../../services/ValidationService';
 
 export default factories.createCoreController('api::team.team', ({ strapi }) => ({
   /**
    * Find teams with populated relationships
    */
   async find(ctx) {
-    const { query } = ctx;
-    
-    // Use custom service method for populated data
-    const teams = await strapi.service('api::team.team').findWithPopulate(query);
-    
-    return teams;
-  },
-
-  /**
-   * Find one team with populated relationships
-   */
-  async findOne(ctx) {
-    const { id } = ctx.params;
-    const { query } = ctx;
-    
-    // Use custom service method for populated data
-    const team = await strapi.service('api::team.team').findOneWithPopulate(parseInt(id), query);
-    
-    if (!team) {
-      return ctx.notFound('Team not found');
-    }
-    
-    return team;
-  },
-
-  /**
-   * Get teams by season
-   */
-  async bySeason(ctx) {
-    const { saisonId } = ctx.query;
-    
-    if (!saisonId) {
-      return ctx.badRequest('saisonId is required');
-    }
-    
     try {
-      const teams = await strapi.service('api::team.team').findBySeason(
-        parseInt(saisonId as string),
-        ctx.query
-      );
+      const { query } = ctx;
+      
+      strapi.log.debug('Team.find: Fetching teams with query', { query });
+      
+      // Use custom service method for populated data
+      const teams = await strapi.service('api::team.team').findWithPopulate(query);
+      
+      strapi.log.debug('Team.find: Successfully fetched teams', { count: teams?.length || 0 });
       
       return teams;
     } catch (error) {
-      return ctx.badRequest('Error fetching teams by season', { error: error.message });
+      strapi.log.error('Team.find: Error fetching teams', {
+        error: error.message,
+        query: ctx.query
+      });
+      
+      // Let the global error handler format the response
+      throw error;
     }
   },
 
   /**
-   * Get teams by league
+   * Get teams by league with enhanced validation and error handling
    */
   async byLeague(ctx) {
-    const { ligaId } = ctx.query;
-    
-    if (!ligaId) {
-      return ctx.badRequest('ligaId is required');
-    }
-    
     try {
+      const { ligaId } = ctx.query;
+      
+      strapi.log.debug('Team.byLeague: Request received', { ligaId, query: ctx.query });
+      
+      // Validate required parameter
+      if (!ligaId) {
+        strapi.log.warn('Team.byLeague: Missing required parameter ligaId');
+        return ctx.badRequest(
+          ValidationService.createErrorResponse(
+            'ligaId parameter is required',
+            'MISSING_PARAMETER'
+          )
+        );
+      }
+      
+      // Validate ligaId is a valid number
+      const parsedLigaId = parseInt(ligaId as string);
+      if (isNaN(parsedLigaId) || parsedLigaId <= 0) {
+        strapi.log.warn('Team.byLeague: Invalid ligaId parameter', { ligaId });
+        return ctx.badRequest(
+          ValidationService.createErrorResponse(
+            'ligaId must be a valid positive number',
+            'INVALID_PARAMETER'
+          )
+        );
+      }
+      
       const teams = await strapi.service('api::team.team').findByLeague(
-        parseInt(ligaId as string),
+        parsedLigaId,
         ctx.query
       );
       
+      strapi.log.debug('Team.byLeague: Successfully fetched teams', { 
+        ligaId: parsedLigaId, 
+        count: teams?.length || 0 
+      });
+      
       return teams;
     } catch (error) {
-      return ctx.badRequest('Error fetching teams by league', { error: error.message });
+      strapi.log.error('Team.byLeague: Error fetching teams by league', {
+        error: error.message,
+        ligaId: ctx.query.ligaId,
+        query: ctx.query
+      });
+      
+      // Let the global error handler format the response
+      throw error;
     }
   },
 
   /**
-   * Get active teams
+   * Create team with validation
    */
-  async active(ctx) {
+  async create(ctx) {
     try {
-      const teams = await strapi.service('api::team.team').findActive(ctx.query);
-      return teams;
-    } catch (error) {
-      return ctx.badRequest('Error fetching active teams', { error: error.message });
-    }
-  },
-
-  /**
-   * Get team with matches
-   */
-  async withMatches(ctx) {
-    const { id } = ctx.params;
-    const { saisonId } = ctx.query;
-    
-    try {
-      const team = await strapi.service('api::team.team').findWithMatches(
-        parseInt(id),
-        saisonId ? parseInt(saisonId as string) : undefined
+      const { data } = ctx.request.body;
+      
+      strapi.log.debug('Team.create: Creating new team', { data });
+      
+      // Validate required fields
+      const requiredFields = ['name', 'liga', 'saison'];
+      const validation = ValidationService.validateRequiredWithDetails(data, requiredFields);
+      
+      if (!validation.isValid) {
+        strapi.log.warn('Team.create: Validation failed', { errors: validation.errors });
+        return ctx.badRequest(ValidationService.formatErrorResponse(validation.errors));
+      }
+      
+      // Check name uniqueness within the same league and season
+      const isUnique = await ValidationService.validateUnique(
+        'api::team.team',
+        'name',
+        data.name
       );
       
-      if (!team) {
-        return ctx.notFound('Team not found');
+      if (!isUnique) {
+        strapi.log.warn('Team.create: Team name already exists', { name: data.name });
+        return ctx.badRequest(
+          ValidationService.createErrorResponse(
+            `Team name '${data.name}' already exists`,
+            'DUPLICATE_NAME'
+          )
+        );
       }
+      
+      // Create the team
+      const team = await strapi.entityService.create('api::team.team', {
+        data,
+        populate: ['liga', 'saison']
+      });
+      
+      strapi.log.info('Team.create: Team created successfully', { 
+        teamId: team.id, 
+        name: team.name 
+      });
       
       return team;
     } catch (error) {
-      return ctx.badRequest('Error fetching team with matches', { error: error.message });
+      strapi.log.error('Team.create: Error creating team', {
+        error: error.message,
+        data: ctx.request.body?.data
+      });
+      
+      throw error;
     }
   },
 
   /**
-   * Get team roster
+   * Update team with validation
    */
-  async roster(ctx) {
-    const { id } = ctx.params;
-    
+  async update(ctx) {
     try {
-      const roster = await strapi.service('api::team.team').getTeamRoster(parseInt(id));
-      return roster;
-    } catch (error) {
-      return ctx.badRequest('Error fetching team roster', { error: error.message });
-    }
-  },
-
-  /**
-   * Update team statistics
-   */
-  async updateStatistics(ctx) {
-    const { id } = ctx.params;
-    const { saisonId } = ctx.query;
-    
-    try {
-      const updatedTeam = await strapi.service('api::team.team').updateTeamStatistics(
-        parseInt(id),
-        saisonId ? parseInt(saisonId as string) : undefined
-      );
+      const { id } = ctx.params;
+      const { data } = ctx.request.body;
+      
+      strapi.log.debug('Team.update: Updating team', { id, data });
+      
+      // Validate ID
+      const teamId = parseInt(id);
+      if (isNaN(teamId) || teamId <= 0) {
+        return ctx.badRequest(
+          ValidationService.createErrorResponse(
+            'Invalid team ID',
+            'INVALID_ID'
+          )
+        );
+      }
+      
+      // Check if team exists
+      const existingTeam = await strapi.entityService.findOne('api::team.team', teamId);
+      if (!existingTeam) {
+        return ctx.notFound(
+          ValidationService.createErrorResponse(
+            'Team not found',
+            'NOT_FOUND',
+            404
+          )
+        );
+      }
+      
+      // Validate name uniqueness if name is being updated
+      if (data.name && data.name !== existingTeam.name) {
+        const isUnique = await ValidationService.validateUnique(
+          'api::team.team',
+          'name',
+          data.name,
+          teamId
+        );
+        
+        if (!isUnique) {
+          return ctx.badRequest(
+            ValidationService.createErrorResponse(
+              `Team name '${data.name}' already exists`,
+              'DUPLICATE_NAME'
+            )
+          );
+        }
+      }
+      
+      // Update the team
+      const updatedTeam = await strapi.entityService.update('api::team.team', teamId, {
+        data,
+        populate: ['liga', 'saison']
+      });
+      
+      strapi.log.info('Team.update: Team updated successfully', { 
+        teamId, 
+        name: updatedTeam.name 
+      });
       
       return updatedTeam;
     } catch (error) {
-      return ctx.badRequest('Error updating team statistics', { error: error.message });
-    }
-  },
-
-  /**
-   * Get league standings
-   */
-  async standings(ctx) {
-    const { ligaId, saisonId } = ctx.query;
-    
-    if (!ligaId || !saisonId) {
-      return ctx.badRequest('ligaId and saisonId are required');
-    }
-    
-    try {
-      const standings = await strapi.service('api::team.team').getLeagueStandings(
-        parseInt(ligaId as string),
-        parseInt(saisonId as string)
-      );
-      
-      return standings;
-    } catch (error) {
-      return ctx.badRequest('Error fetching league standings', { error: error.message });
-    }
-  },
-
-  /**
-   * Validate team data
-   */
-  async validate(ctx) {
-    const { id } = ctx.params;
-    
-    try {
-      const validation = await strapi.service('api::team.team').validateTeamData(parseInt(id));
-      return validation;
-    } catch (error) {
-      return ctx.badRequest('Error validating team data', { error: error.message });
-    }
-  },
-
-  /**
-   * Get comprehensive team details
-   */
-  async details(ctx) {
-    const { id } = ctx.params;
-    const { saisonId } = ctx.query;
-    
-    try {
-      const details = await strapi.service('api::team.team').getTeamDetails(
-        parseInt(id),
-        saisonId ? parseInt(saisonId as string) : undefined
-      );
-      
-      return details;
-    } catch (error) {
-      return ctx.badRequest('Error fetching team details', { error: error.message });
-    }
-  },
-
-  /**
-   * Custom create with enhanced validation
-   */
-  async create(ctx) {
-    const { data } = ctx.request.body;
-    
-    try {
-      // Validate required relationships exist
-      if (data.club) {
-        const club = await strapi.entityService.findOne('api::club.club', data.club);
-        if (!club) {
-          return ctx.badRequest('Club not found');
-        }
-      }
-      
-      if (data.liga) {
-        const liga = await strapi.entityService.findOne('api::liga.liga', data.liga);
-        if (!liga) {
-          return ctx.badRequest('Liga not found');
-        }
-      }
-      
-      if (data.saison) {
-        const saison = await strapi.entityService.findOne('api::saison.saison', data.saison);
-        if (!saison) {
-          return ctx.badRequest('Saison not found');
-        }
-      }
-      
-      // Create team using default create method
-      const team = await strapi.entityService.create('api::team.team', {
-        data,
-        populate: ['club', 'liga', 'saison', 'spieler', 'aushilfe_spieler'] as any
+      strapi.log.error('Team.update: Error updating team', {
+        error: error.message,
+        id: ctx.params.id,
+        data: ctx.request.body?.data
       });
       
-      return team;
-    } catch (error) {
-      return ctx.badRequest('Error creating team', { error: error.message });
-    }
-  },
-
-  /**
-   * Custom update with enhanced validation
-   */
-  async update(ctx) {
-    const { id } = ctx.params;
-    const { data } = ctx.request.body;
-    
-    try {
-      // Update team using default update method
-      const team = await strapi.entityService.update('api::team.team', parseInt(id), {
-        data,
-        populate: ['club', 'liga', 'saison', 'spieler', 'aushilfe_spieler'] as any
-      });
-      
-      return team;
-    } catch (error) {
-      return ctx.badRequest('Error updating team', { error: error.message });
+      throw error;
     }
   }
 }));

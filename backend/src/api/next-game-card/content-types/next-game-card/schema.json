@@ -16,10 +16,10 @@
       "type": "datetime",
       "required": true
     },
-    "gegner_club": {
+    "gegner_team": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::club.club",
+      "target": "api::team.team",
       "inversedBy": "next_game_cards"
     },
     "ist_heimspiel": {

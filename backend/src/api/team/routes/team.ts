@@ -1,8 +1,6 @@
 /**
- * team router
+ * team router - Ultra-simplified version
  */
-
-import { factories } from '@strapi/strapi';
 
 export default {
   routes: [
@@ -53,83 +51,11 @@ export default {
       },
     },
     
-    // Custom routes for team management
-    {
-      method: 'GET',
-      path: '/teams/by-season',
-      handler: 'team.bySeason',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
+    // Simplified custom route for league-specific team queries
     {
       method: 'GET',
       path: '/teams/by-league',
       handler: 'team.byLeague',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/teams/active',
-      handler: 'team.active',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/teams/:id/with-matches',
-      handler: 'team.withMatches',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/teams/:id/roster',
-      handler: 'team.roster',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'POST',
-      path: '/teams/:id/update-statistics',
-      handler: 'team.updateStatistics',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/teams/standings',
-      handler: 'team.standings',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/teams/:id/validate',
-      handler: 'team.validate',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/teams/:id/details',
-      handler: 'team.details',
       config: {
         policies: [],
         middlewares: [],

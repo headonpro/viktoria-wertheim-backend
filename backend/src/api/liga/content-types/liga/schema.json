@@ -28,17 +28,6 @@
       "target": "api::saison.saison",
       "inversedBy": "ligas"
     },
-    "clubs": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::club.club",
-      "inversedBy": "ligas"
-    },
-    "spieltage_gesamt": {
-      "type": "integer",
-      "default": 30,
-      "min": 1
-    },
     "teams": {
       "type": "relation",
       "relation": "oneToMany",

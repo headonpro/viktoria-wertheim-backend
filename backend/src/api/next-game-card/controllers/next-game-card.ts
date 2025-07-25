@@ -20,10 +20,10 @@ export default factories.createCoreController('api::next-game-card.next-game-car
         sort: { datum: 'asc' },
         limit: 1,
         populate: {
-          gegner_club: {
-            fields: ['name', 'kurz_name'],
+          gegner_team: {
+            fields: ['name'],
             populate: {
-              logo: true
+              teamfoto: true
             }
           }
         }

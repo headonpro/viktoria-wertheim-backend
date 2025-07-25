@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "players",
+  "info": {
+    "singularName": "player",
+    "pluralName": "players",
+    "displayName": "Spieler",
+    "description": "Vereinsspieler mit Team-Zuordnung"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "vorname": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "nachname": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "rueckennummer": {
+      "type": "integer",
+      "min": 1,
+      "max": 99,
+      "unique": false
+    },
+    "position": {
+      "type": "enumeration",
+      "enum": [
+        "Torwart",
+        "Abwehr",
+        "Mittelfeld",
+        "Sturm"
+      ],
+      "required": false
+    },
+    "team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::team.team",
+      "inversedBy": "players"
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "aktiv",
+        "verletzt",
+        "gesperrt"
+      ],
+      "default": "aktiv",
+      "required": true
+    },
+    "kapitaen": {
+      "type": "boolean",
+      "default": false
+    },
+    "geburtsdatum": {
+      "type": "date",
+      "required": false
+    },
+    "nationalitaet": {
+      "type": "string",
+      "maxLength": 5,
+      "required": false
+    }
+  }
+}

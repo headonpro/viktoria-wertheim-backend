@@ -280,12 +280,12 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
     <AnimatedSection>
       <div className="container max-w-6xl">
         <div
-          className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 cursor-pointer hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
+          className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
           onClick={toggleExpanded}
         >
           {/* Title Header */}
           <div className="relative z-10 px-8 md:px-12 py-6 md:py-8 text-center">
-            <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+            <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               {getLeagueName(selectedTeam)}
             </h2>
           </div>
@@ -369,13 +369,12 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
                     key={team.position}
                     className={`
                     px-4 sm:px-6 md:px-8 py-3 sm:py-2.5 md:py-3 
-                    transition-all duration-300 
                     touch-manipulation
                     min-h-[48px] flex items-center
                     relative overflow-hidden
                     ${isViktoriaTeam
                         ? 'cursor-pointer'
-                        : 'hover:bg-white/20 dark:hover:bg-white/10 active:bg-white/30 dark:active:bg-white/15'
+                        : ''
                       }
                   `}
                   >
@@ -479,13 +478,12 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
                     key={team.position}
                     className={`
                     px-4 sm:px-6 md:px-8 py-3 sm:py-2.5 md:py-3 
-                    transition-all duration-300 
                     touch-manipulation
                     min-h-[48px] flex items-center
                     relative overflow-hidden
                     ${isViktoriaTeam
                         ? 'cursor-pointer'
-                        : 'hover:bg-white/20 dark:hover:bg-white/10 active:bg-white/30 dark:active:bg-white/15'
+                        : ''
                       }
                   `}
                   >
@@ -581,7 +579,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
           {/* Expand/Collapse Indicator */}
           <div className="relative z-10 px-6 sm:px-8 md:px-12 py-4 sm:py-6 md:py-8 text-center transition-colors touch-manipulation">
-            <div className="flex items-center justify-center space-x-2 text-xs sm:text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 tracking-wide min-h-[44px] cursor-pointer hover:text-gray-800 dark:hover:text-gray-100 transition-colors duration-200 opacity-70">
+            <div className="flex items-center justify-center space-x-2 text-xs sm:text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 tracking-wide min-h-[44px] cursor-pointer opacity-70">
               <span className="select-none">
                 {isExpanded ? 'Weniger anzeigen' : 'Vollständige Tabelle anzeigen'}
               </span>

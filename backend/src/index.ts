@@ -18,15 +18,14 @@ async function setupPublicPermissions(strapi: any) {
     // Define the content types that should be publicly accessible
     const publicContentTypes = [
       'api::news-artikel.news-artikel',
-      'api::spieler.spieler',
-      'api::spielerstatistik.spielerstatistik',
       'api::tabellen-eintrag.tabellen-eintrag',
-
       'api::team.team',
-      'api::club.club',
       'api::liga.liga',
       'api::sponsor.sponsor',
-      'api::veranstaltung.veranstaltung'
+      'api::veranstaltung.veranstaltung',
+      'api::game-card.game-card',
+      'api::next-game-card.next-game-card',
+      'api::saison.saison'
     ];
 
     // Set up find and findOne permissions for each content type
@@ -103,22 +102,7 @@ export default {
       // Set up public API permissions for frontend access
       await setupPublicPermissions(strapi);
 
-      // Initialize scheduled tasks for automated data processing
-      const ScheduledTasksService = await import('./services/scheduled-tasks');
-      await ScheduledTasksService.default.initializeScheduledTasks();
-
-      strapi.log.info('Automated data processing services initialized successfully');
-
-      // Set up graceful shutdown to stop scheduled tasks
-      process.on('SIGTERM', () => {
-        strapi.log.info('SIGTERM received, stopping scheduled tasks...');
-        ScheduledTasksService.default.stopAllTasks();
-      });
-
-      process.on('SIGINT', () => {
-        strapi.log.info('SIGINT received, stopping scheduled tasks...');
-        ScheduledTasksService.default.stopAllTasks();
-      });
+      strapi.log.info('Backend initialization completed successfully');
 
     } catch (error) {
       strapi.log.error('Failed to initialize automated data processing services:', error);

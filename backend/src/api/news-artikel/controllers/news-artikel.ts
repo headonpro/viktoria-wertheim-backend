@@ -1,202 +1,138 @@
 /**
- * news-artikel controller
+ * news-artikel controller - Ultra-simplified version with enhanced error handling
  */
 
-import { factories } from '@strapi/strapi'
+import { factories } from '@strapi/strapi';
+import { ValidationService } from '../../../services/ValidationService';
 
 export default factories.createCoreController('api::news-artikel.news-artikel', ({ strapi }) => ({
   
-  // Get published articles with pagination and filtering
   async find(ctx) {
-    const { query } = ctx;
-    
-    // Default to published articles only for public API
-    if (!query.filters) {
-      query.filters = {};
-    }
-    
-    // Add publishedAt filter for public access
-    if (!ctx.state.user || !ctx.state.user.role) {
-      (query.filters as any).publishedAt = { $notNull: true };
-    }
-    
-    // Default sorting by publication date (newest first)
-    if (!query.sort) {
-      query.sort = { datum: 'desc' };
-    }
-    
-    // Default population
-    if (!query.populate) {
-      query.populate = {
-        kategorie: true,
-        titelbild: true
-      };
-    }
-    
-    const { data, meta } = await super.find(ctx);
-    return { data, meta };
-  },
-
-  // Get single article by slug
-  async findBySlug(ctx) {
-    const { slug } = ctx.params;
-    
     try {
-      const articles = await strapi.entityService.findMany('api::news-artikel.news-artikel', {
-        filters: { 
-          slug,
-          publishedAt: { $notNull: true }
-        },
-        populate: {
-          kategorie: true,
-          titelbild: true
-        }
-      });
-
-      if (articles.length === 0) {
-        return ctx.notFound('Article not found');
+      const { query } = ctx;
+      
+      strapi.log.debug('NewsArtikel.find: Fetching news articles with query', { query });
+      
+      if (!query.filters) {
+        query.filters = {};
       }
-
-      ctx.body = { data: articles[0] };
+      
+      // Add publishedAt filter for public access
+      if (!ctx.state.user || !ctx.state.user.role) {
+        (query.filters as any).publishedAt = { $notNull: true };
+      }
+      
+      if (!query.sort) {
+        query.sort = { datum: 'desc' };
+      }
+      
+      if (!query.populate) {
+        query.populate = ['titelbild'];
+      }
+      
+      const { data, meta } = await super.find(ctx);
+      
+      strapi.log.debug('NewsArtikel.find: Successfully fetched articles', { 
+        count: data?.length || 0 
+      });
+      
+      return { data, meta };
     } catch (error) {
-      ctx.throw(500, `Failed to fetch article: ${error.message}`);
+      strapi.log.error('NewsArtikel.find: Error fetching news articles', {
+        error: error.message,
+        query: ctx.query
+      });
+      
+      throw error;
     }
   },
 
-  // Get featured articles
+  // Get featured articles with enhanced error handling
   async getFeatured(ctx) {
     try {
-      const { kategorie, limit = 5 } = ctx.query;
+      const { limit = 5 } = ctx.query;
       
-      const filters: any = {
-        featured: true,
-        publishedAt: { $notNull: true }
-      };
+      strapi.log.debug('NewsArtikel.getFeatured: Fetching featured articles', { limit });
       
-      if (kategorie) {
-        filters.kategorie = kategorie;
+      // Validate limit parameter
+      const parsedLimit = parseInt(limit as string);
+      if (isNaN(parsedLimit) || parsedLimit <= 0 || parsedLimit > 50) {
+        return ctx.badRequest(
+          ValidationService.createErrorResponse(
+            'Limit must be a number between 1 and 50',
+            'INVALID_LIMIT'
+          )
+        );
       }
       
-      const articles = await strapi.entityService.findMany('api::news-artikel.news-artikel', {
-        filters,
-        sort: { datum: 'desc' },
-        limit: parseInt(limit as string),
-        populate: {
-          kategorie: true,
-          titelbild: true
-        }
+      const articles = await strapi.service('api::news-artikel.news-artikel').findFeatured(
+        parsedLimit
+      );
+
+      strapi.log.debug('NewsArtikel.getFeatured: Successfully fetched featured articles', { 
+        count: articles?.length || 0 
       });
 
       ctx.body = { data: articles };
     } catch (error) {
-      ctx.throw(500, `Failed to fetch featured articles: ${error.message}`);
-    }
-  },
-
-  // Get articles by category
-  async getByCategory(ctx) {
-    const { categoryId } = ctx.params;
-    const { page = 1, pageSize = 10 } = ctx.query;
-    
-    try {
-      const articles = await strapi.entityService.findMany('api::news-artikel.news-artikel', {
-        filters: {
-          kategorie: categoryId,
-          publishedAt: { $notNull: true }
-        },
-        sort: { datum: 'desc' },
-        start: (parseInt(page as string) - 1) * parseInt(pageSize as string),
-        limit: parseInt(pageSize as string),
-        populate: {
-          kategorie: true,
-          titelbild: true
-        }
+      strapi.log.error('NewsArtikel.getFeatured: Error fetching featured articles', {
+        error: error.message,
+        limit: ctx.query.limit
       });
-
-      // Get total count for pagination
-      const total = await strapi.entityService.count('api::news-artikel.news-artikel', {
-        filters: {
-          kategorie: categoryId,
-          publishedAt: { $notNull: true }
-        }
-      });
-
-      ctx.body = {
-        data: articles,
-        meta: {
-          pagination: {
-            page: parseInt(page as string),
-            pageSize: parseInt(pageSize as string),
-            pageCount: Math.ceil(total / parseInt(pageSize as string)),
-            total
-          }
-        }
-      };
-    } catch (error) {
-      ctx.throw(500, `Failed to fetch articles by category: ${error.message}`);
-    }
-  },
-
-  // Search articles
-  async search(ctx) {
-    const { q, kategorie, limit = 10 } = ctx.query;
-    
-    if (!q) {
-      return ctx.badRequest('Search query is required');
-    }
-    
-    try {
-      const filters: any = {
-        $or: [
-          { titel: { $containsi: q } },
-          { kurzbeschreibung: { $containsi: q } },
-          { inhalt: { $containsi: q } }
-        ],
-        publishedAt: { $notNull: true }
-      };
       
-      if (kategorie) {
-        filters.kategorie = kategorie;
+      throw error;
+    }
+  },
+
+  /**
+   * Create news article with validation
+   */
+  async create(ctx) {
+    try {
+      const { data } = ctx.request.body;
+      
+      strapi.log.debug('NewsArtikel.create: Creating new article', { data });
+      
+      // Validate required fields
+      const requiredFields = ['titel', 'inhalt', 'datum', 'autor'];
+      const validation = ValidationService.validateRequiredWithDetails(data, requiredFields);
+      
+      if (!validation.isValid) {
+        strapi.log.warn('NewsArtikel.create: Validation failed', { errors: validation.errors });
+        return ctx.badRequest(ValidationService.formatErrorResponse(validation.errors));
       }
       
-      const articles = await strapi.entityService.findMany('api::news-artikel.news-artikel', {
-        filters,
-        sort: { datum: 'desc' },
-        limit: parseInt(limit as string),
-        populate: {
-          kategorie: true,
-          titelbild: true
+      // Validate datum is a valid date
+      if (data.datum) {
+        const date = new Date(data.datum);
+        if (isNaN(date.getTime())) {
+          return ctx.badRequest(
+            ValidationService.createErrorResponse(
+              'datum must be a valid date',
+              'INVALID_DATE'
+            )
+          );
         }
-      });
-
-      ctx.body = { data: articles };
-    } catch (error) {
-      ctx.throw(500, `Search failed: ${error.message}`);
-    }
-  },
-
-  // Toggle featured status
-  async toggleFeatured(ctx) {
-    const { id } = ctx.params;
-    
-    try {
-      const article = await strapi.entityService.findOne('api::news-artikel.news-artikel', id);
-      
-      if (!article) {
-        return ctx.notFound('Article not found');
       }
-
-      const updatedArticle = await strapi.entityService.update('api::news-artikel.news-artikel', id, {
-        data: { featured: !article.featured },
-        populate: {
-          kategorie: true,
-          titelbild: true
-        }
+      
+      const article = await strapi.entityService.create('api::news-artikel.news-artikel', {
+        data,
+        populate: ['titelbild']
       });
-
-      ctx.body = { data: updatedArticle };
+      
+      strapi.log.info('NewsArtikel.create: Article created successfully', { 
+        articleId: article.id, 
+        titel: article.titel 
+      });
+      
+      return article;
     } catch (error) {
-      ctx.throw(500, `Failed to toggle featured status: ${error.message}`);
+      strapi.log.error('NewsArtikel.create: Error creating article', {
+        error: error.message,
+        data: ctx.request.body?.data
+      });
+      
+      throw error;
     }
   }
 

@@ -166,9 +166,24 @@ export interface Team {
   attributes: {
     name: string;
     trainer?: string;
-    liga_name?: string;
-    liga_vollname?: string;
-    // Team statistics and management
+    liga?: {
+      data?: {
+        id: number;
+        attributes: {
+          name: string;
+          kurz_name?: string;
+        };
+      };
+    };
+    saison?: {
+      data?: {
+        id: number;
+        attributes: {
+          name: string;
+        };
+      };
+    };
+    // Team statistics
     tabellenplatz?: number;
     punkte?: number;
     spiele_gesamt?: number;
@@ -178,13 +193,6 @@ export interface Team {
     tore_fuer?: number;
     tore_gegen?: number;
     tordifferenz?: number;
-    form_letzte_5?: ('S' | 'U' | 'N')[];
-    trend?: 'steigend' | 'gleich' | 'fallend';
-    status?: 'aktiv' | 'inaktiv' | 'pausiert';
-    altersklasse?: string;
-    co_trainer?: string;
-    trainingszeiten?: string;
-    heimspieltag?: string;
     teamfoto?: {
       data: {
         id: number;
@@ -197,11 +205,6 @@ export interface Team {
         };
       };
     };
-    spielers?: {
-      data: Spieler[];
-    };
-    // spiele removed since Spiel content type was removed
-    publishedAt: string;
     createdAt: string;
     updatedAt: string;
   };
@@ -215,7 +218,6 @@ export interface TeamData {
   id: number;
   name: string;
   liga: string;
-  liga_vollname: string;
   tabellenplatz: number;
   punkte: number;
   spiele_gesamt: number;
@@ -225,11 +227,7 @@ export interface TeamData {
   tore_fuer: number;
   tore_gegen: number;
   tordifferenz: number;
-  form_letzte_5: ('S' | 'U' | 'N')[];
-  trend: 'steigend' | 'gleich' | 'fallend';
-  status?: 'aktiv' | 'inaktiv' | 'pausiert';
   trainer?: string;
-  altersklasse?: string;
 }
 
 export interface GameDetails {

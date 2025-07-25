@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { NewsArtikel } from '@/types/strapi'
 import { strapi } from '@/lib/strapi'
-import DarkModeToggle from '@/components/DarkModeToggle'
 
 interface NewsTickerProps {
   onNewsClick?: (article: NewsArtikel) => void
@@ -15,6 +15,8 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
   const [newsArticles, setNewsArticles] = useState<NewsArtikel[]>([])
   const [loading, setLoading] = useState(true)
   const [isPaused, setIsPaused] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState(0)
   // Fetch news from API
   useEffect(() => {
     const fetchNews = async () => {
@@ -43,6 +45,19 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
 
     fetchNews()
   }, [])
+
+  // Measure container width for animation calculations
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+
+    updateWidth()
+    window.addEventListener('resize', updateWidth)
+    return () => window.removeEventListener('resize', updateWidth)
+  }, [newsArticles])
 
 
 
@@ -78,33 +93,20 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
     )
   }
 
-  // Kombiniere alle News-Titel zu einem langen String mit gelben Separatoren
-  const baseNewsText = newsArticles
+  // Prepare news items for display
+  const newsItems = newsArticles
     .filter(article => {
-      // Handle both API format and legacy format
       const titel = article.titel || (article.attributes && article.attributes.titel)
       return article && titel
     })
-    .map(article => {
-      // Handle both API format and legacy format
-      return article.titel || article.attributes?.titel
-    })
-    .join('\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0')
+    .map(article => ({
+      id: article.id,
+      title: article.titel || article.attributes?.titel || '',
+      article: article
+    }))
 
-
-
-  // Erstelle News-Elemente mit gelben Separatoren für die Anzeige
-  const createNewsContent = (text: string) => {
-    const parts = text.split('|')
-    return parts.map((part, index) => (
-      <React.Fragment key={index}>
-        {part}
-        {index < parts.length - 1 && (
-          <span className="text-viktoria-yellow">|</span>
-        )}
-      </React.Fragment>
-    ))
-  }
+  // For seamless scrolling: start from right (100%) and move to left (-100%)
+  // This creates the classic news ticker effect: right to left
 
   return (
     <div
@@ -112,48 +114,69 @@ export default function NewsTicker({ onNewsClick }: NewsTickerProps) {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="max-w-6xl mx-auto px-4 py-2 md:py-3 pb-6 md:pb-8 relative">
+      <div className="max-w-6xl mx-auto px-4 py-2 md:py-3 pb-3 md:pb-4 relative">
         <div className="flex items-center">
           {/* Kompaktes News Label */}
-          <div className="flex-shrink-0 mr-4">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md text-gray-600 dark:text-gray-300 w-10 h-6 rounded-md border border-white/40 dark:border-white/[0.03] shadow-lg shadow-black/15 dark:shadow-white/[0.20] flex items-center justify-center">
-              <div className="w-2 h-2 bg-viktoria-yellow rounded-full animate-pulse shadow-lg shadow-viktoria-yellow/50 animate-glow-pulse"></div>
+          <div className="flex-shrink-0 mr-2">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl w-10 h-6 rounded-md overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-md before:p-0.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[2px] after:rounded-[calc(0.375rem-2px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 flex items-center justify-center">
+              <div className="w-2.5 h-2.5 bg-viktoria-yellow rounded-full animate-pulse shadow-md shadow-viktoria-yellow/40 ring-1 ring-viktoria-yellow/20 relative z-10"></div>
             </div>
           </div>
 
-          {/* Scrolling News Container */}
-          <div className="flex-1 overflow-hidden relative">
-            <div
-              className="cursor-pointer animate-scroll"
-              onClick={() => onNewsClick?.(newsArticles[0])}
-              style={{
-                display: 'flex',
-                animationPlayState: isPaused ? 'paused' : 'running',
+          {/* Scrolling News Container with Framer Motion */}
+          <div ref={containerRef} className="flex-1 overflow-hidden relative mr-12 md:mr-14">
+            <motion.div
+              className="flex cursor-pointer whitespace-nowrap"
+              animate={{
+                x: isPaused ? undefined : ["100%", "-100%"]
               }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 10, // Adjust speed here
+                  ease: "linear",
+                },
+              }}
+              onClick={() => onNewsClick?.(newsItems[0]?.article)}
             >
-              {/* Langer Text mit mehrfachen Wiederholungen */}
-              <span className="text-gray-600 dark:text-gray-300 hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors duration-300 text-sm font-medium whitespace-nowrap flex-shrink-0">
-                {createNewsContent(`${baseNewsText} | ${baseNewsText} | ${baseNewsText}`)}
+              {/* Single continuous string with separators */}
+              <span className="text-gray-600 dark:text-gray-300 hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors duration-300 text-sm md:text-base font-medium flex-shrink-0">
+                {newsItems.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onNewsClick?.(item.article)
+                      }}
+                    >
+                      {item.title}
+                    </span>
+                    {index < newsItems.length - 1 && (
+                      <span className="text-viktoria-yellow mx-8">|</span>
+                    )}
+                  </React.Fragment>
+                ))}
+                {/* Add separator and repeat for seamless loop */}
+                <span className="text-viktoria-yellow mx-8">|</span>
+                {newsItems.map((item, index) => (
+                  <React.Fragment key={`repeat-${item.id}`}>
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onNewsClick?.(item.article)
+                      }}
+                    >
+                      {item.title}
+                    </span>
+                    {index < newsItems.length - 1 && (
+                      <span className="text-viktoria-yellow mx-8">|</span>
+                    )}
+                  </React.Fragment>
+                ))}
               </span>
-            </div>
+            </motion.div>
           </div>
-
-
-
-          {/* CSS Animation */}
-          <style jsx>{`
-            @keyframes scroll-seamless {
-              0% {
-                transform: translateX(100%);
-              }
-              100% {
-                transform: translateX(-100%);
-              }
-            }
-            .animate-scroll {
-              animation: scroll-seamless 15s linear infinite;
-            }
-          `}</style>
         </div>
       </div>
     </div>

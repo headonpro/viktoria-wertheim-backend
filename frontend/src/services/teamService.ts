@@ -5,17 +5,35 @@ import { Team, TeamData, GameDetails, TeamId, TeamStats } from '../types/strapi'
 // Strapi API Base URL
 const API_BASE_URL = getApiUrl()
 
-// Strapi Response Interfaces
-interface StrapiTeamResponse {
-  data: Team[]
-  meta: {
-    pagination: {
-      page: number
-      pageSize: number
-      pageCount: number
-      total: number
-    }
+// Strapi v5 Team Response Interface
+interface StrapiV5Team {
+  id: number
+  documentId: string
+  name: string
+  trainer?: string
+  tabellenplatz?: number
+  punkte?: number
+  spiele_gesamt?: number
+  siege?: number
+  unentschieden?: number
+  niederlagen?: number
+  tore_fuer?: number
+  tore_gegen?: number
+  tordifferenz?: number
+  liga?: {
+    id: number
+    documentId: string
+    name: string
+    kurz_name?: string
   }
+  saison?: {
+    id: number
+    documentId: string
+    name: string
+  }
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
 }
 
 // StrapiSpielResponse removed since Spiel content type was removed
@@ -25,9 +43,8 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
   const fallbackData: Record<TeamId, TeamData> = {
     '1': {
       id: 1,
-      name: '1. Mannschaft',
-      liga: 'Kreisliga',
-      liga_vollname: 'Kreisliga',
+      name: 'SV Viktoria Wertheim',
+      liga: 'Kreisliga Tauberbischofsheim',
       tabellenplatz: 8,
       punkte: 24,
       spiele_gesamt: 18,
@@ -37,16 +54,12 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       tore_fuer: 32,
       tore_gegen: 28,
       tordifferenz: 4,
-      form_letzte_5: ['S', 'N', 'U', 'S', 'N'],
-      trend: 'gleich',
-      trainer: 'Max Mustermann',
-      altersklasse: 'Herren'
+      trainer: 'Max Mustermann'
     },
     '2': {
       id: 2,
-      name: '2. Mannschaft',
-      liga: 'Kreisklasse A',
-      liga_vollname: 'Kreisklasse A',
+      name: 'SV Viktoria Wertheim II',
+      liga: 'Kreisklasse A Tauberbischofsheim',
       tabellenplatz: 5,
       punkte: 28,
       spiele_gesamt: 16,
@@ -56,17 +69,12 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       tore_fuer: 35,
       tore_gegen: 22,
       tordifferenz: 13,
-      form_letzte_5: ['S', 'S', 'U', 'S', 'N'],
-      trend: 'steigend',
-      status: 'aktiv',
-      trainer: 'Hans Schmidt',
-      altersklasse: 'Herren'
+      trainer: 'Hans Schmidt'
     },
     '3': {
       id: 3,
-      name: '3. Mannschaft',
-      liga: 'Kreisklasse B',
-      liga_vollname: 'Kreisklasse B',
+      name: 'SV Viktoria Wertheim III',
+      liga: 'Kreisklasse B Tauberbischofsheim',
       tabellenplatz: 12,
       punkte: 15,
       spiele_gesamt: 14,
@@ -76,40 +84,34 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
       tore_fuer: 18,
       tore_gegen: 31,
       tordifferenz: -13,
-      form_letzte_5: ['N', 'N', 'U', 'N', 'S'],
-      trend: 'fallend',
-      status: 'aktiv',
-      trainer: 'Peter Weber',
-      altersklasse: 'Herren'
+      trainer: 'Peter Weber'
     }
   }
   
   return fallbackData[teamId]
 }
 
-// Transform Strapi Team to TeamData
-const transformStrapiToTeamData = (strapiTeam: Team): TeamData => {
-  const attrs = strapiTeam.attributes
+// Transform Strapi v5 Team to TeamData
+const transformStrapiV5ToTeamData = (strapiTeam: StrapiV5Team): TeamData => {
+  // Get liga name from relation if available
+  const ligaName = strapiTeam.liga?.name || 
+                   strapiTeam.liga?.kurz_name || 
+                   'Unbekannte Liga'
   
   return {
     id: strapiTeam.id,
-    name: attrs.name,
-    liga: attrs.liga_name || '',
-    liga_vollname: attrs.liga_vollname || attrs.liga_name || '',
-    tabellenplatz: attrs.tabellenplatz || 1,
-    punkte: attrs.punkte || 0,
-    spiele_gesamt: attrs.spiele_gesamt || 0,
-    siege: attrs.siege || 0,
-    unentschieden: attrs.unentschieden || 0,
-    niederlagen: attrs.niederlagen || 0,
-    tore_fuer: attrs.tore_fuer || 0,
-    tore_gegen: attrs.tore_gegen || 0,
-    tordifferenz: attrs.tordifferenz || 0,
-    form_letzte_5: attrs.form_letzte_5 || [],
-    trend: attrs.trend || 'gleich',
-
-    trainer: attrs.trainer,
-    altersklasse: attrs.altersklasse
+    name: strapiTeam.name,
+    liga: ligaName,
+    tabellenplatz: strapiTeam.tabellenplatz || 1,
+    punkte: strapiTeam.punkte || 0,
+    spiele_gesamt: strapiTeam.spiele_gesamt || 0,
+    siege: strapiTeam.siege || 0,
+    unentschieden: strapiTeam.unentschieden || 0,
+    niederlagen: strapiTeam.niederlagen || 0,
+    tore_fuer: strapiTeam.tore_fuer || 0,
+    tore_gegen: strapiTeam.tore_gegen || 0,
+    tordifferenz: strapiTeam.tordifferenz || 0,
+    trainer: strapiTeam.trainer
   }
 }
 
@@ -131,22 +133,25 @@ export const teamService = {
         '3': '3. Mannschaft'
       }
       
-      const response = await axios.get<StrapiTeamResponse>(
+      const response = await axios.get<StrapiV5Team[]>(
         `${API_BASE_URL}/api/teams`,
         {
           params: {
             'filters[name][$eq]': teamNames[teamId],
-            'populate': '*'
+            'populate': {
+              liga: true,
+              saison: true
+            }
           }
         }
       )
 
-      if (!response.data?.data || response.data.data.length === 0) {
+      if (!response.data || response.data.length === 0) {
         console.warn(`No API data found for team ${teamId}, using fallback`)
         return getFallbackTeamData(teamId)
       }
 
-      return transformStrapiToTeamData(response.data.data[0])
+      return transformStrapiV5ToTeamData(response.data[0])
 
     } catch (error) {
       console.warn(`Error fetching team data for ${teamId}:`, error)
@@ -177,12 +182,13 @@ export const teamService = {
     try {
       // Use the separate Game Card API endpoints
       const [lastResponse, nextResponse] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/game-cards/last`),
-        axios.get(`${API_BASE_URL}/api/next-game-cards/next`)
+        axios.get(`${API_BASE_URL}/api/game-cards`),
+        axios.get(`${API_BASE_URL}/api/next-game-cards?populate=gegner_team`)
       ])
       
-      const lastGameData = lastResponse.data?.data
-      const nextGameData = nextResponse.data?.data
+      // Get the first (most recent) game from each endpoint
+      const lastGameData = lastResponse.data?.data?.[0]
+      const nextGameData = nextResponse.data?.data?.[0]
       
       // Transform Game Card data to GameDetails format
       const transformGameCardToGameDetails = (gameCard: any, type: 'last' | 'next'): GameDetails | null => {
@@ -191,10 +197,10 @@ export const teamService = {
         const gameDate = new Date(gameCard.datum)
         const isHome = gameCard.ist_heimspiel
         
-        // Get opponent name - for last games it's a string, for next games it's a club relation
+        // Get opponent name - for last games it's a string, for next games it's a team relation
         const opponentName = type === 'last' 
           ? gameCard.gegner 
-          : gameCard.gegner_club?.name || gameCard.gegner_club?.kurz_name || 'Unbekannter Gegner'
+          : gameCard.gegner_team?.name || 'Unbekannter Gegner'
         
         // Determine team names based on whether it's a home or away game
         const homeTeam = isHome ? 'SV Viktoria Wertheim' : opponentName

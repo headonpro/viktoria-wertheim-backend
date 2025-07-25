@@ -1,11 +1,7 @@
 export default [
   'strapi::logger',
   'strapi::errors',
-  // Enhanced error handler for better validation messages
-  {
-    name: 'global::enhanced-error-handler',
-    config: {},
-  },
+  'global::error-handler', // Custom error handler for consistent error formatting
   'strapi::security',
   {
     name: 'strapi::cors',
@@ -22,14 +18,4 @@ export default [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
-  // Role-based access control middleware
-  {
-    name: 'global::role-based-access',
-    config: {},
-  },
-  // Avatar upload validation middleware
-  {
-    name: 'global::avatar-upload',
-    config: {},
-  },
 ];

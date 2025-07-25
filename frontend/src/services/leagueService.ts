@@ -4,56 +4,41 @@ import axios from 'axios'
 import { getApiUrl } from '../lib/apiConfig';
 const API_BASE_URL = getApiUrl();
 
-// Strapi Club Response Interface (Strapi 5 format)
-interface StrapiClub {
+// Strapi v5 Tabellen-Eintrag Response Interface
+interface StrapiV5TabellenEintrag {
   id: number
   documentId: string
-  name: string
-  kurz_name: string
-  logo?: {
+  platz: number
+  spiele: number
+  siege: number
+  unentschieden: number
+  niederlagen: number
+  tore_fuer: number
+  tore_gegen: number
+  tordifferenz: number
+  punkte: number
+  liga?: {
     id: number
     documentId: string
     name: string
-    alternativeText?: string
-    caption?: string
-    width: number
-    height: number
-    formats?: any
-    hash: string
-    ext: string
-    mime: string
-    size: number
-    url: string
-    previewUrl?: string
-    provider: string
-    provider_metadata?: any
-    createdAt: string
-    updatedAt: string
-    publishedAt: string
+    kurz_name?: string
   }
-  vereinsfarben?: string
-  heimstadion?: string
-  adresse?: string
-  website?: string
-  kontakt?: string
-  ist_unser_verein: boolean
-  liga?: string
-  platz?: number
-  spiele?: number
-  siege?: number
-  unentschieden?: number
-  niederlagen?: number
-  tore_fuer?: number
-  tore_gegen?: number
-  tordifferenz?: number
-  punkte?: number
+  team?: {
+    id: number
+    documentId: string
+    name: string
+    teamfoto?: {
+      id: number
+      url: string
+      alternativeText?: string
+    }
+  }
   createdAt: string
   updatedAt: string
-  publishedAt: string
 }
 
-interface StrapiResponse {
-  data: StrapiClub[]
+interface StrapiV5Response {
+  data: StrapiV5TabellenEintrag[]
   meta: {
     pagination: {
       page: number
@@ -79,41 +64,45 @@ export interface Team {
   points: number
 }
 
-// Transform Strapi Club data to Frontend Team format
-const transformStrapiClubToTeam = (strapiClub: StrapiClub): Team => {
+// Transform Strapi v5 Tabellen-Eintrag data to Frontend Team format
+const transformStrapiV5TabellenEintragToTeam = (strapiEntry: StrapiV5TabellenEintrag): Team => {
+  const teamLogo = strapiEntry.team?.teamfoto?.url
+  
   return {
-    position: strapiClub.platz || 0,
-    name: strapiClub.name || 'Unknown Team',
-    logo: strapiClub.logo?.url
-      ? `${API_BASE_URL}${strapiClub.logo.url}`
-      : undefined,
-    games: 0, // spiele removed since Spiel content type was removed
-    wins: strapiClub.siege || 0,
-    draws: strapiClub.unentschieden || 0,
-    losses: strapiClub.niederlagen || 0,
-    goalsFor: strapiClub.tore_fuer || 0,
-    goalsAgainst: strapiClub.tore_gegen || 0,
-    goalDifference: strapiClub.tordifferenz || 0,
-    points: strapiClub.punkte || 0
+    position: strapiEntry.platz || 0,
+    name: strapiEntry.team?.name || 'Unknown Team',
+    logo: teamLogo ? `${API_BASE_URL}${teamLogo}` : undefined,
+    games: strapiEntry.spiele || 0,
+    wins: strapiEntry.siege || 0,
+    draws: strapiEntry.unentschieden || 0,
+    losses: strapiEntry.niederlagen || 0,
+    goalsFor: strapiEntry.tore_fuer || 0,
+    goalsAgainst: strapiEntry.tore_gegen || 0,
+    goalDifference: strapiEntry.tordifferenz || 0,
+    points: strapiEntry.punkte || 0
   }
 }
 
 // API Service Functions
 export const leagueService = {
   /**
-   * Fetch all league standings from Strapi (now using clubs directly)
+   * Fetch all league standings from Strapi (using tabellen-eintraege)
    * @returns Promise<Team[]> - Array of teams sorted by position
    */
   async fetchLeagueStandings(): Promise<Team[]> {
     try {
-      const response = await axios.get<StrapiResponse>(
-        `${API_BASE_URL}/api/clubs`,
+      const response = await axios.get<StrapiV5Response>(
+        `${API_BASE_URL}/api/tabellen-eintraege`,
         {
           params: {
             sort: 'platz:asc', // Sort by position ascending
             'pagination[pageSize]': 100, // Get all teams
-            'populate': 'logo',
-            'filters[platz][$notNull]': true // Only get clubs with table positions
+            'populate': {
+              team: {
+                populate: ['teamfoto']
+              },
+              liga: true
+            }
           }
         }
       )
@@ -124,7 +113,7 @@ export const leagueService = {
 
       // Transform and return sorted data
       return response.data.data
-        .map(transformStrapiClubToTeam)
+        .map(transformStrapiV5TabellenEintragToTeam)
         .filter(team => team.position > 0) // Only teams with valid positions
         .sort((a, b) => a.position - b.position)
 
@@ -141,15 +130,19 @@ export const leagueService = {
    */
   async fetchLeagueStandingsByLeague(leagueName: string): Promise<Team[]> {
     try {
-      const response = await axios.get<StrapiResponse>(
-        `${API_BASE_URL}/api/clubs`,
+      const response = await axios.get<StrapiV5Response>(
+        `${API_BASE_URL}/api/tabellen-eintraege`,
         {
           params: {
-            'filters[liga][$eq]': leagueName,
-            'filters[platz][$notNull]': true,
+            'filters[liga][name][$eq]': leagueName,
             sort: 'platz:asc',
             'pagination[pageSize]': 100,
-            'populate': 'logo'
+            'populate': {
+              team: {
+                populate: ['teamfoto']
+              },
+              liga: true
+            }
           }
         }
       )
@@ -159,7 +152,7 @@ export const leagueService = {
       }
 
       return response.data.data
-        .map(transformStrapiClubToTeam)
+        .map(transformStrapiV5TabellenEintragToTeam)
         .filter(team => team.position > 0)
         .sort((a, b) => a.position - b.position)
 
@@ -176,12 +169,17 @@ export const leagueService = {
    */
   async fetchTeamStanding(teamName: string): Promise<Team | null> {
     try {
-      const response = await axios.get<StrapiResponse>(
-        `${API_BASE_URL}/api/clubs`,
+      const response = await axios.get<StrapiV5Response>(
+        `${API_BASE_URL}/api/tabellen-eintraege`,
         {
           params: {
-            'filters[name][$eq]': teamName,
-            'populate': 'logo'
+            'filters[team][name][$eq]': teamName,
+            'populate': {
+              team: {
+                populate: ['teamfoto']
+              },
+              liga: true
+            }
           }
         }
       )
@@ -190,7 +188,7 @@ export const leagueService = {
         return null
       }
 
-      return transformStrapiClubToTeam(response.data.data[0])
+      return transformStrapiV5TabellenEintragToTeam(response.data.data[0])
 
     } catch (error) {
       console.error(`Error fetching team standing for ${teamName}:`, error)

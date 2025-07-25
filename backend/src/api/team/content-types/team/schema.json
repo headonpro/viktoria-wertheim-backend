@@ -5,7 +5,7 @@
     "singularName": "team",
     "pluralName": "teams",
     "displayName": "Team",
-    "description": "Teams des Vereins mit Liga- und Saison-Zuordnung"
+    "description": "Vereinfachte Teams mit nur essentiellen Feldern"
   },
   "options": {
     "draftAndPublish": false
@@ -17,12 +17,6 @@
       "required": true,
       "unique": true,
       "maxLength": 50
-    },
-    "club": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::club.club",
-      "inversedBy": "teams"
     },
     "liga": {
       "type": "relation",
@@ -40,53 +34,13 @@
       "type": "string",
       "maxLength": 100
     },
-    "co_trainer": {
-      "type": "string",
-      "maxLength": 100
-    },
-    "trainingszeiten": {
-      "type": "text"
-    },
-    "trainingsort": {
-      "type": "string",
-      "maxLength": 100
-    },
-    "heimspieltag": {
-      "type": "string",
-      "maxLength": 50
-    },
     "teamfoto": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
-    },
-    "spieler": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::spieler.spieler",
-      "mappedBy": "hauptteam"
-    },
-    "aushilfe_spieler": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::spieler.spieler",
-      "mappedBy": "aushilfe_teams"
-    },
-
-
-    "liga_name": {
-      "type": "string",
-      "maxLength": 100
-    },
-    "liga_vollname": {
-      "type": "string",
-      "maxLength": 150
-    },
-    "tabellenplatz": {
-      "type": "integer",
-      "min": 1,
-      "default": 1
+      "allowedTypes": [
+        "images"
+      ]
     },
     "punkte": {
       "type": "integer",
@@ -127,23 +81,22 @@
       "type": "integer",
       "default": 0
     },
-    "form_letzte_5": {
-      "type": "json",
-      "default": []
+    "tabellenplatz": {
+      "type": "integer",
+      "min": 1,
+      "default": 1
     },
-    "trend": {
-      "type": "enumeration",
-      "enum": ["steigend", "gleich", "fallend"],
-      "default": "gleich"
+    "tabellen_eintraege": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tabellen-eintrag.tabellen-eintrag",
+      "mappedBy": "team"
     },
-    "status": {
-      "type": "enumeration",
-      "enum": ["aktiv", "inaktiv", "pausiert"],
-      "default": "aktiv"
-    },
-    "altersklasse": {
-      "type": "string",
-      "maxLength": 50
+    "next_game_cards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::next-game-card.next-game-card",
+      "mappedBy": "gegner_team"
     }
   }
 }

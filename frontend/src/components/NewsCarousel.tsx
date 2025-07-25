@@ -19,11 +19,11 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   if (isDesktopSidebar) {
     return (
       <div 
-        className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden cursor-pointer hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
+        className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
       >
         {/* Title Header */}
         <div className="px-8 md:px-12 py-6 md:py-8 text-center">
-          <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+          <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
             Neueste Nachrichten
           </h2>
         </div>
@@ -61,7 +61,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
               return (
                 <div
                   key={article.id}
-                  className="px-4 md:px-6 py-3 md:py-4 transition-all duration-300 hover:bg-white/30 cursor-pointer group"
+                  className="px-4 md:px-6 py-3 md:py-4 cursor-pointer group"
                   onClick={() => onNewsClick(article)}
                 >
                   <div className="flex gap-4 md:gap-5">
@@ -72,7 +72,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                           src={`${getApiUrl()}${imageUrl}`}
                           alt={titel || 'News Artikel'}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="object-cover"
                           style={{ objectPosition: 'top center' }}
                         />
                       ) : (
@@ -101,7 +101,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm md:text-base mb-2 line-clamp-2 leading-tight group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
+                      <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-sm md:text-base mb-2 line-clamp-2 leading-tight">
                         {titel}
                       </h3>
 
@@ -144,12 +144,12 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
   // Mobile/tablet version - horizontal carousel
   return (
     <div 
-      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-8 md:p-12 overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
+      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-8 md:p-12 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
     >
       {/* Title Header */}
       <div className="mb-6 md:mb-8">
         <div className="text-center">
-          <h2 className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+          <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
             Neueste Nachrichten
           </h2>
         </div>
@@ -199,7 +199,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
             return (
               <div
                 key={article.id}
-                className="flex-shrink-0 w-56 sm:w-64 md:w-72 lg:w-80 bg-white/80 dark:bg-white/[0.04] backdrop-blur-md rounded-lg overflow-hidden cursor-pointer hover:bg-white/90 dark:hover:bg-white/[0.06] transition-all duration-300 group border border-white/60 dark:border-white/[0.12] shadow-lg hover:shadow-xl"
+                className="flex-shrink-0 w-56 sm:w-64 md:w-72 lg:w-80 bg-white/80 dark:bg-white/[0.04] backdrop-blur-md rounded-lg overflow-hidden cursor-pointer group border border-white/60 dark:border-white/[0.12] shadow-lg"
                 onClick={() => onNewsClick(article)}
               >
                 {/* Image */}
@@ -209,7 +209,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                       src={`${getApiUrl()}${imageUrl}`}
                       alt={titel || 'News Artikel'}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover"
                       style={{ objectPosition: 'center' }}
                     />
                   ) : (
@@ -242,7 +242,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
                 {/* Content */}
                 <div className="p-4 md:p-5">
                   {/* Title */}
-                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-base md:text-lg mb-3 line-clamp-2 leading-tight group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
+                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-base md:text-lg mb-3 line-clamp-2 leading-tight">
                     {titel}
                   </h3>
 
@@ -275,7 +275,7 @@ export default function NewsCarousel({ newsArticles, onNewsClick, isDesktopSideb
 
                   {/* Read More Indicator */}
                   <div className="mt-3 pt-3 border-t border-white/10 dark:border-white/[0.12]">
-                    <span className="text-xs text-viktoria-blue dark:text-viktoria-yellow font-medium group-hover:underline">
+                    <span className="text-xs text-viktoria-blue dark:text-viktoria-yellow font-medium">
                       Weiterlesen →
                     </span>
                   </div>

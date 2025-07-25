@@ -111,11 +111,11 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
   
   return (
     <div 
-      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-6 overflow-hidden hover:bg-gray-100/13 dark:hover:bg-white/[0.016] transition-all duration-500 cursor-pointer md:min-h-[240px] hover:scale-[1.01] active:scale-[0.99] shadow-[0_12px_48px_rgba(0,0,0,0.18),0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.15),0_4px_16px_rgba(255,255,255,0.08)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.25),0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_12px_48px_rgba(255,255,255,0.20),0_6px_24px_rgba(255,255,255,0.12)] hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/3 before:via-white/8 before:to-white/15 dark:before:from-white/0.8 dark:before:via-white/2 dark:before:to-white/4 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.02] after:to-white/[0.04] after:pointer-events-none after:z-0"
+      className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-6 overflow-hidden cursor-pointer md:min-h-[240px] shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
       onClick={onClick}
     >
       <div className="mb-2 md:mb-4 text-center">
-        <div className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+        <div className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
           {type === 'last' ? 'Last' : 'Next'}
         </div>
       </div>
@@ -123,7 +123,7 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
       <div className="flex items-center justify-between mb-3 md:mb-8">
         {/* Home Team */}
         <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 mb-0 md:mb-3">
+          <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 mb-2 md:mb-3">
             {homeLogo ? (
               <Image 
                 src={homeLogo} 
@@ -140,10 +140,14 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
             )}
           </div>
           {/* Team Name - nur auf Desktop anzeigen */}
-          <div className="hidden md:block text-center px-2">
+          <div className="hidden md:block text-center px-2 mb-2">
             <p className="text-gray-800 dark:text-gray-200 text-sm font-semibold leading-tight max-w-32 line-clamp-2">
               {homeTeam}
             </p>
+          </div>
+          {/* Time - centered under logo/team name */}
+          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400 text-center">
+            {time}
           </div>
         </div>
         
@@ -172,7 +176,7 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
         
         {/* Away Team */}
         <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 mb-0 md:mb-3">
+          <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 mb-2 md:mb-3">
             {awayLogo ? (
               <Image 
                 src={awayLogo} 
@@ -189,35 +193,27 @@ const GameCard = ({ type, homeTeam, awayTeam, homeScore, awayScore, date, time, 
             )}
           </div>
           {/* Team Name - nur auf Desktop anzeigen */}
-          <div className="hidden md:block text-center px-2">
+          <div className="hidden md:block text-center px-2 mb-2">
             <p className="text-gray-800 dark:text-gray-200 text-sm font-semibold leading-tight max-w-32 line-clamp-2">
               {awayTeam}
             </p>
           </div>
-        </div>
-      </div>
-      
-      <div className="flex items-center justify-between">
-        {/* Time - aligned under home team */}
-        <div className="flex flex-col items-center flex-1">
-          <div className="flex items-center space-x-1 md:space-x-2 text-xs md:text-sm text-gray-500 dark:text-gray-400">
-            <IconClock size={12} className="md:w-4 md:h-4" />
-            <span>{time}</span>
-          </div>
-        </div>
-        
-        {/* Empty center space - matches the VS/Score area above */}
-        <div className="text-center px-2 md:px-6 flex-shrink-0">
-          {/* Empty space for alignment */}
-        </div>
-        
-        {/* Date - aligned under away team */}
-        <div className="flex flex-col items-center flex-1">
-          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
-            {date.replace(/(\d{2})\.(\d{2})/, '$1.$2.')}
+          {/* Date - centered under logo/team name */}
+          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400 text-center">
+            {(() => {
+              // Robust format: TT.MM.
+              const parts = date.split(".");
+              if (parts.length >= 2) {
+                const day = parts[0].padStart(2, "0");
+                const month = parts[1].padStart(2, "0");
+                return `${day}.${month}.`;
+              }
+              return date;
+            })()}
           </div>
         </div>
       </div>
+
     </div>
   )
 }

@@ -1,5 +1,5 @@
 /**
- * veranstaltung router
+ * veranstaltung router - Ultra-simplified version
  */
 
 import { factories } from '@strapi/strapi';
@@ -52,93 +52,11 @@ export default {
         middlewares: [],
       },
     },
-    
-    // Custom routes for event management
-    {
-      method: 'GET',
-      path: '/veranstaltungs/slug/:slug',
-      handler: 'veranstaltung.findBySlug',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
+    // Basic custom route only
     {
       method: 'GET',
       path: '/veranstaltungs/upcoming',
       handler: 'veranstaltung.getUpcoming',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/veranstaltungs/category/:kategorie',
-      handler: 'veranstaltung.getByCategory',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/veranstaltungs/calendar',
-      handler: 'veranstaltung.getCalendar',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/veranstaltungs/calendar/overview',
-      handler: 'veranstaltung.getCalendarOverview',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/veranstaltungs/date-range',
-      handler: 'veranstaltung.getEventsInDateRange',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/veranstaltungs/statistics',
-      handler: 'veranstaltung.getEventStatistics',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'POST',
-      path: '/veranstaltungs/process-notifications',
-      handler: 'veranstaltung.processScheduledNotifications',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/veranstaltungs/search',
-      handler: 'veranstaltung.search',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: 'PUT',
-      path: '/veranstaltungs/:id/toggle-public',
-      handler: 'veranstaltung.togglePublic',
       config: {
         policies: [],
         middlewares: [],

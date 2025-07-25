@@ -3,7 +3,7 @@
  * Implements single active season constraint validation
  */
 
-import AuditLoggerService from '../../../../services/audit-logger';
+// Audit logging removed for simplification
 
 export default {
   async beforeCreate(event) {
@@ -52,35 +52,12 @@ export default {
   async afterCreate(event) {
     const { result } = event;
     
-    // Log audit event for season creation
-    await AuditLoggerService.logDataChange(
-      'api::saison.saison',
-      result.id,
-      'create',
-      null,
-      result,
-      event.state?.user?.id
-    );
-    
     // Log when a new season is created
     strapi.log.info(`New season created: ${result.name} (Active: ${result.aktiv})`);
   },
 
   async afterUpdate(event) {
-    const { result, params } = event;
-    
-    // Get original data for audit logging
-    const originalData = await strapi.entityService.findOne('api::saison.saison' as any, result.id);
-    
-    // Log audit event for season update
-    await AuditLoggerService.logDataChange(
-      'api::saison.saison',
-      result.id,
-      'update',
-      originalData,
-      result,
-      event.state?.user?.id
-    );
+    const { result } = event;
     
     // Log when a season is updated
     strapi.log.info(`Season updated: ${result.name} (Active: ${result.aktiv})`);
@@ -88,16 +65,6 @@ export default {
 
   async afterDelete(event) {
     const { result } = event;
-    
-    // Log audit event for season deletion
-    await AuditLoggerService.logDataChange(
-      'api::saison.saison',
-      result.id,
-      'delete',
-      result,
-      null,
-      event.state?.user?.id
-    );
     
     strapi.log.info(`Season deleted: ${result.name}`);
   }

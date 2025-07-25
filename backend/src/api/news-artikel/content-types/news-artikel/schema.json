@@ -38,36 +38,14 @@
         "images"
       ]
     },
-    "kategorie": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::kategorie.kategorie",
-      "inversedBy": "news_artikel"
-    },
     "featured": {
       "type": "boolean",
       "default": false
-    },
-    "kurzbeschreibung": {
-      "type": "text",
-      "maxLength": 500
     },
     "slug": {
       "type": "uid",
       "targetField": "titel",
       "required": true
-    },
-    "seo_titel": {
-      "type": "string",
-      "maxLength": 60
-    },
-    "seo_beschreibung": {
-      "type": "text",
-      "maxLength": 160
-    },
-    "lesezeit": {
-      "type": "integer",
-      "min": 1
     }
   }
 }
