@@ -93,7 +93,7 @@ export default function TeamsPage() {
                     onClick={() => {
                       window.location.href = `/teams/${team.id}`
                     }}
-                    className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 group-hover:border-viktoria-yellow/50 dark:group-hover:border-viktoria-yellow/30 cursor-pointer h-full flex flex-col shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+                    className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 cursor-pointer h-full flex flex-col hover:transform hover:translateY-[-2px] transition-all duration-300 group-hover:shadow-[0_6px_20px_rgba(0,0,0,0.12),0_3px_10px_rgba(0,0,0,0.08)] dark:group-hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_3px_10px_rgba(255,255,255,0.06)]"
                   >
                     {/* Team Header with Liga Badge */}
                     <div className="relative h-24 md:h-32 bg-gradient-to-br from-viktoria-blue-light to-viktoria-blue overflow-hidden">
@@ -135,10 +135,10 @@ export default function TeamsPage() {
                     </div>
 
                     {/* Team Content */}
-                    <div className="p-16 md:p-24 flex-grow flex flex-col">
+                    <div className="p-4 md:p-6 flex-grow flex flex-col relative z-10">
                       {/* Team Name */}
-                      <div className="mb-4">
-                        <h3 className="text-lg md:text-xl font-bold text-gray-800 dark:text-gray-200 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
+                      <div className="mb-4 relative z-10">
+                        <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors">
                           {team.attributes.name}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
@@ -147,26 +147,26 @@ export default function TeamsPage() {
                       </div>
 
                       {/* Enhanced Information Grid */}
-                      <div className="space-y-2 md:space-y-3 mb-4 flex-grow">
+                      <div className="space-y-3 mb-4 flex-grow">
                         {/* Trainer */}
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 dark:bg-white/[0.02]">
                           <div className="flex items-center">
                             <IconUsers className="w-4 h-4 text-viktoria-blue dark:text-viktoria-yellow mr-2 flex-shrink-0" />
                             <span className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">Trainer</span>
                           </div>
-                          <span className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 text-right">
+                          <span className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 text-right">
                             {team.attributes.trainer || 'N/A'}
                           </span>
                         </div>
 
                         {/* Trainingszeiten */}
                         {(team.attributes as any).trainingszeiten && (
-                          <div className="flex items-start justify-between">
+                          <div className="flex items-start justify-between p-2 rounded-lg bg-white/5 dark:bg-white/[0.02]">
                             <div className="flex items-center">
                               <IconMapPin className="w-4 h-4 text-viktoria-blue dark:text-viktoria-yellow mr-2 flex-shrink-0 mt-0.5" />
                               <span className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">Training</span>
                             </div>
-                            <span className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 text-right max-w-[60%]">
+                            <span className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 text-right max-w-[60%]">
                               {(team.attributes as any).trainingszeiten}
                             </span>
                           </div>
@@ -174,12 +174,12 @@ export default function TeamsPage() {
 
                         {/* Heimspieltag */}
                         {(team.attributes as any).heimspieltag && (
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 dark:bg-white/[0.02]">
                             <div className="flex items-center">
                               <IconTrophy className="w-4 h-4 text-viktoria-blue dark:text-viktoria-yellow mr-2 flex-shrink-0" />
                               <span className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">Heimspiele</span>
                             </div>
-                            <span className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200 text-right">
+                            <span className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100 text-right">
                               {((team.attributes as any).heimspieltag || '').replace('Sonntag', 'So').replace('Samstag', 'Sa').replace('Montag', 'Mo').replace('Dienstag', 'Di').replace('Mittwoch', 'Mi').replace('Donnerstag', 'Do').replace('Freitag', 'Fr')}
                             </span>
                           </div>
@@ -187,9 +187,9 @@ export default function TeamsPage() {
 
                         {/* Letztes Spiel */}
                         {(team.attributes as any).letztes_spiel && (
-                          <div className="pt-2">
+                          <div className="p-2 rounded-lg bg-viktoria-yellow/10 dark:bg-viktoria-yellow/5">
                             <div className="text-xs font-medium text-viktoria-blue dark:text-viktoria-yellow mb-1">Letztes Spiel</div>
-                            <div className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-200">
+                            <div className="text-xs md:text-sm font-semibold text-gray-800 dark:text-gray-100">
                               {(team.attributes as any).letztes_spiel}
                             </div>
                           </div>
@@ -197,7 +197,7 @@ export default function TeamsPage() {
                       </div>
 
                       {/* Action Button */}
-                      <div className="pt-3 md:pt-4 border-t border-white/20 dark:border-white/[0.08]">
+                      <div className="pt-3 md:pt-4 border-t border-white/20 dark:border-white/[0.08] relative z-10">
                         <div className="flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold hover:text-viktoria-blue dark:hover:text-viktoria-yellow transition-colors group/btn">
                           <span className="text-sm">Team Details</span>
                           <div className="ml-2 text-lg group-hover/btn:translate-x-1 transition-transform">
@@ -214,14 +214,14 @@ export default function TeamsPage() {
             {/* Empty State */}
             {teams.length === 0 && (
               <div className="text-center py-12">
-                <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-100 dark:bg-white/[0.08] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 p-6 md:p-8">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-100 dark:bg-white/[0.08] rounded-full flex items-center justify-center mx-auto mb-4 relative z-10">
                     <IconUsers className="w-6 h-6 md:w-8 md:h-8 text-gray-400 dark:text-gray-500" />
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg font-medium">
+                  <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2 relative z-10">
                     Keine Mannschaften gefunden
-                  </p>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm relative z-10">
                     Die Mannschaftsdaten werden geladen oder sind nicht verfügbar.
                   </p>
                 </div>

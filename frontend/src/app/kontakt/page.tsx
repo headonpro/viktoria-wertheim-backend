@@ -120,32 +120,32 @@ export default function KontaktPage() {
               <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
                 <motion.button
                   onClick={() => navigator.clipboard.writeText('info@viktoria-wertheim.de')}
-                  className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg border-2 border-white/80 dark:border-white/[0.15] rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+                  className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-gray-100/15 dark:hover:bg-white/[0.018] transition-all duration-300 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:transform hover:translateY(-2px)"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <IconMail size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" style={{ strokeWidth: 1.5 }} />
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">E-Mail</span>
+                  <IconMail size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2 relative z-10" style={{ strokeWidth: 1.5 }} />
+                  <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide relative z-10">E-Mail</span>
                 </motion.button>
 
                 <motion.a
                   href="tel:+4993421234567"
-                  className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg border-2 border-white/80 dark:border-white/[0.15] rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+                  className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-gray-100/15 dark:hover:bg-white/[0.018] transition-all duration-300 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:transform hover:translateY(-2px)"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <IconPhone size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" style={{ strokeWidth: 1.5 }} />
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Telefon</span>
+                  <IconPhone size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2 relative z-10" style={{ strokeWidth: 1.5 }} />
+                  <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide relative z-10">Telefon</span>
                 </motion.a>
 
                 <motion.button
                   onClick={() => window.open('https://maps.google.com/?q=Haslocherweg+85,+97877+Wertheim-Bestenheid', '_blank')}
-                  className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg border-2 border-white/80 dark:border-white/[0.15] rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+                  className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl aspect-square flex flex-col items-center justify-center hover:bg-gray-100/15 dark:hover:bg-white/[0.018] transition-all duration-300 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:transform hover:translateY(-2px)"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <IconMapPin size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2" style={{ strokeWidth: 1.5 }} />
-                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Karte</span>
+                  <IconMapPin size={32} className="text-viktoria-blue dark:text-viktoria-yellow mb-2 relative z-10" style={{ strokeWidth: 1.5 }} />
+                  <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide relative z-10">Karte</span>
                 </motion.button>
               </div>
             </AnimatedSection>
@@ -154,8 +154,8 @@ export default function KontaktPage() {
           {/* Contact Form */}
           <div className="mt-4 md:mt-9 lg:mt-8">
             <AnimatedSection className="py-2 md:py-3" delay={0.2}>
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-                <div className="px-6 py-4 border-b border-white/20 dark:border-white/[0.08]">
+              <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0">
+                <div className="px-6 py-4 border-b border-white/20 dark:border-white/[0.08] relative z-10">
                   {/* Progress Dots - Centered */}
                   <div className="flex justify-center space-x-2">
                     {steps.map((_, index) => (
@@ -173,7 +173,7 @@ export default function KontaktPage() {
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-6 relative z-10">
                   <AnimatePresence mode="wait">
                     {formStatus === 'success' ? (
                       <motion.div
@@ -335,14 +335,14 @@ export default function KontaktPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* 1. Vorsitzender */}
                 <motion.div
-                  className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:transform hover:translateY(-2px)"
+                  className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-6 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] hover:bg-gray-100/15 dark:hover:bg-white/[0.018] transition-all duration-300 hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="text-center">
+                  <div className="text-center relative z-10">
                     <div className="w-16 h-16 bg-viktoria-blue dark:bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-4">
                       <IconUser size={24} className="text-viktoria-yellow dark:text-viktoria-dark" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                    <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
                       Fabian Väthjeder
                     </h3>
                     <p className="text-viktoria-blue dark:text-viktoria-yellow font-medium mb-3">
@@ -367,14 +367,14 @@ export default function KontaktPage() {
 
                 {/* Jugendleiter */}
                 <motion.div
-                  className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:transform hover:translateY(-2px)"
+                  className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-6 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] hover:bg-gray-100/15 dark:hover:bg-white/[0.018] transition-all duration-300 hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="text-center">
+                  <div className="text-center relative z-10">
                     <div className="w-16 h-16 bg-viktoria-blue dark:bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-4">
                       <IconUsers size={24} className="text-viktoria-yellow dark:text-viktoria-dark" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                    <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
                       Marco Schneider
                     </h3>
                     <p className="text-viktoria-blue dark:text-viktoria-yellow font-medium mb-3">
@@ -399,14 +399,14 @@ export default function KontaktPage() {
 
                 {/* Kassenwart */}
                 <motion.div
-                  className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:transform hover:translateY(-2px)"
+                  className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-6 overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] hover:bg-gray-100/15 dark:hover:bg-white/[0.018] transition-all duration-300 hover:transform hover:translateY(-2px) before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="text-center">
+                  <div className="text-center relative z-10">
                     <div className="w-16 h-16 bg-viktoria-blue dark:bg-viktoria-yellow rounded-full flex items-center justify-center mx-auto mb-4">
                       <IconCreditCard size={24} className="text-viktoria-yellow dark:text-viktoria-dark" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                    <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2">
                       Petra Weber
                     </h3>
                     <p className="text-viktoria-blue dark:text-viktoria-yellow font-medium mb-3">
@@ -435,17 +435,17 @@ export default function KontaktPage() {
           {/* Sportplatz Section */}
           <div className="mt-4 md:mt-9 lg:mt-8 pb-16 md:pb-24 lg:pb-32">
             <AnimatedSection className="py-2 md:py-3" delay={0.4}>
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-                <div className="p-6">
+              <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0">
+                <div className="p-6 relative z-10">
                   <div className="text-center mb-4">
-                    <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+                    <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                       Unser Sportplatz
                     </h2>
                   </div>
 
                   <div className="space-y-4">
                     <div className="rounded-lg p-4">
-                      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
+                      <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-4 flex items-center justify-center">
                         <IconMapPin size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
                         Sportplatz Adresse
                       </h3>
@@ -465,7 +465,7 @@ export default function KontaktPage() {
                     </div>
 
                     <div className="rounded-lg p-4">
-                      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-center">
+                      <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-4 flex items-center justify-center">
                         <IconClock size={20} className="text-viktoria-blue dark:text-viktoria-yellow mr-2" />
                         Trainingszeiten
                       </h3>

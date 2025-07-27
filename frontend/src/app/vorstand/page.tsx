@@ -82,28 +82,13 @@ export default function BoardPage() {
     }
   ]
 
-  const getColorClasses = (color: string) => {
-    switch (color) {
-      case 'viktoria-blue': return 'text-viktoria-blue bg-viktoria-blue/10'
-      case 'viktoria-yellow': return 'text-viktoria-yellow bg-viktoria-yellow/10'
-      case 'green-600': return 'text-green-600 bg-green-100'
-      case 'purple-600': return 'text-purple-600 bg-purple-100'
-      case 'orange-600': return 'text-orange-600 bg-orange-100'
-      case 'pink-600': return 'text-pink-600 bg-pink-100'
-      default: return 'text-gray-600 bg-gray-100'
-    }
-  }
-
   return (
     <PageLayout>
-      {/* Header Section - nur Mobile */}
-      
-
       <div className="px-4 md:px-6 lg:px-0">
         <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto space-y-6 md:space-y-8">
           
           {/* Einleitung */}
-          <AnimatedSection delay={0.2}>
+          <AnimatedSection delay={0.1}>
             <div className="text-center mb-6 md:mb-8">
               <Image 
                 src="/viktorialogo.png" 
@@ -124,96 +109,109 @@ export default function BoardPage() {
           </AnimatedSection>
 
           {/* Vorstandsmitglieder */}
-          <div className="space-y-4">
-            {boardMembers.map((member, index) => (
-              <AnimatedDiv 
-                key={index} 
-                delay={0.3 + index * 0.1}
-                className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] p-6 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
-              >
-                <div className="flex items-start space-x-4">
-                  {/* Icon */}
-                  <div className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 p-3 rounded-lg flex-shrink-0">
-                    <member.icon size={24} />
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-1">
-                      {member.name}
-                    </h3>
-                    <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
-                      {member.position}
+          <AnimatedSection delay={0.2}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  Vorstandsmitglieder
+                </h3>
+              </div>
+              <div className="p-6 space-y-4 relative z-10">
+                {boardMembers.map((member, index) => (
+                  <AnimatedDiv 
+                    key={index} 
+                    delay={0.3 + index * 0.1}
+                    className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border border-white/60 dark:border-white/[0.1] p-6 hover:bg-gray-100/60 dark:hover:bg-white/[0.08] transition-all duration-300 shadow-sm hover:shadow-md hover:transform hover:translateY(-1px)"
+                  >
+                    <div className="flex items-start space-x-4">
+                      {/* Icon */}
+                      <div className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 p-3 rounded-lg flex-shrink-0">
+                        <member.icon size={24} />
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1">
+                        <h4 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-1">
+                          {member.name}
+                        </h4>
+                        <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3">
+                          {member.position}
+                        </div>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                          {member.description}
+                        </p>
+                        
+                        {/* Kontakt */}
+                        <div className="space-y-2">
+                          {member.email && (
+                            <a 
+                              href={`mailto:${member.email}`}
+                              className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                            >
+                              <IconMail size={16} />
+                              <span>{member.email}</span>
+                            </a>
+                          )}
+                          {member.phone && (
+                            <a 
+                              href={`tel:${member.phone}`}
+                              className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                            >
+                              <IconPhone size={16} />
+                              <span>{member.phone}</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                      {member.description}
-                    </p>
-                    
-                    {/* Kontakt */}
-                    <div className="space-y-2">
-                      {member.email && (
-                        <a 
-                          href={`mailto:${member.email}`}
-                          className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-                        >
-                          <IconMail size={16} />
-                          <span>{member.email}</span>
-                        </a>
-                      )}
-                      {member.phone && (
-                        <a 
-                          href={`tel:${member.phone}`}
-                          className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
-                        >
-                          <IconPhone size={16} />
-                          <span>{member.phone}</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </AnimatedDiv>
-            ))}
-          </div>
+                  </AnimatedDiv>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
 
           {/* Ehrenamt Info */}
-          <AnimatedSection delay={1.0}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <IconUsers className="text-gray-600 dark:text-gray-400 mx-auto mb-4" size={48} />
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                Ehrenamtliches Engagement
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-sm">
-                Unser gesamter Vorstand arbeitet ehrenamtlich und investiert seine Freizeit 
-                für den Verein. Wir sind stolz auf das große Engagement und den Zusammenhalt 
-                in unserem Vorstandsteam.
-              </p>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">6</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Vorstandsmitglieder</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">100%</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Ehrenamtlich</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">24/7</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Für den Verein</div>
+          <AnimatedSection delay={0.3}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  Ehrenamtliches Engagement
+                </h3>
+              </div>
+              <div className="p-6 text-center relative z-10">
+                <IconUsers className="text-gray-600 dark:text-gray-400 mx-auto mb-4" size={48} />
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-sm">
+                  Unser gesamter Vorstand arbeitet ehrenamtlich und investiert seine Freizeit 
+                  für den Verein. Wir sind stolz auf das große Engagement und den Zusammenhalt 
+                  in unserem Vorstandsteam.
+                </p>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">6</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Vorstandsmitglieder</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">100%</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Ehrenamtlich</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">24/7</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Für den Verein</div>
+                  </div>
                 </div>
               </div>
             </div>
           </AnimatedSection>
 
           {/* Allgemeine Kontaktinfo */}
-          <AnimatedSection delay={1.1}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="px-8 md:px-12 py-6 md:py-8 text-center mb-4">
-                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <AnimatedSection delay={0.4}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Allgemeine Kontaktinformationen
-                </h2>
+                </h3>
               </div>
-              <div className="space-y-3">
+              <div className="p-6 space-y-3 relative z-10">
                 <div className="flex items-center justify-center space-x-2">
                   <IconMail className="text-gray-600 dark:text-gray-400" size={20} />
                   <a 
@@ -237,21 +235,25 @@ export default function BoardPage() {
           </AnimatedSection>
 
           {/* Interesse am Vorstand */}
-          <AnimatedSection delay={1.2}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                Interesse am Vorstand?
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
-                Sie möchten sich ehrenamtlich für unseren Verein engagieren? 
-                Wir freuen uns immer über neue Mitstreiter im Vorstandsteam!
-              </p>
-              <a 
-                href="/kontakt" 
-                className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 inline-block"
-              >
-                Jetzt Kontakt aufnehmen
-              </a>
+          <AnimatedSection delay={0.5}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  Interesse am Vorstand?
+                </h3>
+              </div>
+              <div className="p-6 text-center relative z-10">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
+                  Sie möchten sich ehrenamtlich für unseren Verein engagieren? 
+                  Wir freuen uns immer über neue Mitstreiter im Vorstandsteam!
+                </p>
+                <a 
+                  href="/kontakt" 
+                  className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 inline-block"
+                >
+                  Jetzt Kontakt aufnehmen
+                </a>
+              </div>
             </div>
           </AnimatedSection>
 

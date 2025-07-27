@@ -58,13 +58,7 @@ export default factories.createCoreController('api::liga.liga', ({ strapi }) => 
       });
       
       if (!league) {
-        return ctx.notFound(
-          ValidationService.createErrorResponse(
-            'League not found',
-            'NOT_FOUND',
-            404
-          )
-        );
+        return ctx.notFound('Liga not found');
       }
       
       strapi.log.debug('Liga.findOne: League found', { id: ligaId, name: league.name });

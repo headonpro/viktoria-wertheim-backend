@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Image from "next/image"
-import { leagueService, Team } from '@/services/leagueService'
+import { leagueService, Team, LeagueServiceError } from '@/services/leagueService'
 import { teamService } from '@/services/teamService'
 
 const AnimatedSection = dynamic(
@@ -17,33 +17,54 @@ const AnimatedSection = dynamic(
 // Funktion zur Kürzung der Teamnamen (wie professionelle Fußball-Overlays)
 const shortenTeamName = (name: string): string => {
   // Spezielle Behandlung für bekannte Teams (wie in TV-Overlays)
+  // Updated with actual team names from Tabellen-Eintrag API
   const teamAbbreviations: { [key: string]: string } = {
+    // Viktoria Teams - Updated with actual database names
     'SV Viktoria Wertheim': 'SV VIK',
     'SV Viktoria Wertheim II': 'SV VIK II',
-    'SV Viktoria Wertheim III': 'SV VIK III',
-    'FC Eichel': 'FC EIC',
-    'TSV Assamstadt': 'TSV ASS',
-    'Türkgücü Wertheim': 'TGW',
-    'TSV Tauberbischofsheim': 'TSV TAU',
-    'FV Brehmbachtal': 'FV BRE',
-    'SV Brehmbachtal': 'SV BRE',
-    'SV Pülfringen': 'SV PÜL',
-    'SG Pülfringen': 'SG PÜL',
-    'TSV Kreuzwertheim': 'TSV KRE',
-    'SV Kreuzwertheim': 'SV KRE',
-    'FC Hundheim-Steinbach': 'FC HUN',
-    'TSV Hundheim': 'TSV HUN',
-    'SpG Schwabhausen/Windischbuch': 'SpG SCH',
-    'SV Schwabhausen': 'SV SCH',
-    'FC Umpfertal': 'FC UMP',
-    'SG Umpfertal': 'SG UMP',
-    'SV Schönfeld': 'SV SCH',
-    'Kickers DHK Wertheim': 'KIC',
-    'SG RaMBo': 'SG RAM',
+    'SpG Vikt. Wertheim 3/Grünenwort': 'SpG VIK 3',
+    
+    // Kreisliga Tauberbischofsheim Teams - Updated with actual database names
     'VfR Gerlachsheim': 'VfR GER',
-    'VfB Reicholzheim': 'VfB REI',
+    'TSV Jahn Kreuzwertheim': 'TSV JAH',
+    'TSV Assamstadt': 'TSV ASS',
+    'FV Brehmbachtal': 'FV BRE',
+    'FC Hundheim-Steinbach': 'FC HUN',
     'TuS Großrinderfeld': 'TuS GRO',
-    'SpG Impfingen/Tauberbischofsheim 2': 'SpG IMP'
+    'Türk Gücü Wertheim': 'TGW',
+    'SV Pülfringen': 'SV PÜL',
+    'VfB Reicholzheim': 'VfB REI',
+    'FC Rauenberg': 'FC RAU',
+    'SV Schönfeld': 'SV SCH',
+    'TSG Impfingen II': 'TSG IMP',
+    '1. FC Umpfertal': '1. FC UMP',
+    'Kickers DHK Wertheim': 'KIC DHK',
+    'TSV Schwabhausen': 'TSV SCH',
+    
+    // Kreisklasse A Tauberbischofsheim Teams - Updated with actual database names
+    'TSV Unterschüpf': 'TSV UNT',
+    'SV Nassig II': 'SV NAS II',
+    'TSV Dittwar': 'TSV DIT',
+    'FV Oberlauda e.V.': 'FV OBE',
+    'FC Wertheim-Eichel': 'FC EIC',
+    'TSV Assamstadt II': 'TSV ASS II',
+    'FC Grünsfeld II': 'FC GRÜ II',
+    'TSV Gerchsheim': 'TSV GER',
+    'SV Distelhausen II': 'SV DIS II',
+    'TSV Wenkheim': 'TSV WEN',
+    'SV Winzer Beckstein II': 'SV WIN II',
+    'SV Oberbalbach': 'SV OBE',
+    'FSV Tauberhöhe II': 'FSV TAU II',
+    
+    // Kreisklasse B Tauberbischofsheim Teams - Updated with actual database names
+    'FC Hundheim-Steinbach 2': 'FC HUN 2',
+    'FC Wertheim-Eichel 2': 'FC EIC 2',
+    'SG RaMBo 2': 'SG RAM 2',
+    'SV Eintracht Nassig 3': 'SV NAS 3',
+    'SpG Kickers DHK Wertheim 2/Urphar': 'SpG KIC 2',
+    'TSV Kreuzwertheim 2': 'TSV KRE 2',
+    'Turkgucu Wertheim 2': 'TGW 2',
+    'VfB Reicholzheim 2': 'VfB REI 2'
   };
 
   // Prüfe ob eine spezielle Abkürzung existiert
@@ -102,27 +123,23 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [teams, setTeams] = useState<Team[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<LeagueServiceError | null>(null)
+  const [retryCount, setRetryCount] = useState(0)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
   // Get league name from team data or fallback to static names
   const [leagueName, setLeagueName] = useState<string>('')
+  const [isFallbackMode, setIsFallbackMode] = useState<boolean>(false)
 
   const getLeagueName = (team: '1' | '2' | '3') => {
-    // Static fallback names
-    const fallbackNames = {
-      '1': 'Kreisliga Tauberbischofsheim',
-      '2': 'Kreisklasse A Tauberbischofsheim',
-      '3': 'Kreisklasse B Tauberbischofsheim'
-    }
-    return leagueName || fallbackNames[team]
+    return leagueName || leagueService.getLeagueNameByTeam(team)
   }
 
   const getViktoriaTeamName = (team: '1' | '2' | '3') => {
     switch (team) {
       case '1': return 'SV Viktoria Wertheim'
       case '2': return 'SV Viktoria Wertheim II'
-      case '3': return 'SV Viktoria Wertheim III'
+      case '3': return 'SpG Vikt. Wertheim 3/Grünenwort'
       default: return 'SV Viktoria Wertheim'
     }
   }
@@ -130,118 +147,71 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
 
   // Fetch league standings from API based on selected team
-  const fetchLeagueData = useCallback(async () => {
+  const fetchLeagueData = useCallback(async (useRetry: boolean = false) => {
     try {
       setLoading(true)
       setError(null)
 
-      // First, get team data to determine league information
-      const teamData = await teamService.fetchTeamData(selectedTeam)
+      // Get team info with fallback detection
+      const teamInfo = leagueService.getTeamInfo(selectedTeam)
+      setLeagueName(teamInfo.ligaName)
+      setIsFallbackMode(teamInfo.isFallback)
 
-      if (teamData && teamData.liga_vollname) {
-        setLeagueName(teamData.liga_vollname)
-
-        // Try to fetch league-specific data first
-        try {
-          const leagueTeams = await leagueService.fetchLeagueStandingsByLeague(teamData.liga_vollname)
-
-          if (leagueTeams && leagueTeams.length > 0) {
-            setTeams(leagueTeams)
-            setLastUpdated(new Date())
-            return
-          }
-        } catch (leagueError) {
-          console.warn(`League-specific data not available for ${teamData.liga_vollname}:`, leagueError)
-        }
+      let leagueTeams: Team[]
+      
+      if (useRetry) {
+        // Use retry mechanism for manual refresh
+        leagueTeams = await leagueService.fetchLeagueStandingsByTeamWithRetry(selectedTeam, 2)
+        setRetryCount(prev => prev + 1)
+      } else {
+        // Normal fetch for initial load and team changes
+        leagueTeams = await leagueService.fetchLeagueStandingsByTeam(selectedTeam)
       }
 
-      // Fallback: For team 1, try to get general league standings
-      if (selectedTeam === '1') {
-        try {
-          const apiTeams = await leagueService.fetchLeagueStandings()
-
-          if (apiTeams && apiTeams.length > 0) {
-            setTeams(apiTeams)
-            setLastUpdated(new Date())
-          } else {
-            console.warn('No league data available for team', selectedTeam)
-            setTeams([])
-          }
-        } catch (apiError) {
-          console.warn('General league API data not available:', apiError)
-          setTeams([])
-          setError('Tabellendaten konnten nicht geladen werden')
-        }
+      if (leagueTeams && leagueTeams.length > 0) {
+        setTeams(leagueTeams)
+        setLastUpdated(new Date())
+        setRetryCount(0) // Reset retry count on success
+        setIsFallbackMode(false) // Reset fallback mode on successful data load
       } else {
-        // For teams 2 and 3, show empty state if no league-specific data
-        if (process.env.NODE_ENV !== 'test') {
-          console.info(`No league table data available for team ${selectedTeam}`)
-        }
+        // This shouldn't happen with the new error handling, but keep as fallback
         setTeams([])
+        if (process.env.NODE_ENV !== 'test') {
+          console.info(`No league table data available for team ${selectedTeam} in ${teamInfo.ligaName}`)
+        }
       }
 
     } catch (err) {
       console.error('Failed to fetch league data for team', selectedTeam, ':', err)
-      setError('Tabelle konnte nicht geladen werden')
+      
+      const serviceError = err as LeagueServiceError
+      setError(serviceError)
       setTeams([])
+      
+      // Use fallback team info even on error
+      const teamInfo = leagueService.getTeamInfo(selectedTeam)
+      setLeagueName(teamInfo.ligaName)
+      setIsFallbackMode(teamInfo.isFallback)
     } finally {
       setLoading(false)
     }
   }, [selectedTeam])
 
   useEffect(() => {
-    fetchLeagueData()
+    fetchLeagueData(false) // Initial load without retry
   }, [fetchLeagueData])
 
-  // Add refresh function for manual updates
+  // Add refresh function for manual updates with retry
   const refreshData = async () => {
-    await fetchLeagueData()
+    await fetchLeagueData(true) // Use retry mechanism for manual refresh
   }
 
   // Get current Viktoria team name and implement proper team matching
   const currentViktoriaTeam = getViktoriaTeamName(selectedTeam)
 
-  // Enhanced team matching function to handle different name variations
+  // Enhanced team matching function using leagueService
   const isViktoriaTeamMatch = (teamName: string, selectedTeam: '1' | '2' | '3'): boolean => {
-    const normalizedTeamName = teamName.toLowerCase().trim()
-
-    // Check for exact matches first
-    if (teamName === currentViktoriaTeam) return true
-
-    // Check for variations of Viktoria team names
-    const viktoriaVariations = [
-      'sv viktoria wertheim',
-      'viktoria wertheim',
-      'sv viktoria wertheim i',
-      'sv viktoria wertheim ii',
-      'sv viktoria wertheim iii',
-      'viktoria wertheim i',
-      'viktoria wertheim ii',
-      'viktoria wertheim iii'
-    ]
-
-    // For team 1, match base name and "I" variations
-    if (selectedTeam === '1') {
-      return viktoriaVariations.slice(0, 3).some(variation =>
-        normalizedTeamName.includes(variation) || normalizedTeamName === variation
-      )
-    }
-
-    // For team 2, match "II" variations
-    if (selectedTeam === '2') {
-      return viktoriaVariations.slice(3, 5).some(variation =>
-        normalizedTeamName.includes(variation) || normalizedTeamName === variation
-      )
-    }
-
-    // For team 3, match "III" variations  
-    if (selectedTeam === '3') {
-      return viktoriaVariations.slice(5).some(variation =>
-        normalizedTeamName.includes(variation) || normalizedTeamName === variation
-      )
-    }
-
-    return false
+    return leagueService.isViktoriaTeam(teamName, selectedTeam)
   }
 
   // Filter teams for compact view: show more teams on desktop (5 total including 6th and 10th)
@@ -288,6 +258,11 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
             <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
               {getLeagueName(selectedTeam)}
             </h2>
+            {isFallbackMode && (
+              <div className="mt-2 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full inline-block">
+                ⚠️ Fallback-Modus aktiv
+              </div>
+            )}
           </div>
 
           {/* Table Header */}
@@ -320,39 +295,103 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           {/* Error State */}
           {error && !loading && (
             <div className="relative z-10 px-4 md:px-8 py-6 text-center">
-              <div className="text-red-500 mb-2">⚠️</div>
-              <p className="text-sm text-red-400 dark:text-red-300 mb-3">{error}</p>
-              <button
-                onClick={refreshData}
-                className="px-4 py-2 bg-viktoria-blue text-white rounded-lg text-sm hover:bg-viktoria-blue-light transition-colors"
-              >
-                Erneut versuchen
-              </button>
+              <div className="text-red-500 mb-3 text-2xl">
+                {error.type === 'network' ? '🌐' : 
+                 error.type === 'timeout' ? '⏱️' :
+                 error.type === 'server' ? '🔧' :
+                 error.type === 'not_found' ? '🔍' : '⚠️'}
+              </div>
+              
+              <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100 mb-2">
+                {error.type === 'network' ? 'Verbindungsfehler' :
+                 error.type === 'timeout' ? 'Zeitüberschreitung' :
+                 error.type === 'server' ? 'Serverfehler' :
+                 error.type === 'not_found' ? 'Liga nicht gefunden' : 'Fehler beim Laden'}
+              </h3>
+              
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 max-w-md mx-auto">
+                {error.message}
+              </p>
+              
+              {error.type === 'network' && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.
+                </p>
+              )}
+              
+              {error.type === 'timeout' && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  Die Anfrage dauerte zu lange. Versuchen Sie es in einem Moment erneut.
+                </p>
+              )}
+              
+              {error.type === 'server' && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  Temporärer Serverfehler. Das Problem wird normalerweise automatisch behoben.
+                </p>
+              )}
+              
+              {retryCount > 0 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  Versuche: {retryCount}
+                </p>
+              )}
+              
+              {error.retryable && (
+                <button
+                  onClick={refreshData}
+                  disabled={loading}
+                  className="px-6 py-2 bg-viktoria-blue text-white rounded-lg text-sm hover:bg-viktoria-blue-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Wird geladen...' : 'Erneut versuchen'}
+                </button>
+              )}
+              
+              {!error.retryable && (
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  Dieser Fehler kann nicht automatisch behoben werden.
+                </div>
+              )}
             </div>
           )}
 
           {/* Empty State */}
           {!loading && !error && teams.length === 0 && (
             <div className="relative z-10 px-4 md:px-8 py-8 text-center">
-              <div className="text-gray-400 mb-2">📊</div>
-              <p className="text-sm text-gray-800 dark:text-gray-100 mb-3">
+              <div className="text-gray-400 mb-4 text-3xl">📊</div>
+              
+              <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100 mb-2">
+                Keine Tabellendaten verfügbar
+              </h3>
+              
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
                 {selectedTeam === '1'
-                  ? 'Keine Tabellendaten für die Kreisliga verfügbar'
+                  ? 'Für die Kreisliga Tauberbischofsheim sind derzeit keine Tabellendaten verfügbar.'
                   : selectedTeam === '2'
-                    ? 'Keine Tabellendaten für die Kreisklasse A verfügbar'
-                    : 'Keine Tabellendaten für die Kreisklasse B verfügbar'
+                    ? 'Für die Kreisklasse A Tauberbischofsheim sind derzeit keine Tabellendaten verfügbar.'
+                    : 'Für die Kreisklasse B Tauberbischofsheim sind derzeit keine Tabellendaten verfügbar.'
                 }
               </p>
-              <p className="text-xs text-gray-200 dark:text-gray-300 mb-4">
-                {selectedTeam === '1'
-                  ? 'Die Tabellendaten werden möglicherweise noch aktualisiert.'
-                  : 'Tabellendaten für diese Liga sind derzeit nicht verfügbar.'
-                }
-              </p>
+              
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-6 space-y-1">
+                <p>Mögliche Gründe:</p>
+                <ul className="list-disc list-inside space-y-1 max-w-md mx-auto">
+                  <li>Die Saison hat noch nicht begonnen</li>
+                  <li>Tabellendaten werden gerade aktualisiert</li>
+                  <li>Temporäre Wartungsarbeiten</li>
+                </ul>
+              </div>
+              
+              {lastUpdated && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  Letzter Versuch: {lastUpdated.toLocaleTimeString('de-DE')}
+                </p>
+              )}
+              
               <button
                 onClick={refreshData}
                 disabled={loading}
-                className="px-4 py-2 bg-viktoria-blue text-white rounded-lg text-sm hover:bg-viktoria-blue-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-viktoria-blue text-white rounded-lg text-sm hover:bg-viktoria-blue-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Wird geladen...' : 'Erneut laden'}
               </button>
@@ -362,11 +401,11 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           {/* Teams - Mobile View */}
           {!loading && !error && teams.length > 0 && (
             <div className="relative z-10 md:hidden">
-              {mobileTeams.map((team) => {
+              {mobileTeams.map((team, index) => {
                 const isViktoriaTeam = isViktoriaTeamMatch(team.name, selectedTeam)
                 return (
                   <div
-                    key={team.position}
+                    key={`mobile-${team.position}-${team.name.replace(/\s+/g, '-')}-${index}`}
                     className={`
                     px-4 sm:px-6 md:px-8 py-3 sm:py-2.5 md:py-3 
                     touch-manipulation
@@ -471,11 +510,11 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
           {/* Teams - Desktop View */}
           {!loading && !error && teams.length > 0 && (
             <div className="relative z-10 hidden md:block">
-              {desktopTeams.map((team) => {
+              {desktopTeams.map((team, index) => {
                 const isViktoriaTeam = isViktoriaTeamMatch(team.name, selectedTeam)
                 return (
                   <div
-                    key={team.position}
+                    key={`desktop-${team.position}-${team.name.replace(/\s+/g, '-')}-${index}`}
                     className={`
                     px-4 sm:px-6 md:px-8 py-3 sm:py-2.5 md:py-3 
                     touch-manipulation

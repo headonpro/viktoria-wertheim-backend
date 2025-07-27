@@ -447,6 +447,9 @@ export interface ApiGameCardGameCard extends Struct.CollectionTypeSchema {
       'api::game-card.game-card'
     > &
       Schema.Attribute.Private;
+    mannschaft: Schema.Attribute.Enumeration<['m1', 'm2', 'm3']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'m1'>;
     publishedAt: Schema.Attribute.DateTime;
     unsere_tore: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
@@ -470,7 +473,7 @@ export interface ApiKategorieKategorie extends Struct.CollectionTypeSchema {
     singularName: 'kategorie';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     beschreibung: Schema.Attribute.Text;
@@ -620,6 +623,9 @@ export interface ApiNextGameCardNextGameCard
       'api::next-game-card.next-game-card'
     > &
       Schema.Attribute.Private;
+    mannschaft: Schema.Attribute.Enumeration<['m1', 'm2', 'm3']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'m1'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -797,6 +803,15 @@ export interface ApiTabellenEintragTabellenEintrag
   };
   options: {
     draftAndPublish: false;
+    mainField: 'team_name';
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: true;
+    };
+    'content-type-builder': {
+      visible: true;
+    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -856,8 +871,13 @@ export interface ApiTabellenEintragTabellenEintrag
         number
       > &
       Schema.Attribute.DefaultTo<0>;
-    team: Schema.Attribute.Relation<'manyToOne', 'api::team.team'> &
-      Schema.Attribute.Required;
+    team: Schema.Attribute.Relation<'manyToOne', 'api::team.team'>;
+    team_logo: Schema.Attribute.Media<'images'>;
+    team_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
     tordifferenz: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<0>;
@@ -897,7 +917,7 @@ export interface ApiTabellenEintragTabellenEintrag
 export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
   collectionName: 'teams';
   info: {
-    description: 'Vereinfachte Teams mit nur essentiellen Feldern';
+    description: 'Viktoria Mannschaften ohne Tabellenstatistiken';
     displayName: 'Team';
     pluralName: 'teams';
     singularName: 'team';
@@ -927,88 +947,19 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::next-game-card.next-game-card'
     >;
-    niederlagen: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
-    punkte: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
     saison: Schema.Attribute.Relation<'manyToOne', 'api::saison.saison'>;
-    siege: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
-    spiele_gesamt: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
-    tabellen_eintraege: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::tabellen-eintrag.tabellen-eintrag'
-    >;
-    tabellenplatz: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<1>;
     team_typ: Schema.Attribute.Enumeration<
       ['viktoria_mannschaft', 'gegner_verein']
     > &
-      Schema.Attribute.DefaultTo<'gegner_verein'>;
+      Schema.Attribute.DefaultTo<'viktoria_mannschaft'>;
     teamfoto: Schema.Attribute.Media<'images'>;
-    tordifferenz: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    tore_fuer: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
-    tore_gegen: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
     trainer: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
     trend: Schema.Attribute.Enumeration<['steigend', 'neutral', 'fallend']> &
       Schema.Attribute.DefaultTo<'neutral'>;
-    unentschieden: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

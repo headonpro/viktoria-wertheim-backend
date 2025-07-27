@@ -26,6 +26,12 @@
       "type": "boolean",
       "required": true,
       "default": true
+    },
+    "mannschaft": {
+      "type": "enumeration",
+      "enum": ["m1", "m2", "m3"],
+      "required": true,
+      "default": "m1"
     }
   }
 }

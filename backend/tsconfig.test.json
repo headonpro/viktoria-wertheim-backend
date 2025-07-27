@@ -1,15 +1,28 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
+    "target": "ES2019",
+    "lib": ["ES2020"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "strict": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "noEmit": true,
+    "isolatedModules": false,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+    "outDir": "./dist"
   },
   "include": [
     "src/**/*",
-    "tests/**/*"
+    "tests/**/*",
+    "src/**/*.test.ts",
+    "src/**/__tests__/**/*"
   ],
   "exclude": [
     "node_modules",

@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "global": {
+    "logLevel": "debug",
+    "enableStrictValidation": false,
+    "maxHookExecutionTime": 200,
+    "enableMetrics": true,
+    "enableBackgroundJobs": false,
+    "enableValidationWarnings": true,
+    "validationTimeout": 10000,
+    "calculationTimeout": 15000,
+    "enableCaching": true,
+    "cacheExpirationMs": 60000
+  },
+  "factory": {
+    "enableServiceCaching": true,
+    "maxCacheSize": 20,
+    "cacheExpirationMs": 600000,
+    "enableServiceMetrics": true
+  },
+  "contentTypes": {
+    "team": {
+      "customConfig": {
+        "enableAdvancedValidation": true,
+        "enableRealTimeUpdates": true,
+        "enableDebugLogging": true
+      }
+    },
+    "saison": {
+      "customConfig": {
+        "enableOverlapChecking": false,
+        "enableDebugLogging": true
+      }
+    },
+    "tabellen-eintrag": {
+      "customConfig": {
+        "enableAutoCalculation": true,
+        "enablePositionTracking": true,
+        "enableDebugLogging": true
+      }
+    }
+  },
+  "featureFlags": {
+    "enableHookMetrics": true,
+    "enableBackgroundJobs": false,
+    "enableAdvancedValidation": true,
+    "enableConfigurationUI": true,
+    "enableHookProfiling": true,
+    "enableAsyncValidation": false,
+    "enableValidationCaching": false,
+    "enableCalculationCaching": false,
+    "enableHookChaining": true,
+    "enableConditionalHooks": true
+  },
+  "metadata": {
+    "environment": "development",
+    "description": "Development environment configuration with debug features enabled",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

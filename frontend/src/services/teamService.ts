@@ -130,6 +130,16 @@ const transformStrapiV5ToTeamData = (strapiTeam: StrapiV5Team): TeamData => {
 // transformStrapiToGameDetails removed since Spiel content type was removed
 // Use Game Cards instead
 
+// Helper function to get team name for error messages
+const getTeamName = (teamId: TeamId): string => {
+  const teamNames: Record<TeamId, string> = {
+    '1': '1. Mannschaft',
+    '2': '2. Mannschaft', 
+    '3': '3. Mannschaft'
+  }
+  return teamNames[teamId]
+}
+
 // Team Service Implementation
 export const teamService = {
   /**
@@ -181,7 +191,7 @@ export const teamService = {
 
   /**
    * Get the last and next game for a team using the new Game Card API
-   * @param teamId - ID of the team
+   * @param teamId - ID of the team ('1', '2', or '3')
    * @returns Promise<{lastGame: GameDetails | null, nextGame: GameDetails | null}>
    */
   async fetchLastAndNextGame(teamId: TeamId): Promise<{
@@ -189,10 +199,14 @@ export const teamService = {
     nextGame: GameDetails | null
   }> {
     try {
-      // Use the separate Game Card API endpoints
+      // Map frontend team IDs to backend mannschaft values
+      // Frontend: "1", "2", "3" -> Backend: "m1", "m2", "m3"
+      const mannschaftValue = `m${teamId}`
+      
+      // Use the separate Game Card API endpoints with mannschaft filtering
       const [lastResponse, nextResponse] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/game-cards`),
-        axios.get(`${API_BASE_URL}/api/next-game-cards?populate=gegner_team`)
+        axios.get(`${API_BASE_URL}/api/game-cards?filters[mannschaft][$eq]=${mannschaftValue}`),
+        axios.get(`${API_BASE_URL}/api/next-game-cards?filters[mannschaft][$eq]=${mannschaftValue}&populate=gegner_team`)
       ])
       
       // Get the first (most recent) game from each endpoint
@@ -240,7 +254,25 @@ export const teamService = {
         nextGame: transformGameCardToGameDetails(nextGameData, 'next')
       }
     } catch (error) {
-      console.warn(`Error fetching last/next games for team ${teamId}:`, error)
+      const teamName = getTeamName(teamId)
+      console.warn(`Error fetching last/next games for ${teamName} (Team ${teamId}):`, error)
+      
+      // Provide team-specific error context
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status
+        if (status === 404) {
+          console.warn(`No game data found for ${teamName}`)
+        } else if (status && status >= 500) {
+          console.warn(`Server error while fetching games for ${teamName}`)
+        } else if (status) {
+          console.warn(`API error for ${teamName}: ${status} ${error.response?.statusText || ''}`)
+        } else {
+          console.warn(`Network error for ${teamName}: ${error.message}`)
+        }
+      } else {
+        console.warn(`Unknown error for ${teamName}:`, error)
+      }
+      
       return { lastGame: null, nextGame: null }
     }
   },

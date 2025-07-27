@@ -112,9 +112,9 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         {/* Mannschaftsbild */}
         <AnimatedSection className="px-4 py-4" delay={0.3}>
           <div className="container">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-6 border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
-              <h2 className="text-lg font-semibold text-viktoria-blue dark:text-viktoria-yellow mb-4 text-center">Mannschaftsfoto</h2>
-              <div className="aspect-[16/9] md:aspect-[21/9] bg-gradient-to-r from-viktoria-blue-light to-viktoria-blue rounded-lg flex items-center justify-center">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 p-6">
+              <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-4 text-center relative z-10">Mannschaftsfoto</h2>
+              <div className="aspect-[16/9] md:aspect-[21/9] bg-gradient-to-r from-viktoria-blue-light to-viktoria-blue rounded-lg flex items-center justify-center relative z-10">
                 <div className="text-center text-white">
                   <IconUsers size={48} className="mx-auto mb-4 text-viktoria-yellow" />
                   <p className="text-lg font-semibold">Mannschaftsfoto</p>
@@ -128,14 +128,14 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         {/* Fußballfeld - Start 11 */}
         <AnimatedSection className="px-4 py-4" delay={0.4}>
           <div className="container">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-4 md:p-6 border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
-              <div className="flex items-center justify-center mb-6">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 p-4 md:p-6">
+              <div className="flex items-center justify-center mb-6 relative z-10">
                 <IconShield className="text-viktoria-blue dark:text-viktoria-yellow mr-3" size={24} />
-                <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue dark:text-viktoria-yellow">Start-11</h2>
+                <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">Start-11</h2>
               </div>
               
               {/* Fußballfeld */}
-              <div className="relative bg-green-600 rounded-lg min-h-[500px] md:min-h-[600px]">
+              <div className="relative bg-green-600 rounded-lg min-h-[500px] md:min-h-[600px] z-10">
                 {/* Feldlinien */}
                 <div className="absolute inset-6 md:inset-8 pointer-events-none">
                   <div className="w-full h-full border-2 border-white rounded-lg relative">
@@ -292,14 +292,14 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
         {/* Ersatzbank */}
         <AnimatedSection className="px-4 py-4" delay={1.6}>
           <div className="container">
-            <div className="bg-white/20 dark:bg-white/[0.02] backdrop-blur-md rounded-xl p-4 md:p-6 border border-white/40 dark:border-white/[0.08] shadow-lg dark:shadow-white/[0.05]">
-              <div className="flex items-center justify-center mb-6">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 p-4 md:p-6">
+              <div className="flex items-center justify-center mb-6 relative z-10">
                 <IconUsers className="text-viktoria-blue dark:text-viktoria-yellow mr-3" size={24} />
-                <h2 className="text-lg md:text-xl font-semibold text-viktoria-blue dark:text-viktoria-yellow">Ersatzbank</h2>
+                <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">Ersatzbank</h2>
               </div>
               
               {/* Ersatzbank im Spielfeld-Design - erweitert für 15 Personen */}
-              <div className="relative bg-green-600 rounded-lg min-h-[380px] md:min-h-[420px]">
+              <div className="relative bg-green-600 rounded-lg min-h-[380px] md:min-h-[420px] z-10">
                 {/* Weißer Rahmen wie beim Spielfeld */}
                 <div className="absolute inset-4 md:inset-6 pointer-events-none">
                   <div className="w-full h-full border-2 border-white rounded-lg relative"></div>
@@ -441,8 +441,8 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
                 </div>
 
                 {/* Positions-spezifische Statistiken */}
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h3 className="font-semibold text-viktoria-blue mb-3 text-center">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                  <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-3 text-center">
                     Spezialstatistiken
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -531,7 +531,7 @@ export default function TeamDetailPage({ params }: { params: Promise<{ id: strin
 
                 {/* Saison-Leistung */}
                 <div className="bg-gradient-to-r from-viktoria-blue to-viktoria-blue-light rounded-lg p-4 text-white">
-                  <h3 className="font-semibold mb-3 text-center">Saison 2024/25</h3>
+                  <h3 className="text-sm md:text-base font-semibold text-white uppercase tracking-wide mb-3 text-center">Saison 2024/25</h3>
                   <div className="flex justify-center space-x-8">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-viktoria-yellow">

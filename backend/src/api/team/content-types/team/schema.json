@@ -5,7 +5,7 @@
     "singularName": "team",
     "pluralName": "teams",
     "displayName": "Team",
-    "description": "Vereinfachte Teams mit nur essentiellen Feldern"
+    "description": "Viktoria Mannschaften ohne Tabellenstatistiken"
   },
   "options": {
     "draftAndPublish": false
@@ -42,56 +42,6 @@
         "images"
       ]
     },
-    "punkte": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "spiele_gesamt": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "siege": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "unentschieden": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "niederlagen": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "tore_fuer": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "tore_gegen": {
-      "type": "integer",
-      "min": 0,
-      "default": 0
-    },
-    "tordifferenz": {
-      "type": "integer",
-      "default": 0
-    },
-    "tabellenplatz": {
-      "type": "integer",
-      "min": 1,
-      "default": 1
-    },
-    "tabellen_eintraege": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::tabellen-eintrag.tabellen-eintrag",
-      "mappedBy": "team"
-    },
     "next_game_cards": {
       "type": "relation",
       "relation": "oneToMany",
@@ -105,12 +55,19 @@
     },
     "team_typ": {
       "type": "enumeration",
-      "enum": ["viktoria_mannschaft", "gegner_verein"],
-      "default": "gegner_verein"
+      "enum": [
+        "viktoria_mannschaft",
+        "gegner_verein"
+      ],
+      "default": "viktoria_mannschaft"
     },
     "trend": {
       "type": "enumeration",
-      "enum": ["steigend", "neutral", "fallend"],
+      "enum": [
+        "steigend",
+        "neutral",
+        "fallend"
+      ],
       "default": "neutral"
     }
   }

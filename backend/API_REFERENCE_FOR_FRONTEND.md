@@ -24,16 +24,214 @@ const headers = {
 
 | Collection | Endpoint | Purpose | Key Relations |
 |------------|----------|---------|---------------|
-| Teams | `/api/teams` | Football teams | Liga, Saison |
+| Teams | `/api/teams` | Viktoria teams only | Liga, Saison |
+| Tabellen-Eintraege | `/api/tabellen-eintraege` | League table entries | Liga |
 | Ligas | `/api/ligas` | Football leagues | Teams, Saison |
 | Saisons | `/api/saisons` | Football seasons | Teams, Ligas |
 | News-Artikels | `/api/news-artikels` | News articles | None |
-| Teams | `/api/teams` | Teams with league table data | Liga, Saison |
 | Game-Cards | `/api/game-cards` | Match information | Teams |
 | Next-Game-Cards | `/api/next-game-cards` | Upcoming matches | Teams |
 | Sponsors | `/api/sponsors` | Club sponsors | None |
 
-## Teams API
+## Tabellen-Eintraege API (League Table Entries)
+
+### Get League Table Entries
+```typescript
+// Basic request - all table entries
+const response = await fetch(`${API_BASE_URL}/api/tabellen-eintraege`);
+const { data } = await response.json();
+
+// Filter by league name
+const response = await fetch(`${API_BASE_URL}/api/tabellen-eintraege?filters[liga][name][$eq]=Kreisliga Tauberbischofsheim&sort=platz:asc`);
+const { data } = await response.json();
+
+// Filter by league with population
+const response = await fetch(`${API_BASE_URL}/api/tabellen-eintraege?filters[liga][name][$eq]=Kreisklasse A Tauberbischofsheim&populate=liga&sort=platz:asc`);
+const { data } = await response.json();
+
+// Get specific team position
+const response = await fetch(`${API_BASE_URL}/api/tabellen-eintraege?filters[team_name][$contains]=Viktoria&populate=liga`);
+const { data } = await response.json();
+```
+
+### Tabellen-Eintrag Data Structure
+```typescript
+interface TabellenEintrag {
+  id: number;
+  attributes: {
+    team_name: string;               // Team name (required)
+    platz: number;                   // Table position (required, min: 1)
+    spiele: number;                  // Games played (default: 0)
+    siege: number;                   // Wins (default: 0)
+    unentschieden: number;           // Draws (default: 0)
+    niederlagen: number;             // Losses (default: 0)
+    tore_fuer: number;               // Goals for (default: 0)
+    tore_gegen: number;              // Goals against (default: 0)
+    tordifferenz: number;            // Goal difference (default: 0)
+    punkte: number;                  // Points (default: 0)
+    team_logo?: {                    // Team logo
+      data?: {
+        id: number;
+        attributes: {
+          url: string;
+          alternativeText?: string;
+        };
+      };
+    };
+    liga: {                          // League relation (required)
+      data: {
+        id: number;
+        attributes: {
+          name: string;
+          kurz_name: string;
+        };
+      };
+    };
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+```
+
+### Liga-Mannschaft Mapping
+The system uses the following mapping between teams and leagues:
+
+| Mannschaft | Liga | API Filter |
+|------------|------|------------|
+| 1. Mannschaft | Kreisliga Tauberbischofsheim | `filters[liga][name][$eq]=Kreisliga Tauberbischofsheim` |
+| 2. Mannschaft | Kreisklasse A Tauberbischofsheim | `filters[liga][name][$eq]=Kreisklasse A Tauberbischofsheim` |
+| 3. Mannschaft | Kreisklasse B Tauberbischofsheim | `filters[liga][name][$eq]=Kreisklasse B Tauberbischofsheim` |
+
+### Viktoria Team Identification
+The following team names are used to identify Viktoria teams in the table:
+
+| Liga | Viktoria Team Name |
+|------|-------------------|
+| Kreisliga Tauberbischofsheim | `SV Viktoria Wertheim` |
+| Kreisklasse A Tauberbischofsheim | `SV Viktoria Wertheim II` |
+| Kreisklasse B Tauberbischofsheim | `SpG Vikt. Wertheim 3/Grünenwort` |
+
+### Example League Service Implementation
+```typescript
+// services/leagueService.ts
+export const fetchLeagueStandingsByLiga = async (ligaName: string): Promise<TabellenEintrag[]> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/tabellen-eintraege?filters[liga][name][$eq]=${encodeURIComponent(ligaName)}&populate=liga&sort=platz:asc`
+  );
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch league standings for ${ligaName}`);
+  }
+  
+  const { data } = await response.json();
+  return data;
+};
+
+export const fetchLeagueStandingsByTeam = async (teamId: '1' | '2' | '3'): Promise<TabellenEintrag[]> => {
+  const ligaMapping = {
+    '1': 'Kreisliga Tauberbischofsheim',
+    '2': 'Kreisklasse A Tauberbischofsheim',
+    '3': 'Kreisklasse B Tauberbischofsheim'
+  };
+  
+  const ligaName = ligaMapping[teamId];
+  return fetchLeagueStandingsByLiga(ligaName);
+};
+
+// Transform to frontend Team format for compatibility
+export const transformTabellenEintragToTeam = (entry: TabellenEintrag): Team => {
+  return {
+    id: entry.id,
+    attributes: {
+      name: entry.attributes.team_name,
+      tabellenplatz: entry.attributes.platz,
+      punkte: entry.attributes.punkte,
+      spiele_gesamt: entry.attributes.spiele,
+      siege: entry.attributes.siege,
+      unentschieden: entry.attributes.unentschieden,
+      niederlagen: entry.attributes.niederlagen,
+      tore_fuer: entry.attributes.tore_fuer,
+      tore_gegen: entry.attributes.tore_gegen,
+      tordifferenz: entry.attributes.tordifferenz,
+      teamfoto: entry.attributes.team_logo,
+      liga: entry.attributes.liga,
+      createdAt: entry.attributes.createdAt,
+      updatedAt: entry.attributes.updatedAt
+    }
+  };
+};
+```
+
+### Example Component Usage
+```typescript
+const LeagueTable = ({ selectedTeam }: { selectedTeam: '1' | '2' | '3' }) => {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [leagueName, setLeagueName] = useState<string>('');
+  
+  useEffect(() => {
+    const fetchLeagueData = async () => {
+      try {
+        const tabellenEintraege = await fetchLeagueStandingsByTeam(selectedTeam);
+        const transformedTeams = tabellenEintraege.map(transformTabellenEintragToTeam);
+        
+        setTeams(transformedTeams);
+        if (tabellenEintraege.length > 0) {
+          setLeagueName(tabellenEintraege[0].attributes.liga.data.attributes.name);
+        }
+      } catch (error) {
+        console.error('Failed to fetch league data:', error);
+      }
+    };
+    
+    fetchLeagueData();
+  }, [selectedTeam]);
+  
+  const isViktoriaTeam = (teamName: string, teamId: string): boolean => {
+    const viktoriaPatterns = {
+      '1': ['SV Viktoria Wertheim', 'Viktoria Wertheim'],
+      '2': ['SV Viktoria Wertheim II', 'Viktoria Wertheim II'],
+      '3': ['SpG Vikt. Wertheim 3/Grünenwort', 'Viktoria Wertheim III']
+    };
+    
+    return viktoriaPatterns[teamId as keyof typeof viktoriaPatterns]?.some(pattern => 
+      teamName.includes(pattern)
+    ) || false;
+  };
+  
+  return (
+    <div>
+      <h2>{leagueName}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Platz</th>
+            <th>Team</th>
+            <th>Spiele</th>
+            <th>Punkte</th>
+            <th>Tore</th>
+          </tr>
+        </thead>
+        <tbody>
+          {teams.map(team => (
+            <tr 
+              key={team.id}
+              className={isViktoriaTeam(team.attributes.name, selectedTeam) ? 'viktoria-highlight' : ''}
+            >
+              <td>{team.attributes.tabellenplatz}</td>
+              <td>{team.attributes.name}</td>
+              <td>{team.attributes.spiele_gesamt}</td>
+              <td>{team.attributes.punkte}</td>
+              <td>{team.attributes.tore_fuer}:{team.attributes.tore_gegen}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+```
+
+## Teams API (Viktoria Teams Only)
 
 ### Get All Teams
 ```typescript
@@ -58,25 +256,16 @@ const response = await fetch(`${API_BASE_URL}/api/teams?filters[liga_name][$eq]=
 const { data } = await response.json();
 ```
 
-### Team Data Structure
+### Team Data Structure (Viktoria Teams Only)
 ```typescript
 interface Team {
   id: number;
   attributes: {
     name: string;                    // Team name (required, unique)
     trainer?: string;                // Coach name
-    punkte: number;                  // Points (default: 0)
-    spiele_gesamt: number;           // Total games (default: 0)
-    siege: number;                   // Wins (default: 0)
-    unentschieden: number;           // Draws (default: 0)
-    niederlagen: number;             // Losses (default: 0)
-    tore_fuer: number;               // Goals for (default: 0)
-    tore_gegen: number;              // Goals against (default: 0)
-    tordifferenz: number;            // Goal difference (default: 0)
-    tabellenplatz: number;           // Table position (default: 1)
     form_letzte_5?: string;          // Form of last 5 games (S/U/N, max 5 chars)
-    team_typ?: 'viktoria_mannschaft' | 'gegner_verein'; // Team type (default: gegner_verein)
-    liga_name?: string;              // League name for simple filtering
+    team_typ?: 'viktoria_mannschaft' | 'gegner_verein'; // Team type (default: viktoria_mannschaft)
+    trend?: 'up' | 'down' | 'stable'; // Team trend indicator
     teamfoto?: {                     // Team photo
       data?: {
         id: number;
@@ -108,6 +297,10 @@ interface Team {
     updatedAt: string;
   };
 }
+
+// Note: Table statistics (punkte, spiele_gesamt, siege, etc.) have been moved to Tabellen-Eintraege
+// Teams now only contain Viktoria-specific information like trainer, form, and trend
+```
 ```
 
 ### Example Usage in React
@@ -550,6 +743,177 @@ export const strapiService = new StrapiService();
 - Validate API responses at runtime if needed
 - Keep types in sync with backend schema
 
+## Game Cards API
+
+### Get All Game Cards
+```typescript
+// Basic request
+const response = await fetch(`${API_BASE_URL}/api/game-cards`);
+const { data } = await response.json();
+
+// Filter by team (mannschaft) - NEW FEATURE
+const response = await fetch(`${API_BASE_URL}/api/game-cards?filters[mannschaft][$eq]=m1`);
+const { data } = await response.json();
+
+// Filter by different teams
+const response = await fetch(`${API_BASE_URL}/api/game-cards?filters[mannschaft][$eq]=m2`);
+const response = await fetch(`${API_BASE_URL}/api/game-cards?filters[mannschaft][$eq]=m3`);
+```
+
+### Game Card Data Structure
+```typescript
+interface GameCard {
+  id: number;
+  attributes: {
+    datum: string;                   // Match date (required)
+    gegner: string;                  // Opponent name (required)
+    ist_heimspiel: boolean;          // Home game flag (required, default: true)
+    unsere_tore?: number;            // Our goals (optional)
+    gegner_tore?: number;            // Opponent goals (optional)
+    mannschaft: 'm1' | 'm2' | 'm3'; // Team identifier (required, default: 'm1')
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+}
+```
+
+### Next Game Cards API
+
+```typescript
+// Basic request with population
+const response = await fetch(`${API_BASE_URL}/api/next-game-cards?populate=gegner_team`);
+const { data } = await response.json();
+
+// Filter by team (mannschaft) - NEW FEATURE
+const response = await fetch(`${API_BASE_URL}/api/next-game-cards?filters[mannschaft][$eq]=m1&populate=gegner_team`);
+const { data } = await response.json();
+
+// Filter by different teams
+const response = await fetch(`${API_BASE_URL}/api/next-game-cards?filters[mannschaft][$eq]=m2&populate=gegner_team`);
+const response = await fetch(`${API_BASE_URL}/api/next-game-cards?filters[mannschaft][$eq]=m3&populate=gegner_team`);
+```
+
+### Next Game Card Data Structure
+```typescript
+interface NextGameCard {
+  id: number;
+  attributes: {
+    datum: string;                   // Match date (required)
+    ist_heimspiel: boolean;          // Home game flag (required, default: true)
+    mannschaft: 'm1' | 'm2' | 'm3'; // Team identifier (required, default: 'm1')
+    gegner_team?: {                  // Opponent team relation
+      data?: {
+        id: number;
+        attributes: {
+          name: string;
+          logo?: {
+            data?: {
+              id: number;
+              attributes: {
+                url: string;
+                alternativeText?: string;
+              };
+            };
+          };
+        };
+      };
+    };
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+}
+```
+
+### Team ID Mapping
+The API uses technical team identifiers that map to user-facing team names:
+
+| Technical ID | Team Name | Frontend Display |
+|--------------|-----------|------------------|
+| `m1` | 1. Mannschaft | 1. Mannschaft |
+| `m2` | 2. Mannschaft | 2. Mannschaft |
+| `m3` | 3. Mannschaft | 3. Mannschaft |
+
+### Example Game Cards Service
+```typescript
+// services/gameCardsService.ts
+export const getGameCardsByTeam = async (teamId: 'm1' | 'm2' | 'm3'): Promise<GameCard[]> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/game-cards?filters[mannschaft][$eq]=${teamId}&sort=datum:desc`
+  );
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch game cards');
+  }
+  
+  const { data } = await response.json();
+  return data;
+};
+
+export const getNextGameByTeam = async (teamId: 'm1' | 'm2' | 'm3'): Promise<NextGameCard | null> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/next-game-cards?filters[mannschaft][$eq]=${teamId}&populate=gegner_team&sort=datum:asc&pagination[limit]=1`
+  );
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch next game');
+  }
+  
+  const { data } = await response.json();
+  return data[0] || null;
+};
+
+// Combined service for frontend components
+export const getLastAndNextGame = async (teamId: 'm1' | 'm2' | 'm3') => {
+  const [lastGames, nextGames] = await Promise.all([
+    getGameCardsByTeam(teamId),
+    getNextGameByTeam(teamId)
+  ]);
+  
+  return {
+    lastGame: lastGames[0] || null,
+    nextGame: nextGames
+  };
+};
+```
+
+### Example Component Usage
+```typescript
+const GameCards = ({ selectedTeam }: { selectedTeam: 'm1' | 'm2' | 'm3' }) => {
+  const [gameData, setGameData] = useState<{
+    lastGame: GameCard | null;
+    nextGame: NextGameCard | null;
+  }>({ lastGame: null, nextGame: null });
+  
+  useEffect(() => {
+    getLastAndNextGame(selectedTeam)
+      .then(setGameData)
+      .catch(console.error);
+  }, [selectedTeam]);
+  
+  return (
+    <div>
+      {gameData.lastGame && (
+        <div>
+          <h3>Last Game</h3>
+          <p>{gameData.lastGame.attributes.gegner}</p>
+          <p>{gameData.lastGame.attributes.unsere_tore}:{gameData.lastGame.attributes.gegner_tore}</p>
+        </div>
+      )}
+      
+      {gameData.nextGame && (
+        <div>
+          <h3>Next Game</h3>
+          <p>{gameData.nextGame.attributes.gegner_team?.data?.attributes.name}</p>
+          <p>{new Date(gameData.nextGame.attributes.datum).toLocaleDateString()}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
 ## Spieler-Statistiks API
 
 ### Get Top Scorers
@@ -622,5 +986,26 @@ const TopScorers = () => {
   );
 };
 ```
+
+## Additional Documentation
+
+### Detailed API Documentation
+- **[Tabellen-Eintrag API Documentation](./docs/TABELLEN_EINTRAG_API_DOCUMENTATION.md)** - Comprehensive guide for the new league table endpoints
+- **[Liga-Tabellen Content Manager Guide](./docs/LIGA_TABELLEN_CONTENT_MANAGER_GUIDE.md)** - Guide for content managers using Strapi Admin
+- **[Liga-Tabellen Strapi Admin Guide](./docs/LIGA_TABELLEN_STRAPI_ADMIN_GUIDE.md)** - Technical implementation guide for Strapi admin interface
+
+### Migration Notes
+The Liga-Tabellen-System has been migrated from Team-based table statistics to a dedicated Tabellen-Eintrag collection type:
+
+- ✅ **Use**: `/api/tabellen-eintraege` for all league table data
+- ❌ **Deprecated**: Table statistics fields in `/api/teams` (removed)
+- ✅ **Teams API**: Now only contains Viktoria-specific data (trainer, form, trend)
+
+### Liga-Mannschaft Quick Reference
+| Team | League | API Filter |
+|------|--------|------------|
+| 1. Mannschaft | Kreisliga Tauberbischofsheim | `filters[liga][name][$eq]=Kreisliga Tauberbischofsheim` |
+| 2. Mannschaft | Kreisklasse A Tauberbischofsheim | `filters[liga][name][$eq]=Kreisklasse A Tauberbischofsheim` |
+| 3. Mannschaft | Kreisklasse B Tauberbischofsheim | `filters[liga][name][$eq]=Kreisklasse B Tauberbischofsheim` |
 
 This API reference provides everything needed to integrate with the simplified Viktoria Wertheim backend. The API follows standard REST conventions and provides predictable, well-structured responses for all frontend needs.

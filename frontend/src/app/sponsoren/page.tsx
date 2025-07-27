@@ -158,23 +158,13 @@ export default function SponsorsPage() {
     }
   }
 
-  const getPackageColorClasses = (color: string) => {
-    switch (color) {
-      case 'viktoria-yellow': return 'text-viktoria-yellow bg-viktoria-yellow/10 border-viktoria-yellow'
-      case 'viktoria-blue': return 'text-viktoria-blue bg-viktoria-blue/10 border-viktoria-blue'
-      case 'orange-600': return 'text-orange-600 bg-orange-100 border-orange-600'
-      case 'gray-600': return 'text-gray-600 bg-gray-100 border-gray-600'
-      default: return 'text-gray-600 bg-gray-100 border-gray-600'
-    }
-  }
-
   return (
     <PageLayout>
       <div className="px-4 md:px-6 lg:px-0">
         <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto space-y-6 md:space-y-8">
           
           {/* Einleitung */}
-          <AnimatedSection delay={0.2}>
+          <AnimatedSection delay={0.1}>
             <div className="text-center mb-8">
               <Image 
                 src="/viktorialogo.png" 
@@ -196,26 +186,26 @@ export default function SponsorsPage() {
           </AnimatedSection>
 
           {/* Aktuelle Sponsoren */}
-          <AnimatedSection delay={0.3}>
-            <div>
-              <div className="px-8 md:px-12 py-6 md:py-8 text-center mb-6">
-                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <AnimatedSection delay={0.2}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Unsere aktuellen Sponsoren
-                </h2>
+                </h3>
               </div>
-              <div className="space-y-4">
+              <div className="p-6 space-y-4 relative z-10">
                 {sponsors.map((sponsor, index) => (
                   <AnimatedDiv 
                     key={index} 
-                    delay={0.4 + index * 0.1}
-                    className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+                    delay={0.3 + index * 0.1}
+                    className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border border-white/60 dark:border-white/[0.1] p-6 hover:bg-gray-100/60 dark:hover:bg-white/[0.08] transition-all duration-300 shadow-sm hover:shadow-md hover:transform hover:translateY(-1px)"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-3">
-                          <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg">
+                          <h4 className="font-bold text-gray-800 dark:text-gray-200 text-lg">
                             {sponsor.name}
-                          </h3>
+                          </h4>
                           <span className={`${getCategoryColor(sponsor.category)} text-xs font-bold px-2 py-1 rounded-full`}>
                             {sponsor.category}
                           </span>
@@ -255,19 +245,19 @@ export default function SponsorsPage() {
           </AnimatedSection>
 
           {/* Sponsoring-Pakete */}
-          <AnimatedSection delay={0.8}>
-            <div>
-              <div className="px-8 md:px-12 py-6 md:py-8 text-center mb-6">
-                <h2 className="text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
+          <AnimatedSection delay={0.3}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Werden Sie unser Partner!
-                </h2>
+                </h3>
               </div>
-              <div className="space-y-4">
+              <div className="p-6 space-y-4 relative z-10">
                 {sponsoringPackages.map((pkg, index) => (
                   <AnimatedDiv 
                     key={index} 
-                    delay={0.9 + index * 0.1}
-                    className="relative bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)"
+                    delay={0.4 + index * 0.1}
+                    className="relative bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border border-white/60 dark:border-white/[0.1] p-6 hover:bg-gray-100/60 dark:hover:bg-white/[0.08] transition-all duration-300 shadow-sm hover:shadow-md hover:transform hover:translateY(-1px)"
                   >
                     {pkg.popular && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -290,16 +280,16 @@ export default function SponsorsPage() {
                       
                       {/* Content */}
                       <div className="flex-1">
-                        <h3 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-2">
+                        <h4 className="font-bold text-gray-800 dark:text-gray-200 text-lg mb-2">
                           {pkg.name}
-                        </h3>
+                        </h4>
                         <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
                           {pkg.description}
                         </p>
                         
                         {/* Benefits */}
                         <div>
-                          <h4 className="font-semibold text-gray-800 dark:text-gray-200 text-sm mb-2">Leistungen:</h4>
+                          <h5 className="font-semibold text-gray-800 dark:text-gray-200 text-sm mb-2">Leistungen:</h5>
                           <ul className="grid grid-cols-1 gap-1">
                             {pkg.benefits.map((benefit, benefitIndex) => (
                               <li key={benefitIndex} className="flex items-start space-x-2 text-sm text-gray-600 dark:text-gray-400">
@@ -318,59 +308,67 @@ export default function SponsorsPage() {
           </AnimatedSection>
 
           {/* Warum Sponsor werden */}
-          <AnimatedSection delay={1.4}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <IconGift className="text-gray-600 dark:text-gray-400 mx-auto mb-4" size={48} />
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                Warum Viktoria sponsern?
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-sm">
-                Als Sponsor unterstützen Sie nicht nur den Sport, sondern investieren 
-                in die Gemeinschaft. Profitieren Sie von der positiven Ausstrahlung 
-                und der regionalen Verbundenheit unseres Vereins.
-              </p>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">250+</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Mitglieder</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">1000+</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Fans</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">20+</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">Heimspiele/Jahr</div>
+          <AnimatedSection delay={0.4}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  Warum Viktoria sponsern?
+                </h3>
+              </div>
+              <div className="p-6 text-center relative z-10">
+                <IconGift className="text-gray-600 dark:text-gray-400 mx-auto mb-4" size={48} />
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-sm">
+                  Als Sponsor unterstützen Sie nicht nur den Sport, sondern investieren 
+                  in die Gemeinschaft. Profitieren Sie von der positiven Ausstrahlung 
+                  und der regionalen Verbundenheit unseres Vereins.
+                </p>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">250+</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Mitglieder</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">1000+</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Fans</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-200">20+</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Heimspiele/Jahr</div>
+                  </div>
                 </div>
               </div>
             </div>
           </AnimatedSection>
 
           {/* Kontakt für Sponsoring */}
-          <AnimatedSection delay={1.5}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-6 text-center transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                Interesse an einer Partnerschaft?
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
-                Gerne erstellen wir Ihnen ein individuelles Sponsoring-Angebot. 
-                Kontaktieren Sie unseren Vorstand für ein persönliches Gespräch.
-              </p>
-              <div className="grid grid-cols-1 gap-3">
-                <a 
-                  href="mailto:vorsitzender@viktoria-wertheim.de?subject=Sponsoring-Anfrage"
-                  className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
-                >
-                  <IconMail size={20} />
-                  <span>E-Mail senden</span>
-                </a>
-                <a 
-                  href="tel:09342123456"
-                  className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
-                >
-                  <IconPhone size={20} />
-                  <span>(09342) 123-456</span>
-                </a>
+          <AnimatedSection delay={0.5}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  Interesse an einer Partnerschaft?
+                </h3>
+              </div>
+              <div className="p-6 text-center relative z-10">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
+                  Gerne erstellen wir Ihnen ein individuelles Sponsoring-Angebot. 
+                  Kontaktieren Sie unseren Vorstand für ein persönliches Gespräch.
+                </p>
+                <div className="grid grid-cols-1 gap-3">
+                  <a 
+                    href="mailto:vorsitzender@viktoria-wertheim.de?subject=Sponsoring-Anfrage"
+                    className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
+                  >
+                    <IconMail size={20} />
+                    <span>E-Mail senden</span>
+                  </a>
+                  <a 
+                    href="tel:09342123456"
+                    className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
+                  >
+                    <IconPhone size={20} />
+                    <span>(09342) 123-456</span>
+                  </a>
+                </div>
               </div>
             </div>
           </AnimatedSection>

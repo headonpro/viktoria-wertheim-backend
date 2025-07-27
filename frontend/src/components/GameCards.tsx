@@ -252,8 +252,8 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
         setLastGame(fetchedLastGame)
         setNextGame(fetchedNextGame)
       } catch (err) {
-        console.error('Error fetching team games:', err)
-        setError('Spiele konnten nicht geladen werden')
+        console.error(`Error fetching team games for ${getTeamName(selectedTeam)}:`, err)
+        setError(`Spiele für ${getTeamName(selectedTeam)} konnten nicht geladen werden`)
         setLastGame(null)
         setNextGame(null)
       } finally {
@@ -349,15 +349,15 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
   return (
     <>
       <AnimatedSection className="py-0" delay={0}>
-        <div className="container max-w-6xl">
+        <div className="container max-w-6xl" data-testid="game-cards">
           <div className="grid grid-cols-2 gap-4 md:gap-8">
             {/* Letztes Spiel */}
             {error ? (
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center" data-testid="last-game-error">
                 <div className="text-center">
                   <div className="text-red-400 mb-2">⚠️</div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                    {error}
+                    Letztes Spiel für {getTeamName(selectedTeam)} konnte nicht geladen werden
                   </p>
                   <button 
                     onClick={() => window.location.reload()}
@@ -368,12 +368,14 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
                 </div>
               </div>
             ) : lastGame ? (
-              <GameCard
-                {...lastGame}
-                onClick={() => openGameModal(lastGame)}
-              />
+              <div data-testid="last-game-card">
+                <GameCard
+                  {...lastGame}
+                  onClick={() => openGameModal(lastGame)}
+                />
+              </div>
             ) : (
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center" data-testid="last-game-fallback">
                 <div className="text-center">
                   <div className="text-gray-400 mb-2">⚽</div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -385,11 +387,11 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
             
             {/* Nächstes Spiel */}
             {error ? (
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center" data-testid="next-game-error">
                 <div className="text-center">
                   <div className="text-red-400 mb-2">⚠️</div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                    {error}
+                    Nächstes Spiel für {getTeamName(selectedTeam)} konnte nicht geladen werden
                   </p>
                   <button 
                     onClick={() => window.location.reload()}
@@ -400,12 +402,14 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
                 </div>
               </div>
             ) : nextGame ? (
-              <GameCard
-                {...nextGame}
-                onClick={() => openGameModal(nextGame)}
-              />
+              <div data-testid="next-game-card">
+                <GameCard
+                  {...nextGame}
+                  onClick={() => openGameModal(nextGame)}
+                />
+              </div>
             ) : (
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center">
+              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center" data-testid="next-game-fallback">
                 <div className="text-center">
                   <div className="text-gray-400 mb-2">📅</div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">

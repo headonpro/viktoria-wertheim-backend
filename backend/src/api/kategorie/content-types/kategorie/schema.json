@@ -8,7 +8,7 @@
     "description": "Kategorien für News-Artikel"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {

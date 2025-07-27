@@ -101,13 +101,13 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-4xl max-h-[90vh] bg-white/95 dark:bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/40 dark:border-white/[0.03] shadow-3xl shadow-black/30 dark:shadow-white/[0.35] overflow-hidden"
+            className="relative w-full max-w-4xl max-h-[90vh] bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/20 dark:bg-white/[0.02] hover:bg-white/30 dark:hover:bg-white/[0.04] backdrop-blur-md border border-white/40 dark:border-white/[0.08] rounded-full transition-colors duration-300"
+              className="absolute top-4 right-4 z-10 p-2 bg-white/10 backdrop-blur-sm hover:bg-white/15 border border-white/20 hover:border-white/30 rounded-full transition-colors duration-300"
             >
               <IconX className="w-5 h-5 text-gray-600 dark:text-gray-300" />
             </button>
@@ -171,7 +171,7 @@ export default function NewsModal({ article, isOpen, onClose }: NewsModalProps) 
                 </div>
 
                 {/* Title */}
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 leading-tight">
+                <h1 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide leading-tight">
                   {article.titel || article.attributes?.titel || 'Unbekannter Titel'}
                 </h1>
 

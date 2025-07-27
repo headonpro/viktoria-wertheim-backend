@@ -1,34 +1,51 @@
 "use client"
 
 import PageLayout from '@/components/PageLayout'
-import AnimatedSection from '@/components/AnimatedSection'
+import dynamic from 'next/dynamic'
 import { IconFileText, IconUser, IconMessage, IconUpload, IconShield, IconKey, IconLink } from '@tabler/icons-react'
+import Image from "next/image"
+
+// Dynamic Import für animierte Komponenten
+const AnimatedSection = dynamic(
+  () => import('@/components/AnimatedSection'),
+  { ssr: false }
+)
 
 export default function AGBPage() {
   return (
     <PageLayout>
-      <main className="px-4 py-6">
-        <div className="container max-w-4xl space-y-6">
+      <div className="px-4 md:px-6 lg:px-0">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto space-y-6 md:space-y-8">
           
-          {/* Titel */}
+          {/* Einleitung */}
           <AnimatedSection delay={0.1}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6">
-                <h1 className="text-xl md:text-2xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconFileText className="mr-3 text-viktoria-yellow w-6 h-6 md:w-8 md:h-8 flex-shrink-0" />
-                  <span className="leading-tight">Allgemeine Nutzungsbedingungen für viktoria-wertheim.de</span>
-                </h1>
-              </div>
+            <div className="text-center mb-6 md:mb-8">
+              <Image 
+                src="/viktorialogo.png" 
+                alt="Viktoria Wertheim Logo"
+                width={80}
+                height={80}
+                className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 drop-shadow-lg"
+                priority
+              />
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+                Allgemeine Geschäftsbedingungen
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed px-4 text-sm md:text-base">
+                Nutzungsbedingungen für die Website viktoria-wertheim.de
+              </p>
             </div>
           </AnimatedSection>
 
           {/* 1. Informationen zum Urheberrecht */}
           <AnimatedSection delay={0.2}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm md:text-base leading-relaxed space-y-4">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white mb-4">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   1. Informationen zum Urheberrecht
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm md:text-base leading-relaxed space-y-4 relative z-10">
                 <p>
                   Alle Informationen dieser Web-Seite werden wie angegeben ohne Anspruch auf Richtigkeit, Vollständigkeit oder Aktualität zur Verfügung gestellt.
                 </p>
@@ -47,11 +64,13 @@ export default function AGBPage() {
 
           {/* 2. Vertragliche Zusicherungen und Verzichtserklärungen */}
           <AnimatedSection delay={0.3}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white mb-4">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   2. Vertragliche Zusicherungen und Verzichtserklärungen
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Die Website viktoria-wertheim.de steht Ihnen - soweit nicht anders vereinbart - kostenlos zur Verfügung. Die Betreiber übernehmen keinerlei Gewähr für Richtigkeit der enthaltenen Informationen, Verfügbarkeit der Dienste, Verlust von auf viktoria-wertheim.de abgespeicherten Daten oder Nutzbarkeit für irgendeinen bestimmten Zweck.
                 </p>
@@ -70,18 +89,19 @@ export default function AGBPage() {
 
           {/* 3. Meinungsäußerungen bei Kommentaren und im Forum */}
           <AnimatedSection delay={0.4}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconMessage className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
-                  <span className="leading-tight">3. Meinungsäußerungen bei Kommentaren und im Forum</span>
-                </h2>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  3. Meinungsäußerungen bei Kommentaren und im Forum
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Aufgrund der sich ständig verändernden Inhalte bei Kommentaren und im Forum ist es dem Betreiber nicht möglich, alle Beiträge lückenlos zu sichten, inhaltlich zu prüfen und die unmittelbare aktive Kontrolle darüber auszuüben. Es wird keine Verantwortung für den Inhalt, die Korrektheit und die Form der eingestellten Beiträge übernommen.
                 </p>
                 
                 <div className="bg-viktoria-blue/5 rounded-lg p-4 border border-viktoria-blue/20">
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-3">3a. Spezielle Bestimmungen für angemeldete Nutzer</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-3">3a. Spezielle Bestimmungen für angemeldete Nutzer</h4>
                   <p className="mb-3">
                     Mit der Anmeldung bei viktoria-wertheim.de erklärt sich der Nutzer - nachfolgend »Mitglied« gegenüber dem Betreiber mit folgenden Nutzungsbedingungen einverstanden:
                   </p>
@@ -101,12 +121,13 @@ export default function AGBPage() {
 
           {/* 4. Einreichen von Beiträgen und Artikeln */}
           <AnimatedSection delay={0.5}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconUpload className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
-                  <span className="leading-tight">4. Einreichen von Beiträgen und Artikeln</span>
-                </h2>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  4. Einreichen von Beiträgen und Artikeln
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Soweit das Mitglied von der Möglichkeit Gebrauch macht, eigene Beiträge für redaktionellen Teil von »viktoria-wertheim.de« einzureichen, gilt Folgendes:
                 </p>
@@ -127,12 +148,13 @@ export default function AGBPage() {
 
           {/* 5. Erklärung zum Datenschutz */}
           <AnimatedSection delay={0.6}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconShield className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
-                  <span className="leading-tight">5. Erklärung zum Datenschutz (Privacy Policy)</span>
-                </h2>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  5. Erklärung zum Datenschutz (Privacy Policy)
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Sofern innerhalb des Internetangebotes die Möglichkeit zur Eingabe persönlicher oder geschäftlicher Daten genutzt wird, so erfolgt die Preisgabe dieser Daten seitens des Nutzers auf ausdrücklich freiwilliger Basis. Die Inanspruchnahme unseres Dienstes ist - soweit technisch möglich und zumutbar - auch ohne Angabe solcher Daten bzw. unter Angabe anonymisierter Daten oder eines Pseudonyms gestattet.
                 </p>
@@ -145,12 +167,13 @@ export default function AGBPage() {
 
           {/* 6. Registrierung und Passwort */}
           <AnimatedSection delay={0.7}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconKey className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
-                  <span className="leading-tight">6. Registrierung und Passwort</span>
-                </h2>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  6. Registrierung und Passwort
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed relative z-10">
                 <p>
                   Der Benutzer ist verpflichtet, die Kombination Benutzername/Passwort vertraulich zu behandeln und nicht an Dritte weiterzugeben. Bei Verdacht auf Missbrauch der Zugangsdaten ist der Betreiber zu informieren.
                 </p>
@@ -160,12 +183,13 @@ export default function AGBPage() {
 
           {/* 7. Hinweis gemäß Teledienstgesetz */}
           <AnimatedSection delay={0.8}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg md:text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconLink className="mr-3 text-viktoria-yellow w-5 h-5 md:w-6 md:h-6 flex-shrink-0" />
-                  <span className="leading-tight">7. Hinweis gemäß Teledienstgesetz</span>
-                </h2>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  7. Hinweis gemäß Teledienstgesetz
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Für Internetseiten Dritter, auf die dieses Angebot durch sog. Links verweist, tragen die jeweiligen Anbieter die Verantwortung. Der Betreiber ist für den Inhalt solcher Seiten Dritter nicht verantwortlich.
                 </p>
@@ -181,20 +205,22 @@ export default function AGBPage() {
 
           {/* Kontakt und Rechtswirksamkeit */}
           <AnimatedSection delay={0.9}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white mb-4">
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Kontakt & Rechtswirksamkeit
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">Kontakt</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Kontakt</h4>
                   <p>
                     Fragen rund um viktoria-wertheim.de bitte an den Webmaster richten.
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">Rechtswirksamkeit</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Rechtswirksamkeit</h4>
                   <p>
                     Diese Allgemeinen Nutzungsbedingungen beziehen sich auf viktoria-wertheim.de.
                   </p>
@@ -207,7 +233,7 @@ export default function AGBPage() {
           </AnimatedSection>
 
         </div>
-      </main>
+      </div>
     </PageLayout>
   )
 }

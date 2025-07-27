@@ -254,8 +254,8 @@ export default function NewsPage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`flex-shrink-0 px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
                     selectedCategory === category
-                      ? 'bg-viktoria-yellow text-gray-900 shadow-sm'
-                      : 'bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg text-gray-700 dark:text-gray-300 border-2 border-white/80 dark:border-white/[0.15] active:bg-viktoria-blue/10 active:text-viktoria-blue dark:active:text-viktoria-yellow hover:shadow-sm'
+                      ? 'bg-viktoria-yellow text-gray-800 shadow-sm shadow-viktoria-yellow/20'
+                      : 'bg-white/10 backdrop-blur-sm text-gray-700 dark:text-gray-200 hover:bg-white/15 hover:text-gray-600 dark:hover:text-white border border-white/20 hover:border-white/30 shadow-sm hover:shadow-md'
                   }`}
                 >
                   {category}
@@ -272,10 +272,10 @@ export default function NewsPage() {
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-white/[0.05] dark:hover:shadow-white/[0.08] ${
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       selectedCategory === category
-                        ? 'bg-viktoria-yellow text-gray-900 shadow-md'
-                        : 'bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg text-gray-700 dark:text-gray-300 hover:bg-viktoria-blue/10 hover:text-viktoria-blue dark:hover:text-viktoria-yellow border-2 border-white/80 dark:border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)]'
+                        ? 'bg-viktoria-yellow text-gray-800 shadow-sm shadow-viktoria-yellow/20'
+                        : 'bg-white/10 backdrop-blur-sm text-gray-700 dark:text-gray-200 hover:bg-white/15 hover:text-gray-600 dark:hover:text-white border border-white/20 hover:border-white/30 shadow-sm hover:shadow-md'
                     }`}
                   >
                     {category}
@@ -293,7 +293,7 @@ export default function NewsPage() {
         <AnimatedSection delay={0.3}>
           {filteredArticles.length === 0 ? (
             <div className="text-center py-12">
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)]">
+              <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-8 shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0">
                 <div className="w-16 h-16 bg-gray-100 dark:bg-white/[0.08] rounded-full flex items-center justify-center mx-auto mb-4">
                   <IconEye className="w-8 h-8 text-gray-400 dark:text-gray-500" />
                 </div>
@@ -323,7 +323,7 @@ export default function NewsPage() {
                       className="group"
                     >
                       <div 
-                        className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden cursor-pointer hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px) h-full flex flex-col"
+                        className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] hover:transform hover:translateY(-2px) h-full flex flex-col before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0"
                         onClick={() => openArticleModal(article.id)}
                       >
                         {/* Image */}
@@ -368,7 +368,7 @@ export default function NewsPage() {
                         {/* Content */}
                         <div className="p-3 sm:p-5 flex-grow flex flex-col">
                           {/* Title */}
-                          <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors line-clamp-2 leading-tight flex-grow">
+                          <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide mb-2 sm:mb-3 group-hover:text-viktoria-blue dark:group-hover:text-viktoria-yellow transition-colors line-clamp-2 leading-tight flex-grow">
                             {getArticleTitle(article)}
                           </h3>
 

@@ -28,11 +28,7 @@ const customJestConfig = {
   },
   testTimeout: 10000, // 10 seconds for integration tests
   reporters: [
-    'default',
-    ['jest-junit', {
-      outputDirectory: 'test-results',
-      outputName: 'junit.xml',
-    }]
+    'default'
   ],
 }
 

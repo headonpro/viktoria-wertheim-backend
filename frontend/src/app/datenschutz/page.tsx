@@ -1,23 +1,51 @@
 "use client"
 
 import PageLayout from '@/components/PageLayout'
-import AnimatedSection from '@/components/AnimatedSection'
+import dynamic from 'next/dynamic'
 import { IconShield, IconUser, IconDatabase, IconLock, IconGavel, IconCookie, IconTrash, IconMail, IconEye, IconFileText } from '@tabler/icons-react'
+import Image from "next/image"
+
+// Dynamic Import für animierte Komponenten
+const AnimatedSection = dynamic(
+  () => import('@/components/AnimatedSection'),
+  { ssr: false }
+)
 
 export default function DatenschutzPage() {
   return (
     <PageLayout>
-      <main className="px-4 py-6">
-        <div className="container max-w-4xl space-y-6">
+      <div className="px-4 md:px-6 lg:px-0">
+        <div className="container max-w-4xl lg:max-w-5xl lg:mx-auto space-y-6 md:space-y-8">
           
-          {/* Titel und Einleitung */}
+          {/* Einleitung */}
           <AnimatedSection delay={0.1}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-                <h1 className="text-xl font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconShield className="mr-3 text-viktoria-yellow" size={24} />
-                  Datenschutzerklärung
-                </h1>
+            <div className="text-center mb-6 md:mb-8">
+              <Image 
+                src="/viktorialogo.png" 
+                alt="Viktoria Wertheim Logo"
+                width={80}
+                height={80}
+                className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 drop-shadow-lg"
+                priority
+              />
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+                Datenschutzerklärung
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed px-4 text-sm md:text-base">
+                Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO
+              </p>
+            </div>
+          </AnimatedSection>
+
+          {/* Titel und Einleitung */}
+          <AnimatedSection delay={0.2}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                  Einleitung
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed relative z-10">
                 <p>
                   Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten (nachfolgend kurz &quot;Daten&quot;) im Rahmen der Erbringung unserer Leistungen sowie innerhalb unseres Onlineangebotes und der mit ihm verbundenen Webseiten, Funktionen und Inhalte sowie externen Onlinepräsenzen, wie z.B. unser Social Media Profile auf (nachfolgend gemeinsam bezeichnet als &quot;Onlineangebot&quot;). Im Hinblick auf die verwendeten Begrifflichkeiten, wie z.B. &quot;Verarbeitung&quot; oder &quot;Verantwortlicher&quot; verweisen wir auf die Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).
                 </p>
@@ -26,20 +54,21 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Verantwortlicher */}
-          <AnimatedSection delay={0.2}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconUser className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={0.3}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Verantwortlicher
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm relative z-10">
                 <div className="space-y-2">
                   <p><strong>SV Viktoria Wertheim</strong></p>
                   <p>Ingrid Scheurich</p>
                   <p>Haslocher Weg 85</p>
                   <p>97877 Wertheim</p>
                   <p>
-                    <a href="mailto:ingrid-s@web.de" className="text-viktoria-blue dark:text-white hover:underline">
+                    <a href="mailto:ingrid-s@web.de" className="text-gray-800 dark:text-gray-100 hover:underline">
                       ingrid-s@web.de
                     </a>
                   </p>
@@ -49,13 +78,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Arten der verarbeiteten Daten */}
-          <AnimatedSection delay={0.3}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconDatabase className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={0.4}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Arten der verarbeiteten Daten
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm relative z-10">
                 <ul className="list-disc list-inside space-y-2">
                   <li>Bestandsdaten (z.B., Personen-Stammdaten, Namen oder Adressen).</li>
                   <li>Kontaktdaten (z.B., E-Mail, Telefonnummern).</li>
@@ -68,12 +98,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Kategorien betroffener Personen */}
-          <AnimatedSection delay={0.4}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white mb-4">
+          <AnimatedSection delay={0.5}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Kategorien betroffener Personen
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm relative z-10">
                 <p>
                   Besucher und Nutzer des Onlineangebotes (Nachfolgend bezeichnen wir die betroffenen Personen zusammenfassend auch als &quot;Nutzer&quot;).
                 </p>
@@ -82,12 +114,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Zweck der Verarbeitung */}
-          <AnimatedSection delay={0.5}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white mb-4">
+          <AnimatedSection delay={0.6}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Zweck der Verarbeitung
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm relative z-10">
                 <ul className="list-disc list-inside space-y-2">
                   <li>Zurverfügungstellung des Onlineangebotes, seiner Funktionen und Inhalte.</li>
                   <li>Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern.</li>
@@ -99,45 +133,46 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Verwendete Begrifflichkeiten */}
-          <AnimatedSection delay={0.6}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconFileText className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={0.7}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Verwendete Begrifflichkeiten
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">&quot;Personenbezogene Daten&quot;</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">&quot;Personenbezogene Daten&quot;</h4>
                   <p>
                     sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden &quot;betroffene Person&quot;) beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung (z.B. Cookie) oder zu einem oder mehreren besonderen Merkmalen identifiziert werden kann, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person sind.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">&quot;Verarbeitung&quot;</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">&quot;Verarbeitung&quot;</h4>
                   <p>
                     ist jeder mit oder ohne Hilfe automatisierter Verfahren ausgeführte Vorgang oder jede solche Vorgangsreihe im Zusammenhang mit personenbezogenen Daten. Der Begriff reicht weit und umfasst praktisch jeden Umgang mit Daten.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">&quot;Pseudonymisierung&quot;</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">&quot;Pseudonymisierung&quot;</h4>
                   <p>
                     die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogenen Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer spezifischen betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass die personenbezogenen Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">&quot;Profiling&quot;</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">&quot;Profiling&quot;</h4>
                   <p>
                     jede Art der automatisierten Verarbeitung personenbezogener Daten, die darin besteht, dass diese personenbezogenen Daten verwendet werden, um bestimmte persönliche Aspekte, die sich auf eine natürliche Person beziehen, zu bewerten, insbesondere um Aspekte bezüglich Arbeitsleistung, wirtschaftliche Lage, Gesundheit, persönliche Vorlieben, Interessen, Zuverlässigkeit, Verhalten, Aufenthaltsort oder Ortswechsel dieser natürlichen Person zu analysieren oder vorherzusagen.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">&quot;Verantwortlicher&quot;</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">&quot;Verantwortlicher&quot;</h4>
                   <p>
                     wird die natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet, bezeichnet.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">&quot;Auftragsverarbeiter&quot;</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">&quot;Auftragsverarbeiter&quot;</h4>
                   <p>
                     eine natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet.
                   </p>
@@ -147,13 +182,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Maßgebliche Rechtsgrundlagen */}
-          <AnimatedSection delay={0.7}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-3">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconGavel className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={0.8}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Maßgebliche Rechtsgrundlagen
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-3 relative z-10">
                 <p>
                   Nach Maßgabe des Art. 13 DSGVO teilen wir Ihnen die Rechtsgrundlagen unserer Datenverarbeitungen mit. Für Nutzer aus dem Geltungsbereich der Datenschutzgrundverordnung (DSGVO), d.h. der EU und des EWG gilt, sofern die Rechtsgrundlage in der Datenschutzerklärung nicht genannt wird, Folgendes:
                 </p>
@@ -170,13 +206,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Sicherheitsmaßnahmen */}
-          <AnimatedSection delay={0.8}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconLock className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={0.9}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Sicherheitsmaßnahmen
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Wir treffen nach Maßgabe der gesetzlichen Vorgaben unter Berücksichtigung des Stands der Technik, der Implementierungskosten und der Art, des Umfangs, der Umstände und der Zwecke der Verarbeitung sowie der unterschiedlichen Eintrittswahrscheinlichkeit und Schwere des Risikos für die Rechte und Freiheiten natürlicher Personen, geeignete technische und organisatorische Maßnahmen, um ein dem Risiko angemessenes Schutzniveau zu gewährleisten.
                 </p>
@@ -188,13 +225,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Cookies */}
-          <AnimatedSection delay={0.9}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconCookie className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={1.0}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Cookies und Widerspruchsrecht bei Direktwerbung
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-4 relative z-10">
                 <p>
                   Als &quot;Cookies&quot; werden kleine Dateien bezeichnet, die auf Rechnern der Nutzer gespeichert werden. Innerhalb der Cookies können unterschiedliche Angaben gespeichert werden. Ein Cookie dient primär dazu, die Angaben zu einem Nutzer (bzw. dem Gerät auf dem das Cookie gespeichert ist) während oder auch nach seinem Besuch innerhalb eines Onlineangebotes zu speichern.
                 </p>
@@ -209,13 +247,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Rechte der betroffenen Personen */}
-          <AnimatedSection delay={1.0}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-3">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconEye className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={1.1}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Rechte der betroffenen Personen
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed space-y-3 relative z-10">
                 <ul className="list-disc list-inside space-y-2">
                   <li>Sie haben das Recht, eine Bestätigung darüber zu verlangen, ob betreffende Daten verarbeitet werden und auf Auskunft über diese Daten sowie auf weitere Informationen und Kopie der Daten entsprechend den gesetzlichen Vorgaben.</li>
                   <li>Sie haben entsprechend den gesetzlichen Vorgaben das Recht, die Vervollständigung der Sie betreffenden Daten oder die Berichtigung der Sie betreffenden unrichtigen Daten zu verlangen.</li>
@@ -225,10 +264,10 @@ export default function DatenschutzPage() {
                 </ul>
                 
                 <div className="bg-viktoria-blue/5 rounded-lg p-4 border border-viktoria-blue/20 mt-6">
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2">Widerrufsrecht</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Widerrufsrecht</h4>
                   <p>Sie haben das Recht, erteilte Einwilligungen mit Wirkung für die Zukunft zu widerrufen.</p>
                   
-                  <h3 className="font-semibold text-viktoria-blue dark:text-white mb-2 mt-4">Widerspruchsrecht</h3>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2 mt-4">Widerspruchsrecht</h4>
                   <p>Sie können der künftigen Verarbeitung der Sie betreffenden Daten nach Maßgabe der gesetzlichen Vorgaben jederzeit widersprechen. Der Widerspruch kann insbesondere gegen die Verarbeitung für Zwecke der Direktwerbung erfolgen.</p>
                 </div>
               </div>
@@ -236,13 +275,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Löschung von Daten */}
-          <AnimatedSection delay={1.1}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconTrash className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={1.2}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Löschung von Daten
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed relative z-10">
                 <p>
                   Die von uns verarbeiteten Daten werden nach Maßgabe der gesetzlichen Vorgaben gelöscht oder in ihrer Verarbeitung eingeschränkt. Sofern nicht im Rahmen dieser Datenschutzerklärung ausdrücklich angegeben, werden die bei uns gespeicherten Daten gelöscht, sobald sie für ihre Zweckbestimmung nicht mehr erforderlich sind und der Löschung keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
                 </p>
@@ -251,13 +291,14 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Kontaktaufnahme */}
-          <AnimatedSection delay={1.2}>
-            <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl border-2 border-white/80 dark:border-white/[0.15] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)]">
-              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
-                <h2 className="text-lg font-bold text-viktoria-blue dark:text-white flex items-center mb-4">
-                  <IconMail className="mr-3 text-viktoria-yellow" size={20} />
+          <AnimatedSection delay={1.3}>
+            <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),0_4px_20px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_6px_20px_rgba(255,255,255,0.12),0_2px_10px_rgba(255,255,255,0.08)] hover:transform hover:translateY(-2px)">
+              <div className="px-8 md:px-12 py-6 md:py-8 text-center">
+                <h3 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                   Kontaktaufnahme
-                </h2>
+                </h3>
+              </div>
+              <div className="p-6 text-gray-700 dark:text-gray-200 text-sm leading-relaxed relative z-10">
                 <p>
                   Bei der Kontaktaufnahme mit uns (z.B. per Kontaktformular, E-Mail, Telefon oder via sozialer Medien) werden die Angaben des Nutzers zur Bearbeitung der Kontaktanfrage und deren Abwicklung gem. Art. 6 Abs. 1 lit. b. (im Rahmen vertraglicher-/vorvertraglicher Beziehungen), Art. 6 Abs. 1 lit. f. (andere Anfragen) DSGVO verarbeitet. Die Angaben der Nutzer können in einem Customer-Relationship-Management System (&quot;CRM System&quot;) oder vergleichbarer Anfragenorganisation gespeichert werden.
                 </p>
@@ -269,8 +310,8 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
           {/* Quelle */}
-          <AnimatedSection delay={1.3}>
-            <div className="bg-viktoria-blue/5 rounded-xl p-4 border border-viktoria-blue/20 text-center">
+          <AnimatedSection delay={1.4}>
+            <div className="bg-gray-100/20 dark:bg-white/[0.02] rounded-xl p-4 border border-gray-200/50 dark:border-white/[0.1] text-center">
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 Erstellt mit Datenschutz-Generator.de von RA Dr. Thomas Schwenke
               </p>
@@ -278,7 +319,7 @@ export default function DatenschutzPage() {
           </AnimatedSection>
 
         </div>
-      </main>
+      </div>
     </PageLayout>
   )
 }

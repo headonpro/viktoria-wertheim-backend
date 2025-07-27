@@ -1,0 +1,399 @@
+/**
+ * Feature Flag Integration
+ * 
+ * Integrates feature flags with the existing hook system, providing
+ * seamless feature flag evaluation within hook services.
+ * 
+ * Requirements: 6.2, 3.1
+ */
+
+import { FeatureFlagService, FeatureFlagContext } from './FeatureFlagService';
+import { HookConfigurationManager } from '../HookConfigurationManager';
+import { BaseHookService } from '../BaseHookService';
+
+/**
+ * Feature flag decorator for hook methods
+ */
+export function FeatureFlag(flagName: string, defaultValue: boolean = false) {
+  return function (_target: any, _propertyName: string, descriptor: PropertyDescriptor) {
+    const method = descriptor.value;
+
+    descriptor.value = async function (...args: any[]) {
+      const featureFlagService = getFeatureFlagService();
+      
+      if (!featureFlagService) {
+        // If feature flag service is not available, use default value
+        if (!defaultValue) {
+          return;
+        }
+        return method.apply(this, args);
+      }
+
+      try {
+        const context = (this as any).buildFeatureFlagContext ? (this as any).buildFeatureFlagContext() : {};
+        const isEnabled = await featureFlagService.isEnabled(flagName, context);
+        
+        if (!isEnabled) {
+          (this as any).logDebug?.(`Feature flag disabled, skipping method: ${flagName}`);
+          return;
+        }
+
+        return method.apply(this, args);
+
+      } catch (error) {
+        (this as any).logError?.(`Error evaluating feature flag: ${flagName}`, error);
+        
+        // Fall back to default behavior on error
+        if (defaultValue) {
+          return method.apply(this, args);
+        }
+      }
+    };
+
+    return descriptor;
+  };
+}
+
+/**
+ * Feature flag mixin for hook services
+ */
+export class FeatureFlagMixin {
+  protected featureFlagService?: FeatureFlagService;
+  protected strapi: any;
+
+  constructor(strapi: any) {
+    this.strapi = strapi;
+    this.featureFlagService = getFeatureFlagService();
+  }
+
+  /**
+   * Check if feature flag is enabled
+   */
+  protected async isFeatureEnabled(flagName: string, context?: Partial<FeatureFlagContext>): Promise<boolean> {
+    if (!this.featureFlagService) {
+      return false;
+    }
+
+    try {
+      const evaluationContext = this.buildFeatureFlagContext(context);
+      return await this.featureFlagService.isEnabled(flagName, evaluationContext);
+    } catch (error) {
+      this.logError(error as Error, `Error checking feature flag: ${flagName}`);
+      return false;
+    }
+  }
+
+  /**
+   * Get feature flag value
+   */
+  protected async getFeatureValue(flagName: string, context?: Partial<FeatureFlagContext>): Promise<any> {
+    if (!this.featureFlagService) {
+      return null;
+    }
+
+    try {
+      const evaluationContext = this.buildFeatureFlagContext(context);
+      return await this.featureFlagService.getValue(flagName, evaluationContext);
+    } catch (error) {
+      this.logError(error as Error, `Error getting feature flag value: ${flagName}`);
+      return null;
+    }
+  }
+
+  /**
+   * Execute code conditionally based on feature flag
+   */
+  protected async executeIfEnabled<T>(
+    flagName: string,
+    callback: () => Promise<T> | T,
+    fallback?: () => Promise<T> | T,
+    context?: Partial<FeatureFlagContext>
+  ): Promise<T | undefined> {
+    const isEnabled = await this.isFeatureEnabled(flagName, context);
+    
+    if (isEnabled) {
+      return await callback();
+    } else if (fallback) {
+      return await fallback();
+    }
+    
+    return undefined;
+  }
+
+  /**
+   * Build feature flag evaluation context
+   */
+  protected buildFeatureFlagContext(context?: Partial<FeatureFlagContext>): FeatureFlagContext {
+    return {
+      environment: process.env.NODE_ENV || 'development',
+      timestamp: new Date(),
+      ...context
+    };
+  }
+
+  /**
+   * Logging methods (to be implemented by subclasses)
+   */
+  protected logError(error: Error, message?: string): void {
+    this.strapi?.log?.error(message || error.message, error);
+  }
+
+  protected logDebug(message: string, data?: any): void {
+    this.strapi?.log?.debug(message, data);
+  }
+}
+
+/**
+ * Enhanced base hook service with feature flag support
+ */
+export abstract class FeatureFlagEnabledHookService extends BaseHookService {
+  protected featureFlagService?: FeatureFlagService;
+
+  constructor(strapi: any, config: any) {
+    super(strapi, config);
+    this.featureFlagService = getFeatureFlagService();
+  }
+
+  /**
+   * Check if feature flag is enabled
+   */
+  protected async isFeatureEnabled(flagName: string, context?: Partial<FeatureFlagContext>): Promise<boolean> {
+    if (!this.featureFlagService) {
+      return false;
+    }
+
+    try {
+      const evaluationContext = this.buildFeatureFlagContext(context);
+      return await this.featureFlagService.isEnabled(flagName, evaluationContext);
+    } catch (error) {
+      this.logError(error as Error, `Error checking feature flag: ${flagName}`);
+      return false;
+    }
+  }
+
+  /**
+   * Get feature flag value
+   */
+  protected async getFeatureValue(flagName: string, context?: Partial<FeatureFlagContext>): Promise<any> {
+    if (!this.featureFlagService) {
+      return null;
+    }
+
+    try {
+      const evaluationContext = this.buildFeatureFlagContext(context);
+      return await this.featureFlagService.getValue(flagName, evaluationContext);
+    } catch (error) {
+      this.logError(error as Error, `Error getting feature flag value: ${flagName}`);
+      return null;
+    }
+  }
+
+  /**
+   * Execute validation with feature flag control
+   */
+  protected async executeValidationIfEnabled(
+    flagName: string,
+    validationCallback: () => Promise<any>,
+    fallbackResult?: any
+  ): Promise<any> {
+    const isEnabled = await this.isFeatureEnabled(flagName);
+    
+    if (isEnabled) {
+      return await validationCallback();
+    }
+    
+    return fallbackResult || { isValid: true, errors: [], warnings: [] };
+  }
+
+  /**
+   * Execute calculation with feature flag control
+   */
+  protected async executeCalculationIfEnabled(
+    flagName: string,
+    calculationCallback: () => Promise<any>,
+    fallbackValue?: any
+  ): Promise<any> {
+    const isEnabled = await this.isFeatureEnabled(flagName);
+    
+    if (isEnabled) {
+      return await calculationCallback();
+    }
+    
+    return fallbackValue;
+  }
+
+  /**
+   * Build feature flag evaluation context
+   */
+  protected buildFeatureFlagContext(context?: Partial<FeatureFlagContext>): FeatureFlagContext {
+    return {
+      environment: process.env.NODE_ENV || 'development',
+      timestamp: new Date(),
+      ...context
+    };
+  }
+}
+
+/**
+ * Feature flag configuration integration
+ */
+export class FeatureFlagConfigurationIntegration {
+  private configManager: HookConfigurationManager;
+  private featureFlagService: FeatureFlagService;
+
+  constructor(configManager: HookConfigurationManager, featureFlagService: FeatureFlagService) {
+    this.configManager = configManager;
+    this.featureFlagService = featureFlagService;
+    
+    this.setupIntegration();
+  }
+
+  /**
+   * Setup integration between configuration and feature flags
+   */
+  private setupIntegration(): void {
+    // Listen for configuration changes and update feature flags
+    this.configManager.addChangeListener(async (event) => {
+      if (event.type === 'featureFlag') {
+        try {
+          await this.syncFeatureFlagToService(event.key, event.newValue);
+        } catch (error) {
+          console.error(`Error syncing feature flag: ${event.key}`, error);
+        }
+      }
+    });
+
+    // Listen for feature flag changes and update configuration
+    this.featureFlagService.on('flagUpdated', async (event) => {
+      try {
+        this.configManager.updateFeatureFlag(event.flag.name, event.flag.enabled);
+      } catch (error) {
+        console.error(`Error updating configuration for flag: ${event.flag.name}`, error);
+      }
+    });
+  }
+
+  /**
+   * Sync feature flag from configuration to service
+   */
+  private async syncFeatureFlagToService(flagName: string, enabled: boolean): Promise<void> {
+    const existingFlag = await this.featureFlagService.getAllFlags()
+      .then(flags => flags.find(f => f.name === flagName));
+
+    if (existingFlag) {
+      await this.featureFlagService.setFlag({
+        ...existingFlag,
+        enabled
+      });
+    } else {
+      await this.featureFlagService.setFlag({
+        name: flagName,
+        enabled,
+        description: `Auto-created from configuration: ${flagName}`,
+        type: 'boolean',
+        metadata: {
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          version: 1,
+          tags: ['auto-created', 'configuration']
+        }
+      });
+    }
+  }
+
+  /**
+   * Sync all feature flags from configuration
+   */
+  async syncAllFeatureFlags(): Promise<void> {
+    const configFlags = this.configManager.getAllFeatureFlags();
+    
+    for (const [flagName, enabled] of Object.entries(configFlags)) {
+      try {
+        await this.syncFeatureFlagToService(flagName, enabled);
+      } catch (error) {
+        console.error(`Error syncing feature flag: ${flagName}`, error);
+      }
+    }
+  }
+}
+
+/**
+ * Utility functions
+ */
+
+/**
+ * Get feature flag service instance
+ */
+function getFeatureFlagService(): FeatureFlagService | undefined {
+  try {
+    // This would be implemented to get the singleton instance
+    // For now, return undefined to indicate service not available
+    return undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Create feature flag context from hook event
+ */
+export function createFeatureFlagContextFromHookEvent(event: any): FeatureFlagContext {
+  return {
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date(),
+    customAttributes: {
+      contentType: event.contentType,
+      hookType: event.type,
+      hasData: !!event.data,
+      dataKeys: event.data ? Object.keys(event.data) : []
+    }
+  };
+}
+
+/**
+ * Feature flag helper for hook lifecycle methods
+ */
+export class HookFeatureFlagHelper {
+  private featureFlagService: FeatureFlagService;
+
+  constructor(featureFlagService: FeatureFlagService) {
+    this.featureFlagService = featureFlagService;
+  }
+
+  /**
+   * Check if hook should be executed based on feature flags
+   */
+  async shouldExecuteHook(
+    contentType: string,
+    hookType: string,
+    context?: Partial<FeatureFlagContext>
+  ): Promise<boolean> {
+    const flagName = `enable${contentType.charAt(0).toUpperCase() + contentType.slice(1)}${hookType.charAt(0).toUpperCase() + hookType.slice(1)}`;
+    
+    try {
+      return await this.featureFlagService.isEnabled(flagName, context);
+    } catch {
+      // Default to enabled if feature flag evaluation fails
+      return true;
+    }
+  }
+
+  /**
+   * Get hook-specific configuration from feature flags
+   */
+  async getHookConfiguration(
+    contentType: string,
+    hookType: string,
+    context?: Partial<FeatureFlagContext>
+  ): Promise<any> {
+    const flagName = `${contentType}${hookType.charAt(0).toUpperCase() + hookType.slice(1)}Config`;
+    
+    try {
+      return await this.featureFlagService.getValue(flagName, context);
+    } catch {
+      return null;
+    }
+  }
+}
+
+export default FeatureFlagConfigurationIntegration;

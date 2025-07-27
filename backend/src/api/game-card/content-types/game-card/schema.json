@@ -33,6 +33,12 @@
     "gegner_tore": {
       "type": "integer",
       "min": 0
+    },
+    "mannschaft": {
+      "type": "enumeration",
+      "enum": ["m1", "m2", "m3"],
+      "required": true,
+      "default": "m1"
     }
   }
 }

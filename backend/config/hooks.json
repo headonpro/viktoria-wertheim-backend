@@ -1,0 +1,151 @@
+{
+  "version": "1.0.0",
+  "global": {
+    "enableStrictValidation": false,
+    "enableAsyncCalculations": true,
+    "maxHookExecutionTime": 100,
+    "retryAttempts": 2,
+    "enableGracefulDegradation": true,
+    "logLevel": "warn",
+    "enableMetrics": true,
+    "metricsRetentionDays": 30,
+    "enableCaching": true,
+    "cacheExpirationMs": 300000,
+    "enableBackgroundJobs": true,
+    "backgroundJobTimeout": 30000,
+    "enableValidationWarnings": true,
+    "validationTimeout": 5000,
+    "enableCalculationFallbacks": true,
+    "calculationTimeout": 10000
+  },
+  "factory": {
+    "enableServiceCaching": true,
+    "maxCacheSize": 50,
+    "cacheExpirationMs": 1800000,
+    "enableServicePooling": false,
+    "maxPoolSize": 10,
+    "poolIdleTimeout": 600000,
+    "enableServiceMetrics": true,
+    "defaultHookConfig": {
+      "enableStrictValidation": false,
+      "enableAsyncCalculations": true,
+      "maxHookExecutionTime": 100,
+      "retryAttempts": 2,
+      "enableGracefulDegradation": true,
+      "logLevel": "warn",
+      "enableMetrics": true,
+      "metricsRetentionDays": 30,
+      "enableCaching": true,
+      "cacheExpirationMs": 300000,
+      "enableBackgroundJobs": true,
+      "backgroundJobTimeout": 30000,
+      "enableValidationWarnings": true,
+      "validationTimeout": 5000,
+      "enableCalculationFallbacks": true,
+      "calculationTimeout": 10000
+    }
+  },
+  "contentTypes": {
+    "team": {
+      "enabled": true,
+      "hooks": {
+        "beforeCreate": true,
+        "beforeUpdate": true,
+        "afterCreate": true,
+        "afterUpdate": true,
+        "beforeDelete": false,
+        "afterDelete": false
+      },
+      "validationRules": ["teamNameUnique", "teamLigaSaisonConsistency"],
+      "calculationRules": ["teamStatistics", "teamRanking"],
+      "customConfig": {
+        "enableAdvancedValidation": false,
+        "enableRealTimeUpdates": true
+      }
+    },
+    "saison": {
+      "enabled": true,
+      "hooks": {
+        "beforeCreate": true,
+        "beforeUpdate": true,
+        "afterCreate": true,
+        "afterUpdate": true,
+        "beforeDelete": false,
+        "afterDelete": false
+      },
+      "validationRules": ["seasonOverlapValidation", "seasonDateValidation"],
+      "calculationRules": ["seasonStatistics"],
+      "customConfig": {
+        "enableOverlapChecking": true,
+        "maxActiveSaisons": 1
+      }
+    },
+    "tabellen-eintrag": {
+      "enabled": true,
+      "hooks": {
+        "beforeCreate": true,
+        "beforeUpdate": true,
+        "afterCreate": true,
+        "afterUpdate": true,
+        "beforeDelete": false,
+        "afterDelete": false
+      },
+      "validationRules": ["tableDataConsistency", "gameStatisticsValidation"],
+      "calculationRules": ["pointsCalculation", "goalDifferenceCalculation", "tablePositionCalculation"],
+      "customConfig": {
+        "enableAutoCalculation": true,
+        "enablePositionTracking": true
+      }
+    }
+  },
+  "environments": {
+    "development": {
+      "logLevel": "debug",
+      "enableStrictValidation": false,
+      "maxHookExecutionTime": 200,
+      "enableMetrics": true,
+      "enableBackgroundJobs": false
+    },
+    "staging": {
+      "logLevel": "info",
+      "enableStrictValidation": false,
+      "maxHookExecutionTime": 100,
+      "enableMetrics": true,
+      "enableBackgroundJobs": true
+    },
+    "production": {
+      "logLevel": "warn",
+      "enableStrictValidation": false,
+      "maxHookExecutionTime": 50,
+      "enableMetrics": true,
+      "enableBackgroundJobs": true,
+      "metricsRetentionDays": 90
+    },
+    "test": {
+      "logLevel": "error",
+      "enableStrictValidation": true,
+      "maxHookExecutionTime": 200,
+      "enableMetrics": false,
+      "enableBackgroundJobs": false,
+      "enableCaching": false
+    }
+  },
+  "featureFlags": {
+    "enableHookMetrics": true,
+    "enableBackgroundJobs": true,
+    "enableAdvancedValidation": false,
+    "enableConfigurationUI": false,
+    "enableHookProfiling": false,
+    "enableAsyncValidation": false,
+    "enableValidationCaching": true,
+    "enableCalculationCaching": true,
+    "enableHookChaining": false,
+    "enableConditionalHooks": false
+  },
+  "metadata": {
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z",
+    "environment": "development",
+    "description": "Default hook configuration for all environments"
+  }
+}

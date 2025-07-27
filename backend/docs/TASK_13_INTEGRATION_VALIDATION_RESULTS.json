@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-07-27T16:32:06.105Z",
+  "results": {
+    "passed": 0,
+    "failed": 8,
+    "errors": [
+      "API endpoint Kreisliga Tauberbischofsheim: connect ECONNREFUSED 127.0.0.1:1337",
+      "API endpoint Kreisklasse A Tauberbischofsheim: connect ECONNREFUSED 127.0.0.1:1337",
+      "API endpoint Kreisklasse B Tauberbischofsheim: connect ECONNREFUSED 127.0.0.1:1337",
+      "API endpoint Kreisliga Tauberbischofsheim: connect ECONNREFUSED 127.0.0.1:1337",
+      "API endpoint Kreisklasse A Tauberbischofsheim: connect ECONNREFUSED 127.0.0.1:1337",
+      "API endpoint Kreisklasse B Tauberbischofsheim: connect ECONNREFUSED 127.0.0.1:1337",
+      "Team switching performance issues",
+      "Data consistency validation error: connect ECONNREFUSED 127.0.0.1:1337"
+    ],
+    "performance": {},
+    "summary": {}
+  },
+  "performance": {}
+}

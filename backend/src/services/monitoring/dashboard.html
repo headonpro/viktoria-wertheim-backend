@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hook Monitoring Dashboard</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #27ae60;
+        }
+
+        .status-dot.warning { background: #f39c12; }
+        .status-dot.critical { background: #e74c3c; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .metric-value.success { color: #27ae60; }
+        .metric-value.warning { color: #f39c12; }
+        .metric-value.error { color: #e74c3c; }
+
+        .hook-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            background: #f8f9fa;
+        }
+
+        .hook-status.healthy { border-left: 4px solid #27ae60; }
+        .hook-status.warning { border-left: 4px solid #f39c12; }
+        .hook-status.critical { border-left: 4px solid #e74c3c; }
+        .hook-status.disabled { border-left: 4px solid #95a5a6; }
+
+        .hook-name {
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .hook-metrics {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 1rem 0;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .alert.error {
+            background: #fdf2f2;
+            border-color: #e74c3c;
+            color: #c0392b;
+        }
+
+        .alert.warning {
+            background: #fef9e7;
+            border-color: #f39c12;
+            color: #d68910;
+        }
+
+        .alert.info {
+            background: #ebf3fd;
+            border-color: #3498db;
+            color: #2980b9;
+        }
+
+        .alert-actions {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.25rem 0.75rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .refresh-indicator {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            border-bottom-color: #3498db;
+            color: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .real-time-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .real-time-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #27ae60;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .error-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .error-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .error-item:last-child {
+            border-bottom: none;
+        }
+
+        .error-message {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .error-details {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .performance-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .performance-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .performance-label {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hook Monitoring Dashboard</h1>
+        <div class="status-indicator">
+            <div class="status-dot" id="systemStatus"></div>
+            <span id="systemStatusText">System Healthy</span>
+            <div class="real-time-indicator">
+                <div class="real-time-dot"></div>
+                <span>Live</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Overview Cards -->
+        <div class="grid">
+            <div class="card">
+                <h2>System Overview</h2>
+                <div class="metric">
+                    <span class="metric-label">Total Hooks</span>
+                    <span class="metric-value" id="totalHooks">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Active Hooks</span>
+                    <span class="metric-value success" id="activeHooks">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Healthy</span>
+                    <span class="metric-value success" id="healthyHooks">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Warning</span>
+                    <span class="metric-value warning" id="warningHooks">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Critical</span>
+                    <span class="metric-value error" id="criticalHooks">-</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Performance Metrics</h2>
+                <div class="metric">
+                    <span class="metric-label">Total Executions</span>
+                    <span class="metric-value" id="totalExecutions">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Avg Execution Time</span>
+                    <span class="metric-value" id="avgExecutionTime">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Error Rate</span>
+                    <span class="metric-value" id="errorRate">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">System Health</span>
+                    <span class="metric-value" id="systemHealth">-</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Recent Errors</h2>
+                <div class="metric">
+                    <span class="metric-label">Total Errors</span>
+                    <span class="metric-value error" id="totalErrors">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Recent Errors</span>
+                    <span class="metric-value error" id="recentErrors">-</span>
+                </div>
+                <div id="topErrors"></div>
+            </div>
+
+            <div class="card">
+                <h2>Background Jobs</h2>
+                <div class="metric">
+                    <span class="metric-label">Queue Health</span>
+                    <span class="metric-value" id="queueHealth">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Worker Health</span>
+                    <span class="metric-value" id="workerHealth">-</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Recent Failures</span>
+                    <span class="metric-value" id="jobFailures">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('hooks')">Hook Status</div>
+            <div class="tab" onclick="showTab('performance')">Performance</div>
+            <div class="tab" onclick="showTab('errors')">Errors</div>
+            <div class="tab" onclick="showTab('alerts')">Alerts</div>
+        </div>
+
+        <!-- Hook Status Tab -->
+        <div id="hooks" class="tab-content active">
+            <div class="card">
+                <h2>Hook Status Overview</h2>
+                <div id="hookStatusList"></div>
+            </div>
+        </div>
+
+        <!-- Performance Tab -->
+        <div id="performance" class="tab-content">
+            <div class="card">
+                <h2>Performance Trends</h2>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Slowest Hooks</h2>
+                <div id="slowestHooks"></div>
+            </div>
+            
+            <div class="card">
+                <h2>Fastest Hooks</h2>
+                <div id="fastestHooks"></div>
+            </div>
+        </div>
+
+        <!-- Errors Tab -->
+        <div id="errors" class="tab-content">
+            <div class="card">
+                <h2>Error Trends</h2>
+                <div class="chart-container">
+                    <canvas id="errorChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Top Errors</h2>
+                <div class="error-list" id="errorList"></div>
+            </div>
+        </div>
+
+        <!-- Alerts Tab -->
+        <div id="alerts" class="tab-content">
+            <div class="card">
+                <h2>Active Alerts</h2>
+                <div id="alertsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dashboard state
+        let socket;
+        let charts = {};
+        let currentMetrics = null;
+        let refreshInterval;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeWebSocket();
+            startRefreshTimer();
+            loadInitialData();
+        });
+
+        // Initialize WebSocket connection
+        function initializeWebSocket() {
+            socket = io();
+            
+            socket.on('connect', function() {
+                console.log('Connected to dashboard WebSocket');
+                updateConnectionStatus(true);
+            });
+            
+            socket.on('disconnect', function() {
+                console.log('Disconnected from dashboard WebSocket');
+                updateConnectionStatus(false);
+            });
+            
+            socket.on('metrics_update', function(metrics) {
+                updateDashboard(metrics);
+            });
+            
+            socket.on('real_time_event', function(event) {
+                handleRealTimeEvent(event);
+            });
+            
+            socket.on('alert', function(alert) {
+                handleNewAlert(alert);
+            });
+        }
+
+        // Start refresh timer
+        function startRefreshTimer() {
+            refreshInterval = setInterval(function() {
+                refreshMetrics();
+            }, 5000); // Refresh every 5 seconds
+        }
+
+        // Load initial data
+        function loadInitialData() {
+            fetch('/api/dashboard/metrics')
+                .then(response => response.json())
+                .then(data => {
+                    updateDashboard(data);
+                    initializeCharts();
+                })
+                .catch(error => {
+                    console.error('Error loading initial data:', error);
+                });
+        }
+
+        // Refresh metrics
+        function refreshMetrics() {
+            fetch('/api/dashboard/metrics')
+                .then(response => response.json())
+                .then(data => {
+                    updateDashboard(data);
+                })
+                .catch(error => {
+                    console.error('Error refreshing metrics:', error);
+                });
+        }
+
+        // Update dashboard with new metrics
+        function updateDashboard(metrics) {
+            currentMetrics = metrics;
+            updateOverviewCards(metrics);
+            updateHookStatus(metrics);
+            updateCharts(metrics);
+            updateAlerts();
+        }
+
+        // Update overview cards
+        function updateOverviewCards(metrics) {
+            const overview = metrics.overview;
+            
+            document.getElementById('totalHooks').textContent = overview.totalHooks;
+            document.getElementById('activeHooks').textContent = overview.activeHooks;
+            document.getElementById('healthyHooks').textContent = overview.healthyHooks;
+            document.getElementById('warningHooks').textContent = overview.warningHooks;
+            document.getElementById('criticalHooks').textContent = overview.criticalHooks;
+            
+            document.getElementById('totalExecutions').textContent = overview.totalExecutions.toLocaleString();
+            document.getElementById('avgExecutionTime').textContent = overview.averageExecutionTime.toFixed(2) + 'ms';
+            document.getElementById('errorRate').textContent = overview.overallErrorRate.toFixed(2) + '%';
+            
+            const systemHealthElement = document.getElementById('systemHealth');
+            systemHealthElement.textContent = overview.systemHealth;
+            systemHealthElement.className = 'metric-value ' + getStatusClass(overview.systemHealth);
+            
+            // Update system status indicator
+            const statusDot = document.getElementById('systemStatus');
+            const statusText = document.getElementById('systemStatusText');
+            statusDot.className = 'status-dot ' + overview.systemHealth;
+            statusText.textContent = 'System ' + overview.systemHealth.charAt(0).toUpperCase() + overview.systemHealth.slice(1);
+            
+            // Update error metrics
+            document.getElementById('totalErrors').textContent = metrics.errors.totalErrors;
+            document.getElementById('recentErrors').textContent = metrics.errors.recentErrors;
+            
+            // Update job metrics
+            const jobs = metrics.jobs;
+            document.getElementById('queueHealth').textContent = jobs.systemHealth.queueHealth.status;
+            document.getElementById('workerHealth').textContent = jobs.systemHealth.workerHealth.status;
+            document.getElementById('jobFailures').textContent = jobs.recentFailures.length;
+            
+            // Update top errors
+            updateTopErrors(metrics.errors.topErrors);
+        }
+
+        // Update hook status list
+        function updateHookStatus(metrics) {
+            fetch('/api/dashboard/hooks')
+                .then(response => response.json())
+                .then(hooks => {
+                    const container = document.getElementById('hookStatusList');
+                    container.innerHTML = '';
+                    
+                    hooks.forEach(hook => {
+                        const hookElement = document.createElement('div');
+                        hookElement.className = 'hook-status ' + hook.status;
+                        hookElement.innerHTML = `
+                            <div class="hook-name">${hook.hookName}</div>
+                            <div class="hook-metrics">
+                                <span>Executions: ${hook.executionCount}</span>
+                                <span>Avg Time: ${hook.averageExecutionTime.toFixed(2)}ms</span>
+                                <span>Error Rate: ${hook.errorRate.toFixed(2)}%</span>
+                            </div>
+                        `;
+                        container.appendChild(hookElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading hook status:', error);
+                });
+        }
+
+        // Update top errors display
+        function updateTopErrors(topErrors) {
+            const container = document.getElementById('topErrors');
+            container.innerHTML = '';
+            
+            topErrors.slice(0, 3).forEach(error => {
+                const errorElement = document.createElement('div');
+                errorElement.className = 'metric';
+                errorElement.innerHTML = `
+                    <span class="metric-label">${error.hookName}</span>
+                    <span class="metric-value error">${error.count}</span>
+                `;
+                container.appendChild(errorElement);
+            });
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Performance chart
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            charts.performance = new Chart(performanceCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Average Execution Time (ms)',
+                        data: [],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Error Count',
+                        data: [],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        yAxisID: 'y1',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+
+            // Error chart
+            const errorCtx = document.getElementById('errorChart').getContext('2d');
+            charts.error = new Chart(errorCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Error Count',
+                        data: [],
+                        backgroundColor: '#e74c3c',
+                        borderColor: '#c0392b',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update charts with new data
+        function updateCharts(metrics) {
+            if (charts.performance && metrics.performance.executionTrends) {
+                const trends = metrics.performance.executionTrends.slice(-20);
+                charts.performance.data.labels = trends.map(t => new Date(t.timestamp).toLocaleTimeString());
+                charts.performance.data.datasets[0].data = trends.map(t => t.averageTime);
+                charts.performance.data.datasets[1].data = trends.map(t => t.errorCount);
+                charts.performance.update();
+            }
+
+            if (charts.error && metrics.errors.errorTrends) {
+                const trends = metrics.errors.errorTrends.slice(-20);
+                charts.error.data.labels = trends.map(t => new Date(t.timestamp).toLocaleTimeString());
+                charts.error.data.datasets[0].data = trends.map(t => t.errorCount);
+                charts.error.update();
+            }
+        }
+
+        // Update alerts
+        function updateAlerts() {
+            fetch('/api/dashboard/alerts')
+                .then(response => response.json())
+                .then(alerts => {
+                    const container = document.getElementById('alertsList');
+                    container.innerHTML = '';
+                    
+                    if (alerts.length === 0) {
+                        container.innerHTML = '<p>No active alerts</p>';
+                        return;
+                    }
+                    
+                    alerts.forEach(alert => {
+                        const alertElement = document.createElement('div');
+                        alertElement.className = 'alert ' + alert.type;
+                        alertElement.innerHTML = `
+                            <div><strong>${alert.title}</strong></div>
+                            <div>${alert.message}</div>
+                            <div class="alert-actions">
+                                <button class="btn btn-primary" onclick="acknowledgeAlert('${alert.id}')">Acknowledge</button>
+                                <button class="btn btn-success" onclick="resolveAlert('${alert.id}')">Resolve</button>
+                            </div>
+                        `;
+                        container.appendChild(alertElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading alerts:', error);
+                });
+        }
+
+        // Handle real-time events
+        function handleRealTimeEvent(event) {
+            console.log('Real-time event:', event);
+            
+            // Update UI based on event type
+            switch (event.type) {
+                case 'hook_execution':
+                    // Could update execution counters in real-time
+                    break;
+                case 'error_occurred':
+                    // Could show toast notification for errors
+                    break;
+                case 'alert_triggered':
+                    // Refresh alerts
+                    updateAlerts();
+                    break;
+                case 'status_changed':
+                    // Refresh hook status
+                    if (currentMetrics) {
+                        updateHookStatus(currentMetrics);
+                    }
+                    break;
+            }
+        }
+
+        // Handle new alerts
+        function handleNewAlert(alert) {
+            updateAlerts();
+            
+            // Could show toast notification
+            console.log('New alert:', alert);
+        }
+
+        // Acknowledge alert
+        function acknowledgeAlert(alertId) {
+            fetch(`/api/dashboard/alerts/${alertId}/acknowledge`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    acknowledgedBy: 'dashboard-user'
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    updateAlerts();
+                }
+            })
+            .catch(error => {
+                console.error('Error acknowledging alert:', error);
+            });
+        }
+
+        // Resolve alert
+        function resolveAlert(alertId) {
+            fetch(`/api/dashboard/alerts/${alertId}/resolve`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    updateAlerts();
+                }
+            })
+            .catch(error => {
+                console.error('Error resolving alert:', error);
+            });
+        }
+
+        // Show tab
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+        }
+
+        // Update connection status
+        function updateConnectionStatus(connected) {
+            const indicator = document.querySelector('.real-time-indicator');
+            if (connected) {
+                indicator.style.opacity = '1';
+            } else {
+                indicator.style.opacity = '0.5';
+            }
+        }
+
+        // Get status class for styling
+        function getStatusClass(status) {
+            switch (status) {
+                case 'healthy': return 'success';
+                case 'warning': return 'warning';
+                case 'critical': return 'error';
+                default: return '';
+            }
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+            if (socket) {
+                socket.disconnect();
+            }
+        });
+    </script>
+</body>
+</html>
+            
