@@ -48,7 +48,7 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
     '1': {
       id: 1,
       name: 'SV Viktoria Wertheim',
-      liga: 'Kreisliga Tauberbischofsheim',
+      liga: 'Kreisliga',
       tabellenplatz: 8,
       punkte: 24,
       spiele_gesamt: 18,
@@ -64,7 +64,7 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
     '2': {
       id: 2,
       name: 'SV Viktoria Wertheim II',
-      liga: 'Kreisklasse A Tauberbischofsheim',
+      liga: 'Kreisklasse A',
       tabellenplatz: 5,
       punkte: 28,
       spiele_gesamt: 16,
@@ -80,7 +80,7 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
     '3': {
       id: 3,
       name: 'SV Viktoria Wertheim III',
-      liga: 'Kreisklasse B Tauberbischofsheim',
+      liga: 'Kreisklasse B',
       tabellenplatz: 12,
       punkte: 15,
       spiele_gesamt: 14,
@@ -98,13 +98,32 @@ const getFallbackTeamData = (teamId: TeamId): TeamData => {
   return fallbackData[teamId]
 }
 
+// Helper function to convert long Liga names to short names
+const getShortLigaName = (ligaName: string): string => {
+  // Convert long Liga names to short versions for better display
+  const ligaMapping: Record<string, string> = {
+    'Kreisliga Tauberbischofsheim': 'Kreisliga',
+    'Kreisklasse A Tauberbischofsheim': 'Kreisklasse A',
+    'Kreisklasse B Tauberbischofsheim': 'Kreisklasse B',
+    'Bezirksliga Tauberbischofsheim': 'Bezirksliga',
+    'Landesliga Tauberbischofsheim': 'Landesliga'
+  }
+  
+  return ligaMapping[ligaName] || ligaName
+}
+
 // Transform Strapi v5 Team to TeamData
 const transformStrapiV5ToTeamData = (strapiTeam: StrapiV5Team): TeamData => {
-  // Get liga name from relation if available, fallback to liga_name field
-  const ligaName = strapiTeam.liga?.name || 
-                   strapiTeam.liga?.kurz_name || 
-                   strapiTeam.liga_name ||
-                   'Unbekannte Liga'
+  // Get liga name from relation - prioritize kurz_name, fallback to name with conversion
+  let ligaName = strapiTeam.liga?.kurz_name || 
+                 strapiTeam.liga?.name || 
+                 strapiTeam.liga_name ||
+                 'Unbekannte Liga'
+  
+  // If we got a long name, convert it to short version
+  if (!strapiTeam.liga?.kurz_name && ligaName) {
+    ligaName = getShortLigaName(ligaName)
+  }
   
   return {
     id: strapiTeam.id,
@@ -190,7 +209,7 @@ export const teamService = {
   },
 
   /**
-   * Get the last and next game for a team using the new Game Card API
+   * Get the last and next game for a team using the Spiele API
    * @param teamId - ID of the team ('1', '2', or '3')
    * @returns Promise<{lastGame: GameDetails | null, nextGame: GameDetails | null}>
    */
@@ -199,49 +218,58 @@ export const teamService = {
     nextGame: GameDetails | null
   }> {
     try {
-      // Map frontend team IDs to backend mannschaft values
-      // Frontend: "1", "2", "3" -> Backend: "m1", "m2", "m3"
-      const mannschaftValue = `m${teamId}`
+      // Map frontend team IDs to backend club IDs
+      // Frontend: "1", "2", "3" -> Backend club IDs: 1, 2, 3
+      const clubId = parseInt(teamId)
+      const now = new Date().toISOString()
       
-      // Use the separate Game Card API endpoints with mannschaft filtering
-      const [lastResponse, nextResponse] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/game-cards?filters[mannschaft][$eq]=${mannschaftValue}`),
-        axios.get(`${API_BASE_URL}/api/next-game-cards?filters[mannschaft][$eq]=${mannschaftValue}&populate=gegner_team`)
+      // Fetch games from the spiele API where our team is either home or away
+      const [pastGamesResponse, futureGamesResponse] = await Promise.all([
+        // Past games (for last game)
+        axios.get(`${API_BASE_URL}/api/spiele?populate[heim_club][fields][0]=name&populate[gast_club][fields][0]=name&populate[liga][fields][0]=name&filters[$or][0][heim_club][id][$eq]=${clubId}&filters[$or][1][gast_club][id][$eq]=${clubId}&filters[datum][$lt]=${now}&filters[status][$eq]=beendet&sort[0]=datum:desc&pagination[limit]=1`),
+        // Future games (for next game)
+        axios.get(`${API_BASE_URL}/api/spiele?populate[heim_club][fields][0]=name&populate[gast_club][fields][0]=name&populate[liga][fields][0]=name&filters[$or][0][heim_club][id][$eq]=${clubId}&filters[$or][1][gast_club][id][$eq]=${clubId}&filters[datum][$gt]=${now}&filters[status][$eq]=geplant&sort[0]=datum:asc&pagination[limit]=1`)
       ])
       
-      // Get the first (most recent) game from each endpoint
-      const lastGameData = lastResponse.data?.data?.[0]
-      const nextGameData = nextResponse.data?.data?.[0]
+      // Get the first game from each response
+      const lastGameData = pastGamesResponse.data?.data?.[0]
+      const nextGameData = futureGamesResponse.data?.data?.[0]
       
-      // Transform Game Card data to GameDetails format
-      const transformGameCardToGameDetails = (gameCard: any, type: 'last' | 'next'): GameDetails | null => {
-        if (!gameCard) return null
+      // Transform Spiel data to GameDetails format
+      const transformSpielToGameDetails = (spiel: any, type: 'last' | 'next'): GameDetails | null => {
+        if (!spiel) return null
         
-        const gameDate = new Date(gameCard.datum)
-        const isHome = gameCard.ist_heimspiel
+        const gameDate = new Date(spiel.datum)
+        const heimClub = spiel.heim_club?.name || 'Unbekannt'
+        const gastClub = spiel.gast_club?.name || 'Unbekannt'
         
-        // Get opponent name - for last games it's a string, for next games it's a team relation
-        const opponentName = type === 'last' 
-          ? gameCard.gegner 
-          : gameCard.gegner_team?.name || 'Unbekannter Gegner'
+        // Determine if our team is playing at home
+        const isHome = spiel.heim_club?.id === clubId
         
-        // Determine team names based on whether it's a home or away game
-        const homeTeam = isHome ? 'SV Viktoria Wertheim' : opponentName
-        const awayTeam = isHome ? opponentName : 'SV Viktoria Wertheim'
+        // Get team names
+        const homeTeam = heimClub
+        const awayTeam = gastClub
+        
+        // Get scores for past games
+        const homeScore = type === 'last' ? spiel.heim_tore : undefined
+        const awayScore = type === 'last' ? spiel.gast_tore : undefined
+        
+        // Determine opponent name
+        const opponentName = isHome ? gastClub : heimClub
         
         return {
-          id: gameCard.id,
+          id: spiel.id,
           type,
           homeTeam,
           awayTeam,
-          homeScore: type === 'last' ? (isHome ? gameCard.unsere_tore : gameCard.gegner_tore) : undefined,
-          awayScore: type === 'last' ? (isHome ? gameCard.gegner_tore : gameCard.unsere_tore) : undefined,
+          homeScore,
+          awayScore,
           date: gameDate.toLocaleDateString('de-DE'),
           time: gameDate.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
           isHome,
           stadium: isHome ? 'Viktoria-Stadion Wertheim' : `Auswärts bei ${opponentName}`,
           referee: 'N/A',
-          status: type === 'last' ? 'beendet' : 'geplant',
+          status: spiel.status || (type === 'last' ? 'beendet' : 'geplant'),
           goalScorers: [],
           yellowCards: [],
           redCards: [],
@@ -250,8 +278,8 @@ export const teamService = {
       }
       
       return {
-        lastGame: transformGameCardToGameDetails(lastGameData, 'last'),
-        nextGame: transformGameCardToGameDetails(nextGameData, 'next')
+        lastGame: transformSpielToGameDetails(lastGameData, 'last'),
+        nextGame: transformSpielToGameDetails(nextGameData, 'next')
       }
     } catch (error) {
       const teamName = getTeamName(teamId)

@@ -1,61 +1,125 @@
 {
   "mcpServers": {
-    "browsermcp": {
-      "command": "npx",
+    "filesystem": {
+      "command": "cmd",
       "args": [
-        "@browsermcp/mcp@latest"
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:/Users/cirak/Documents",
+        "C:/Users/cirak/Desktop",
+        "C:/Users/cirak/Downloads",
+        "C:/Users/cirak/Projekte"
       ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "fetch": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@kazuph/mcp-fetch"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "puppeteer": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "sequential-thinking": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "env": {},
       "disabled": false,
       "autoApprove": [
-        "browser_navigate",
-        "browser_screenshot",
-        "browser_snapshot",
-        "browser_click",
-        "browser_type",
-        "browser_wait",
-        "browser_go_back",
-        "browser_go_forward",
-        "browser_select_option",
-        "browser_get_console_logs",
-        "browser_press_key"
+        "sequentialthinking"
       ]
     },
-    "strapi-mcp": {
-      "command": "node",
+    "playwright": {
+      "command": "cmd",
       "args": [
-        "C:\\Users\\cirak\\Projekte\\ViktoriaWertheim\\debug-mcp-server.js"
+        "/c",
+        "npx",
+        "-y",
+        "@playwright/mcp"
       ],
-      "env": {
-        "STRAPI_URL": "http://localhost:1337",
-        "STRAPI_ADMIN_EMAIL": "cirakoglu.onur@gmail.com",
-        "STRAPI_ADMIN_PASSWORD": "VW123c0nnect!",
-        "STRAPI_DEV_MODE": "true"
-      },
+      "env": {},
       "disabled": false,
       "autoApprove": [
-        "list_content_types",
-        "get_entries",
-        "get_entry",
-        "create_entry",
-        "update_entry",
-        "delete_entry"
+        "browser_navigate"
       ]
     },
-    "strapi-mcp-test": {
-      "command": "npx",
+    "mongodb": {
+      "command": "cmd",
       "args": [
-        "strapi-mcp"
+        "/c",
+        "npx",
+        "-y",
+        "mongodb-mcp-server@latest"
       ],
-      "env": {
-        "STRAPI_URL": "http://localhost:1337",
-        "STRAPI_ADMIN_EMAIL": "cirakoglu.onur@gmail.com",
-        "STRAPI_ADMIN_PASSWORD": "VW123c0nnect!",
-        "STRAPI_DEV_MODE": "true"
-      },
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "postgresql": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@henkey/postgres-mcp-server"
+      ],
+      "env": {},
       "disabled": false,
       "autoApprove": [
-        "list_content_types"
+        "pg_manage_schema",
+        "pg_execute_query",
+        "pg_execute_mutation",
+        "pg_execute_sql"
       ]
+    },
+    "clerk": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@clerk/clerk-mcp"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "magicui": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@magicuidesign/mcp@latest"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
     }
   }
 }

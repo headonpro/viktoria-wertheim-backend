@@ -88,6 +88,7 @@ class PerformanceCache<T> {
 const leagueStandingsCache = new PerformanceCache<Team[]>();
 const ligaMappingCache = new PerformanceCache<string>();
 const teamInfoCache = new PerformanceCache<{ ligaName: string; teamName: string; isFallback: boolean }>();
+const clubDataCache = new PerformanceCache<any>();
 
 // Strapi v5 Tabellen-Eintrag Response Interface
 interface StrapiV5TabellenEintrag {
@@ -98,6 +99,23 @@ interface StrapiV5TabellenEintrag {
     id: number
     url: string
     alternativeText?: string
+  }
+  club?: {
+    id: number
+    documentId: string
+    name: string
+    kurz_name?: string
+    logo?: {
+      id: number
+      url: string
+      alternativeText?: string
+    }
+    ligen?: Array<{
+      id: number
+      documentId: string
+      name: string
+      kurz_name?: string
+    }>
   }
   platz: number
   spiele: number
@@ -142,6 +160,13 @@ const MANNSCHAFT_LIGA_MAPPING = {
   '3': 'Kreisklasse B Tauberbischofsheim'
 } as const
 
+// Club-Mannschaft Mapping (as defined in design document)
+const MANNSCHAFT_CLUB_MAPPING = {
+  '1': 'SV Viktoria Wertheim',
+  '2': 'SV Viktoria Wertheim II',
+  '3': 'SpG Vikt. Wertheim 3/Grünenwort'
+} as const
+
 // Memoized mapping function for better performance
 const getMannschaftLigaMapping = (() => {
   const cache = new Map<TeamId, string>();
@@ -160,21 +185,75 @@ const getMannschaftLigaMapping = (() => {
   };
 })();
 
-// Viktoria Team Patterns for highlighting (updated with actual database names)
-const VIKTORIA_TEAM_PATTERNS = {
-  '1': ['SV Viktoria Wertheim', 'Viktoria Wertheim'],
-  '2': ['SV Viktoria Wertheim II', 'Viktoria Wertheim II'],
-  '3': ['SpG Vikt. Wertheim 3/Grünenwort', 'Viktoria Wertheim III', 'SpG Vikt. Wertheim 3']
+// Memoized club mapping function for better performance
+const getMannschaftClubMapping = (() => {
+  const cache = new Map<TeamId, string>();
+  
+  return (teamId: TeamId): string | undefined => {
+    if (cache.has(teamId)) {
+      return cache.get(teamId);
+    }
+    
+    const club = MANNSCHAFT_CLUB_MAPPING[teamId];
+    if (club) {
+      cache.set(teamId, club);
+    }
+    
+    return club;
+  };
+})();
+
+// Viktoria Club Patterns for highlighting (comprehensive patterns for accurate detection)
+const VIKTORIA_CLUB_PATTERNS = {
+  '1': [
+    'SV Viktoria Wertheim',
+    'Viktoria Wertheim',
+    'SV VIK Wertheim',
+    'VIK Wertheim'
+  ],
+  '2': [
+    'SV Viktoria Wertheim II',
+    'Viktoria Wertheim II',
+    'SV VIK Wertheim II',
+    'VIK Wertheim II',
+    'SV Viktoria Wertheim 2',
+    'Viktoria Wertheim 2'
+  ],
+  '3': [
+    'SpG Vikt. Wertheim 3/Grünenwort',
+    'Viktoria Wertheim III',
+    'SpG Vikt. Wertheim 3',
+    'SpG Viktoria Wertheim 3',
+    'Viktoria Wertheim 3',
+    'VIK Wertheim 3',
+    'SpG VIK Wertheim 3'
+  ]
 } as const
 
 // Transform Strapi v5 Tabellen-Eintrag data to Frontend Team format
 const transformTabellenEintragToTeam = (strapiEntry: StrapiV5TabellenEintrag): Team => {
-  const teamLogo = strapiEntry.team_logo?.url
+  // Prefer club logo over team logo, with error handling for missing club data
+  let logoUrl: string | undefined;
+  
+  try {
+    const clubLogo = strapiEntry.club?.logo?.url
+    const teamLogo = strapiEntry.team_logo?.url
+    logoUrl = clubLogo || teamLogo
+  } catch (error) {
+    console.warn('Error accessing club logo data, falling back to team logo:', error);
+    logoUrl = strapiEntry.team_logo?.url
+  }
+  
+  // Use club name if available, otherwise fall back to team_name
+  let teamName = strapiEntry.team_name || 'Unknown Team';
+  if (strapiEntry.club?.name) {
+    teamName = strapiEntry.club.name;
+  }
   
   return {
     position: strapiEntry.platz || 0,
-    name: strapiEntry.team_name || 'Unknown Team',
-    logo: teamLogo ? `${API_BASE_URL}${teamLogo}` : undefined,
+    name: teamName,
+    logo: logoUrl ? `${API_BASE_URL}${logoUrl}` : undefined,
     games: strapiEntry.spiele || 0,
     wins: strapiEntry.siege || 0,
     draws: strapiEntry.unentschieden || 0,
@@ -212,13 +291,13 @@ export const leagueService = {
    * @throws LeagueServiceError - Structured error information
    */
   async fetchLeagueStandingsByLiga(ligaName: string, useCache: boolean = true): Promise<Team[]> {
-    const cacheKey = `liga:${ligaName}`;
+    const cacheKey = `liga:${ligaName}:with-clubs`;
     
     // Check cache first
     if (useCache && leagueStandingsCache.has(cacheKey)) {
       const cachedData = leagueStandingsCache.get(cacheKey);
       if (cachedData) {
-        console.log(`Serving league standings for ${ligaName} from cache`);
+        console.log(`Serving league standings for ${ligaName} from cache (with club data)`);
         return cachedData;
       }
     }
@@ -238,6 +317,8 @@ export const leagueService = {
             'filters[liga][name][$eq]': ligaName,
             'populate[liga]': true,
             'populate[team_logo]': true,
+            'populate[club][populate][logo]': true,
+            'populate[club][populate][ligen]': true,
             sort: 'platz:asc',
             'pagination[pageSize]': 100
           },
@@ -486,7 +567,114 @@ export const leagueService = {
   },
 
   /**
-   * Check if a team name matches Viktoria patterns for highlighting
+   * Get the club name for a specific team using team-to-club mapping
+   * @param teamId - ID of the team ('1', '2', or '3')
+   * @returns string - Club name for the team
+   */
+  getClubNameByTeam(teamId: TeamId): string {
+    const clubName = getMannschaftClubMapping(teamId);
+    
+    if (!clubName) {
+      console.warn(`No club mapping found for team ${teamId}, using fallback`)
+      // Fallback names if mapping fails
+      const fallbackNames = {
+        '1': 'SV Viktoria Wertheim',
+        '2': 'SV Viktoria Wertheim II',
+        '3': 'SpG Vikt. Wertheim 3/Grünenwort'
+      }
+      return fallbackNames[teamId] || 'Unbekannter Verein';
+    }
+    
+    return clubName;
+  },
+
+  /**
+   * Get all possible Viktoria team name variations for a given team ID
+   * @param teamId - ID of the team ('1', '2', or '3')
+   * @returns string[] - Array of all possible name variations
+   */
+  getViktoriaTeamVariations(teamId: TeamId): string[] {
+    const patterns = VIKTORIA_CLUB_PATTERNS[teamId];
+    if (!patterns) {
+      return [];
+    }
+    
+    // Convert readonly array to mutable array and add additional variations
+    const baseVariations: string[] = Array.from(patterns);
+    const additionalVariations: string[] = [];
+    
+    patterns.forEach(pattern => {
+      // Add variations with different spacing
+      additionalVariations.push(pattern.replace(/\s+/g, ' '));
+      // Add variations without periods
+      additionalVariations.push(pattern.replace(/\./g, ''));
+      // Add variations with different abbreviations
+      if (pattern.includes('SpG')) {
+        additionalVariations.push(pattern.replace('SpG', 'Spielgemeinschaft'));
+      }
+      if (pattern.includes('SV')) {
+        additionalVariations.push(pattern.replace('SV', 'Sportverein'));
+      }
+    });
+    
+    // Combine and remove duplicates
+    const allVariations: string[] = [];
+    baseVariations.forEach(variation => {
+      if (allVariations.indexOf(variation) === -1) {
+        allVariations.push(variation);
+      }
+    });
+    additionalVariations.forEach(variation => {
+      if (allVariations.indexOf(variation) === -1) {
+        allVariations.push(variation);
+      }
+    });
+    
+    return allVariations;
+  },
+
+  /**
+   * Check if a club name matches Viktoria patterns for highlighting
+   * @param clubName - Name of the club to check
+   * @param teamId - Optional team ID for specific pattern matching
+   * @returns boolean - Whether the club should be highlighted as Viktoria
+   */
+  isViktoriaClub(clubName: string, teamId?: TeamId): boolean {
+    const normalizedName = clubName.toLowerCase()
+    
+    // If teamId is provided, check specific patterns for that team
+    if (teamId && VIKTORIA_CLUB_PATTERNS[teamId]) {
+      const teamSpecificMatch = VIKTORIA_CLUB_PATTERNS[teamId].some(pattern => 
+        normalizedName.includes(pattern.toLowerCase())
+      );
+      if (teamSpecificMatch) {
+        return true;
+      }
+      
+      // Also check additional variations
+      const variations = this.getViktoriaTeamVariations(teamId);
+      const variationMatch = variations.some(variation => 
+        normalizedName.includes(variation.toLowerCase())
+      );
+      if (variationMatch) {
+        return true;
+      }
+    }
+    
+    // General Viktoria pattern matching (fallback)
+    const generalPatterns = [
+      'viktoria',
+      'vikt.',
+      'sv viktoria wertheim',
+      'spg vikt. wertheim',
+      'vik wertheim'
+    ];
+    
+    return generalPatterns.some(pattern => normalizedName.includes(pattern));
+  },
+
+  /**
+   * Check if a team name matches Viktoria patterns for highlighting (enhanced with club name detection)
    * @param teamName - Name of the team to check
    * @param teamId - Optional team ID for specific pattern matching
    * @returns boolean - Whether the team should be highlighted as Viktoria
@@ -494,17 +682,40 @@ export const leagueService = {
   isViktoriaTeam(teamName: string, teamId?: TeamId): boolean {
     const normalizedName = teamName.toLowerCase()
     
-    // If teamId is provided, check specific patterns for that team
-    if (teamId && VIKTORIA_TEAM_PATTERNS[teamId]) {
-      return VIKTORIA_TEAM_PATTERNS[teamId].some(pattern => 
-        normalizedName.includes(pattern.toLowerCase())
-      )
+    // First, try club-based detection using the isViktoriaClub method
+    if (this.isViktoriaClub(teamName, teamId)) {
+      return true;
     }
     
-    // General Viktoria pattern matching
-    return normalizedName.includes('viktoria') || 
-           normalizedName.includes('vikt.') ||
-           normalizedName.includes('sv viktoria wertheim')
+    // If teamId is provided, check specific club patterns for that team
+    if (teamId && VIKTORIA_CLUB_PATTERNS[teamId]) {
+      const isViktoriaByPattern = VIKTORIA_CLUB_PATTERNS[teamId].some(pattern => 
+        normalizedName.includes(pattern.toLowerCase())
+      );
+      if (isViktoriaByPattern) {
+        return true;
+      }
+    }
+    
+    // Fallback to team-based detection for backward compatibility
+    const teamBasedPatterns = [
+      'viktoria',
+      'vikt.',
+      'sv viktoria wertheim',
+      'spg vikt. wertheim',
+      'viktoria wertheim'
+    ];
+    
+    const isViktoriaByTeamPattern = teamBasedPatterns.some(pattern => 
+      normalizedName.includes(pattern)
+    );
+    
+    if (isViktoriaByTeamPattern) {
+      console.log(`Viktoria team detected via fallback team pattern: ${teamName}`);
+      return true;
+    }
+    
+    return false;
   },
 
   /**
@@ -548,7 +759,9 @@ export const leagueService = {
         params: {
           'filters[team_name][$eq]': teamName,
           'populate[liga]': true,
-          'populate[team_logo]': true
+          'populate[team_logo]': true,
+          'populate[club][populate][logo]': true,
+          'populate[club][populate][ligen]': true
         }
       })
 
@@ -561,6 +774,60 @@ export const leagueService = {
     } catch (error) {
       console.error(`Error fetching team standing for ${teamName}:`, error)
       return null
+    }
+  },
+
+  /**
+   * Fetch specific club standing by club name from Tabellen-Eintrag API
+   * @param clubName - Name of the club to fetch
+   * @returns Promise<Team | null> - Club data or null if not found
+   */
+  async fetchClubStanding(clubName: string): Promise<Team | null> {
+    const cacheKey = `club-standing:${clubName}`;
+    
+    // Check cache first
+    if (clubDataCache.has(cacheKey)) {
+      const cachedData = clubDataCache.get(cacheKey);
+      if (cachedData) {
+        console.log(`Serving club standing for ${clubName} from cache`);
+        return cachedData;
+      }
+    }
+
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/tabellen-eintraege`, {
+        params: {
+          'filters[club][name][$eq]': clubName,
+          'populate[liga]': true,
+          'populate[team_logo]': true,
+          'populate[club][populate][logo]': true,
+          'populate[club][populate][ligen]': true
+        }
+      })
+
+      if (!response.data || !response.data.data || response.data.data.length === 0) {
+        // Try fallback with team_name if club lookup fails
+        return await this.fetchTeamStanding(clubName);
+      }
+
+      const result = transformTabellenEintragToTeam(response.data.data[0]);
+      
+      // Cache the result
+      clubDataCache.set(cacheKey, result);
+      
+      return result;
+
+    } catch (error) {
+      console.error(`Error fetching club standing for ${clubName}:`, error)
+      
+      // Try fallback with team_name if club lookup fails
+      try {
+        console.log(`Attempting fallback to team name lookup for ${clubName}`);
+        return await this.fetchTeamStanding(clubName);
+      } catch (fallbackError) {
+        console.error(`Fallback team lookup also failed for ${clubName}:`, fallbackError);
+        return null;
+      }
     }
   },
 
@@ -662,7 +929,18 @@ export const leagueService = {
     leagueStandingsCache.clear();
     ligaMappingCache.clear();
     teamInfoCache.clear();
+    clubDataCache.clear();
     console.log('All leagueService caches cleared');
+  },
+
+  /**
+   * Clear club-specific caches - useful for club data updates
+   */
+  clearClubCache(): void {
+    clubDataCache.clear();
+    // Also clear league standings cache since it contains club data
+    leagueStandingsCache.clear();
+    console.log('Club-related caches cleared');
   },
 
   /**
@@ -672,16 +950,18 @@ export const leagueService = {
     leagueStandings: number; 
     ligaMapping: number; 
     teamInfo: number; 
+    clubData: number;
     total: number 
   } {
     const stats = {
       leagueStandings: leagueStandingsCache.size(),
       ligaMapping: ligaMappingCache.size(),
       teamInfo: teamInfoCache.size(),
+      clubData: clubDataCache.size(),
       total: 0
     };
     
-    stats.total = stats.leagueStandings + stats.ligaMapping + stats.teamInfo;
+    stats.total = stats.leagueStandings + stats.ligaMapping + stats.teamInfo + stats.clubData;
     return stats;
   },
 
@@ -704,6 +984,132 @@ export const leagueService = {
 
     await Promise.allSettled(preloadPromises);
     console.log('League data preloading completed');
+  },
+
+  /**
+   * Preload club data for all Viktoria teams
+   * @param useCache - Whether to use cache (default: true)
+   */
+  async preloadClubData(useCache: boolean = true): Promise<void> {
+    console.log('Preloading club data for Viktoria teams...');
+    
+    const teamIds: TeamId[] = ['1', '2', '3'];
+    const preloadPromises = teamIds.map(async (teamId) => {
+      try {
+        const clubName = this.getClubNameByTeam(teamId);
+        await this.fetchClubStanding(clubName);
+        console.log(`Preloaded club data for ${clubName}`);
+      } catch (error) {
+        console.warn(`Failed to preload club data for team ${teamId}:`, error);
+      }
+    });
+
+    await Promise.allSettled(preloadPromises);
+    console.log('Club data preloading completed');
+  },
+
+  /**
+   * Test Viktoria team detection for all known variations
+   * @returns object with test results for debugging and validation
+   */
+  testViktoriaDetection(): {
+    clubDetection: { [key: string]: boolean };
+    teamDetection: { [key: string]: boolean };
+    summary: {
+      clubTests: { passed: number; total: number };
+      teamTests: { passed: number; total: number };
+      allPassed: boolean;
+    };
+  } {
+    console.log('Testing Viktoria team/club detection...');
+    
+    // Test club-based detection
+    const clubTestCases = {
+      'SV Viktoria Wertheim': true,
+      'SV Viktoria Wertheim II': true,
+      'SpG Vikt. Wertheim 3/Grünenwort': true,
+      'Viktoria Wertheim': true,
+      'Viktoria Wertheim II': true,
+      'Viktoria Wertheim III': true,
+      'SpG Vikt. Wertheim 3': true,
+      'VfR Gerlachsheim': false,
+      'TSV Jahn Kreuzwertheim': false,
+      'FC Hundheim-Steinbach': false
+    };
+    
+    const clubResults: { [key: string]: boolean } = {};
+    let clubTestsPassed = 0;
+    
+    Object.entries(clubTestCases).forEach(([clubName, expected]) => {
+      const result = this.isViktoriaClub(clubName);
+      clubResults[clubName] = result === expected;
+      if (result === expected) {
+        clubTestsPassed++;
+      } else {
+        console.warn(`Club detection failed for "${clubName}": expected ${expected}, got ${result}`);
+      }
+    });
+    
+    // Test team-based detection (including fallback)
+    const teamTestCases = {
+      'SV Viktoria Wertheim': true,
+      'SV Viktoria Wertheim II': true,
+      'SpG Vikt. Wertheim 3/Grünenwort': true,
+      'Viktoria Wertheim': true,
+      'Viktoria Wertheim II': true,
+      'Viktoria Wertheim III': true,
+      'SpG Vikt. Wertheim 3': true,
+      '1. Mannschaft': false, // Legacy team names should not match
+      '2. Mannschaft': false,
+      '3. Mannschaft': false,
+      'VfR Gerlachsheim': false,
+      'TSV Jahn Kreuzwertheim': false,
+      'FC Hundheim-Steinbach': false
+    };
+    
+    const teamResults: { [key: string]: boolean } = {};
+    let teamTestsPassed = 0;
+    
+    Object.entries(teamTestCases).forEach(([teamName, expected]) => {
+      const result = this.isViktoriaTeam(teamName);
+      teamResults[teamName] = result === expected;
+      if (result === expected) {
+        teamTestsPassed++;
+      } else {
+        console.warn(`Team detection failed for "${teamName}": expected ${expected}, got ${result}`);
+      }
+    });
+    
+    // Test team-specific detection
+    const teamSpecificTests = [
+      { name: 'SV Viktoria Wertheim', teamId: '1' as TeamId, expected: true },
+      { name: 'SV Viktoria Wertheim II', teamId: '2' as TeamId, expected: true },
+      { name: 'SpG Vikt. Wertheim 3/Grünenwort', teamId: '3' as TeamId, expected: true },
+      { name: 'VfR Gerlachsheim', teamId: '1' as TeamId, expected: false }
+    ];
+    
+    teamSpecificTests.forEach(({ name, teamId, expected }) => {
+      const clubResult = this.isViktoriaClub(name, teamId);
+      const teamResult = this.isViktoriaTeam(name, teamId);
+      
+      if (clubResult !== expected || teamResult !== expected) {
+        console.warn(`Team-specific detection failed for "${name}" (team ${teamId}): club=${clubResult}, team=${teamResult}, expected=${expected}`);
+      }
+    });
+    
+    const summary = {
+      clubTests: { passed: clubTestsPassed, total: Object.keys(clubTestCases).length },
+      teamTests: { passed: teamTestsPassed, total: Object.keys(teamTestCases).length },
+      allPassed: clubTestsPassed === Object.keys(clubTestCases).length && teamTestsPassed === Object.keys(teamTestCases).length
+    };
+    
+    console.log('Viktoria detection test results:', summary);
+    
+    return {
+      clubDetection: clubResults,
+      teamDetection: teamResults,
+      summary
+    };
   }
 }
 

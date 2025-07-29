@@ -39,6 +39,18 @@
       "relation": "oneToMany",
       "target": "api::tabellen-eintrag.tabellen-eintrag",
       "mappedBy": "liga"
+    },
+    "clubs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::club.club",
+      "mappedBy": "ligen"
+    },
+    "spiele": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::spiel.spiel",
+      "mappedBy": "liga"
     }
   }
 }

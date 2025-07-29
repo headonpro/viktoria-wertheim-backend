@@ -26,6 +26,15 @@ importers:
       better-sqlite3:
         specifier: 11.3.0
         version: 11.3.0
+      ioredis:
+        specifier: ^5.6.1
+        version: 5.6.1
+      node-cron:
+        specifier: ^3.0.3
+        version: 3.0.3
+      node-fetch:
+        specifier: ^2.7.0
+        version: 2.7.0
       pg:
         specifier: ^8.16.3
         version: 8.16.3
@@ -42,9 +51,15 @@ importers:
         specifier: ^6.0.0
         version: 6.1.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.23
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
+      '@types/koa':
+        specifier: ^2.15.0
+        version: 2.15.0
       '@types/node':
         specifier: ^20
         version: 20.19.9
@@ -57,12 +72,39 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.3.7(@types/react@18.3.23)
+      '@types/socket.io':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3
+      chalk:
+        specifier: ^4.1.2
+        version: 4.1.2
+      cli-table3:
+        specifier: ^0.6.3
+        version: 0.6.5
+      commander:
+        specifier: ^9.4.1
+        version: 9.5.0
+      inquirer:
+        specifier: ^8.2.5
+        version: 8.2.5
       jest:
         specifier: ^30.0.5
         version: 30.0.5(@types/node@20.19.9)(babel-plugin-macros@3.1.0)(esbuild-register@3.5.0(esbuild@0.25.8))
+      jest-html-reporters:
+        specifier: ^3.1.7
+        version: 3.1.7
+      jest-junit:
+        specifier: ^16.0.0
+        version: 16.0.0
+      ora:
+        specifier: ^5.4.1
+        version: 5.4.1
+      socket.io:
+        specifier: ^4.7.5
+        version: 4.8.1
       supertest:
         specifier: ^7.1.4
         version: 7.1.4
@@ -1042,6 +1084,9 @@ packages:
   '@internationalized/number@3.5.3':
     resolution: {integrity: sha512-rd1wA3ebzlp0Mehj5YTuTI50AQEx80gWFyHcQu+u91/5NgdwBecO8BH6ipPfE+lmQ9d63vpB3H9SHoIUiupllw==}
 
+  '@ioredis/commands@1.3.0':
+    resolution: {integrity: sha512-M/T6Zewn7sDaBQEqIZ8Rb+i9y8qfGmq+5SDFSf9sA2lUZTmdDLVdOiQaeDp+Q4wElZ9HG1GAX5KhDaidp6LQsQ==}
+
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -1945,6 +1990,9 @@ packages:
   '@sinonjs/fake-timers@13.0.5':
     resolution: {integrity: sha512-36/hTbH2uaWuGVERyC6da9YwGWnzUZXuPro/F2LfsdOsLnCojz/iSH8MxUt/FD2S5XBSVPhmArFUXcpCQ2Hkiw==}
 
+  '@socket.io/component-emitter@3.1.2':
+    resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
+
   '@strapi/admin@5.18.1':
     resolution: {integrity: sha512-OlY4kpBHbWm8/Giy7LNrR9E+nDHBwVmvRF0en8H3rIRWvQO2YjNN6+j0iqpXo+wkkP6Z4ZLao+549kdS2gfPxA==}
     engines: {node: '>=18.0.0 <=22.x.x', npm: '>=6.0.0'}
@@ -2305,6 +2353,9 @@ packages:
   '@types/cookies@0.9.1':
     resolution: {integrity: sha512-E/DPgzifH4sM1UMadJMWd6mO2jOd4g1Ejwzx8/uRCDpJis1IrlyQEcGAYEomtAqRYmD5ORbNXMeI9U0RiVGZbg==}
 
+  '@types/cors@2.8.19':
+    resolution: {integrity: sha512-mFNylyeyqN93lfe/9CSxOGREz8cpzAhH+E93xJ4xWQf62V8sQ/24reV2nyzUWM6H6Xji+GGHpkbLe7pVoUEskg==}
+
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
 
@@ -2317,14 +2368,8 @@ packages:
   '@types/express-serve-static-core@4.19.6':
     resolution: {integrity: sha512-N4LZ2xG7DatVqhCZzOGb1Yi5lMbXSZcmdLDe9EzSndPV2HpWYWzRbaerl2n27irrm94EPpprqa8KpskPT085+A==}
 
-  '@types/express-serve-static-core@5.0.7':
-    resolution: {integrity: sha512-R+33OsgWw7rOhD1emjU7dzCDHucJrgJXMA5PYCzJxVil0dsyx5iBEPHqpPfiKNJQb7lZ1vxwoLR4Z87bBUpeGQ==}
-
   '@types/express@4.17.23':
     resolution: {integrity: sha512-Crp6WY9aTYP3qPi2wGDo9iUe/rceX01UMhnF1jmwDcKCFM6cx7YhGP/Mpr3y9AASpfHixIG0E6azCcL5OcDHsQ==}
-
-  '@types/express@5.0.3':
-    resolution: {integrity: sha512-wGA0NX93b19/dZC1J18tKWVIYWyyF2ZjT9vin/NRu0qzzvfVzWjs04iq2rQ3H65vCTQYlRqs3YHfY7zjdV+9Kw==}
 
   '@types/fined@1.1.5':
     resolution: {integrity: sha512-2N93vadEGDFhASTIRbizbl4bNqpMOId5zZfj6hHqYZfEzEfO9onnU4Im8xvzo8uudySDveDHBOOSlTWf38ErfQ==}
@@ -2451,6 +2496,10 @@ packages:
 
   '@types/serve-static@1.15.8':
     resolution: {integrity: sha512-roei0UY3LhpOJvjbIP6ZZFngyLKl5dskOtDhxY5THRSpO+ZI+nzJ+m5yUMzGrp89YRa7lvknKkMYjqQFGwA7Sg==}
+
+  '@types/socket.io@3.0.2':
+    resolution: {integrity: sha512-pu0sN9m5VjCxBZVK8hW37ZcMe8rjn4HHggBN5CbaRTvFwv5jOmuIRZEuddsBPa9Th0ts0SIo3Niukq+95cMBbQ==}
+    deprecated: This is a stub types definition. socket.io provides its own type definitions, so you do not need this installed.
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -2871,6 +2920,10 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
+  base64id@2.0.0:
+    resolution: {integrity: sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==}
+    engines: {node: ^4.5.0 || >= 5.9}
+
   bcryptjs@2.4.3:
     resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
 
@@ -3124,6 +3177,10 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
 
+  cluster-key-slot@1.1.2:
+    resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
+    engines: {node: '>=0.10.0'}
+
   co-body@6.2.0:
     resolution: {integrity: sha512-Kbpv2Yd1NdL1V/V4cwLVxraHDV6K8ayohr2rmH0J87Er8+zJjcTa6dAn9QMPC9CRgU8+aNajKbSf1TzDB1yKPA==}
     engines: {node: '>=8.0.0'}
@@ -3192,6 +3249,10 @@ packages:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
 
+  commander@9.5.0:
+    resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
+    engines: {node: ^12.20.0 || >=14}
+
   component-emitter@1.3.1:
     resolution: {integrity: sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==}
 
@@ -3258,6 +3319,10 @@ packages:
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+
+  cors@2.8.5:
+    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
+    engines: {node: '>= 0.10'}
 
   cosmiconfig@7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
@@ -3428,6 +3493,10 @@ packages:
   delegates@1.0.0:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
 
+  denque@2.1.0:
+    resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
+    engines: {node: '>=0.10'}
+
   depd@1.1.2:
     resolution: {integrity: sha512-7emPTl6Dpo6JRXOXjLRxck+FlLRX5847cLKEn00PLAgc3g2hTZZgr+e4c2v6QpSmLeFP3n5yUo7ft6avBK/5jQ==}
     engines: {node: '>= 0.6'}
@@ -3579,6 +3648,14 @@ packages:
 
   end-of-stream@1.4.5:
     resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==}
+
+  engine.io-parser@5.2.3:
+    resolution: {integrity: sha512-HqD3yTBfnBxIrbnM1DoD6Pcq8NECnh8d4As1Qgh0z5Gg3jRRIqijury0CL3ghu/edArpUYiYqQiDUQBIs4np3Q==}
+    engines: {node: '>=10.0.0'}
+
+  engine.io@6.6.4:
+    resolution: {integrity: sha512-ZCkIjSYNDyGn0R6ewHDtXgns/Zre/NT6Agvq1/WobF7JXgFff4SeDroKiCO3fNJreU9YG429Sc81o4w5ok/W5g==}
+    engines: {node: '>=10.2.0'}
 
   enhanced-resolve@5.18.2:
     resolution: {integrity: sha512-6Jw4sE1maoRJo3q8MsSIn2onJFbLTOjY9hlx4DZXmOKvLRd1Ok2kXmAGXaafL2+ijsJZ1ClYbl/pmqr9+k4iUQ==}
@@ -4238,6 +4315,10 @@ packages:
   invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
 
+  ioredis@5.6.1:
+    resolution: {integrity: sha512-UxC0Yv1Y4WRJiGQxQkP0hfdL0/5/6YvdfOOClRgJ0qppSarkhneSa6UvkMkms0AkdGimSH3Ikqm+6mkMmX7vGA==}
+    engines: {node: '>=12.22.0'}
+
   is-absolute@1.0.0:
     resolution: {integrity: sha512-dOWoqflvcydARa360Gvv18DZ/gRuHKi2NU/wU5X1ZFzdYfH29nkiNZsF3mp4OJ3H4yo9Mx8A/uAGNzpzPN3yBA==}
     engines: {node: '>=0.10.0'}
@@ -4472,6 +4553,13 @@ packages:
   jest-haste-map@30.0.5:
     resolution: {integrity: sha512-dkmlWNlsTSR0nH3nRfW5BKbqHefLZv0/6LCccG0xFCTWcJu8TuEwG+5Cm75iBfjVoockmO6J35o5gxtFSn5xeg==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
+
+  jest-html-reporters@3.1.7:
+    resolution: {integrity: sha512-GTmjqK6muQ0S0Mnksf9QkL9X9z2FGIpNSxC52E0PHDzjPQ1XDu2+XTI3B3FS43ZiUzD1f354/5FfwbNIBzT7ew==}
+
+  jest-junit@16.0.0:
+    resolution: {integrity: sha512-A94mmw6NfJab4Fg/BlvVOUXzXgF0XIH6EmTgJ5NDPp4xoKq0Kr7sErb+4Xs9nZvu58pJojz5RFGpqnZYJTrRfQ==}
+    engines: {node: '>=10.12.0'}
 
   jest-leak-detector@30.0.5:
     resolution: {integrity: sha512-3Uxr5uP8jmHMcsOtYMRB/zf1gXN3yUIc+iPorhNETG54gErFIiUhLvyY/OggYpSMOEYqsmRxmuU4ZOoX5jpRFg==}
@@ -4801,9 +4889,15 @@ packages:
   lodash.deburr@4.1.0:
     resolution: {integrity: sha512-m/M1U1f3ddMCs6Hq2tAsYThTBDaAKFDX3dwDo97GEYzamXi9SqUpjWi/Rrj/gf3X2n8ktwgZrlP1z6E3v/IExQ==}
 
+  lodash.defaults@4.2.0:
+    resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
+
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
     deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
+
+  lodash.isarguments@3.1.0:
+    resolution: {integrity: sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==}
 
   lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
@@ -5139,6 +5233,19 @@ packages:
 
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
+
+  node-cron@3.0.3:
+    resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
+    engines: {node: '>=6.0.0'}
+
+  node-fetch@2.7.0:
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
 
   node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
@@ -5837,6 +5944,14 @@ packages:
     resolution: {integrity: sha512-/vxpCXddiX8NGfGO/mTafwjq4aFa/71pvamip0++IQk3zG8cbCj0fifNPrjjF1XMXUne91jL9OoxmdykoEtifQ==}
     engines: {node: '>= 10.13.0'}
 
+  redis-errors@1.2.0:
+    resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}
+    engines: {node: '>=4'}
+
+  redis-parser@3.0.0:
+    resolution: {integrity: sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==}
+    engines: {node: '>=4'}
+
   redux-thunk@2.4.2:
     resolution: {integrity: sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==}
     peerDependencies:
@@ -6145,6 +6260,17 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
+  socket.io-adapter@2.5.5:
+    resolution: {integrity: sha512-eLDQas5dzPgOWCk9GuuJC2lBqItuhKI4uxGgo9aIV7MYbk2h9Q6uULEh8WBzThoI7l+qU9Ast9fVUmkqPP9wYg==}
+
+  socket.io-parser@4.2.4:
+    resolution: {integrity: sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==}
+    engines: {node: '>=10.0.0'}
+
+  socket.io@4.8.1:
+    resolution: {integrity: sha512-oZ7iUCxph8WYRHHcjBEc9unw3adt5CmSNlppj/5Q4k2RIrhl8Z5yY2Xr4j9zj0+wzVZ0bxmYoGSzKJnRl6A4yg==}
+    engines: {node: '>=10.2.0'}
+
   sorted-array-functions@1.3.0:
     resolution: {integrity: sha512-2sqgzeFlid6N4Z2fUQ1cvFmTOLRi/sEDzSQ0OKYchqgoPmQBVyM3959qYx3fpS6Esef80KjmpgPeEr028dP3OA==}
 
@@ -6207,6 +6333,9 @@ packages:
 
   stackframe@1.3.4:
     resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==}
+
+  standard-as-callback@2.1.0:
+    resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
 
   statuses@1.5.0:
     resolution: {integrity: sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==}
@@ -6437,6 +6566,9 @@ packages:
   touch@3.1.1:
     resolution: {integrity: sha512-r0eojU4bI8MnHr8c5bNo7lJDdI2qXlWWJk6a9EAFG7vbhTjElYhBVS3/miuE0uOuoLdb8Mc/rVfsmm6eo5o9GA==}
     hasBin: true
+
+  tr46@0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
   tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
@@ -6754,6 +6886,9 @@ packages:
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
+  webidl-conversions@3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+
   webpack-bundle-analyzer@4.10.2:
     resolution: {integrity: sha512-vJptkMm9pk5si4Bv922ZbKLV8UTT4zib4FPgXMhgzUny0bfDDkLXAVQs3ly3fS4/TN9ROFtb0NFrm04UXFE/Vw==}
     engines: {node: '>= 10.13.0'}
@@ -6787,6 +6922,9 @@ packages:
     peerDependenciesMeta:
       webpack-cli:
         optional: true
+
+  whatwg-url@5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
   which-pm@2.0.0:
     resolution: {integrity: sha512-Lhs9Pmyph0p5n5Z3mVnN0yWcbQYUAD7rbQUiMsQxOJ3T57k7RFe35SUwWMf7dsbDZks1uOmw4AecB/JMDj3v/w==}
@@ -6873,6 +7011,9 @@ packages:
   xdg-portable@10.6.0:
     resolution: {integrity: sha512-xrcqhWDvtZ7WLmt8G4f3hHy37iK7D2idtosRgkeiSPZEPmBShp0VfmRBLWAPC6zLF48APJ21yfea+RfQMF4/Aw==}
     engines: {node: '>= 4.0'}
+
+  xml@1.0.1:
+    resolution: {integrity: sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -8214,6 +8355,8 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.17
 
+  '@ioredis/commands@1.3.0': {}
+
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
@@ -8439,7 +8582,7 @@ snapshots:
 
   '@koa/router@12.0.2':
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.1(supports-color@5.5.0)
       http-errors: 2.0.0
       koa-compose: 4.1.0
       methods: 1.1.2
@@ -9248,6 +9391,8 @@ snapshots:
   '@sinonjs/fake-timers@13.0.5':
     dependencies:
       '@sinonjs/commons': 3.0.1
+
+  '@socket.io/component-emitter@3.1.2': {}
 
   '@strapi/admin@5.18.1(@babel/runtime@7.27.6)(@codemirror/autocomplete@6.18.6)(@codemirror/language@6.11.2)(@codemirror/lint@6.8.5)(@codemirror/search@6.5.11)(@codemirror/state@6.5.2)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.38.1)(@strapi/data-transfer@5.18.1(@types/node@20.19.9)(better-sqlite3@11.3.0)(pg@8.16.3)(typescript@5.4.4))(@types/hoist-non-react-statics@3.3.7(@types/react@18.3.23))(@types/node@20.19.9)(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(better-sqlite3@11.3.0)(codemirror@5.65.19)(debug@4.3.4)(pg@8.16.3)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.30.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(styled-components@6.1.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
@@ -10425,8 +10570,12 @@ snapshots:
   '@types/cookies@0.9.1':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/express': 5.0.3
+      '@types/express': 4.17.23
       '@types/keygrip': 1.0.6
+      '@types/node': 20.19.9
+
+  '@types/cors@2.8.19':
+    dependencies:
       '@types/node': 20.19.9
 
   '@types/eslint-scope@3.7.7':
@@ -10448,24 +10597,11 @@ snapshots:
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.5
 
-  '@types/express-serve-static-core@5.0.7':
-    dependencies:
-      '@types/node': 20.19.9
-      '@types/qs': 6.14.0
-      '@types/range-parser': 1.2.7
-      '@types/send': 0.17.5
-
   '@types/express@4.17.23':
     dependencies:
       '@types/body-parser': 1.19.6
       '@types/express-serve-static-core': 4.19.6
       '@types/qs': 6.14.0
-      '@types/serve-static': 1.15.8
-
-  '@types/express@5.0.3':
-    dependencies:
-      '@types/body-parser': 1.19.6
-      '@types/express-serve-static-core': 5.0.7
       '@types/serve-static': 1.15.8
 
   '@types/fined@1.1.5': {}
@@ -10607,6 +10743,14 @@ snapshots:
       '@types/http-errors': 2.0.5
       '@types/node': 20.19.9
       '@types/send': 0.17.5
+
+  '@types/socket.io@3.0.2':
+    dependencies:
+      socket.io: 4.8.1
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@types/stack-utils@2.0.3': {}
 
@@ -11055,6 +11199,8 @@ snapshots:
 
   base64-js@1.5.1: {}
 
+  base64id@2.0.0: {}
+
   bcryptjs@2.4.3: {}
 
   better-sqlite3@11.3.0:
@@ -11392,6 +11538,8 @@ snapshots:
 
   clone@1.0.4: {}
 
+  cluster-key-slot@1.1.2: {}
+
   co-body@6.2.0:
     dependencies:
       '@hapi/bourne': 3.0.0
@@ -11458,6 +11606,8 @@ snapshots:
 
   commander@8.3.0: {}
 
+  commander@9.5.0: {}
+
   component-emitter@1.3.1: {}
 
   compressible@2.0.18:
@@ -11513,8 +11663,7 @@ snapshots:
   cookie-signature@1.2.2:
     optional: true
 
-  cookie@0.7.2:
-    optional: true
+  cookie@0.7.2: {}
 
   cookiejar@2.1.4: {}
 
@@ -11536,6 +11685,11 @@ snapshots:
   core-js-pure@3.44.0: {}
 
   core-util-is@1.0.3: {}
+
+  cors@2.8.5:
+    dependencies:
+      object-assign: 4.1.1
+      vary: 1.1.2
 
   cosmiconfig@7.1.0:
     dependencies:
@@ -11687,6 +11841,8 @@ snapshots:
 
   delegates@1.0.0: {}
 
+  denque@2.1.0: {}
+
   depd@1.1.2: {}
 
   depd@2.0.0: {}
@@ -11833,6 +11989,24 @@ snapshots:
   end-of-stream@1.4.5:
     dependencies:
       once: 1.4.0
+
+  engine.io-parser@5.2.3: {}
+
+  engine.io@6.6.4:
+    dependencies:
+      '@types/cors': 2.8.19
+      '@types/node': 20.19.9
+      accepts: 1.3.8
+      base64id: 2.0.0
+      cookie: 0.7.2
+      cors: 2.8.5
+      debug: 4.3.4
+      engine.io-parser: 5.2.3
+      ws: 8.17.1
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   enhanced-resolve@5.18.2:
     dependencies:
@@ -12630,6 +12804,20 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
+  ioredis@5.6.1:
+    dependencies:
+      '@ioredis/commands': 1.3.0
+      cluster-key-slot: 1.1.2
+      debug: 4.4.1(supports-color@5.5.0)
+      denque: 2.1.0
+      lodash.defaults: 4.2.0
+      lodash.isarguments: 3.1.0
+      redis-errors: 1.2.0
+      redis-parser: 3.0.0
+      standard-as-callback: 2.1.0
+    transitivePeerDependencies:
+      - supports-color
+
   is-absolute@1.0.0:
     dependencies:
       is-relative: 1.0.0
@@ -12918,6 +13106,18 @@ snapshots:
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
+
+  jest-html-reporters@3.1.7:
+    dependencies:
+      fs-extra: 10.1.0
+      open: 8.4.0
+
+  jest-junit@16.0.0:
+    dependencies:
+      mkdirp: 1.0.4
+      strip-ansi: 6.0.1
+      uuid: 8.3.2
+      xml: 1.0.1
 
   jest-leak-detector@30.0.5:
     dependencies:
@@ -13288,7 +13488,7 @@ snapshots:
 
   koa-send@5.0.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.1(supports-color@5.5.0)
       http-errors: 1.8.1
       resolve-path: 1.4.0
     transitivePeerDependencies:
@@ -13297,7 +13497,7 @@ snapshots:
   koa-session@6.4.0:
     dependencies:
       crc: 3.8.0
-      debug: 4.3.4
+      debug: 4.4.1(supports-color@5.5.0)
       is-type-of: 1.4.0
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -13413,7 +13613,11 @@ snapshots:
 
   lodash.deburr@4.1.0: {}
 
+  lodash.defaults@4.2.0: {}
+
   lodash.get@4.4.2: {}
+
+  lodash.isarguments@3.1.0: {}
 
   lodash.isplainobject@4.0.6: {}
 
@@ -13683,6 +13887,14 @@ snapshots:
       semver: 7.7.2
 
   node-abort-controller@3.1.1: {}
+
+  node-cron@3.0.3:
+    dependencies:
+      uuid: 8.3.2
+
+  node-fetch@2.7.0:
+    dependencies:
+      whatwg-url: 5.0.0
 
   node-int64@0.4.0: {}
 
@@ -14450,6 +14662,12 @@ snapshots:
     dependencies:
       resolve: 1.22.10
 
+  redis-errors@1.2.0: {}
+
+  redis-parser@3.0.0:
+    dependencies:
+      redis-errors: 1.2.0
+
   redux-thunk@2.4.2(redux@4.2.1):
     dependencies:
       redux: 4.2.1
@@ -14824,6 +15042,36 @@ snapshots:
       dot-case: 3.0.4
       tslib: 2.8.1
 
+  socket.io-adapter@2.5.5:
+    dependencies:
+      debug: 4.3.4
+      ws: 8.17.1
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  socket.io-parser@4.2.4:
+    dependencies:
+      '@socket.io/component-emitter': 3.1.2
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+
+  socket.io@4.8.1:
+    dependencies:
+      accepts: 1.3.8
+      base64id: 2.0.0
+      cors: 2.8.5
+      debug: 4.3.4
+      engine.io: 6.6.4
+      socket.io-adapter: 2.5.5
+      socket.io-parser: 4.2.4
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   sorted-array-functions@1.3.0: {}
 
   source-list-map@2.0.1: {}
@@ -14875,6 +15123,8 @@ snapshots:
       escape-string-regexp: 2.0.0
 
   stackframe@1.3.4: {}
+
+  standard-as-callback@2.1.0: {}
 
   statuses@1.5.0: {}
 
@@ -15106,6 +15356,8 @@ snapshots:
   totalist@3.0.1: {}
 
   touch@3.1.1: {}
+
+  tr46@0.0.3: {}
 
   tree-kill@1.2.2: {}
 
@@ -15363,6 +15615,8 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
+  webidl-conversions@3.0.1: {}
+
   webpack-bundle-analyzer@4.10.2:
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
@@ -15435,6 +15689,11 @@ snapshots:
       - '@swc/core'
       - esbuild
       - uglify-js
+
+  whatwg-url@5.0.0:
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
 
   which-pm@2.0.0:
     dependencies:
@@ -15524,6 +15783,8 @@ snapshots:
       os-paths: 7.4.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  xml@1.0.1: {}
 
   xtend@4.0.2: {}
 

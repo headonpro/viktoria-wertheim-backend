@@ -1,0 +1,135 @@
+{
+  "database": {
+    "client": "postgres",
+    "connection": {
+      "host": "${DATABASE_HOST}",
+      "port": "${DATABASE_PORT}",
+      "database": "${DATABASE_NAME}",
+      "user": "${DATABASE_USERNAME}",
+      "password": "${DATABASE_PASSWORD}",
+      "ssl": {
+        "rejectUnauthorized": true,
+        "ca": "${DATABASE_SSL_CA}",
+        "cert": "${DATABASE_SSL_CERT}",
+        "key": "${DATABASE_SSL_KEY}"
+      },
+      "schema": "public"
+    },
+    "pool": {
+      "min": 10,
+      "max": 50,
+      "acquireTimeoutMillis": 60000,
+      "createTimeoutMillis": 30000,
+      "destroyTimeoutMillis": 5000,
+      "idleTimeoutMillis": 30000
+    },
+    "debug": false,
+    "migrations": {
+      "directory": "./database/migrations",
+      "tableName": "knex_migrations"
+    }
+  },
+  "automation": {
+    "queue": {
+      "enabled": true,
+      "concurrency": 5,
+      "maxRetries": 3,
+      "retryDelay": 2000,
+      "jobTimeout": 45000
+    },
+    "cache": {
+      "enabled": true,
+      "provider": "redis",
+      "redis": {
+        "host": "${REDIS_HOST}",
+        "port": "${REDIS_PORT}",
+        "password": "${REDIS_PASSWORD}",
+        "db": 0,
+        "tls": {
+          "rejectUnauthorized": true
+        }
+      },
+      "ttl": {
+        "tableData": 300,
+        "teamStats": 600,
+        "queueStatus": 30
+      }
+    },
+    "calculation": {
+      "timeout": 45000,
+      "createSnapshots": true,
+      "validateResults": true
+    },
+    "snapshot": {
+      "enabled": true,
+      "maxSnapshots": 100,
+      "maxAge": 90,
+      "compression": true,
+      "directory": "${SNAPSHOT_STORAGE_PATH}",
+      "s3": {
+        "enabled": true,
+        "bucket": "${S3_SNAPSHOT_BUCKET}",
+        "region": "${AWS_REGION}",
+        "accessKeyId": "${AWS_ACCESS_KEY_ID}",
+        "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}"
+      }
+    },
+    "monitoring": {
+      "enabled": true,
+      "metricsCollection": true,
+      "prometheus": {
+        "enabled": true,
+        "port": 9090
+      },
+      "alerting": {
+        "enabled": true,
+        "webhook": "${ALERT_WEBHOOK_URL}",
+        "email": {
+          "enabled": true,
+          "smtp": {
+            "host": "${SMTP_HOST}",
+            "port": "${SMTP_PORT}",
+            "secure": true,
+            "auth": {
+              "user": "${SMTP_USER}",
+              "pass": "${SMTP_PASSWORD}"
+            }
+          },
+          "recipients": ["${ADMIN_EMAIL}"]
+        }
+      },
+      "logging": {
+        "level": "warn",
+        "structured": true,
+        "file": "${LOG_FILE_PATH}",
+        "syslog": {
+          "enabled": true,
+          "host": "${SYSLOG_HOST}",
+          "port": "${SYSLOG_PORT}"
+        }
+      }
+    },
+    "features": {
+      "automaticCalculation": true,
+      "queueProcessing": true,
+      "snapshotCreation": true,
+      "adminExtensions": true,
+      "performanceMonitoring": true,
+      "caching": true,
+      "debugMode": false
+    }
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": "${PORT}",
+    "cors": {
+      "enabled": true,
+      "origin": ["${FRONTEND_URL}"]
+    }
+  },
+  "admin": {
+    "auth": {
+      "secret": "${ADMIN_JWT_SECRET}"
+    }
+  }
+}

@@ -38,6 +38,12 @@
       "target": "api::team.team",
       "required": false
     },
+    "club": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "required": false
+    },
     "team_logo": {
       "type": "media",
       "multiple": false,

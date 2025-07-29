@@ -100,12 +100,12 @@ const shortenTeamName = (name: string): string => {
 const TeamNameDisplay = ({ team, isViktoriaTeam }: { team: { name: string }, isViktoriaTeam: boolean }) => (
   <>
     {/* Mobile: Gekürzte Namen */}
-    <span className={`text-sm lg:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-100 font-medium'
+    <span className={`text-sm lg:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-800 dark:text-gray-100 font-medium'
       }`}>
       {shortenTeamName(team.name)}
     </span>
     {/* Desktop: Vollständige Namen */}
-    <span className={`text-base hidden lg:inline ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-100 font-medium'
+    <span className={`text-base hidden lg:inline ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-800 dark:text-gray-100 font-medium'
       }`}>
       {team.name}
     </span>
@@ -417,14 +417,17 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
                       }
                   `}
                   >
-                    {/* Viktoria team highlighting background - properly contained */}
+                    {/* Viktoria team highlighting - subtle left border accent */}
                     {isViktoriaTeam && (
-                      <div className="absolute inset-0 bg-viktoria-yellow opacity-90" />
+                      <>
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-viktoria-yellow" />
+                        <div className="absolute inset-0 bg-viktoria-yellow/5 dark:bg-viktoria-yellow/10" />
+                      </>
                     )}
                     <div className="flex items-center text-sm md:text-base w-full relative z-10">
                       {/* Position */}
                       <div className="w-8 sm:w-10 md:w-12 text-left">
-                        <span className={`text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-200'
+                        <span className={`text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-800 dark:text-gray-200'
                           }`}>
                           {team.position}.
                         </span>
@@ -454,38 +457,38 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
                       </div>
 
                       {/* Games */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.games}
                       </div>
 
                       {/* Wins - Hidden on mobile */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.wins}
                       </div>
 
                       {/* Draws - Hidden on mobile */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.draws}
                       </div>
 
                       {/* Losses - Hidden on mobile */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.losses}
                       </div>
 
                       {/* Goals - Mobile shows goals, desktop hidden */}
-                      <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.goalsFor}:{team.goalsAgainst}
                       </div>
 
                       {/* Goal Difference */}
                       <div className="w-10 sm:w-12 md:w-16 text-center">
-                        <span className={`text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' :
+                        <span className={`text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' :
                           team.goalDifference > 0 ? 'text-green-600' :
                             team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600 dark:text-gray-300'
                           }`}>
@@ -495,7 +498,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
                       {/* Points */}
                       <div className="w-10 sm:w-12 md:w-16 text-center">
-                        <span className={`text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-300'
+                        <span className={`text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-800 dark:text-gray-300'
                           }`}>
                           {team.points}
                         </span>
@@ -528,12 +531,12 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
                   >
                     {/* Viktoria team highlighting background - properly contained */}
                     {isViktoriaTeam && (
-                      <div className="absolute inset-0 bg-viktoria-yellow opacity-90" />
+                      <div className="absolute inset-0 bg-viktoria-yellow/20 dark:bg-viktoria-yellow/10" />
                     )}
                     <div className="flex items-center text-sm md:text-base w-full relative z-10">
                       {/* Position */}
                       <div className="w-8 sm:w-10 md:w-12 text-left">
-                        <span className={`text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-200'
+                        <span className={`text-sm md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-800 dark:text-gray-200'
                           }`}>
                           {team.position}.
                         </span>
@@ -563,38 +566,38 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
                       </div>
 
                       {/* Games */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.games}
                       </div>
 
                       {/* Wins - Hidden on mobile */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.wins}
                       </div>
 
                       {/* Draws - Hidden on mobile */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.draws}
                       </div>
 
                       {/* Losses - Hidden on mobile */}
-                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-8 sm:w-10 md:w-12 text-center text-xs sm:text-sm md:text-base hidden sm:block ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.losses}
                       </div>
 
                       {/* Goals - Mobile shows goals, desktop hidden */}
-                      <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-600 dark:text-gray-300'
+                      <div className={`w-12 sm:w-16 md:w-20 text-center text-xs sm:text-sm sm:hidden ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-600 dark:text-gray-300'
                         }`}>
                         {team.goalsFor}:{team.goalsAgainst}
                       </div>
 
                       {/* Goal Difference */}
                       <div className="w-10 sm:w-12 md:w-16 text-center">
-                        <span className={`text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' :
+                        <span className={`text-xs sm:text-sm md:text-base ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' :
                           team.goalDifference > 0 ? 'text-green-600' :
                             team.goalDifference < 0 ? 'text-red-600' : 'text-gray-600 dark:text-gray-300'
                           }`}>
@@ -604,7 +607,7 @@ const LeagueTable = ({ selectedTeam }: LeagueTableProps) => {
 
                       {/* Points */}
                       <div className="w-10 sm:w-12 md:w-16 text-center">
-                        <span className={`text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-gray-900 font-bold' : 'text-gray-800 dark:text-gray-300'
+                        <span className={`text-sm sm:text-base md:text-lg ${isViktoriaTeam ? 'text-gray-900 dark:text-viktoria-yellow font-bold' : 'text-gray-800 dark:text-gray-300'
                           }`}>
                           {team.points}
                         </span>

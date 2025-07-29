@@ -375,12 +375,27 @@ export default function GameCards({ selectedTeam }: GameCardsProps) {
                 />
               </div>
             ) : (
-              <div className="bg-gray-100/40 dark:bg-white/[0.04] backdrop-blur-lg rounded-xl md:rounded-2xl p-3 md:p-6 border-2 border-white/80 dark:border-white/[0.15] md:min-h-[240px] shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_1px_8px_rgba(255,255,255,0.05)] flex items-center justify-center" data-testid="last-game-fallback">
-                <div className="text-center">
-                  <div className="text-gray-400 mb-2">⚽</div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Kein letztes Spiel für {getTeamName(selectedTeam)} verfügbar
-                  </p>
+              <div className="relative bg-gray-100/11 dark:bg-white/[0.012] backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-6 overflow-hidden md:min-h-[240px] shadow-[0_4px_16px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_16px_rgba(255,255,255,0.08),0_2px_8px_rgba(255,255,255,0.04)] before:content-[''] before:absolute before:inset-0 before:rounded-xl before:md:rounded-2xl before:p-1.5 before:bg-gradient-to-br before:from-white/2 before:via-white/4 before:to-white/8 dark:before:from-white/0.4 dark:before:via-white/1 dark:before:to-white/2 before:mask-composite:subtract before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:pointer-events-none after:content-[''] after:absolute after:inset-[6px] after:rounded-[calc(0.75rem-6px)] after:md:rounded-[calc(1rem-6px)] after:bg-gradient-to-tl after:from-transparent after:via-white/[0.01] after:to-white/[0.02] after:pointer-events-none after:z-0" data-testid="last-game-fallback">
+                {/* Header wie bei anderen GameCards */}
+                <div className="mb-2 md:mb-4 text-center">
+                  <div className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                    Last
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-center flex-1">
+                  <div className="text-center relative z-10">
+                    {/* Hauptinhalt */}
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      Saison-Vorbereitung
+                    </p>
+                    
+                    {/* Status Badge mit verbessertem Dark Mode */}
+                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-viktoria-yellow/20 dark:bg-viktoria-yellow/30 text-viktoria-blue dark:text-viktoria-yellow text-xs font-medium border border-viktoria-yellow/30 dark:border-viktoria-yellow/50">
+                      <span className="w-2 h-2 bg-viktoria-yellow rounded-full mr-2 animate-pulse"></span>
+                      Training läuft
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

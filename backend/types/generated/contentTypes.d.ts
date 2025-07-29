@@ -410,6 +410,83 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiClubClub extends Struct.CollectionTypeSchema {
+  collectionName: 'clubs';
+  info: {
+    description: 'Football clubs for league operations with team mappings and metadata';
+    displayName: 'Club';
+    pluralName: 'clubs';
+    singularName: 'club';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    adresse: Schema.Attribute.Text;
+    aktiv: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    club_typ: Schema.Attribute.Enumeration<
+      ['viktoria_verein', 'gegner_verein']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'gegner_verein'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gast_spiele: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'>;
+    gruendungsjahr: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 2030;
+          min: 1800;
+        },
+        number
+      >;
+    heim_spiele: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'>;
+    heimstadion: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    kurz_name: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 20;
+        minLength: 2;
+      }>;
+    ligen: Schema.Attribute.Relation<'manyToMany', 'api::liga.liga'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::club.club'> &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+        minLength: 2;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    tabellen_eintraege: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tabellen-eintrag.tabellen-eintrag'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vereinsfarben: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    viktoria_team_mapping: Schema.Attribute.Enumeration<
+      ['team_1', 'team_2', 'team_3']
+    >;
+    website: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+  };
+}
+
 export interface ApiGameCardGameCard extends Struct.CollectionTypeSchema {
   collectionName: 'game_cards';
   info: {
@@ -520,6 +597,7 @@ export interface ApiLigaLiga extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    clubs: Schema.Attribute.Relation<'manyToMany', 'api::club.club'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -538,6 +616,7 @@ export interface ApiLigaLiga extends Struct.CollectionTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     saison: Schema.Attribute.Relation<'manyToOne', 'api::saison.saison'>;
+    spiele: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'>;
     tabellen_eintraege: Schema.Attribute.Relation<
       'oneToMany',
       'api::tabellen-eintrag.tabellen-eintrag'
@@ -668,6 +747,81 @@ export interface ApiSaisonSaison extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     start_datum: Schema.Attribute.Date & Schema.Attribute.Required;
     teams: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSpielSpiel extends Struct.CollectionTypeSchema {
+  collectionName: 'spiele';
+  info: {
+    description: 'Vollst\u00E4ndige Spielinformationen f\u00FCr automatische Tabellenberechnung';
+    displayName: 'Spiel';
+    pluralName: 'spiele';
+    singularName: 'spiel';
+  };
+  options: {
+    draftAndPublish: false;
+    mainField: 'display_name';
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: true;
+    };
+    'content-type-builder': {
+      visible: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    datum: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    display_name: Schema.Attribute.String & Schema.Attribute.Private;
+    gast_club: Schema.Attribute.Relation<'manyToOne', 'api::club.club'>;
+    gast_team: Schema.Attribute.Relation<'manyToOne', 'api::team.team'>;
+    gast_tore: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    heim_club: Schema.Attribute.Relation<'manyToOne', 'api::club.club'>;
+    heim_team: Schema.Attribute.Relation<'manyToOne', 'api::team.team'>;
+    heim_tore: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    liga: Schema.Attribute.Relation<'manyToOne', 'api::liga.liga'> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::spiel.spiel'> &
+      Schema.Attribute.Private;
+    notizen: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    saison: Schema.Attribute.Relation<'manyToOne', 'api::saison.saison'> &
+      Schema.Attribute.Required;
+    spieltag: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    status: Schema.Attribute.Enumeration<
+      ['geplant', 'beendet', 'abgesagt', 'verschoben']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'geplant'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -814,6 +968,7 @@ export interface ApiTabellenEintragTabellenEintrag
     };
   };
   attributes: {
+    club: Schema.Attribute.Relation<'manyToOne', 'api::club.club'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1552,12 +1707,14 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::club.club': ApiClubClub;
       'api::game-card.game-card': ApiGameCardGameCard;
       'api::kategorie.kategorie': ApiKategorieKategorie;
       'api::liga.liga': ApiLigaLiga;
       'api::news-artikel.news-artikel': ApiNewsArtikelNewsArtikel;
       'api::next-game-card.next-game-card': ApiNextGameCardNextGameCard;
       'api::saison.saison': ApiSaisonSaison;
+      'api::spiel.spiel': ApiSpielSpiel;
       'api::spieler-statistik.spieler-statistik': ApiSpielerStatistikSpielerStatistik;
       'api::sponsor.sponsor': ApiSponsorSponsor;
       'api::tabellen-eintrag.tabellen-eintrag': ApiTabellenEintragTabellenEintrag;

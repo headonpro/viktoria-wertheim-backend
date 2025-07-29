@@ -19,10 +19,18 @@ module.exports = {
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   testTimeout: 30000,
-  moduleNameMapper: {
+  moduleNameMapping: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   transformIgnorePatterns: [
     'node_modules/(?!(.*\\.mjs$))'
-  ]
+  ],
+  // Handle open handles and improve test cleanup
+  forceExit: true,
+  detectOpenHandles: true,
+  maxWorkers: 1, // Use single worker to avoid race conditions
+  // Improve test isolation
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true
 };

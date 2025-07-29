@@ -242,15 +242,7 @@ export default function TeamStatus({ selectedTeam, onTeamChange }: TeamStatusPro
                 </div>
                 <div className="flex items-center justify-center h-8 md:h-10">
                   <div className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 leading-tight text-center max-w-full overflow-hidden">
-                    <span className="block sm:hidden">
-                      {teamData?.liga ? 
-                        teamData.liga.split(' ').slice(0, 2).join(' ') : 
-                        '-'
-                      }
-                    </span>
-                    <span className="hidden sm:block">
-                      {teamData?.liga || '-'}
-                    </span>
+                    {teamData?.liga || '-'}
                   </div>
                 </div>
               </div>

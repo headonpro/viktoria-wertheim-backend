@@ -1,0 +1,102 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clubs",
+  "info": {
+    "singularName": "club",
+    "pluralName": "clubs",
+    "displayName": "Club",
+    "description": "Football clubs for league operations with team mappings and metadata"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 100,
+      "minLength": 2
+    },
+    "kurz_name": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 2
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "gruendungsjahr": {
+      "type": "integer",
+      "min": 1800,
+      "max": 2030
+    },
+    "vereinsfarben": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "heimstadion": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "adresse": {
+      "type": "text"
+    },
+    "website": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "club_typ": {
+      "type": "enumeration",
+      "enum": [
+        "viktoria_verein",
+        "gegner_verein"
+      ],
+      "default": "gegner_verein",
+      "required": true
+    },
+    "viktoria_team_mapping": {
+      "type": "enumeration",
+      "enum": [
+        "team_1",
+        "team_2",
+        "team_3"
+      ]
+    },
+    "ligen": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::liga.liga",
+      "inversedBy": "clubs"
+    },
+    "aktiv": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "heim_spiele": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::spiel.spiel",
+      "mappedBy": "heim_club"
+    },
+    "gast_spiele": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::spiel.spiel",
+      "mappedBy": "gast_club"
+    },
+    "tabellen_eintraege": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tabellen-eintrag.tabellen-eintrag",
+      "mappedBy": "club"
+    }
+  }
+}

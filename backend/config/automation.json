@@ -1,0 +1,45 @@
+{
+  "queue": {
+    "enabled": true,
+    "concurrency": 3,
+    "maxRetries": 3,
+    "retryDelay": 2000,
+    "jobTimeout": 30000
+  },
+  "cache": {
+    "enabled": true,
+    "provider": "memory",
+    "ttl": {
+      "tableData": 300,
+      "teamStats": 600,
+      "queueStatus": 30
+    }
+  },
+  "calculation": {
+    "timeout": 30000,
+    "createSnapshots": true,
+    "validateResults": true
+  },
+  "snapshot": {
+    "enabled": true,
+    "maxSnapshots": 50,
+    "maxAge": 30,
+    "compression": true
+  },
+  "monitoring": {
+    "enabled": true,
+    "metricsCollection": true,
+    "logging": {
+      "level": "info",
+      "structured": true
+    }
+  },
+  "features": {
+    "automaticCalculation": true,
+    "queueProcessing": true,
+    "snapshotCreation": true,
+    "adminExtensions": true,
+    "performanceMonitoring": true,
+    "caching": true
+  }
+}

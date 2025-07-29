@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spiele",
+  "info": {
+    "singularName": "spiel",
+    "pluralName": "spiele",
+    "displayName": "Spiel",
+    "description": "Vollständige Spielinformationen für automatische Tabellenberechnung"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "mainField": "display_name"
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "display_name": {
+      "type": "string",
+      "required": false,
+      "private": true
+    },
+    "datum": {
+      "type": "datetime",
+      "required": true
+    },
+    "liga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::liga.liga",
+      "required": true
+    },
+    "saison": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::saison.saison",
+      "required": true
+    },
+    "heim_team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::team.team",
+      "required": false,
+      "description": "DEPRECATED: Use heim_club instead. Kept for backward compatibility."
+    },
+    "gast_team": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::team.team",
+      "required": false,
+      "description": "DEPRECATED: Use gast_club instead. Kept for backward compatibility."
+    },
+    "heim_club": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "required": false
+    },
+    "gast_club": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::club.club",
+      "required": false
+    },
+    "heim_tore": {
+      "type": "integer",
+      "min": 0,
+      "required": false
+    },
+    "gast_tore": {
+      "type": "integer",
+      "min": 0,
+      "required": false
+    },
+    "spieltag": {
+      "type": "integer",
+      "min": 1,
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "geplant",
+        "beendet", 
+        "abgesagt",
+        "verschoben"
+      ],
+      "default": "geplant",
+      "required": true
+    },
+    "notizen": {
+      "type": "text",
+      "maxLength": 500
+    }
+  }
+}
